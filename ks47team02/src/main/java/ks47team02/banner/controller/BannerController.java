@@ -6,14 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/banner")
 public class BannerController {
 
-	@GetMapping("/")
+	@GetMapping("/banner")
 	public String main(Model model) {
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("contents", "spring boot mybatis");
-		return "banner/main";
+		return "user/banner/bannerMain";
 	}
 	
 }
