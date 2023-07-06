@@ -1,9 +1,142 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{user/layout/default}">
-<h1>커밋 제대로 되남</h1>
-	<th:block layout:fragment="customContents">
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
 
-	</th:block>
+
+<!-- 왼쪽 메뉴 바 -->
+<th:block layout:fragment="asideFragment">
+	<table>
+		<thead>
+			<tr>
+				<th>왼쪽메뉴</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>구인구직</td>
+			</tr>
+			<tr>
+				<td>
+					<li>지역별</li>
+					<li>참여분야별</li>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</th:block>
+
+<!-- 검색 -->
+<th:block layout:fragment="searchFragment">
+	<div class="search-area">
+		<div class="search-bg">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<form action="#" class="d-md-flex justify-content-between">
+							<select>
+								<option value="1">직종</option>
+								<option value="2">Part Time</option>
+								<option value="3">Full Time</option>
+								<option value="4">Remote</option>
+								<option value="5">Office Job</option>
+							</select>
+							<select>
+								<option value="1">지역</option>
+								<option value="2">Dhaka</option>
+								<option value="3">Rajshahi</option>
+								<option value="4">Barishal</option>
+								<option value="5">Noakhali</option>
+							</select>
+							<input type="text" placeholder="검색어를 입력해주세요" onfocus="this.placeholder = ''"
+								onblur="this.placeholder = 'Search Keyword'" required>
+							<button type="submit" class="template-btn">검색</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 컨텐츠 -->
+<th:block layout:fragment="customContents">
+	<table border="1" width="100%">
+		<thead>
+			<tr>
+				<th>회원아이디</th>
+				<th>회원비밀번호</th>
+				<th>회원이름</th>
+				<th>회원등급</th>
+				<th>회원이메일</th>
+				<th>회원주소</th>
+				<th>회원등록날짜</th>
+				<th>수정</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+				<td>7</td>
+				<td>
+					<a th:href="@{#}">수정</a>
+				</td>
+				<td>
+					<a th:href="@{#}">삭제</a>
+				</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+				<td>7</td>
+				<td>
+					<a th:href="@{#}">수정</a>
+				</td>
+				<td>
+					<a th:href="@{#}">삭제</a>
+				</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+				<td>7</td>
+				<td>
+					<a th:href="@{#}">수정</a>
+				</td>
+				<td>
+					<a th:href="@{#}">삭제</a>
+				</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+				<td>7</td>
+				<td>
+					<a th:href="@{#}">수정</a>
+				</td>
+				<td>
+					<a th:href="@{#}">삭제</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</th:block>
+
 </html>
