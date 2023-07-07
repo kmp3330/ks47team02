@@ -26,7 +26,7 @@
 							<!-- 프로젝트 메뉴 -->
 							<li><a th:href="@{#}">프로젝트</a>
 								<ul class="sub-menu">
-									<li><a th:href="@{#}">일반과제 프로젝트</a></li>
+									<li><a th:hr]ef="@{#}">일반과제 프로젝트</a></li>
 									<li><a th:href="@{#}">전문과제 프로젝트</a></li>
 								</ul>
 							</li>
@@ -40,15 +40,15 @@
 							</li>
 							
 							<!-- 프로필 메뉴 -->
-							<li><a href="#">구직 프로필</a>
+							<li><a href="@{/profile}">구직 프로필</a>
 								<ul class="sub-menu">
-									<li><a th:href="@{#}">자기소개</a></li>
-									<li><a th:href="@{#}">보유기술</a></li>
-									<li><a th:href="@{#}">경력</a></li>
-									<li><a th:href="@{#}">학력</a></li>
-									<li><a th:href="@{#}">자격증</a></li>
-									<li><a th:href="@{#}">수상이력</a></li>
-									<li><a th:href="@{#}">포트폴리오</a></li>
+									<li><a th:href="@{/profile/profileIntroList}">자기소개</a></li>
+									<li><a th:href="@{/profile/profileSkillList}">보유기술</a></li>
+									<li><a th:href="@{/profile/profileWorkSpecList}">경력</a></li>
+									<li><a th:href="@{/profile/profileEduSpecList}">학력</a></li>
+									<li><a th:href="@{/profile/profileCertificateList}">자격증</a></li>
+									<li><a th:href="@{/profile/profileAwardList}">수상이력</a></li>
+									<li><a th:href="@{/profile/profilePortfolioList}">포트폴리오</a></li>
 								</ul>
 							</li>
 							
