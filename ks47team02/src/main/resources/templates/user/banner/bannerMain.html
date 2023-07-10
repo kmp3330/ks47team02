@@ -1,9 +1,167 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{user/layout/default}">
+      layout:decorate="~{user/banner/layout/default}">
 
-	<th:block layout:fragment="customContents">
-		
-	</th:block>
+<head>
+  <style>
+    table.type10 {
+      border-collapse: collapse;
+      text-align: left;
+      line-height: 1.5;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      margin: 20px 10px;
+    }
+    table.type10 thead th {
+      width: 150px;
+      padding: 10px;
+      font-weight: bold;
+      vertical-align: top;
+      color: #fff;
+      background: #00a8c6;
+      margin: 20px 10px;
+    }
+    table.type10 tbody th {
+      width: 150px;
+      padding: 10px;
+    }
+    table.type10 td {
+      width: 350px;
+      padding: 10px;
+      vertical-align: top;
+    }
+    table.type10 .even {
+      background: #c9dae1;
+    }
+    #estimatedPrice {
+      display: none;
+    }
+  </style>
+</head>
+<th:block layout:fragment="priceTable">
+  <table class="type10">
+    <thead>
+       <tr>
+        <th scope="cols">광고 배너위치</th>
+        <th scope="cols">광고 기간</th>
+        <th scope="cols">할인률</th>
+        <th scope="cols">할인가</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">상단 배너</th>
+        <td>1주</td>
+        <td>할인 미적용</td>
+        <td>500,000</td>
+      </tr>
+      <tr>
+        <th scope="row" class="even">측면 배너</th>
+        <td class="even">1주</td>
+        <td class="even">할인 미적용</td>
+        <td class="even">600,000</td>
+      </tr>
+      <tr>
+        <th scope="row">상단 배너</th>
+        <td>2주</td>
+        <td>5%</td>
+        <td>475,000</td>
+      </tr>
+      <tr>
+        <th scope="row" class="even">측면 배너</th>
+        <td class="even">2주</td>
+        <td class="even">5%</td>
+        <td class="even">570,000</td>
+      </tr>
+      <tr>
+        <th scope="row">상단 배너</th>
+        <td>3주</td>
+        <td>7%</td>
+        <td>465,000</td>
+      </tr>
+      <tr>
+        <th scope="row" class="even">측면 배너</th>
+        <td class="even">3주</td>
+        <td class="even">7%</td>
+        <td class="even">558,000</td>
+      </tr>
+      <tr>
+        <th scope="row">상단 배너</th>
+        <td>4주</td>
+        <td>10%</td>
+        <td>450,000</td>
+      </tr>
+      <tr>
+        <th scope="row" class="even">측면 배너</th>
+        <td class="even">4주</td>
+        <td class="even">10%</td>
+        <td class="even">540,000</td>
+      </tr>
+    </tbody>
+  </table>
+</th:block>
+
+
+<th:block layout:fragment="customContents">
+  <h4>예상 가격 알아보기</h4>
+  <br>
+  <form id="adForm" action="#" class="d-md-flex justify-content-between">
+    <select id="adTypeSelect">
+      <option value="" selected disabled>광고 유형을 선택해주세요.</option>
+      <option value="상단 배너 광고">상단 배너 광고</option>
+      <option value="측면 배너 광고">측면 배너 광고</option>
+    </select>
+    <select id="adDurationSelect">
+      <option value="" selected disabled>광고 일수를 선택해주세요.</option>
+      <option value="1">1주</option>
+      <option value="2">2주</option>
+      <option value="3">3주</option>
+      <option value="4">4주</option>
+      <option value="5">5주</option>
+      <option value="6">6주</option>
+      <option value="7">7주</option>
+      <option value="8">8주</option>
+    </select>
+    <div class="buttonAndPriceContainer">
+      <button type="submit" id="calculateBtn" class="template-btn">예상 금액</button>
+      <div id="estimatedPrice"></div>
+    </div>
+  </form>
+</th:block>
+
+<th:block layout:fragment="customJs">
+  <script th:src="@{/js/jquery-3.7.0.js}"></script>
+<script>
+  // 가격 정보를 객체로 저장
+  var prices = {
+    '상단 배너 광고': {
+      '1': { price: 500000, discount: 0 },
+      '2': { price: 475000, discount: 0.05 },
+      '3': { price: 465000, discount: 0.07 },
+      '4': { price: 450000, discount: 0.10 }
+    },
+    '측면 배너 광고': {
+      '1': { price: 600000, discount: 0 },
+      '2': { price: 570000, discount: 0.05 },
+      '3': { price: 558000, discount: 0.07 },
+      '4': { price: 540000, discount: 0.10 }
+    }
+  };
+  
+  $(document).ready(function() {
+    // 'submit' 이벤트를 폼에 등록
+    $('#adForm').on('submit', function(e) {
+      e.preventDefault(); // 폼 제출 방지
+      
+      var adType = $("#adTypeSelect").val();
+      var adWeeks = $("#adDurationSelect").val();
+      var pricePerWeek = prices[adType][adWeeks].price;  // 1주 단위 가격
+      var discount = prices[adType][adWeeks].discount;  // 할인율
+      var totalEstimatedPrice = (pricePerWeek * (1 - discount)) * adWeeks;  // 주수와 할인율에 따른 가격 계산
+      alert('예상 금액: ' + totalEstimatedPrice.toFixed(0));
+    });
+  });
+</script>
+</th:block>
 </html>

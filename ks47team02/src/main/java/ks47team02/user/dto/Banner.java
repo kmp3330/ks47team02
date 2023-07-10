@@ -1,4 +1,4 @@
-package ks47team02.banner.dto;
+package ks47team02.user.dto;
 
 import java.util.Date;
 
