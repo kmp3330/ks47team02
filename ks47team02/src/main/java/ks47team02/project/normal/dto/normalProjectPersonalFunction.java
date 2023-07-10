@@ -1,4 +1,4 @@
-package ksmart47team02.project.normal.dto;
+package ks47team02.project.normal.dto;
 
 public class normalProjectPersonalFunction {
 
