@@ -16,9 +16,16 @@
 
     <select id="getBannerRequestCompanyCode" parameterType="String" resultMap="bannerRequestCompanyResultMap">
         SELECT
+        rc.banner_request_company_code,
+        rc.banner_request_company_name,
+        rc.banner_unit_price_code,
+        rc.banner_location,
+        rc.banner_period,
+        rc.banner_price
         FROM
         banner_request_company AS rc
-
+        WHERE
+        rc.banner_request_company_code = #(banner_request_company_code);
     </select>
 
     <!--<select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
