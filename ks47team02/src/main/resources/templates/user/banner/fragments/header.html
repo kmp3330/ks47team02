@@ -6,7 +6,7 @@
 			<div class="row">
 				<div class="col-lg-2">
 					<div class="logo-area">
-						<a th:href="@{/}"><img src="/user/assets/images/logo-light.png" alt="logo"
+						<a th:href="@{/}"><img src="user/assets/images/logo-light.png" alt="logo"
 								style="width: 180px; height: auto;"></a>
 					</div>
 				</div>
@@ -26,7 +26,7 @@
 							<!-- 프로젝트 메뉴 -->
 							<li><a th:href="@{#}">프로젝트</a>
 								<ul class="sub-menu">
-									<li><a th:hr]ef="@{#}">일반과제 프로젝트</a></li>
+									<li><a th:href="@{#}">일반과제 프로젝트</a></li>
 									<li><a th:href="@{#}">전문과제 프로젝트</a></li>
 								</ul>
 							</li>
@@ -40,22 +40,22 @@
 							</li>
 							
 							<!-- 프로필 메뉴 -->
-							<li><a th:href="@{/profile/}">구직 프로필</a>
+							<li><a href="#">구직 프로필</a>
 								<ul class="sub-menu">
-									<li><a th:href="@{/profile/profileIntroList}">자기소개</a></li>
-									<li><a th:href="@{/profile/profileSkillList}">보유기술</a></li>
-									<li><a th:href="@{/profile/profileWorkSpecList}">경력</a></li>
-									<li><a th:href="@{/profile/profileEduSpecList}">학력</a></li>
-									<li><a th:href="@{/profile/profileCertificateList}">자격증</a></li>
-									<li><a th:href="@{/profile/profileAwardList}">수상이력</a></li>
-									<li><a th:href="@{/profile/profilePortfolioList}">포트폴리오</a></li>
+									<li><a th:href="@{#}">자기소개</a></li>
+									<li><a th:href="@{#}">보유기술</a></li>
+									<li><a th:href="@{#}">경력</a></li>
+									<li><a th:href="@{#}">학력</a></li>
+									<li><a th:href="@{#}">자격증</a></li>
+									<li><a th:href="@{#}">수상이력</a></li>
+									<li><a th:href="@{#}">포트폴리오</a></li>
 								</ul>
 							</li>
 							
 							<!-- 광고 메뉴 -->
-							<li><a href="/banner">광고문의</a>
+							<li><a href="#">광고문의</a>
 								<ul class="sub-menu">
-									<li><a th:href="@{/banner}">광고 신청</a></li>
+									<li><a th:href="@{user/banner/bannerMain}">광고 신청</a></li>
 									<li><a th:href="@{#}">광고 신청 현황</a></li>
 									<li><a th:href="@{#}">광고 진행 현황</a></li>
 								</ul>
@@ -70,8 +70,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 offset-md-3">
-					<h2 th:text="${titleText}"></h2>
-					<p th:text="${contents}"></p>
+          
+          <h1 th:text="${title}"></h1>
+          <h5 th:text="${contents}"></h5>
 				</div>
 			</div>
 		</div>
