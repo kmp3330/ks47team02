@@ -37,7 +37,9 @@
     }
     script {
       font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
+    }.template-btn {
+       margin-right: 20px; /* 원하는 간격만큼 조정 */
+     }
   </style>
 </head>
 <th:block layout:fragment="priceTable">
@@ -101,6 +103,9 @@
       </tr>
     </tbody>
   </table>
+  <!--<br>
+  <button type="submit" class="template-btn">신청하기</button>
+  <button type="submit" class="template-btn">신청현황 조회</button>-->
 </th:block>
 
 
