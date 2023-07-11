@@ -4,6 +4,7 @@
       layout:decorate="~{user/banner/layout/default}">
 
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
     table.type10 {
       border-collapse: collapse;
@@ -34,8 +35,8 @@
     table.type10 .even {
       background: #c9dae1;
     }
-    #estimatedPrice {
-      display: none;
+    script {
+      font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
   </style>
 </head>
@@ -132,36 +133,54 @@
 
 <th:block layout:fragment="customJs">
   <script th:src="@{/js/jquery-3.7.0.js}"></script>
-<script>
-  // 가격 정보를 객체로 저장
-  var prices = {
-    '상단 배너 광고': {
-      '1': { price: 500000, discount: 0 },
-      '2': { price: 475000, discount: 0.05 },
-      '3': { price: 465000, discount: 0.07 },
-      '4': { price: 450000, discount: 0.10 }
-    },
-    '측면 배너 광고': {
-      '1': { price: 600000, discount: 0 },
-      '2': { price: 570000, discount: 0.05 },
-      '3': { price: 558000, discount: 0.07 },
-      '4': { price: 540000, discount: 0.10 }
-    }
-  };
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   
-  $(document).ready(function() {
-    // 'submit' 이벤트를 폼에 등록
-    $('#adForm').on('submit', function(e) {
-      e.preventDefault(); // 폼 제출 방지
-      
-      var adType = $("#adTypeSelect").val();
-      var adWeeks = $("#adDurationSelect").val();
-      var pricePerWeek = prices[adType][adWeeks].price;  // 1주 단위 가격
-      var discount = prices[adType][adWeeks].discount;  // 할인율
-      var totalEstimatedPrice = (pricePerWeek * (1 - discount)) * adWeeks;  // 주수와 할인율에 따른 가격 계산
-      alert('예상 금액: ' + totalEstimatedPrice.toFixed(0));
+  <script>
+    // 가격 정보를 객체로 저장
+    var prices = {
+      '상단 배너 광고': {
+        '1': { price: 500000, discount: 0 },
+        '2': { price: 475000, discount: 0.05 },
+        '3': { price: 465000, discount: 0.07 },
+        '4': { price: 450000, discount: 0.10 },
+        '5': { price: 450000, discount: 0.10 },
+        '6': { price: 450000, discount: 0.10 },
+        '7': { price: 450000, discount: 0.10 },
+        '8': { price: 450000, discount: 0.10 }
+      },
+      '측면 배너 광고': {
+        '1': { price: 600000, discount: 0 },
+        '2': { price: 570000, discount: 0.05 },
+        '3': { price: 558000, discount: 0.07 },
+        '4': { price: 540000, discount: 0.10 },
+        '5': { price: 540000, discount: 0.10 },
+        '6': { price: 540000, discount: 0.10 },
+        '7': { price: 540000, discount: 0.10 },
+        '8': { price: 540000, discount: 0.10 }
+      }
+    };
+    
+    $(document).ready(function() {
+      // 'submit' 이벤트를 폼에 등록
+      $('#adForm').on('submit', function(e) {
+        e.preventDefault(); // 폼 제출 방지
+        
+        var adType = $("#adTypeSelect").val();
+        var adWeeks = $("#adDurationSelect").val();
+        var pricePerWeek = prices[adType][adWeeks].price;  // 1주 단위 가격
+        var discount = prices[adType][adWeeks].discount;  // 할인율
+        var totalEstimatedPrice = pricePerWeek * adWeeks;  // 주수와 할인율에 따른 가격 계산
+        Swal.fire({
+          title: ('예상 금액: ' + totalEstimatedPrice.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")),
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          }
+        })
+      });
     });
-  });
-</script>
+  </script>
 </th:block>
 </html>
