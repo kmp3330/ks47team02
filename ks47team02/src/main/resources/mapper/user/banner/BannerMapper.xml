@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.banner.mapper.BannerMapper">
+    <resultMap type="BannerRequestCompany" id="bannerRequestCompanyResultMap">
+        <!-- id태그는 조회시 테이블의 PK(기본키) -->
+        <id 	column="banner_request_company_code"  property="bannerRequestCompanyCode"/>
+        <!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키 -->
+        <result column="banner_request_company_name"  property="bannerRequestCompanyName"/>
+        <result column="banner_unit_price_code" 	  property="bannerUnitPriceCod"/>
+        <result column="banner_location" 	          property="bannerLocation"/>
+        <result column="banner_period" 	              property="bannerPeriod"/>
+        <result column="banner_price" 	              property="bannerPrice"/>
+    </resultMap>
+
+    <select id="getBannerRequestCompanyCode" parameterType="String" resultMap="bannerRequestCompanyResultMap">
+        SELECT
+        rc.banner_request_company_code,
+        rc.banner_request_company_name,
+        rc.banner_unit_price_code,
+        rc.banner_location,
+        rc.banner_period,
+        rc.banner_price
+        FROM
+        banner_request_company AS rc
+        WHERE
+        rc.banner_request_company_code = #(banner_request_company_code);
+    </select>
+
+    <!--<select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
+        /* 회원별 상세조회 */
+        SELECT
+        m.m_id,
+        m.m_pw,
+        m.m_name,
+        m.m_level,
+        m.m_email,
+        m.m_addr,
+        m.m_reg_date
+        FROM
+        tb_member AS m
+        WHERE
+        m.m_id = #{memberId};
+    </select>-->
+</mapper>
