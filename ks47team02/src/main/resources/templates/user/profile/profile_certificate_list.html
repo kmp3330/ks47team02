@@ -1,12 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		layout:decorate="~{user/layout/default}">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+	
+	<head>
+    	<link rel="stylesheet" type="text/css" th:href="@{/user/assets/css/table.css}"/>
+    </head>
 
-</body>
+
+<th:block layout:fragment="asideFragment">
+	<!-- <h4 class="mb-4">자격증</h4>
+	<a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
+		<span>자기소개</span>
+	</a>
+	<a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
+		<span>보유기술</span>
+	</a>
+	<a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
+		<span>경력</span>
+	</a>
+	<a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
+		<span>학력</span>
+	</a>
+	<a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
+		<span>자격증</span>
+	</a>
+	<a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
+		<span>수상이력</span>
+	</a>
+	<a href="#" class="sidebar-btn d-flex justify-content-between"> <span>포트폴리오</span>
+	</a> -->
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="single-job mb-4 d-lg-flex justify-content-between">
+					<div class="job-text">
+						<h4>보유 자격증</h4>
+						<table>
+							<thead>
+								<tr>
+									<th>자격증명</th>
+									<th>기관명</th>
+									<th>취득 일시</th>
+									<th>공개 여부</th>
+									<th>입사지원시 공개여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:unless="${#lists.isEmpty(certificateList)}"
+									th:each="l : ${certificateList}">
+									<td th:text="${l.certificateName}"></td>
+									<td th:text="${l.certificatePublication}"></td>
+									<td th:text="${l.certificateDate}"></td>
+									<td th:text="${l.profileHidden}"></td>
+									<td th:text="${l.profileApplicationHidden}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="job-btn align-self-center">
+						<a href="#" class="third-btn job-btn1">full time</a> <a href="#"
+							class="third-btn">apply</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
 </html>
