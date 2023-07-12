@@ -1,4 +1,4 @@
-package ks47team02.user.controller;
+package ks47team02.user.recommend.controller;
 
 
 
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks47team02.user.dto.Recommend;
-import ks47team02.user.mapper.RecommendMapper;
-import ks47team02.user.service.RecommendService;
+import ks47team02.user.recommend.dto.Recommend;
+import ks47team02.user.recommend.mapper.RecommendMapper;
+import ks47team02.user.recommend.service.RecommendService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -101,6 +101,7 @@ public class RecommendController {
 	 */
 	@GetMapping("/addRecommendEmployment")
 	public String addRecommendEmployment(Model model) {
+		
 		
 		model.addAttribute("title", "채용 단계 순 목록 등록");
 		model.addAttribute("titleText", "채용 단계 순 목록 등록");
