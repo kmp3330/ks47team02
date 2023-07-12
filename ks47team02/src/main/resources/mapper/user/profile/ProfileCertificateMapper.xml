@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.profile.mapper.ProfileCertificateMapper">
+
+	<resultMap id="ProfileResultMap" type="ProfileCertificate">
+		<id column="user_certificate_code" property="certificateCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_certificate_name" property="certificateName"/>
+		<result column="user_certificate_publication" property="certificatePublication"/>
+		<result column="user_certificate_date" property="certificateDate"/>
+		<result column="profile_hidden" property="profileHidden"/>
+		<result column="profile_application_hidden" property="profileApplicationHidden"/>
+	</resultMap>
+
+	<select id="certificateList" resultMap="ProfileResultMap">
+		/* 자격증 조회 */
+		SELECT
+			user_certificate_code,
+			user_id,
+			user_certificate_name,
+			user_certificate_publication,
+			user_certificate_date,
+			profile_hidden,
+			profile_application_hidden
+		FROM
+			profile_certificate;
+	</select>
+
+</mapper>
