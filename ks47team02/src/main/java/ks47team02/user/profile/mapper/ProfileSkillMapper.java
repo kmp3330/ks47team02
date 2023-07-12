@@ -1,10 +1,10 @@
-package ks47team02.user.mapper;
+package ks47team02.user.profile.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import ks47team02.user.dto.ProfileSkill;
+import ks47team02.user.profile.dto.ProfileSkill;
 
 @Mapper
 public interface ProfileSkillMapper {
