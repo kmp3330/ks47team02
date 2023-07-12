@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <header class="header-area single-page" th:fragment="headerFragment">
 	<div class="header-top">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-2">
 					<div class="logo-area">
-						<a th:href="@{/}"><img src="/user/assets/images/logo-light.png" alt="logo"
+						<a th:href="@{/}"><img th:src="@{/user/assets/images/logo-light.png}" alt="logo"
 								style="width: 180px; height: auto;"></a>
 					</div>
 				</div>
