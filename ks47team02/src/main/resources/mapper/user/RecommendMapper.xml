@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.mapper.RecommendMapper">
+ <resultMap type="Recommend" id="RecommendResultMap">
+ 	<id 	column="company_employment_code" property="companyEmploymentCode"/>
+ 	<result column="company_support_code"	 property="companySupportCode"/>
+ 	<result column="user_id"				 property="userId"/>
+ 	<result column="announcement_code"		 property="announcementCode"/>
+ 	<result column="join_cate_code"			 property="joinCateCode"/>
+ 	<result column="join_cate_name"			 property="joinCateName"/>
+ 	<result column="area_code"				 property="areaCode"/>
+ 	<result column="area_cate"				 property="areaCate"/>
+ 	<result column="job_opening"			 property="jobOpening"/>
+ 	<result column="required_skills"		 property="requiredSkills"/>
+ 	<result column="career"				 	 property="career"/>
+ 	<result column="wage"				 	 property="wage"/>
+ 	<result column="start_date"				 property="startDate"/>
+ 	<result column="due_date"				 property="dueDate"/>
+ 	<result column="job_normal_run_code"	 property="jobNormalRunCode"/>
+ 	<result column="job_normal_run"			 property="-[]"/>
+ </resultMap>
+ 
+ <select id="getRecommendEmployment" resultMap="RecommendResultMap">
+ 	SELECT
+		user_id,
+		join_cate_name,
+		area_cate,
+		job_opening,
+		required_skills,
+		career,
+		wage,
+		start_date,
+		due_date,
+		job_normal_run
+	FROM
+		company_employment  
+ </select>
+ 
+ <insert id="addRecommendEmploymnet" parameterType="Recommend">
+ 	INSERT INTO company_employment 
+	(company_employment_code,
+	company_support_code,
+	user_id,
+	announcement_code,
+	join_cate_code,
+	join_cate_name,
+	area_code,
+	area_cate,
+	job_opening,
+	required_skills,
+	career,
+	wage,
+	start_date,
+	due_date,
+	job_normal_run_code,
+	job_normal_run)
+VALUE	
+	(#{companyEmploymentCode},
+	#{companySupportCode},
+	#{userId},
+	#{announcementCode},
+	#{joinCateCode},
+	#{joinCateName},
+	#{areaCode},
+	#{areaCate},
+	#{jobOpening},
+	#{requiredSkills},
+	#{career},
+	#{wage},
+	#{startDate},
+	#{dueDate},
+	#{jobNormalRunCode},
+	#{jobNormalRun})
+ </insert>
+</mapper>

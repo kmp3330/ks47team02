@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{user/layout/default}">
+	<head>
+		<meta charset="UTF-8">
+		<title>기업 추천 서비스 메인 화면</title>
+		<link rel="stylesheet" href="/user/assets/css/style.css">
+		<style>
+		
+			table{
+				border : 1px solid black;
+				width: 1000px;
+				table-layout: auto;
+				text-align: center;
+			}
+			th{
+				border: 1px solid black;
+				background-color: cornflowerblue;
+				color : azure;
+				height: 30px;
+			}
+			td{
+				border : 1px solid black;
+				height: 30px;
+			}
+			tfoot a {
+				text-decoration-line : none;
+				color : blue;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<th:block layout:fragment="customContents">
+			<h1 style="text-align: center">기업 추천 서비스 메인</h1>
+			<br>
+			<table>
+				<thead>
+					<tr>
+						<th>
+							<button type="button" onclick="location.href='recommendScrap'">스크랩 순 기업 추천 서비스</button>
+						</th>
+						<th>
+							<button type="button" onclick="location.href='recommendSupport'">기업 지원 순 기업 추천 서비스</button>
+						</th>
+						<th>
+							<button type="button" onclick="location.href='recommendEmployment'">채용 단계 순 기업 추천 서비스</button>
+						</th>
+					</tr>
+				</thead>
+			</table>
+			<br><br>
+			
+			<h2 style="text-align: center">분류 별 top 5</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>스크랩 순 기업 추천 서비스</th>
+						<th>기업 지원 순 기업 추천 서비스</th>
+						<th>채용 단계 순 기업 추천 서비스</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+					
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+	</body>
+</html>

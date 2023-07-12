@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{user/layout/default}">
+<head>
+<meta charset="UTF-8">
+<title>기업 지원 순 추천 서비스</title>
+</head>
+<body>
+	<th:block layout:fragment="customContents">
+		<h1>기업 지원 순 추천 서비스</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><a href="recommendSupportDelete">삭제</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</th:block>
+</body>
+</html>
