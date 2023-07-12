@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks47team02.user.profile.dto.ProfileAward;
 import ks47team02.user.profile.dto.ProfileCertificate;
+import ks47team02.user.profile.dto.ProfileIntro;
+import ks47team02.user.profile.dto.ProfileSkill;
 import ks47team02.user.profile.service.ProfileService;
 import lombok.AllArgsConstructor;
 
@@ -41,10 +43,22 @@ public class ProfileController {
 	 */
 	@GetMapping("/profileIntroList")
 	public String profileIntroList(Model model) {
-		model.addAttribute("title", "자기소개");
-		model.addAttribute("titleText", "자기소개 관리");
-		model.addAttribute("contents", "자기소개를 관리할 수 있는 페이지입니다.");
+		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList();
+		model.addAttribute("title", "메인화면");
+		model.addAttribute("titleText", "크게 보이는 글씨");
+		model.addAttribute("contents", "작게 보이는 글씨");
+		model.addAttribute("profileIntroList", profileIntroList);
 		return "user/profile/profile_intro_list";
+	}
+	@GetMapping("/profileIntroInsert")
+	public String profileIntroInsert(Model model) {
+
+		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList();
+		model.addAttribute("title", "메인화면");
+		model.addAttribute("titleText", "크게 보이는 글씨");
+		model.addAttribute("contents", "작게 보이는 글씨");
+		model.addAttribute("profileIntroList", profileIntroList);
+		return "user/profile/profile_intro_insert";
 	}
 
 	/**
@@ -54,9 +68,12 @@ public class ProfileController {
 	 */
 	@GetMapping("/profileSkillList")
 	public String profileSkillList(Model model) {
-		model.addAttribute("title", "보유기술");
-		model.addAttribute("titleText", "보유기술 관리");
-		model.addAttribute("contents", "습득한 기술을 관리할 수 있는 페이지입니다.");
+		List<ProfileSkill> profileSkillList = profileService.getProfileSkillList();
+		model.addAttribute("title", "메인화면");
+		model.addAttribute("titleText", "크게 보이는 글씨");
+		model.addAttribute("contents", "작게 보이는 글씨");
+		model.addAttribute("profileSkillList", profileSkillList);
+
 		return "user/profile/profile_skill_list";
 	}
 	
