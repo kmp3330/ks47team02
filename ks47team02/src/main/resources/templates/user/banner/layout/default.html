@@ -33,7 +33,7 @@
 	<!-- Preloader End -->
 
 	<!-- Header Area Starts -->
-	<header th:replace="~{/user/banner/fragments/header :: headerFragment}"></header>
+	<header th:replace="~{/user/fragments/header :: headerFragment}"></header>
 
 	<!-- Search Area Starts -->
 	<th:block layout:fragment="searchFragment">
@@ -59,13 +59,14 @@
             <br><br>
             <div id="priceTable" layout:fragment="priceTable"></div>
           </div>
+          <p>광고 문의는 신청 페이지 혹은 000-0000-0000으로 연락 바랍니다.</p>
         </div>
       </div>
     </div>
   </section>
   <!-- Jobs Area End -->
   <!-- Footer Area Starts -->
-  <footer th:replace="~{/user/banner/fragments/footer :: footerFragment}"></footer>
+  <footer th:replace="~{/user/fragments/footer :: footerFragment}"></footer>
   <!-- Footer Area End -->
 
 
