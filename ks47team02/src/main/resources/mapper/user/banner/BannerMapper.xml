@@ -14,33 +14,15 @@
         <result column="banner_price" 	              property="bannerPrice"/>
     </resultMap>
 
-    <select id="getBannerRequestCompanyCode" parameterType="String" resultMap="bannerRequestCompanyResultMap">
+    <select id="bannerRequestCompany" resultMap="bannerRequestCompanyResultMap">
         SELECT
-        rc.banner_request_company_code,
-        rc.banner_request_company_name,
-        rc.banner_unit_price_code,
-        rc.banner_location,
-        rc.banner_period,
-        rc.banner_price
+        banner_request_company_code,
+        banner_request_company_name,
+        banner_unit_price_code,
+        banner_location,
+        banner_period,
+        banner_price
         FROM
-        banner_request_company AS rc
-        WHERE
-        rc.banner_request_company_code = #(banner_request_company_code);
+        banner_request_company;
     </select>
-
-    <!--<select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
-        /* 회원별 상세조회 */
-        SELECT
-        m.m_id,
-        m.m_pw,
-        m.m_name,
-        m.m_level,
-        m.m_email,
-        m.m_addr,
-        m.m_reg_date
-        FROM
-        tb_member AS m
-        WHERE
-        m.m_id = #{memberId};
-    </select>-->
 </mapper>

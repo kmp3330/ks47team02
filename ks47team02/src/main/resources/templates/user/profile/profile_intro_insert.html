@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{user/layout/default}">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+	<th:block layout:fragment="customContents">
+		<div class="section-top-border">
+			<div class="row">
+				<div class="col-lg-8 col-md-8">
+					<h3 class="mb-30 title_color">자기소개 등록 양식</h3>
+					<form action="#">
+						<div class="mt-10">
+							<input type="text" name="first_name" placeholder="자기소개 제목" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required="" class="single-input">
+						</div>
+						<div class="mt-10">
+							<textarea class="single-textarea" placeholder="내용" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'" required=""></textarea>
+						</div>
+						<div class="job-btn align-self-center">
+							<a th:href="@{#}" class="third-btn job-btn1">등록</a>
+							<a href="#" class="third-btn">취소</a>
+						</div>
+					</form>
+				</div>
+</html>
