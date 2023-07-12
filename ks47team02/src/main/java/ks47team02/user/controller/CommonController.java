@@ -9,8 +9,11 @@ public class CommonController {
 
 	@GetMapping("/")
 	public String main(Model model) {
+		
 		model.addAttribute("title", "메인화면");
-		model.addAttribute("contents", "spring boot mybatis");
+		model.addAttribute("titleText", "메인화면");
+		model.addAttribute("contents", "메인 화면을 볼 수 있는 페이지입니다.");
+		
 		return "user/main";
 	}
 	
