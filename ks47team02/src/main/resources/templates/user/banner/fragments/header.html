@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header class="header-area single-page" th:fragment="headerFragment">
+	<div class="header-top">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2">
+					<div class="logo-area">
+						<a th:href="@{/}"><img src="user/assets/images/logo-light.png" alt="logo"
+								style="width: 180px; height: auto;"></a>
+					</div>
+				</div>
+				<div class="col-lg-10">
+					<div class="custom-navbar">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+					
+					<!-- 상단 메뉴 -->
+					<div class="main-menu main-menu-light">
+						<ul>
+							<!-- 메인화면 -->
+							<li class="active"><a th:href="@{/}">home</a></li>
+							
+							<!-- 프로젝트 메뉴 -->
+							<li><a th:href="@{#}">프로젝트</a>
+								<ul class="sub-menu">
+									<li><a th:href="@{#}">일반과제 프로젝트</a></li>
+									<li><a th:href="@{#}">전문과제 프로젝트</a></li>
+								</ul>
+							</li>
+							
+							<!-- 구인구직 메뉴 -->
+							<li><a href="#">구인구직</a>
+								<ul class="sub-menu">
+									<li><a th:href="@{#}">구인구직</a></li>
+									<li><a th:href="@{#}">기업 추천 서비스</a></li>
+								</ul>
+							</li>
+							
+							<!-- 프로필 메뉴 -->
+							<li><a href="#">구직 프로필</a>
+								<ul class="sub-menu">
+									<li><a th:href="@{#}">자기소개</a></li>
+									<li><a th:href="@{#}">보유기술</a></li>
+									<li><a th:href="@{#}">경력</a></li>
+									<li><a th:href="@{#}">학력</a></li>
+									<li><a th:href="@{#}">자격증</a></li>
+									<li><a th:href="@{#}">수상이력</a></li>
+									<li><a th:href="@{#}">포트폴리오</a></li>
+								</ul>
+							</li>
+							
+							<!-- 광고 메뉴 -->
+							<li><a href="#">광고문의</a>
+								<ul class="sub-menu">
+									<li><a th:href="@{user/banner/bannerMain}">광고 신청</a></li>
+									<li><a th:href="@{#}">광고 신청 현황</a></li>
+									<li><a th:href="@{#}">광고 진행 현황</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="page-title text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+          
+          <h1 th:text="${title}"></h1>
+          <h5 th:text="${contents}"></h5>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<html>

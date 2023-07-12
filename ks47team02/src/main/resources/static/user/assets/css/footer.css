@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+.footer__award-item--kbpi:before {
+    top: 2px;
+    left: -10px;
+    width: 40px;
+    height: 43px;
+}
+
+.footer__award-item:before {
+    content: "";
+    position: absolute;
+    background-image: url(/user/assets/images/footer_award.png);
+    background-repeat: no-repeat;
+    vertical-align: top;
+}
+
+.footer__award-item--bcli:before {
+    top: 50px;
+    left: -10px;
+    width: 44px;
+    height: 44px;
+    background-position: 0 -105px;
+}
+
+.footer__award-item:before {
+    content: "";
+    position: absolute;
+    background-image: url(/user/assets/images/footer_award.png);
+    background-repeat: no-repeat;
+    vertical-align: top;
+}
+
+.footer__award-item--fav:before {
+    top: 100px;
+    left: -8px;
+    width: 40px;
+    height: 54px;
+    background-position: -123px -50px;
+}
+
+.footer__award-item:before {
+    content: "";
+    position: absolute;
+    background-image: url(/user/assets/images/footer_award.png);
+    background-repeat: no-repeat;
+    vertical-align: top;
+}
