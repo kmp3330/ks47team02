@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{user/layout/default}">
+      
+<head>
+<meta charset="UTF-8">
+<style>
+    		input{
+    			width: 98%;
+    			height: 23px;
+    		}
+    		td:nth-child(3n+1):not(:last-child){
+    			color: white;
+    			font-weight: 700;
+    			background-color: cornflowerblue;
+    		}
+    		#announcementInsertBtn, #resetBtn {
+    			width: 49%;
+    			height: 25px;
+    		}
+    	</style>
+</head>
+
+<th:block layout:fragment="customJs">
+    	<script th:src="@{/js/jquery-3.7.0.js}"></script>
+    	<script>
+    		// 유효성검사 함수
+	    	const validCheck = element => {
+				let data = $(element).val();
+				let eleId = $(element).attr('id');
+				if(typeof data == 'undefined' || data == null || data == '' ){
+					let cate = $(`label[for="${eleId}"]`).text();
+					alert(`${cate} 필수 입력항목입니다.`);
+					$(element).focus();
+					return false;
+				}
+				return true;
+			}
+    	
+	    	// 등록 버튼 클릭시 이벤트
+			$('#announcementInsertBtn').click(function(){
+				const validateEle = $('#announcementInsertForm input');
+				let isSubmit = false;
+				validateEle.each((idx, item) => {    				
+	    			isSubmit = validCheck(item);
+	    			return isSubmit;
+				})
+				if(isSubmit) $('#announcementInsertForm').submit();
+			});
+	    	
+			// 취소 버튼 클릭시 이벤트 처리
+    		$('#resetBtn').click(function(e){
+    			// 태그가 가지고 있는 기본 이벤트 동작 방지
+    			e.preventDefault();
+    			$('#announcementInsertForm input').val('');
+    		});
+			
+    	</script>
+</th:block>
+<body>
+	<th:block layout:fragment="customContents">
+		<form id="announcementInsertForm" th:action="@{/user/announcement/announcementInsert}" method="post">
+			<table>
+				<tbody>			
+					<tr>
+						<td>
+							<label for="cpName">회사명</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="cpName" name="cpName" placeholder="회사명을 입력하세요.">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="joinCateName">참여분야</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="joinCateName" name="joinCateName" placeholder="참여분야를 입력하세요.">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="areaCate">지역분류</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="areaCate" name="areaCate" placeholder="지역분류를 입력하세요.">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="jobOpening">채용직</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="jobOpening" name="jobOpening" placeholder="채용직을 입력하세요.">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="requiredSkills">요구 기술</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="requiredSkills" name="requiredSkills" placeholder="요구기술을 입력하세요.">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="career">관련 업무 경력</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="career" name="career" placeholder="관련업무경력을 입력하세요.">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="recruitment">채용인원</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="recruitment" name="recruitment" placeholder="채용인원을 입력하세요.">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="wage">급여</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="wage" name="wage" placeholder="급여를 입력하세요.">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="hiringStatus">진행 상태 분류</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="hiringStatus" name="hiringStatus" placeholder="진행상태분류을 입력하세요.">
+						</td>
+					</tr>
+					<tr>
+					<td colspan="3">
+							<button type="button" id="announcementInsertBtn" >등록</button>
+							<button type="reset" id="resetBtn" >취소</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</th:block>
+</body>
+</html>
