@@ -25,4 +25,11 @@
         FROM
         banner_request_company;
     </select>
+
+    <insert id="request" parameterType="BannerRequestCompany">
+        INSERT INTO banner_request_company
+        (banner_request_company_code, banner_request_company_name, banner_unit_price_code, banner_location, banner_period, banner_price)
+        VALUES
+        (#{bannerRequestCompanyCode}, #{bannerRequestCompanyName}, #{bannerUnitPriceCode}, #{bannerLocation}, #{bannerPeriod}, #{bannerPrice})
+    </insert>
 </mapper>
