@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.project.normal.mapper.NormalProjectMapper">
+	<resultMap type="NormalProjects" id="NormalProjectMap">
+		<id 	column="normal_project_code" 		property="normalProjectCode" />
+		<result column="user_id" 			property="userId" />
+		<result column="normal_project_name" 			property="normalProjectName" />
+		<result column="join_cate_code" 	property="joinCateCode" />
+		<result column="participation_field" property="participationField" />
+		<result column="work_cate_code" 	property="workCateCode" />
+		<result column="work_cate_name" 	property="workCateName" />
+		<result column="subject_cate_code" 	property="subjectCateCode" />
+		<result column="subject_cate_name" 	property="subjectCateName" />
+		<result column="required_skill" 	property="requiredSkill" />
+		<result column="normal_project_detail" 	property="normalProjectDetail" />
+		<result column="project_max_people_num" 	property="projectMaxPeopleNum" />
+		<result column="normal_run_code" 	property="normalRunCode" />
+		<result column="progress_status_category_name" 	property="progressStatusCategoryName" />
+		<result column="project_advertise_start_date" 	property="projectAdvertiseStartDate" />
+		<result column="project_advertise_finish_date" 	property="projectAdvertiseFinishDate" />
+		<result column="project_startup_date" 	property="projectStartUpDate" />
+		<result column="project_finish_date" 	property="projectFinishDate" />
+		<result column="project_day" 	property="projectDay" />
+		<result column="project_day_score" 	property="projectDayScore" />
+		<result column="project_finish_score" 	property="projectFinishScore" />
+	</resultMap>
+	
+	<insert id="addNormalProject" parameterType="NormalProjects">
+		<selectKey resultType="String" keyColumn="newNormalProjectCode" keyProperty="normalProjectCode" order="BEFORE">
+			/* 상품 자동 증가 코드 */
+			<![CDATA[
+			SELECT 
+				CASE
+				WHEN COUNT(*) = 0 THEN 'normal_project_code_001'
+				WHEN CAST(SUBSTRING_INDEX(normal_project_code,'n',-1) AS UNSIGNED) < 999
+				THEN CONCAT('n',LPAD(MAX(CAST(SUBSTRING_INDEX(normal_project_code,'n',-1) AS UNSIGNED))+1,3,'0'))	
+				ELSE
+					CONCAT('g',MAX(CAST(SUBSTRING_INDEX(normal_project_code,'n',-1) AS UNSIGNED))+1)	
+				END AS newNormalProjectCode
+			FROM 
+				normal_project
+			]]>
+		</selectKey>
+	
+		INSERT INTO normal_project
+			(user_id, normal_project_name, join_cate_code, participation_field, work_cate_code, work_cate_name, subject_cate_code, 
+			subject_cate_name, required_skill, normal_project_detail, project_max_people_num, normal_run_code, progress_status_category_name, 
+			project_advertise_start_date, project_advertise_finish_date, project_startup_date, project_finish_date, project_day, project_day_score, project_finish_score)
+		VALUES ('id001', #{normalProjectName}, ${joinCateCode}, ${participationField}, ${workCateCode}, ${workCateName}, ${subjectCateCode}, 
+				${subjectCateName}, ${requiredSkill}, #{normalProjectDetail}, #{projectMaxPeopleNum}, 'normal_run_code01', '모집중', 
+				NOW(), #{projectAdvertiseFinishDate}, #{projectStartUpDate}, #{projectFinishDate}, '#{projectDay}', '10', '100')
+	</insert>
+	
+	<select id="getNormalProjectList" resultMap="NormalProjectMap">
+		/* 회원목록 조회 */
+		SELECT 
+			normal_project_code, 
+			user_id, 
+			normal_project_name, 
+			join_cate_code, 
+			participation_field,
+			work_cate_code, 
+			work_cate_name, 
+			subject_cate_code, 
+			subject_cate_name, 
+			required_skill, 
+			normal_project_detail,
+			project_max_people_num, 
+			normal_run_code, 
+			progress_status_category_name, 
+			project_advertise_start_date, 
+			project_advertise_finish_date, 
+			project_startup_date, 
+			project_finish_date, 
+			project_day, 
+			project_day_score, 
+			project_finish_score
+		FROM 
+			normal_project
+	</select>
+	
+	<select id="getjoinCateList" resultType="joinCate">
+	SELECT
+		jc.join_cate_code AS joinCateCode,
+		jc.join_cate_name AS joinCateName
+	FROM
+		join_cate AS jc
+	</select>
+	
+	<select id="getSubjectCateList" resultType="subjectCate">
+	
+	SELECT
+		sc.subject_cate_code AS subjectCateCode,
+		sc.subject_cate_name AS subjectCateName
+	FROM
+		subject_cate AS sc
+	
+	</select>
+</mapper>

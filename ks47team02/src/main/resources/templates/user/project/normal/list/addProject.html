@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+      
+      <th:block layout:fragment="customJs">
+		  <script>
+			  
+			  let $dateCalculateBtn = $('#dateCalculate');
+			  
+			  $dateCalculateBtn.click(function(){
+				  let $projectStartDay = $('#projectStartUpDate');
+				  let $projectFinishDay = $('#projectFinishDate');
+				  const startDate = $projectStartDay.val();
+				  const finishDate = $projectFinishDay.val();
+				 
+				  const date1 = new Date(startDate);
+				  const date2 = new Date(finishDate);
+				  const result =  Math.abs(date1-date2) /(1000 * 60 * 60 * 24);
+				  $('#projectDay').val(result);
+			  });
+			  
+			  
+			  
+		  </script>
+		  
+	  </th:block>
+
+	<th:block layout:fragment="customContents">
+		<form id="addProjectForm" th:action="@{/user/project/normal/list/addProject}" method="post">
+			<table border="1">
+				<tbody>
+					<tr>
+						<td>
+							<label for="projectName">프로젝트 이름</label>
+						</td>
+						<td>
+							<input type="text" id="projectName" name="projectName">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="joinCate">참여분야 선택</label>
+						</td>
+						<td>
+							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+							<select name="joinCate" id="joinCate">
+								<th:block th:unless="${#lists.isEmpty(joinCateList)}"
+								th:each="l : ${joinCateList}">
+									<option value="${l.joinCateCode}">[[${l.joinCateName}]]</option>
+								</th:block>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td> 
+							<label>주제분류 선택</label>
+						</td>
+						<td>
+							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+							<select name="subjectCate" id="subjectCate">
+								<th:block th:unless="${#lists.isEmpty(subjectCateList)}"
+								th:each="l : ${subjectCateList}">
+								<option value="${l.subjectCatecode}">[[${l.subjectCateName}]]</option>
+								</th:block>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td> 
+							<label>요구기술 기입</label>
+						</td>
+						<td>
+							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+							<input type="text" id="requiredSkill" name="requiredSkill">
+						</td>
+					</tr>
+					<tr>
+						<td> 
+							<label>프로젝트 내용 기입</label>
+						</td>
+						<td>
+							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+							<input type="text" id="normalProjectDetail" name="normalProjectDetail">
+						</td>
+					</tr>
+					<tr>
+						<td> 
+							<label>프로젝트 최대인원</label>
+						</td>
+						<td>
+							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+							<input type="number" id="projectMaxPeopleNum" name="projectMaxPeopleNum">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>신청마감일시</label>
+						</td>
+						<td>
+							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+							<input type="date" id="projectAdvertiseFinishDate" name="projectAdvertiseFinishDate">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="projectStartUpDate">프로젝트 시작 일시</label>
+						</td>
+						<td>
+							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+							<input type="date" id="projectStartUpDate" name="projectStartUpDate">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="projectFinishDate">프로젝트 종료 일시</label>
+						</td>
+						<td>
+							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+							<input type="date" id="projectFinishDate" name="projectFinishDate">
+							<button type="button" id="dateCalculate">날짜 계산</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="projectFinishDate">프로젝트 일수</label>
+						</td>
+						<td>
+							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+							<input type="number" id="projectDay" name="projectDay" disabled>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit">작성완료</button>
+			<button type="reset">입력초기화</button>
+		</form> 			
+	</th:block>
+	
+</html>

@@ -33,7 +33,7 @@
 	<!-- Preloader End -->
 
 	<!-- Header Area Starts -->
-	<header th:replace="~{/user/fragments/header :: headerFragment}"></header>
+	<header th:replace="~{user/fragments/header :: headerFragment}"></header>
 
 	<!-- Search Area Starts -->
 	<th:block layout:fragment="searchFragment">
@@ -42,7 +42,7 @@
 	<!-- Search Area End -->
 
 	<!-- 왼쪽 메뉴 시작 -->
-	<div id="leftcolumn" layout:fragment="asideFragment"></div>
+	<aside id="leftcolumn" layout:fragment="asideFragment"></aside>
 	<!-- 왼쪽 메뉴 끝 -->
 
 	<!-- Jobs Area Starts -->
@@ -53,7 +53,7 @@
 					<div class="single-job mb-4 justify-content-between">
 
 						<!-- 컨텐츠 시작 -->
-						<div id="rightcolumn" layout:fragment="customContents"></div>
+						<th:block layout:fragment="customContents"></th:block>
 						<!-- 컨텐츠 끝 -->
 
 					</div>
@@ -65,7 +65,7 @@
 
 
 	<!-- Footer Area Starts -->
-	<footer th:replace="~{/user/fragments/footer :: footerFragment}"></footer>
+	<footer th:replace="~{user/fragments/footer :: footerFragment}"></footer>
 	<!-- Footer Area End -->
 
 
