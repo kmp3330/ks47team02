@@ -8,7 +8,7 @@ public class NormalProjects {
 	private String userId;
 	private String normalProjectName;
 	private String joinCateCode;
-	private String participationField;
+	private String joinCateName;
 	private String workCateCode;
 	private String workCateName;
 	private String subjectCateCode;
@@ -23,7 +23,7 @@ public class NormalProjects {
 	private String projectStartUpDate;
 	private String projectFinishDate;
 	private int projectDay;	
-	private String projectDayScore;
-	private String projectFinishScore;
+	private int projectDayScore;
+	private int projectFinishScore;
 	
 }

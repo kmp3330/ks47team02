@@ -32,10 +32,10 @@
 				<tbody>
 					<tr>
 						<td>
-							<label for="projectName">프로젝트 이름</label>
+							<label for="normalProjectName">프로젝트 이름</label>
 						</td>
 						<td>
-							<input type="text" id="projectName" name="projectName">
+							<input type="text" id="normalProjectName" name="normalProjectName">
 						</td>
 					</tr>
 					<tr>
@@ -44,7 +44,7 @@
 						</td>
 						<td>
 							<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
-							<select name="joinCate" id="joinCate">
+							<select name="joinCateCode" id="joinCateCode">
 								<th:block th:unless="${#lists.isEmpty(joinCateList)}"
 								th:each="l : ${joinCateList}">
 									<option value="${l.joinCateCode}">[[${l.joinCateName}]]</option>

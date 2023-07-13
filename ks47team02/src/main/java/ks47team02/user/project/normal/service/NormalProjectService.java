@@ -57,6 +57,15 @@ public class NormalProjectService {
 		return subjectCateList;
 	}
 	
+	public void addNormalProject(NormalProjects norproject) {
+		// goods객체에 현재 상품코드가 없다
+		log.info("insert 전 norproject : {}", norproject);
+		normalProjectMapper.addNormalProject(norproject);
+		// goods객체에 현재 상품코드가 있다.
+		log.info("insert 후 norproject : {}", norproject);
+	}
+	
+	
 	
 
 }
