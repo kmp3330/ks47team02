@@ -20,27 +20,26 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class AnnouncementController {
 	
+	// 생성자 메소드 의존성 주입
 	private final AnnouncementMapper announcementMapper;
 	private final AnnouncementService announcementService;
 
 	@PostMapping("/announcementInsert")
 	public String announcementInsert(Announcement announcement) {
 		
-		log.info("공고등록시 입력정보: {}", announcement);
-		
 		announcementService.announcementInsert(announcement);
 		
-		return "redirect:/user/announcement/announcement_insert";
+		log.info("공고등록시 입력정보: {}", announcement);
+		
+		return "redirect:/user/announcement/announcement_list";
 	}
 	
 	@GetMapping("/announcementInsert")
-	public String getAnnouncementInsert(Model model) {
-		
+	public String announcementInsert(Model model) {
 		
 		model.addAttribute("title", "채용공고등록화면");
 		model.addAttribute("titleText", "채용공고등록");
 		model.addAttribute("contents", "채용공고등록 페이지입니다.");
-		
 		
 		return "user/announcement/announcement_insert";
 	}
@@ -53,7 +52,6 @@ public class AnnouncementController {
 		model.addAttribute("titleText", "채용공고");
 		model.addAttribute("contents", "채용공고목록 페이지입니다.");
 		model.addAttribute("announcementList", announcementList);
-		
 		
 		return "user/announcement/announcement_list";
 	}

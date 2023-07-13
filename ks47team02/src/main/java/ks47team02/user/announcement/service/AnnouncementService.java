@@ -26,7 +26,7 @@ public class AnnouncementService {
 		}
 
 	// 채용공고 등록
-	public  void announcementInsert(Announcement announcement) {
+	public void announcementInsert(Announcement announcement) {
 		announcementMapper.announcementInsert(announcement);
 	}
 		

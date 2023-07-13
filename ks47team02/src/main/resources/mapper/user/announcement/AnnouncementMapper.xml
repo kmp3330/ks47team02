@@ -5,24 +5,64 @@
 <mapper namespace="ks47team02.user.announcement.mapper.AnnouncementMapper">
 
 	<resultMap type="Announcement"   	 id="announcementResultMap">
-	<id 	column="announcement_code"   property="announcementCode"/>
-	<result column="cp_name" 		  	 property="cpName"/>
-	<result column="join_cate_name"  	 property="joinCateName"/>
-	<result column="area_cate" 			 property="areaCate"/>
-	<result column="job_opening" 		 property="jobOpening"/>
-	<result column="required_skills"	 property="requiredSkills"/>
-	<result column="career"				 property="career"/>
-	<result column="recruitment"		 property="recruitment"/>
-	<result column="wage" 				 property="wage"/>
-	<result column="hiring_status"  	 property="hiringStatus"/>
+		<!-- id태그는 조회시 테이블의 PK(기본키) -->
+		<id 	column="announcement_code"   property="announcementCode"/>
+		<!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키 -->
+		<result column="cp_id" 		  	 	 property="cpId"/>
+		<result column="cp_name" 		  	 property="cpName"/>
+		<result column="cp_cate_code"  	 	 property="cpCateCode"/>
+		<result column="join_cate_code"  	 property="joinCateCode"/>
+		<result column="join_cate_name"  	 property="joinCateName"/>
+		<result column="area_code" 			 property="areaCode"/>
+		<result column="area_cate" 			 property="areaCate"/>
+		<result column="job_opening" 		 property="jobOpening"/>
+		<result column="required_skills"	 property="requiredSkills"/>
+		<result column="career"				 property="career"/>
+		<result column="recruitment"		 property="recruitment"/>
+		<result column="wage" 				 property="wage"/>
+		<result column="start_date" 		 property="startDate"/>
+		<result column="due_date" 			 property="dueDate"/>
+		<result column="hiring_status_code"  property="hiringStatusCode"/>
+		<result column="hiring_status"  	 property="hiringStatus"/>
 	</resultMap>
 	
-	<insert id="announcementInsert" parameterType="Announcement">
+	<insert id="announcementInsert" parameterType="Announcement" >
 		/* 채용공고 등록 */
-		INSERT INTO announcement 
-			(announcement_code, cp_name, join_cate_name, area_cate, job_opening, required_skills, career, recruitment, wage, hiring_status)
+		INSERT INTO announcement (announcement_code,
+								  cp_id,
+								  cp_name,
+								  cp_cate_code,
+								  join_cate_code,
+								  join_cate_name,
+								  area_code,
+								  area_cate,
+						          job_opening,
+								  required_skills,
+								  career,
+								  recruitment,
+							      wage,
+							      start_date,
+							      due_date,
+							      hiring_status_code,
+								  hiring_status)
 		VALUES 
-			(#{announcementCode},#{cpName},#{joinCateName},#{areaCate},#{jobOpening},#{requiredSkills},#{career},#{recruitment},#{wage},#{hiringStatus});
+								 (#{announcementCode},
+								  #{cpId},
+								  #{cpName},
+							 	  #{cpCateCode},
+						 		  #{joinCateCode},
+								  #{joinCateName},
+								  #{areaCode},
+								  #{areaCate},
+								  #{jobOpening},
+								  #{requiredSkills},
+								  #{career},
+								  #{recruitment},
+								  #{wage},
+								  #{startDate},
+								  #{dueDate},
+								  #{hiringStatusCode},
+								  #{hiringStatus});
 	</insert>
 	
 	<select id="getAnnouncementList" parameterType="map" resultType="Announcement">
