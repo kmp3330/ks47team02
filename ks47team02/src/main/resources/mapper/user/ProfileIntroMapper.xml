@@ -30,20 +30,19 @@
 	
 	<insert id="profileIntroInsert" parameterType="ProfileIntro">
 		/*회원가입*/
-		INSERT INTO profile_intro
-		(
-		        user_intro_code,
-		        user_id,
-		        user_intro,
-		        profile_hidden,
-		        profile_application_hidden
+		INSERT INTO profile_intro(
+	        user_intro_code,
+	        user_id,
+	        user_intro,
+	        profile_hidden,
+	        profile_application_hidden
 		    )
 		VALUES(
-			#{user_intro_code},
-			#{user_id},
-			#{user_intro},
-			#{profile_hidden},
-			#{profile_application_hidden});
+			#{userIntroCode},
+			#{userId},
+			#{userIntro},
+			#{profileHidden},
+			#{profileApplicationHidden});
 	</insert>
 
 </mapper>

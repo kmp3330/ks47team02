@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="ks47team02.user.profile.mapper.ProfileEduSpecMapper">
+	<!-- 회원별 보유기술  -->
+	<resultMap type="ProfileEduSpec" id="profileEduSpecResultMap">
+		<!--  id태그는 조회시 테이블의 PK(기본키)  -->
+		<id	column="user_edu_spec_code" property="userEduSpecCode" />
+		<!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키를 의 -->
+		<result	column="user_id" property="userId" />
+		<result	column="user_degree" property="userDegree" />
+		<result	column="user_univ_name" property="userUnivName" />
+		<result	column="user_univ_major" property="userUnivMajor" />
+		<result	column="user_univ_grad" property="userUnivGrad" />
+		<result	column="user_univ_enter_date" property="userUnivEnterDate" />
+		<result	column="user_univ_grad_date" property= "userUnivGradDate" />
+		<result	column="user_univ_score" property="userUnivScore" />
+		<result	column="user_univ_total_score" property="userUnivTotalScore" />
+		<result	column="user_reg_date" property="userRegDate" />
+		<result	column="profile_hidden" property="profileHidden" />
+		<result	column="profile_application_hidden" property="profileApplicationHidden" />
+	</resultMap>
+	
+	<select id="getProfileEduSpecList" resultMap="profileEduSpecResultMap">
+		/*회원별 학력 조회 */
+		SELECT
+		    pes.user_edu_spec_code,
+		    pes.user_id,
+		    pes.user_degree,
+		    pes.user_univ_name,
+		    pes.user_univ_major,
+		    pes.user_univ_grad,
+		    pes.user_univ_enter_date,
+		    pes.user_univ_grad_date,
+		    pes.user_univ_score,
+		    pes.user_univ_total_score,
+		    pes.profile_reg_date,
+		    pes.profile_hidden,
+		    pes.profile_application_hidden
+		FROM
+		    profile_edu_spec as pes
+	</select>
+	
+</mapper>
