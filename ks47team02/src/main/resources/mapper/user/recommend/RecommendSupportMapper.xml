@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="ks47team02.user.recommend.mapper.RecommendSupportMapper">
+	<resultMap type="RecommendSupport" 		id="RecommendSupportResultMap">
+	 	<id 	column="company_support_code" 	property="companySupportCode"/>
+	 	<result column="user_id"	 			property="userId"/>
+	 	<result column="announcement_code"		property="announcementCode"/>
+	 	<result column="cp_id"		 			property="cpId"/>
+	 	<result column="cp_name"			    property="cpName"/>
+	 	<result column="area_code"			    property="areaCode"/>
+	 	<result column="area_cate"				property="areaCate"/>
+	 	<result column="job_opening"			property="jobOpening"/>
+	 	<result column="required_skills"		property="requiredSkills"/>
+	 	<result column="career"		 			property="career"/>
+	 	<result column="wage"				 	property="wage"/>
+	 	<result column="application_date"		property="applicationDate"/>
+ 	</resultMap>
+ 	
+ 	<select id="getRecommendSupport" resultMap="RecommendSupportResultMap">
+ 		SELECT
+			user_id,
+			cp_id,
+			cp_name,
+			area_cate,
+			job_opening,
+			required_skills,
+			career,
+			wage,
+			application_date
+		FROM
+			company_support
+ 	</select>
+ 	
+ 	<select id="getRecommendSupportCode" resultMap="RecommendSupportResultMap">
+ 		SELECT
+			company_support_code
+		FROM
+			company_support
+ 	</select>
+ 	
+ 	<select id="getRecommendSupportRank" resultMap="RecommendSupportResultMap">
+ 		SELECT 
+			cp_name
+		FROM 
+			company_support
+		GROUP BY 
+			cp_name
+		ORDER BY 
+			cp_name DESC
+		LIMIT 
+			5
+ 	</select>
+</mapper>

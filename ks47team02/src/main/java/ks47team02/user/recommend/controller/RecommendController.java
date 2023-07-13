@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks47team02.user.recommend.dto.RecommendEmployment;
-import ks47team02.user.recommend.mapper.RecommendMapper;
+import ks47team02.user.recommend.dto.RecommendScrap;
+import ks47team02.user.recommend.dto.RecommendSupport;
+import ks47team02.user.recommend.mapper.RecommendEmploymentMapper;
+import ks47team02.user.recommend.mapper.RecommendScrapMapper;
+import ks47team02.user.recommend.mapper.RecommendSupportMapper;
 import ks47team02.user.recommend.service.RecommendService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,11 +29,18 @@ import lombok.extern.slf4j.Slf4j;
 public class RecommendController {
 	
 	public final RecommendService recommendService;
-	public final RecommendMapper recommendMapper;
+	public final RecommendEmploymentMapper recommendMapper;
+	public final RecommendSupportMapper recommendSupportMapper;
+	public final RecommendScrapMapper recommendScrapMapper;
 	
-	public RecommendController(RecommendMapper recommendMapper, RecommendService recommendService) {
+	public RecommendController(RecommendEmploymentMapper recommendMapper, 
+			RecommendService recommendService, 
+			RecommendSupportMapper recommendSupportMapper,
+			RecommendScrapMapper recommendScrapMapper) {
 		this.recommendMapper = recommendMapper;
 		this.recommendService = recommendService;
+		this.recommendSupportMapper = recommendSupportMapper;
+		this.recommendScrapMapper = recommendScrapMapper;
 	}
 	
 	/*
@@ -38,12 +49,18 @@ public class RecommendController {
 	@GetMapping("/recommendMain")
 	public String getRecommendMain(Model model) {
 		
+		List <RecommendSupport> recommendSupportRank = recommendService.getRecommendSupportRank();
+		
 		model.addAttribute("title", "기업 추천 서비스 메인화면");
 		model.addAttribute("titleText", "기업 추천 서비스");
 		model.addAttribute("contents","기업 추천 서비스 메인 화면입니다.");
+		model.addAttribute("recommendSupportRank", recommendSupportRank);
 		
 		return "user/recommend/recommend_main";
 	}
+	
+	
+	
 	
 	/*
 	 *  스크랩 순 기업 추천 서비스
@@ -52,10 +69,12 @@ public class RecommendController {
 	@GetMapping("/recommendScrap")
 	public String getRecommendScrap(Model model) {
 		
+		List <RecommendScrap> recommendScrapInfo = recommendService.getRecommendScrapInfo();
+		
 		model.addAttribute("title", "스크랩 순 기업 추천 서비스");
 		model.addAttribute("titleText", "스크랩 순 기업 추천 서비스");
 		model.addAttribute("contents","스크랩 순 기업 추천 서비스 화면입니다.");
-		
+		model.addAttribute("recommendScrapInfo", recommendScrapInfo);
 		return "user/recommend/recommend_scrap";
 	}
 	
@@ -65,13 +84,18 @@ public class RecommendController {
 	 */
 	@GetMapping("/recommendSupport")
 	public String getRecommendSupport(Model model) {
+		
+		List <RecommendSupport> recommendSupportInfo = recommendService.getRecommendSupportInfo();
+		
 		model.addAttribute("title", "기업 지원 순 기업 추천 서비스");
 		model.addAttribute("titleText", "기업 지원 순 기업 추천 서비스");
 		model.addAttribute("contents","기업 지원 순 추천 서비스 화면입니다.");
-		
+		model.addAttribute("recommendSupportInfo", recommendSupportInfo);
 		
 		return "user/recommend/recommend_support";
 	}
+	
+	
 	
 	/*
 	 *  기업 아이디가 기업 지원 순 목록 삭제
@@ -102,10 +126,12 @@ public class RecommendController {
 	@GetMapping("/addRecommendEmployment")
 	public String addRecommendEmployment(Model model) {
 		
+		List <RecommendSupport> recommendSupportCode = recommendService.getRecommendSupportCode();
 		
 		model.addAttribute("title", "채용 단계 순 목록 등록");
 		model.addAttribute("titleText", "채용 단계 순 목록 등록");
 		model.addAttribute("contents", "채용 단계 순 목록 등록 화면입니다.");
+		model.addAttribute("recommendSupportCode", recommendSupportCode);
 		
 		return "user/recommend/recommend_employment_insert";
 	}

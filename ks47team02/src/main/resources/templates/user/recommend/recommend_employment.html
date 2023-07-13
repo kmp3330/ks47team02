@@ -1,45 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		layout:decorate="~{user/layout/default}">
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="/user/assets/css/style.css">
-	</head>
-	<body>
-		<th:block layout:fragment="customContents">
-			<h1>채용 단계순 기업 추천 서비스</h1>
-			<button type="button" onclick="location.href='/recommend/addRecommendEmployment'">등록버튼</button>
-			<table>
-				<thead>
-					<tr>
-						<th>회원 아이디</th>
-						<th>참여 분야</th>
-						<th>지역</th>
-						<th>채용직</th>
-						<th>요구 기술</th>
-						<th>관련 업무 경력</th>
-						<th>급여</th>
-						<th>작성 일시</th>
-						<th>마감 일시</th>
-						<th>진행 상태 분류</th>						
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="l : ${RecommendEmploymentInfo}">
-						<td th:text="${l.userId}"></td>	
-						<td th:text="${l.joinCateName}"></td>
-						<td th:text="${l.areaCate}"></td>
-						<td th:text="${l.jobOpening}"></td>
-						<td th:text="${l.requiredSkills}"></td>
-						<td th:text="${l.career}"></td>
-						<td th:text="${l.wage}"></td>
-						<td th:text="${l.startDate}"></td>
-						<td th:text="${l.dueDate}"></td>
-						<td th:text="${l.jobNormalRun}"></td>
-					</tr>
-				</tbody>
-			</table>
-		</th:block>
-	</body>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/user/assets/css/table.css}" />
+<style>
+
+  .button{
+  	padding-left: 61px;
+  	padding-right: 61px;
+  }
+
+  th {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+  
+  td {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+</style>
+</head>
+<th:block layout:fragment="customContents">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="single-job mb-4 d-lg-flex justify-content-between">
+					<div class="job-text">
+						<table>
+							<thead>
+								<tr>
+									<th>회원 아이디</th>
+									<th>참여 분야</th>
+									<th>지역</th>
+									<th>채용직</th>
+									<th>요구 기술</th>
+									<th>관련 업무 경력</th>
+									<th>급여</th>
+									<th>작성 일시</th>
+									<th>마감 일시</th>
+									<th>진행 상태 분류</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="l : ${RecommendEmploymentInfo}">
+									<td th:text="${l.userId}"></td>
+									<td th:text="${l.joinCateName}"></td>
+									<td th:text="${l.areaCate}"></td>
+									<td th:text="${l.jobOpening}"></td>
+									<td th:text="${l.requiredSkills}"></td>
+									<td th:text="${l.career}"></td>
+									<td th:text="${l.wage}"></td>
+									<td th:text="${l.startDate}"></td>
+									<td th:text="${l.dueDate}"></td>
+									<td th:text="${l.jobNormalRun}"></td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<button class="button" type="button"
+							onclick="location.href='/recommend/addRecommendEmployment'">등록버튼</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
 </html>

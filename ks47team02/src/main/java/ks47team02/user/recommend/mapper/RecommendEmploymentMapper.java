@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 
 @Mapper
-public interface RecommendMapper {
+public interface RecommendEmploymentMapper {
 	
 	/*
 	 * 회사 지원 코드 조회

@@ -1,14 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		layout:decorate="~{user/layout/default}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
 <head>
 <meta charset="UTF-8">
-<title>스크랩 순 기업 추천 서비스</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/user/assets/css/table.css}" />
+<style>
+
+  th {
+    padding-left: 33px;
+    padding-right: 33px;
+  }
+  
+  td {
+    padding-left: 33px;
+    padding-right: 33px;
+  }
+</style>
 </head>
-<body>
-	<th:block layout:fragment="customContents">
-		<h1>스크랩 순 기업 추천 서비스</h1>
-	</th:block>
-</body>
+<th:block layout:fragment="customContents">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="single-job mb-4 d-lg-flex justify-content-between">
+					<div class="job-text">
+						<table>
+							<thead>
+								<tr>
+									<th>회원 아이디</th>
+									<th>참여 분야</th>
+									<th>지역</th>
+									<th>채용직</th>
+									<th>요구 기술</th>
+									<th>경력</th>
+									<th>급여</th>
+									<th>등록 시간</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="l : ${recommendScrapInfo}">
+									<td th:text="${l.userId}"></td>
+									<td th:text="${l.joinCateName}"></td>
+									<td th:text="${l.areaCate}"></td>
+									<td th:text="${l.jobOpening}"></td>
+									<td th:text="${l.requiredSkills}"></td>
+									<td th:text="${l.career}"></td>
+									<td th:text="${l.wage}"></td>
+									<td th:text="${l.registrationTime}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
 </html>
