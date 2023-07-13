@@ -17,7 +17,7 @@ public interface NormalProjectMapper {
 	
 	public List<subjectCate> getSubjectCateList();
 	
-	public void
+
 	
 
 }
