@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ks47team02.user.recommend.dto.Recommend;
+import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.mapper.RecommendMapper;
 
 @Service
@@ -27,15 +27,15 @@ public class RecommendService {
 	 *  채용 단계 순 목록 등록
 	 */
 	
-	public void addEmployment(Recommend recommend) {
+	public void addEmployment(RecommendEmployment recommend) {
 		recommendMapper.addRecommendEmploymnet(recommend);
 	}
 	
 	/*
 	 * 채용 단계 순  목록 
 	 */
-	public List <Recommend> getRecommendEmploymentInfo(){
-		List <Recommend> RecommendEmploymentInfo = recommendMapper.getRecommendEmployment();
+	public List <RecommendEmployment> getRecommendEmploymentInfo(){
+		List <RecommendEmployment> RecommendEmploymentInfo = recommendMapper.getRecommendEmployment();
 		return RecommendEmploymentInfo;
 	}
 	

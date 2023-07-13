@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks47team02.user.recommend.dto.Recommend;
+import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.mapper.RecommendMapper;
 import ks47team02.user.recommend.service.RecommendService;
 import lombok.extern.slf4j.Slf4j;
@@ -89,7 +89,7 @@ public class RecommendController {
 	 *  채용 단계 순 기업 추천 서비스 목록 등록
 	 */
 	@PostMapping("/addRecommendEmployment")
-	public String addRecommendEmployment(Recommend recommend) {
+	public String addRecommendEmployment(RecommendEmployment recommend) {
 		log.info("목록 등록시 입력정보: {}", recommend);
 		
 		recommendService.addEmployment(recommend);
@@ -116,7 +116,7 @@ public class RecommendController {
 	@GetMapping("/recommendEmployment")
 	public String getRecommendEmployment(Model model) {
 		
-		List <Recommend> RecommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
+		List <RecommendEmployment> RecommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
 		
 		model.addAttribute("title", "채용 단계 순 기업 추천 서비스");
 		model.addAttribute("titleText", "채용 단계 순 기업 추천 서비스");

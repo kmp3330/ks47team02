@@ -1,9 +1,11 @@
 package ks47team02.user.recommend.dto;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
-public class Recommend {
+public class RecommendEmployment {
 	private String companyEmploymentCode;
 	private String companySupportCode;
 	private String userId;
@@ -16,8 +18,8 @@ public class Recommend {
 	private String requiredSkills;
 	private String career;
 	private int wage;
-	private String startDate;
-	private String dueDate;
+	private Date startDate;
+	private Date dueDate;
 	private String jobNormalRunCode;
 	private String jobNormalRun;
 	

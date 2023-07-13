@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ks47team02.user.recommend.mapper.RecommendMapper">
+<mapper namespace="ks47team02.user.recommend.mapper.RecommendEmploymentMapper">
  <resultMap type="Recommend" id="RecommendResultMap">
  	<id 	column="company_employment_code" property="companyEmploymentCode"/>
  	<result column="company_support_code"	 property="companySupportCode"/>
@@ -69,8 +69,8 @@ VALUE
 	#{requiredSkills},
 	#{career},
 	#{wage},
-	#{startDate},
-	#{dueDate},
+	NOW(),
+	NOW(),
 	#{jobNormalRunCode},
 	#{jobNormalRun})
  </insert>
