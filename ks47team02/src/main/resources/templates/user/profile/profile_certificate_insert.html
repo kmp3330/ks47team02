@@ -37,43 +37,57 @@
 					<div class="single-job mb-4 justify-content-between text-center">
 						<div class="card">
 							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">보유 자격증</h3>
+								<h3 class="mb-0 title_color text-left">자격증 등록</h3>
 								<div class="card-tools">
-									<a th:href="@{/profile/profileCertificateInsert}" class="genric-btn info-border circle"> <i
-										class="fas">등록</i>
+									<a th:href="@{#}" class="genric-btn info-border circle">
+										<i class="fas">등록 완료</i>
+									</a>
+									<a th:href="@{#}" class="genric-btn danger-border circle">
+										<i class="fas">취소</i>
 									</a>
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">
-								<table class="table table-striped table-valign-middle">
-									<thead>
-										<tr>
-											<th>자격증명</th>
-											<th>기관명</th>
-											<th>취득 일시</th>
-											<th>공개 여부</th>
-											<th>입사지원시 공개여부</th>
-											<th>수정</th>
-											<th>삭제</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:unless="${#lists.isEmpty(certificateList)}"
-											th:each="l : ${certificateList}">
-											<td th:text="${l.certificateName}"></td>
-											<td th:text="${l.certificatePublication}"></td>
-											<td th:text="${l.certificateDate}"></td>
-											<td th:text="${l.profileHidden}"></td>
-											<td th:text="${l.profileApplicationHidden}"></td>
-											<td><a th:href="@{#}"
-												class="genric-btn success-border circle"> <i class="fas">수정</i>
-											</a></td>
-											<td><a th:href="@{#}"
-												class="genric-btn danger-border circle"> <i class="fas">삭제</i>
-											</a></td>
-										</tr>
-									</tbody>
-								</table>
+								<form action="#" class="d-md-flex justify-content-between">
+									<table class="table table-valign-middle">
+										<thead>
+											<tr>
+												<th>자격증명</th>
+												<th>기관명</th>
+												<th>취득 일시</th>
+												<th>공개 여부</th>
+												<th>입사지원시 공개여부</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><input class="genric-btn" type="text"
+													placeholder="자격증명" onfocus="this.placeholder = ''"
+													onblur="this.placeholder = '자격증명'" required=""></td>
+												<td><input class="genric-btn" type="text"
+													placeholder="기관명" onfocus="this.placeholder = ''"
+													onblur="this.placeholder = '기관명'" required=""></td>
+												<td><input class="genric-btn" type="date"></td>
+												<td>
+													<div class="d-flex justify-content-center">
+														<div class="confirm-switch">
+															<input type="checkbox" id="confirm-switch1" checked="">
+															<label for="confirm-switch1"></label>
+														</div>
+													</div>
+												</td>
+												<td>
+													<div class="d-flex justify-content-center">
+														<div class="confirm-switch">
+															<input type="checkbox" id="confirm-switch2" checked="">
+															<label for="confirm-switch2"></label>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
 							</div>
 						</div>
 					</div>
