@@ -8,53 +8,82 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<section class="jobs-area section-padding">
+
+	<div class="container">
+		<div class="row">
+		<div class="single-item mb-4">
+			<a href="#" class="genric-btn info circle">Info</a>
+		</div>
+		
+		</div>
+
+	</div>
+
+
+
+	<section class="job-single-content section-padding">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12">
-					<div class="single-job mb-4 d-lg-flex justify-content-between">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="single-job mb-4 d-lg-flex justify-content-between">
-									<div class="job-text">
-										<h4>보유 자격증</h4>
-										<table>
-											<thead>
-												<tr>
-													<th>자격증명</th>
-													<th>기관명</th>
-													<th>취득 일시</th>
-													<th>공개 여부</th>
-													<th>입사지원시 공개여부</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:unless="${#lists.isEmpty(certificateList)}"
-													th:each="l : ${certificateList}">
-													<td th:text="${l.certificateName}"></td>
-													<td th:text="${l.certificatePublication}"></td>
-													<td th:text="${l.certificateDate}"></td>
-													<td th:text="${l.profileHidden}"></td>
-													<td th:text="${l.profileApplicationHidden}"></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="job-btn align-self-center">
-										<a href="#" class="third-btn job-btn1">full time</a> <a
-											href="#" class="third-btn">apply</a>
-									</div>
+				<div class="col-lg-4">
+					<div class="sidebar mt-5 mt-lg-0">
+						<div class="single-item mb-4">
+							<h4 class="mb-4">프로필</h4>
+							<a href="#"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
+							</a> <a href="#"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유스킬</span>
+							</a> <a href="#"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
+							</a> <a href="#"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
+							</a> <a href="#"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
+							</a> <a href="#"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
+							</a> <a href="#" class="sidebar-btn d-flex justify-content-between">
+								<span>포트폴리오</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-8">
+					<div class="main-content">
+						<div class="single-content1">
+							<div class="single-job mb-4 d-lg-flex justify-content-between">
+								<div class="job-text">
+									<h4>보유 자격증</h4>
+									<table>
+										<thead>
+											<tr>
+												<th>자격증명</th>
+												<th>기관명</th>
+												<th>취득 일시</th>
+												<th>공개 여부</th>
+												<th>입사지원시 공개여부</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:unless="${#lists.isEmpty(certificateList)}"
+												th:each="l : ${certificateList}">
+												<td th:text="${l.certificateName}"></td>
+												<td th:text="${l.certificatePublication}"></td>
+												<td th:text="${l.certificateDate}"></td>
+												<td th:text="${l.profileHidden}"></td>
+												<td th:text="${l.profileApplicationHidden}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="job-img align-self-center">
+									<a href="#" class="third-btn job-btn1">등록</a> <a href="#"
+										class="third-btn">apply</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="more-job-btn mt-5 text-center">
-				<a href="#" class="template-btn">more job post</a>
-			</div>
 		</div>
 	</section>
-
 </th:block>
 </html>
