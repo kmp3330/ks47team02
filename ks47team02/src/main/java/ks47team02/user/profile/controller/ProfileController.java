@@ -144,6 +144,14 @@ public class ProfileController {
 		return "user/profile/profile_certificate_list";
 	}
 	
+	@GetMapping("/profileCertificateInsert")
+	public String profileCertificateInsert() {
+		
+		
+		
+		return "user/profile/profile_certificate_insert";
+	}
+	
 	/**
 	 * 수상이력 화면
 	 * @param model
