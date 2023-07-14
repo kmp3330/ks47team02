@@ -48,7 +48,7 @@ public class ProfileController {
 		
 		profileService.profileIntroInsert(profileIntro);
 		
-		return "redirect:/user/profile/profile_intro_list";
+		return "redirect:/profile/profileIntroList";
 	}
 	
 	@GetMapping("/profileIntroInsert")
