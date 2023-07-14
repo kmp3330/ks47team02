@@ -1,27 +1,93 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		layout:decorate="~{user/layout/default}">
-<head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-</head>
-	<th:block layout:fragment="customContents">
-		<div class="section-top-border">
-			<div class="row">
-				<div class="col-lg-8 col-md-8">
-					<h3 class="mb-30 title_color">자기소개 등록 양식</h3>
-					<form action="#">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+
+<th:block layout:fragment="customJs">
+	<script>
+
+		//유효성 검사 함수 (등록눌렀을때 빈값이 없도록 유효성 검사 하는거) => 하 진짜 이해 안감ㅠ 물어봐 
+		const validCheck = element => {
+			let data = $(element).val();
+			let eleId = $(element).attr('id');
+			if (typeof data == 'undefined' || data == null || data == '') {
+				// let cate = $(`input[id="${eleId}"]`).text();
+				alert(`${eleId} 필수 입력항목입니다.`);
+				$(element).focus();
+				return false;
+			}
+			return true;
+		}
+
+		//자기소개 등록 버튼 시 이벤트 => 하 진짜 이해 안감ㅠ 물어봐 
+		$('#insertBtn').click(function () {
+			// const validateEle = $('#insertProfileForm input').not('#introTitle');
+			const validateEle = $('#insertProfileForm textarea');
+			let isSubmit = false;
+			validateEle.each((idx, item) => {
+				isSubmit = validCheck(item);
+				return isSubmit;
+			});
+			if (isSubmit) {
+				console.log('전송');
+				$('#insertProfileForm').submit();
+			}
+		});
+
+		//입력 취소 버튼 클릭시 이벤트 처리
+		$('#resetBtn').click(function (e) {
+			//태그가 가지고 있는 기본 이벤트 동작 방지
+			e.preventDefault();
+			$('#insertProfileForm textarea').val('');
+		});
+
+	</script>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<div class="section-top-border">
+		<div class="row">
+			<div class="col-lg-8 col-md-8">
+				<h3 class="mb-30 title_color">자기소개 등록 양식</h3>
+				<form id="insertProfileForm" th:action="@{/profile/profileIntroInsert}" method="post">
+					<!--
 						<div class="mt-10">
-							<input type="text" name="first_name" placeholder="자기소개 제목" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required="" class="single-input">
+						<input type="text" id="introTitle" name="introTitle" placeholder="자기소개 제목" onfocus="this.placeholder = ''"
+							onblur="this.placeholder = 'First Name'" required="" class="single-input">
+					</div>
+					-->
+					<div class="mt-10">
+						<textarea class="single-textarea" id="userIntro" name="userIntro" placeholder="내용"
+							onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'"
+							required=""></textarea>
+					</div>
+					<div class="col-lg-3 col-md-6 mt-sm-30 element-wrap">
+						<div class="single-element-widget">
+							<div class="switch-wrap d-flex justify-content-between">
+								<p>공개여부</p>
+								<div class="confirm-switch">
+									<input type="checkbox" id="confirm-switch" name="profileHidden" checked="">
+									<label for="confirm-switch"></label>
+								</div>
+							</div>
+							<div class="switch-wrap d-flex justify-content-between">
+								<p>입사지원 시 공개여부</p>
+								<div class="confirm-switch">
+									<input type="checkbox" id="confirm-switch"
+										name="profileApplicationHidden" checked="">
+									<label for=" confirm-switch"></label>
+								</div>
+							</div>
 						</div>
-						<div class="mt-10">
-							<textarea class="single-textarea" placeholder="내용" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'" required=""></textarea>
-						</div>
-						<div class="job-btn align-self-center">
-							<a th:href="@{#}" class="third-btn job-btn1">등록</a>
-							<a href="#" class="third-btn">취소</a>
-						</div>
-					</form>
-				</div>
+					</div>
+					<div class="job-btn align-self-center">
+						<button type="submit" id="insertBtn" class="third-btn job-btn1">등록</button>
+						<button type="button" id="resetBtn" class="third-btn">취소</button>
+						<!-- <a th:href="@{/profile/profileIntroList}"type="button" class="third-btn">취소</a> -->
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</th:block>
+
 </html>
