@@ -51,10 +51,12 @@ public class RecommendController {
 		
 		List <RecommendSupport> recommendSupportRank = recommendService.getRecommendSupportRank();
 		
+		
 		model.addAttribute("title", "기업 추천 서비스 메인화면");
 		model.addAttribute("titleText", "기업 추천 서비스");
 		model.addAttribute("contents","기업 추천 서비스 메인 화면입니다.");
 		model.addAttribute("recommendSupportRank", recommendSupportRank);
+		
 		
 		return "user/recommend/recommend_main";
 	}

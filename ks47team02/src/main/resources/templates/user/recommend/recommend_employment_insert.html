@@ -6,6 +6,12 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/user/assets/css/style.css">
 <link rel="stylesheet" href="/user/assets/css/table.css">
+<style>
+	input[type='date']::before {
+  		content: attr(data-placeholder);
+  		width: 100%;
+}
+</style>
 
 </head>
 <th:block layout:fragment="customJs">
@@ -131,12 +137,12 @@
 										</tr>
 										<tr>
 											<td><label for="startDate">시작일자</label></td>
-											<td><input type="text" id="startDate" name="startDate" />
+											<td><input type="date" data-placeholder="날짜 선택" id="startDate" name="startDate" />
 											</td>
 										</tr>
 										<tr>
 											<td><label for="dueDate">마감일자</label></td>
-											<td><input type="text" id="dueDate" name="dueDate" /></td>
+											<td><input type="date" data-placeholder="날짜 선택" id="dueDate" name="dueDate" /></td>
 										</tr>
 										<tr>
 											<td><label for="jobNormalRunCode">진행 상황 분류 코드</label></td>

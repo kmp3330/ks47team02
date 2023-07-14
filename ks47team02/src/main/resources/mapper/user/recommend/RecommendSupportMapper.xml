@@ -39,6 +39,11 @@
 			company_support_code
 		FROM
 			company_support
+			
+ 	</select>
+ 	
+ 	<select id="getRecommendSupportUserId" resultMap="RecommendSupportResultMap">
+ 	
  	</select>
  	
  	<select id="getRecommendSupportRank" resultMap="RecommendSupportResultMap">
