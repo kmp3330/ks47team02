@@ -8,7 +8,7 @@
 		<result column="user_id" 						property="userId" />
 		<result column="normal_project_name" 			property="normalProjectName" />
 		<result column="join_cate_code" 				property="joinCateCode" />
-		<result column="joinCateName" 					property="joinCateName" />
+		<result column="join_cate_name" 				property="joinCateName" />
 		<result column="work_cate_code" 				property="workCateCode" />
 		<result column="work_cate_name" 				property="workCateName" />
 		<result column="subject_cate_code" 				property="subjectCateCode" />
@@ -58,7 +58,7 @@
 			user_id, 
 			normal_project_name, 
 			join_cate_code, 
-			participation_field,
+			join_cate_name,
 			work_cate_code, 
 			work_cate_name, 
 			subject_cate_code, 

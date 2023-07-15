@@ -31,21 +31,27 @@ public class normalProjectController {
 		/*등록 영역*/
 	
 	
-	@GetMapping("/personalFunction/addPersonalFunction")
+	@GetMapping("/addPersonalFunction")
 	public String addPersonalFunction(Model model) {
 		model.addAttribute("title", "일반과제 개인별 과제 추가");
 		
 		return "user/project/normal/personalFunction/addPersonalFunction";
 	}
 	
-	@GetMapping("/progress/addProgress")
+	@GetMapping("/addProgress")
 	public String addProgress(Model model) {
 		model.addAttribute("title", "일반과제 진행상황 작성");
 		
 		return "user/project/normal/progress/addProgress";
 	}
 	
-	@GetMapping("/list/addProject")
+	/**
+	 * 일반과제 작성 
+	 * @param Model model
+	 * @return 일반과제 추가 페이지
+	 * 
+	 * */
+	@GetMapping("/addProject")
 	public String addProject(Model model) {
 		List<joinCate> joinCateList = normalProjectService.getJoinCateList();
 		List<subjectCate> subjectCateList = normalProjectService.getSubjectCateList();
@@ -59,12 +65,13 @@ public class normalProjectController {
 	}
 	
 	/**
-	 * 일반과제 작성 폼
+	 * 일반과제 작성 폼 post
 	 * @param normalProjects
 	 * @return 일반과제 리스트
 	 */
-	@PostMapping("/list/addProject")
+	@PostMapping("/addProject")
 	public String addProject(NormalProjects normalProjects) {
+		log.info("안녕하시오");
 		
 		log.info("addProject normalProjects 전송 : {}", normalProjects);
 		normalProjectService.addNormalProject(normalProjects);
@@ -72,17 +79,17 @@ public class normalProjectController {
 		log.info("addProject normalProjects : {}", normalProjects);
 		
 		
-		return "redirect:/user/project/normal/list/getProjectList";
+		return "redirect:/user/project/normal/list/projectList";
 	}
 	
-	@GetMapping("/applyApplicant/addApplicantAccept")
+	@GetMapping("/addApplicantAccept")
 	public String addApplicantAccept(Model model) {
 		model.addAttribute("title", "일반과제 신청");
 		
 		return "user/project/normal/applyApplicant/addApplicantAccept";
 	}
 	
-	@GetMapping("/applyApplicant/addAcceptApprove")
+	@GetMapping("/addAcceptApprove")
 	public String addAcceptApprove(Model model) {
 		model.addAttribute("title", "일반과제 신청자 승인");
 		
@@ -97,28 +104,28 @@ public class normalProjectController {
 	
 	
 	/*수정영역*/
-	@GetMapping("/list/modifyProject")
+	@GetMapping("/modifyProject")
 	public String modifyProject(Model model) {
 		model.addAttribute("title", "일반과제 수정 페이지");
 		
 		return "user/project/normal/list/modifyProject";
 	}
 	
-	@GetMapping("/applyApplicant/modifyApplyApplicant")
+	@GetMapping("/modifyApplyApplicant")
 	public String modifyApplyApplicant(Model model) {
 		model.addAttribute("title", "일반과제 신청자 수정");
 		
 		return "user/project/normal/applyApplicant/modifyApplyApplicant";
 	}
 	
-	@GetMapping("/progress/modifyProgress")
+	@GetMapping("/modifyProgress")
 	public String modifyProgress(Model model) {
 		model.addAttribute("title", "일반과제 진행상황 수정");
 		
 		return "user/project/normal/progress/modifyProgress";
 	}
 	
-	@GetMapping("/personalFunction/modifyPersonalFunction")
+	@GetMapping("/modifyPersonalFunction")
 	public String modifyPersonalFunction(Model model) {
 		model.addAttribute("title", "일반과제 개인별 맡은기능 수정");
 		
@@ -128,7 +135,7 @@ public class normalProjectController {
 	
 	/* 삭제영역*/
 	
-	@GetMapping("/progress/removeProgress")
+	@GetMapping("/removeProgress")
 	public String removeProgress(Model model) {
 		model.addAttribute("title", "일반과제 진행상황 삭제");
 		
@@ -136,14 +143,14 @@ public class normalProjectController {
 	}
 	
 	
-	@GetMapping("/applyApplicant/removePerson")
+	@GetMapping("/removePerson")
 	public String removePerson(Model model) {
 		model.addAttribute("title", "일반과제 신청자 삭제");
 		
 		return "user/project/normal/applyApplicant/removePerson";
 	}
 	
-	@GetMapping("/list/removeProject")
+	@GetMapping("/removeProject")
 	public String removeProject(Model model) {
 		model.addAttribute("title", "일반과제 삭제페이지");
 		
@@ -153,7 +160,7 @@ public class normalProjectController {
 	
 	
 	
-	@GetMapping("/personalFunction/removePersonalFunction")
+	@GetMapping("/removePersonalFunction")
 	public String removePersonalFunction(Model model) {
 		model.addAttribute("title", "일반과제 개인별 맡은기능 삭제");
 		
@@ -180,7 +187,7 @@ public class normalProjectController {
 	
 	
 	
-	@GetMapping("/progress/getProgressList")
+	@GetMapping("/getProgressList")
 	public String getProgressList(Model model) {
 		model.addAttribute("title", "일반과제 진행상황 목록");
 		
@@ -191,7 +198,7 @@ public class normalProjectController {
 	
 	
 	
-	@GetMapping("/personalFunction/getPersonalFunctionList")
+	@GetMapping("/getPersonalFunctionList")
 	public String getPersonalFunctionList(Model model) {
 		model.addAttribute("title", "일반과제 신청자별 맡은기능 목록");
 		
@@ -201,7 +208,7 @@ public class normalProjectController {
 	
 
 	
-	@GetMapping("/applyApplicant/getAcceptList")
+	@GetMapping("/getAcceptList")
 	public String getAcceptList(Model model) {
 		model.addAttribute("title", "일반과제 신청자 목록");
 		

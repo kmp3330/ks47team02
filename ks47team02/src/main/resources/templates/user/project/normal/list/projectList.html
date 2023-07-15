@@ -10,7 +10,7 @@
 	<th:block layout:fragment="customContents">
 		<!--/* 검색(searchFragment2 select:상품코드, 상품명, 판매자 아이디, 판매자 이름, 판매자 이메일 */-->
 		<!--/* 검색 주소: /goods/goodsList, HTTP method: get */-->
-		<a th:href="@{user/project/normal/list/addProject}">프로젝트 추가</a>
+		<a th:href="@{/user/project/normal/list/addProject}">프로젝트 추가</a>
 		
 		<br><br>
 		<table border="1">
@@ -40,7 +40,7 @@
 				<tr th:unless="${#lists.isEmpty(normalProjectList)}"
 					th:each="l : ${normalProjectList}">
 					<td th:text="${l.normalProjectName}"></td>
-					<td th:text="${l.participationField}"></td>
+					<td th:text="${l.joinCateName}"></td>
 					<td th:text="${l.workCateName}"></td>
 					<td th:text="${l.subjectCateName}"></td>
 					<td th:text="${l.requiredSkill}"></td>
@@ -55,7 +55,6 @@
 					<td th:text="${l.projectDayScore}"></td>
 					<td th:text="${l.projectFinishScore}"></td>
 				</tr>
-				
 			</tbody>
 		</table>
 	</th:block>
