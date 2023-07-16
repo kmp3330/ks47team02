@@ -27,5 +27,28 @@
 		FROM
 			profile_certificate;
 	</select>
+	
+	<insert id="profileCertificateInsert" parameterType="String">
+		<selectKey resultType="String" keyColumn="newCertificateCode" keyProperty="certificateCode" order="BEFORE">
+			<![CDATA[
+			/* 자동증가코드 */
+			SELECT
+			    CASE
+			    WHEN COUNT(*) = 0
+			        THEN 'user_certificate_code001'
+			    WHEN CAST(SUBSTRING_INDEX(user_certificate_code, '_code', -1) AS UNSIGNED) < 999
+			        THEN CONCAT('user_certificate_code', LPAD(MAX(CAST(SUBSTRING_INDEX(user_certificate_code, '_code', -1) AS UNSIGNED))+1, 3, '0'))
+			    ELSE
+			        CONCAT('user_certificate_code', MAX(CAST(SUBSTRING_INDEX(user_certificate_code, '_code', -1) AS UNSIGNED))+1)
+			    END AS newCertificateCode
+			FROM
+			    profile_certificate;
+			]]>
+		</selectKey>
+		/* 자격증 등록 */
+		INSERT INTO profile_certificate
+			(user_certificate_code, user_id, user_certificate_name, user_certificate_publication, user_certificate_date, profile_hidden, profile_application_hidden)
+			VALUES (#{certificateCode}, #{userId}, #{certificateName}, #{certificatePublication}, #{certificateDate}, ${profileHidden}, ${profileApplicationHidden})
+	</insert>
 
 </mapper>

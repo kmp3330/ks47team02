@@ -144,12 +144,25 @@ public class ProfileController {
 		return "user/profile/profile_certificate_list";
 	}
 	
+	/**
+	 * 자격증 등록화면
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/profileCertificateInsert")
-	public String profileCertificateInsert() {
+	public String profileCertificateInsert(Model model) {
 		
-		
+		model.addAttribute("title", "자격증 등록화면");
 		
 		return "user/profile/profile_certificate_insert";
+	}
+	
+	@PostMapping("/profileCertificateInsert")
+	public String profileCertificateInsert(ProfileCertificate profileCertificate) {
+		
+		profileService.profileCertificateInsert(profileCertificate);
+		
+		return "redirect:/profile/profileCertificateList";
 	}
 	
 	/**
