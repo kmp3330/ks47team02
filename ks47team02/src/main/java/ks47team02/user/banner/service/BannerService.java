@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class BannerService {
 
-    private final BannerMapper bannerMapper;
+	private final BannerMapper bannerMapper;
 
     /**
      * 배너광고 신청 기업 목록 조회

@@ -64,6 +64,16 @@ public class ProfileService {
 		
 		return certificateList;
 	}
+	/**
+	 * 자격증 등록
+	 * @param profileCertificate
+	 */
+	public void profileCertificateInsert(ProfileCertificate profileCertificate) {
+		
+		log.info("profileCertificate : {}", profileCertificate);
+		profileCertificateMapper.profileCertificateInsert(profileCertificate);
+		log.info("profileCertificate : {}", profileCertificate);
+	}
 	
 	/**
 	 * 수상이력 목록 조회
