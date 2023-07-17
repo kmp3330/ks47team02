@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="ks47team02.user.member.mapper.CompanyMapper">
+	
+	<!-- <resultMap type="User" id="userResultMap">
+		<id column="user_id" property="userId"></id>
+		<result column="user_pw" property="userPw"></result>
+		<result column="user_name" property="userName"></result>
+		<result column="level_code" property="levelCode"></result>
+		<result column="level_name" property="levelName"></result>
+		<result column="user_gender" property="userGender"></result>
+		<result column="career_check" property="careerCheck"></result>
+		<result column="freelancer_check" property="freelancerCheck"></result>
+		<result column="user_addr" property="userAddr"></result>
+		<result column="user_eamil" property="userEmail"></result>
+		<result column="user_phone" property="userPhone"></result>
+		<result column="user_join_date" property="userJoinDate"></result>
+		<result column="grade_fee_code" property="gradeFeeCode"></result>
+		<result column="user_grade" property="userGrade"></result>
+		<result column="total_score" property="totalScore"></result>
+		<result column="report_score" property="reportScore"></result>
+	</resultMap> -->
+	
+	
+</mapper>
