@@ -61,6 +61,7 @@ public class ProfileController {
 		model.addAttribute("profileIntroList", profileIntroList);
 		return "user/profile/profile_intro_insert";
 	}
+	
 
 	/**
 	 * 자기소개 화면
@@ -77,6 +78,16 @@ public class ProfileController {
 		return "user/profile/profile_intro_list";
 	}
 	
+	@GetMapping("/profileSkillInsert")
+	public String profilSkillInsert(Model model) {
+
+		List<ProfileSkill> profileSkillList = profileService.getProfileSkillList();
+		model.addAttribute("title", "메인화면");
+		model.addAttribute("titleText", "크게 보이는 글씨");
+		model.addAttribute("contents", "작게 보이는 글씨");
+		model.addAttribute("profileSkillList", profileSkillList);
+		return "user/profile/profile_Skill_insert";
+	}
 	/**
 	 * 보유기술 화면
 	 * @param model
