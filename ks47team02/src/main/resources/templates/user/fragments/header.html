@@ -33,10 +33,10 @@
 							</li>
 							
 							<!-- 구인구직 메뉴 -->
-							<li><a href="#">구인구직</a>
+							<li><a href="@{/announcement}">구인구직</a>
 								<ul class="sub-menu">
-									<li><a th:href="@{#}">구인구직</a></li>
-									<li><a th:href="@{#}">기업 추천 서비스</a></li>
+									<li><a th:href="@{/announcement/announcementList}">구인구직</a></li>
+									<li><a th:href="@{/recommend/recommendMain}">기업 추천 서비스</a></li>
 								</ul>
 							</li>
 							
@@ -61,6 +61,13 @@
 									<li><a th:href="@{#}">광고 진행 현황</a></li>
 								</ul>
 							</li>
+							
+							<!-- 로그인 메뉴 -->
+							<li class="menu-btn">
+                                <a th:if="${session.SID == null}" th:href="@{/login}" class="login">log in</a>
+                                <a th:unless="${session.SID == null}" th:href="@{/logout}" class="login">log out</a>
+                                <a href="#" class="template-btn">sign up</a>
+                            </li>
 						</ul>
 					</div>
 				</div>
