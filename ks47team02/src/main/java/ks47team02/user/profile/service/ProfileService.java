@@ -49,6 +49,12 @@ public class ProfileService {
 		
 		return profileIntroList;
 	}
+	/*보유기술 등록
+	 * @param profileSkill*/
+	public void profileSkillInsert(ProfileSkill profileSkill) {
+		profileSkillMapper.profileSkillInsert(profileSkill);
+	}
+	
 	/*회원별 기술 목록 조회 */
 	public List<ProfileSkill> getProfileSkillList() {
 			
