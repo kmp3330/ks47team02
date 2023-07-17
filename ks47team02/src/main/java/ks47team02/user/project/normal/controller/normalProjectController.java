@@ -165,11 +165,21 @@ public class normalProjectController {
 		return "user/project/normal/applyApplicant/removePerson";
 	}
 	
+	/**
+	 * 일반과제 게시글 삭제
+	 * */
 	@GetMapping("/removeProject")
 	public String removeProject(Model model) {
 		model.addAttribute("title", "일반과제 삭제페이지");
 		
 		return "user/project/normal/list/removeProject";
+	}
+	
+	@PostMapping("/removeProject")
+	public String removeProject(@RequestParam(value="userPw") String userPw ,Model model) {
+		model.addAttribute("title", "일반과제 삭제페이지");
+		
+		return "redirect:/normalProject/projectList";
 	}
 	
 	
