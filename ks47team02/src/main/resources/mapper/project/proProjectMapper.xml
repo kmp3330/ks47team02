@@ -122,23 +122,6 @@
 	 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<!-- 전문과제별 신청자 목록 -->
 	<select id="getProProjectApplicantList" parameterType="map" resultMap="proProjectResultMap">
 		

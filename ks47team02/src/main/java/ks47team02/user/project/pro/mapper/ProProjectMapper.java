@@ -24,9 +24,6 @@ public interface ProProjectMapper {
 		// 주제분야 리스트
 	public List<SubjectCate> getSubjectCateList();
 	
-	
-	
-	
 		// 전문 과제 별 신청자 목록
 	public List<ProProject> getProProjectApplcantList();
 }
