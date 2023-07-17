@@ -1,10 +1,180 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{user/layout/default}">
-	<th:block layout:fragment="customContents">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
 
-	</th:block>
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+</th:block>
 
+<th:block layout:fragment="customContents">
+	<!-- 콘텐츠 작성 공간 -->
+
+	<section class="employee-area section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section-top text-center">
+						<h2>행복한 2팀</h2>
+						<p>긍정적인 마인드로 행복한 미래를 위해 달린다.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="employee-slider owl-carousel owl-loaded owl-drag">
+						<div class="owl-stage-outer">
+							<div class="owl-stage"
+								style="transform: translate3d(-1695px, 0px, 0px); transition: all 0.25s ease 0s; width: 3390px;">
+								<div class="owl-item cloned active"
+									style="width: 545px; margin-right: 20px;">
+									<div class="single-slide d-sm-flex">
+										<div class="slide-img employee1">
+											<div class="hover-state">
+												<div class="hover-text text-center">
+													<h3>박규민</h3>
+													<h5>팀장</h5>
+												</div>
+											</div>
+										</div>
+										<div class="slide-text align-self-center">
+											<i class="fa fa-quote-left"></i>
+											<p>생각이 깊고 사람들 생각도 헤아릴 줄 아는 사람이며,
+												눈치가 빠르고 주변을 잘 실필줄 아는 사람이다.</p>
+										</div>
+									</div>
+								</div>
+								<div class="owl-item cloned active"
+									style="width: 545px; margin-right: 20px;">
+									<div class="single-slide d-sm-flex">
+										<div class="slide-img employee2">
+											<div class="hover-state">
+												<div class="hover-text text-center">
+													<h3>김재훈</h3>
+													<h5>팀원</h5>
+												</div>
+											</div>
+										</div>
+										<div class="slide-text align-self-center">
+											<i class="fa fa-quote-left"></i>
+											<p>항상 긍정적으로 생각하는 마인드가 너무 좋으며,
+												부정의 말을 거의 들어본적이 없다.</p>
+										</div>
+									</div>
+								</div>
+								<div class="owl-item cloned"
+									style="width: 545px; margin-right: 20px;">
+									<div class="single-slide d-sm-flex">
+										<div class="slide-img employee3">
+											<div class="hover-state">
+												<div class="hover-text text-center">
+													<h3>이혜영</h3>
+													<h5>팀원</h5>
+												</div>
+											</div>
+										</div>
+										<div class="slide-text align-self-center">
+											<i class="fa fa-quote-left"></i>
+											<p>매사에 그럴수도 있지라는 말과 긍정적인 태도로 팀원들의 분위기를 좋게 만들어주며,
+												팀원에게 도움을 주려는 모습과 팀에게 도움이 되고자 한다.</p>
+										</div>
+									</div>
+								</div>
+								<div class="owl-item cloned"
+									style="width: 545px; margin-right: 20px;">
+									<div class="single-slide d-sm-flex">
+										<div class="slide-img employee5">
+											<div class="hover-state">
+												<div class="hover-text text-center">
+													<h3>임민호</h3>
+													<h5>팀원</h5>
+												</div>
+											</div>
+										</div>
+										<div class="slide-text align-self-center">
+											<i class="fa fa-quote-left"></i>
+											<p>다른 팀원들이 놓치고 지나간 부분을 세세하게 잘 짚어주며,
+												매사에 침착하게 문제를 해결한다.</p>
+										</div>
+									</div>
+								</div>
+								<div class="owl-item cloned"
+									style="width: 545px; margin-right: 20px;">
+									<div class="single-slide d-sm-flex">
+										<div class="slide-img employee4">
+											<div class="hover-state">
+												<div class="hover-text text-center">
+													<h3>최대한</h3>
+													<h5>팀원</h5>
+												</div>
+											</div>
+										</div>
+										<div class="slide-text align-self-center">
+											<i class="fa fa-quote-left"></i>
+											<p>서로의 특성을 잘 받아들여서로의 부족함을 보완해주려고 하며,
+												자기 보다 다른 사람을 더 생각하는 사람이다.</p>
+										</div>
+									</div>
+								</div>
+								<div class="owl-item cloned"
+									style="width: 545px; margin-right: 20px;">
+									<div class="single-slide d-sm-flex">
+										<div class="slide-img employee6">
+											<div class="hover-state">
+												<div class="hover-text text-center">
+													<h3>김현관</h3>
+													<h5>팀원</h5>
+												</div>
+											</div>
+										</div>
+										<div class="slide-text align-self-center">
+											<i class="fa fa-quote-left"></i>
+											<p>다른 사람들은 생각하지 못한 창의적인 방법을 제시하며,
+												코딩 속도가 빠르고 능숙하다.
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="owl-item cloned"
+									style="width: 545px; margin-right: 20px;">
+									<div class="single-slide d-sm-flex">
+										<div class="slide-img employee7">
+											<div class="hover-state">
+												<div class="hover-text text-center">
+													<h3>임하라</h3>
+													<h5>팀원</h5>
+												</div>
+											</div>
+										</div>
+										<div class="slide-text align-self-center">
+											<i class="fa fa-quote-left"></i>
+											<p>이렇게 순수한 사람이 있을까, 약간 걱정될 정도로 선한 친구이며,
+												착해서 남 배려를 먼저 하려는 모습이 보인다.
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="owl-nav disabled">
+							<button type="button" role="presentation" class="owl-prev">
+								<span aria-label="Previous">‹</span>
+							</button>
+							<button type="button" role="presentation" class="owl-next">
+								<span aria-label="Next">›</span>
+							</button>
+						</div>
+						<div class="owl-dots disabled">
+							<button role="button" class="owl-dot active">
+								<span></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</th:block>
 
 </html>
