@@ -21,24 +21,24 @@
  	
  	<select id="getRecommendSupport" resultMap="RecommendSupportResultMap">
  		SELECT
-			user_id,
-			cp_id,
-			cp_name,
-			area_cate,
-			job_opening,
-			required_skills,
-			career,
-			wage,
-			application_date
+			cs.user_id,
+			cs.cp_id,
+			cs.cp_name,
+			cs.area_cate,
+			cs.job_opening,
+			cs.required_skills,
+			cs.career,
+			cs.wage,
+			cs.application_date
 		FROM
-			company_support
+			company_support AS cs
  	</select>
  	
  	<select id="getRecommendSupportCode" resultMap="RecommendSupportResultMap">
  		SELECT
-			company_support_code
+			cs.company_support_code
 		FROM
-			company_support
+			company_support AS cs
 			
  	</select>
  	
@@ -48,13 +48,13 @@
  	
  	<select id="getRecommendSupportRank" resultMap="RecommendSupportResultMap">
  		SELECT 
-			cp_name
+			cs.cp_name
 		FROM 
-			company_support
+			company_support AS cs
 		GROUP BY 
-			cp_name
+			cs.cp_name
 		ORDER BY 
-			cp_name DESC
+			cs.cp_name DESC
 		LIMIT 
 			5
  	</select>
