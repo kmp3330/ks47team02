@@ -7,16 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ks47team02.user.profile.dto.ProfileAward;
 import ks47team02.user.profile.dto.ProfileCertificate;
-import ks47team02.user.profile.dto.ProfileEduSpec;
 import ks47team02.user.profile.dto.ProfileIntro;
 import ks47team02.user.profile.dto.ProfileSkill;
-import ks47team02.user.profile.dto.ProfileWorkSpec;
 import ks47team02.user.profile.mapper.ProfileAwardMapper;
 import ks47team02.user.profile.mapper.ProfileCertificateMapper;
-import ks47team02.user.profile.mapper.ProfileEduSpecMapper;
 import ks47team02.user.profile.mapper.ProfileIntroMapper;
 import ks47team02.user.profile.mapper.ProfileSkillMapper;
-import ks47team02.user.profile.mapper.ProfileWorkSpecMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,8 +26,6 @@ public class ProfileService {
 	private final ProfileAwardMapper profileAwardMapper;
 	private final ProfileIntroMapper profileIntroMapper;
 	private final ProfileSkillMapper profileSkillMapper;
-	private final ProfileWorkSpecMapper profileWorkSpecMapper;
-	private final ProfileEduSpecMapper profileEduSpecMapper;
 	
 	/*자기소개 등록
 	 * @param profileIntro*/
@@ -49,13 +43,7 @@ public class ProfileService {
 		
 		return profileIntroList;
 	}
-	/*보유기술 등록
-	 * @param profileSkill*/
-	public void profileSkillInsert(ProfileSkill profileSkill) {
-		profileSkillMapper.profileSkillInsert(profileSkill);
-	}
 	
-	/*회원별 기술 목록 조회 */
 	public List<ProfileSkill> getProfileSkillList() {
 			
 		List<ProfileSkill> profileSkillList = profileSkillMapper.getProfileSkillList();
@@ -63,24 +51,6 @@ public class ProfileService {
 		log.info("profileSkillList : {}", profileSkillList);
 		
 		return profileSkillList;
-	}
-	/*회원별 보유기술 목록 조회 */
-	public List<ProfileWorkSpec> getProfileWorkSpecList() {
-		
-		List<ProfileWorkSpec>profileWorkSpecList = profileWorkSpecMapper.getProfileWorkSpecList();
-		
-		log.info("profileWorkSpecList : {}", profileWorkSpecList);
-		
-		return profileWorkSpecList;
-	}
-	/*회원별 학력 목록 조회 */
-	public List<ProfileEduSpec> getProfileEduSpecList(){
-		
-		List<ProfileEduSpec> profileEduSpecList = profileEduSpecMapper.getProfileEduSpecList();
-		
-		log.info("profileEduSpeclList : {}", profileEduSpecList);
-		
-		return profileEduSpecList;
 	}
 	
 	/**
