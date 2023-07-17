@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
 import ks47team02.user.project.normal.service.NormalProjectService;
@@ -19,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/normalProject")
-@AllArgsConstructor
 @Slf4j
+@AllArgsConstructor
 public class normalProjectController {
 	
 	/*생성자 메서드*/
@@ -81,11 +82,18 @@ public class normalProjectController {
 		log.info("addProject normalProjects : {}", normalProjects);
 		
 		
-		return "redirect:/user/project/normal/list/projectList";
+		return "redirect:/normalProject/projectList";
 	}
 	
 	@GetMapping("/addApplicantAccept")
 	public String addApplicantAccept(Model model) {
+		model.addAttribute("title", "일반과제 신청");
+		
+		return "user/project/normal/applyApplicant/addApplicantAccept";
+	}
+	
+	@PostMapping("/addApplicantAccept")
+	public String addApplicantAccept(@RequestParam(value="normalProjectCode") String normalProjectCode ,Model model) {
 		model.addAttribute("title", "일반과제 신청");
 		
 		return "user/project/normal/applyApplicant/addApplicantAccept";
@@ -101,13 +109,26 @@ public class normalProjectController {
 	/*등록영역 끝*/
 	
 	
-	
-	
-	
-	
 	/*수정영역*/
-	@GetMapping("/modifyProject")
+	@PostMapping("/modifyProject")
 	public String modifyProject(Model model) {
+		log.info("안녕");
+		
+		
+		return "redirect:/normalProject/projectList";
+	}
+	
+	
+	/**
+	 * @Param normalProjects normalProjectCode
+	 * 
+	 * return 
+	 * */
+	@GetMapping("/modifyProject")
+	public String modifyProject(@RequestParam(value="normalProjectCode") String normalProjectCode
+			,Model model) {
+		
+		log.info("일반과제 수정할거 번호 :{}",normalProjectCode);
 		model.addAttribute("title", "일반과제 수정 페이지");
 		
 		return "user/project/normal/list/modifyProject";
@@ -152,11 +173,21 @@ public class normalProjectController {
 		return "user/project/normal/applyApplicant/removePerson";
 	}
 	
+	/**
+	 * 일반과제 게시글 삭제
+	 * */
 	@GetMapping("/removeProject")
 	public String removeProject(Model model) {
 		model.addAttribute("title", "일반과제 삭제페이지");
 		
 		return "user/project/normal/list/removeProject";
+	}
+	
+	@PostMapping("/removeProject")
+	public String removeProject(@RequestParam(value="userPw") String userPw ,Model model) {
+		model.addAttribute("title", "일반과제 삭제페이지");
+		
+		return "redirect:/normalProject/projectList";
 	}
 	
 	
@@ -178,10 +209,7 @@ public class normalProjectController {
 		
 		log.info("normalProjectList = {}", "안녕");
 		List<NormalProjects> normalProjectList =  normalProjectService.getNormalProjects();
-		
 		model.addAttribute("normalProjectList", normalProjectList);
-		
-		
 		model.addAttribute("title", "일반과제 목록");
 		
 		return "user/project/normal/list/projectList";
