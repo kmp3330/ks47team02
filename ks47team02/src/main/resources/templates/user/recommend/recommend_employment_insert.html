@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/user/assets/css/style.css">
+<link rel="stylesheet" href="/user/assets/css/table.css">
+<style>
+input[type='date']::before {
+	content: attr(data-placeholder);
+	width: 100%;
+}
+</style>
+
+</head>
+<th:block layout:fragment="customJs">
+	<script th:src="@{/js/jquery-3.7.0.js}"></script>
+	<script>
+		// 유효성검사 함수
+		const validateCheck = function(element){
+			let data = $(element).val();
+			let eleId = $(element).attr('id');
+			if(typeof data == 'undefined' || data == null || data == '' ){
+				let cate = $(`label[for="${eleId}"]`).text();
+				alert(`${cate} 필수 입력항목입니다.`);
+				$(element).focus();
+				return false;
+			}
+			return true;
+		}
+		
+			// 회원 가입 
+			$('#addEmploymentBtn').click(function(){
+				const btnValidate = $('#addEmploymentForm input');
+				let isSubmit= false;
+				
+				btnValidate.each((idx, item) => {    				
+	    			isSubmit = validateCheck(item);
+	    			return isSubmit;
+    			})
+				if(isSubmit)$('#addEmploymentForm').submit();
+				
+			})
+			
+			// 취소 버튼 클릭시 초기화 
+			$('#resetBtn').click(function(){
+				e.preventDefault();
+			});
+		</script>
+</th:block>
+<body>
+	<th:block layout:fragment="customContents">
+		<section class="jobs-area section-padding">
+			<div class="container col-lg-12">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="sidebar">
+							<div class="single-item mb-4">
+								<h4 class="mb-4">기업 추천 서비스</h4>
+								<a th:href="@{/recommend/recommendMain}"
+									class="sidebar-btn d-flex justify-content-between mb-3"><span>분류별
+										Top5</span> </a> <a th:href="@{/recommend/recommendScrap}"
+									class="sidebar-btn d-flex justify-content-between mb-3"><span>스크랩
+										순</span> </a> <a th:href="@{/recommend/recommendSupport}"
+									class="sidebar-btn d-flex justify-content-between mb-3"><span>기업
+										지원 순</span> </a> <a th:href="@{/recommend/recommendEmployment}"
+									class="sidebar-btn d-flex justify-content-between mb-3"><span>채용
+										단계별 채용 순</span> </a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-9">
+						<div class="single-job mb-4 justify-content-between text-center">
+							<div class="card">
+								<div class="card-header border-0">
+									<h3 class="mb-0 title_color text-left">자격증 등록</h3>
+									<div class="card-tools">
+										<a th:href="@{#}" id="employmentInsertbtn"
+											class="genric-btn info-border circle"> <i class="fas">등록
+												완료</i>
+										</a> <a th:href="@{#}" id="employmentResetbtn"
+											class="genric-btn danger-border circle"> <i class="fas">취소</i>
+										</a>
+									</div>
+								</div>
+								<div class="card-body table-responsive p-0">
+									<form id="addEmploymentForm" th:action="@{/recommend/RecommendEmployment}"
+										class="d-md-flex justify-content-between">
+										<table class="table table-valign-middle">
+											<thead>
+												<tr>
+													<th>구분</th>
+													<th>내용</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><label for="companyEmploymentCode">채용 공고
+															코드</label></td>
+													<td><input type="text" id="companyEmploymentCode"
+														name="companyEmploymentCode" /></td>
+												</tr>
+												<tr>
+													<td><label for="companySupportCode">회사 지원 일시</label></td>
+													<td><select id="companySupportCode"
+														name="companySupportCode">
+															<th:block
+																th:unless="${#lists.isEmpty(recommendSupportCode)}"
+																th:each="l : ${recommendSupportCode}">
+																<option th:value="${l.companySupportCode}">[[${l.companySupportCode}]]</option>
+															</th:block>
+															<th:block th:if="${#lists.isEmpty(recommendSupportCode)}">
+																<option th:value="">등록된 코드가 없습니다.</option>
+															</th:block>
+													</select></td>
+												</tr>
+												<tr>
+													<td><label for="userId">회원 아이디</label></td>
+													<td><input type="text" id="userId" name="userId" /></td>
+												</tr>
+												<tr>
+													<td><label for="announcementCode">공고 코드</label></td>
+													<td><input type="text" id="announcementCode"
+														name="announcementCode" /></td>
+												</tr>
+												<tr>
+													<td><label for="joinCateCode">참여 분야 코드</label></td>
+													<td><input type="text" id="joinCateCode"
+														name="joinCateCode" /></td>
+												</tr>
+												<tr>
+													<td><label for="joinCateName">참여 분야</label></td>
+													<td><input type="text" id="joinCateName"
+														name="joinCateName" /></td>
+												</tr>
+												<tr>
+													<td><label for="areaCode">지역 코드</label></td>
+													<td><input type="text" id="areaCode" name="areaCode" />
+													</td>
+												</tr>
+												<tr>
+													<td><label for="areaCate">지역</label></td>
+													<td><input type="text" id="areaCate" name="areaCate" />
+													</td>
+												</tr>
+												<tr>
+													<td><label for="jobOpening">채용직</label></td>
+													<td><input type="text" id="jobOpening"
+														name="jobOpening" /></td>
+												</tr>
+												<tr>
+													<td><label for="requiredSkills">요구 기술</label></td>
+													<td><input type="text" id="requiredSkills"
+														name="requiredSkills" /></td>
+												</tr>
+												<tr>
+													<td><label for="career">경력</label></td>
+													<td><input type="text" id="career" name="career" /></td>
+												</tr>
+												<tr>
+													<td><label for="wage">임금</label></td>
+													<td><input type="text" id="wage" name="wage" /></td>
+												</tr>
+												<tr>
+													<td><label for="startDate">시작일자</label></td>
+													<td><input type="date" data-placeholder="날짜 선택"
+														id="startDate" name="startDate" /></td>
+												</tr>
+												<tr>
+													<td><label for="dueDate">마감일자</label></td>
+													<td><input type="date" data-placeholder="날짜 선택"
+														id="dueDate" name="dueDate" /></td>
+												</tr>
+												<tr>
+													<td><label for="jobNormalRunCode">진행 상황 분류 코드</label></td>
+													<td><input type="text" id="jobNormalRunCode"
+														name="jobNormalRunCode" /></td>
+												</tr>
+												<tr>
+													<td><label for="jobNormalRun">진행 상황 분류</label></td>
+													<td><input type="text" id="jobNormalRun"
+														name="jobNormalRun" /></td>
+												</tr>
+											</tbody>
+										</table>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</th:block>
+
+</body>
+</html>

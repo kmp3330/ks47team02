@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 public class AnnouncementController {
 	
 	// 생성자 메소드 의존성 주입
-	private final AnnouncementMapper announcementMapper;
 	private final AnnouncementService announcementService;
 
 	@PostMapping("/announcementInsert")

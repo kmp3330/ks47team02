@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller("userCommonController")
 public class CommonController {
-
 	@GetMapping("/")
 	public String main(Model model) {
 		
@@ -23,7 +22,4 @@ public class CommonController {
 		
 		return "user/main";
 	}
-	
-	
-	
 }

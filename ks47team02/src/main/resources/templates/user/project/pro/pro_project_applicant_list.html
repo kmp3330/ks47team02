@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{user/layout/default}">
+<head>
+<meta charset="UTF-8">
+<style>
+	table {
+		border : 1px solid black;
+		width: 1000px;
+		table-layout: fixed;
+		text-align: center;
+	}
+
+
+</style>
+	</head>
+		<th:block layout:fragment="customContents">
+			<table>
+				<thead>
+					<tr>
+						<th>신청한 아이디</th>
+						<th>신청날짜</th>
+						<th>진행상태</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(proProjectApplcantList)}">
+						<td colspan="7">아직 신청자가 없습니다.</td>
+					</tr>
+					<tr th:unless="${#lists.isEmpty(proProjectApplcantList)}"
+						th:each="p : ${proProjectApplcantList}">
+						<td th:text="${p.applicantUserId}"></td>
+						<td th:text="${p.applicationDate}"></td>
+						<td th:text="${p.runName}"></td>
+
+						<td>
+							<a th:href="@{#}">신청자 승인</a>
+						</td>
+						<td>
+							<a th:href="@{#}">신청자 거절</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+</html>

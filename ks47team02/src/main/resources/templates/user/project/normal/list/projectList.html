@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+
+	
+		<h1>다시 테스트</h1>
+	
+
+	<th:block layout:fragment="customContents">
+		<!--/* 검색(searchFragment2 select:상품코드, 상품명, 판매자 아이디, 판매자 이름, 판매자 이메일 */-->
+		<!--/* 검색 주소: /goods/goodsList, HTTP method: get */-->
+		<a th:href="@{/user/project/normal/list/addProject}">프로젝트 추가</a>
+		
+		<br><br>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>일반과제명</th>
+					<th>참여분야</th>
+					<th>작업분류</th>
+					<th>주제분류</th>
+					<th>요구기술</th>
+					<th>프로젝트 내용</th>
+					<th>프로젝트 최대 인원</th>
+					<th>프로젝트 진행상황</th>
+					<th>모집글 작성일시</th>
+					<th>모집글 마감 일시</th>
+					<th>프로젝트 시작 일시</th>
+					<th>프로젝트 완료 일시</th>
+					<th>프로젝트 일수</th>
+					<th>일별점수</th>
+					<th>프로젝트 완료시 점수</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${#lists.isEmpty(normalProjectList)}">
+					<td colspan="15">등록된 회원의 정보가 없습니다.</td>
+				</tr>
+				<tr th:unless="${#lists.isEmpty(normalProjectList)}"
+					th:each="l : ${normalProjectList}">
+					<td th:text="${l.normalProjectName}"></td>
+					<td th:text="${l.joinCateName}"></td>
+					<td th:text="${l.workCateName}"></td>
+					<td th:text="${l.subjectCateName}"></td>
+					<td th:text="${l.requiredSkill}"></td>
+					<td th:text="${l.normalProjectDetail}"></td>
+					<td th:text="${l.projectMaxPeopleNum}"></td>
+					<td th:text="${l.progressStatusCategoryName}"></td>
+					<td th:text="${l.projectAdvertiseStartDate}"></td>
+					<td th:text="${l.projectAdvertiseFinishDate}"></td>
+					<td th:text="${l.projectStartUpDate}"></td>
+					<td th:text="${l.projectFinishDate}"></td>
+					<td th:text="${l.projectDay}"></td>
+					<td th:text="${l.projectDayScore}"></td>
+					<td th:text="${l.projectFinishScore}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</th:block>
+	
+</html>

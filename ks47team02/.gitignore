@@ -32,6 +32,3 @@ build/
 
 ### VS Code ###
 .vscode/
-!/src/main/resources/logback-spring.xml
-!/src/main/resources/log4jdbc.log4j2.properties
-!/src/main/resources/application.properties
