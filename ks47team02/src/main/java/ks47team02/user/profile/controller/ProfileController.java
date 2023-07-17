@@ -5,18 +5,23 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ks47team02.user.profile.dto.ProfileAward;
 import ks47team02.user.profile.dto.ProfileCertificate;
+import ks47team02.user.profile.dto.ProfileEduSpec;
 import ks47team02.user.profile.dto.ProfileIntro;
 import ks47team02.user.profile.dto.ProfileSkill;
+import ks47team02.user.profile.dto.ProfileWorkSpec;
 import ks47team02.user.profile.service.ProfileService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/profile")
 @AllArgsConstructor
+@Slf4j
 public class ProfileController {
 	
 	private final ProfileService profileService;
@@ -36,7 +41,27 @@ public class ProfileController {
 		return "user/profile/profileList";
 	}
 	
-	/**
+	@PostMapping("/profileIntroInsert")
+	public String profileIntroInsert(ProfileIntro profileIntro) {
+		
+		log.info("자기소개 등록시 입력정보: {}", profileIntro);
+		
+		profileService.profileIntroInsert(profileIntro);
+		
+		return "redirect:/profile/profileIntroList";
+	}
+	
+	@GetMapping("/profileIntroInsert")
+	public String profileIntroInsert(Model model) {
+
+		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList();
+		model.addAttribute("title", "메인화면");
+		model.addAttribute("titleText", "크게 보이는 글씨");
+		model.addAttribute("contents", "작게 보이는 글씨");
+		model.addAttribute("profileIntroList", profileIntroList);
+		return "user/profile/profile_intro_insert";
+	}
+	/*
 	 * 자기소개 화면
 	 * @param model
 	 * @return
@@ -50,17 +75,26 @@ public class ProfileController {
 		model.addAttribute("profileIntroList", profileIntroList);
 		return "user/profile/profile_intro_list";
 	}
-	@GetMapping("/profileIntroInsert")
-	public String profileIntroInsert(Model model) {
+	
+	@PostMapping("/profileSkillInsert")
+	public String profileSkillInsert(ProfileSkill profileSkill) {
+		
+		log.info("자기소개 등록시 입력정보: {}", profileSkill);
+		
+		profileService.profileSkillInsert(profileSkill);
+		
+		return "redirect:/profile/profileSkillList";
+	}
+	@GetMapping("/profileSkillInsert")
+	public String profilSkillInsert(Model model) {
 
-		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList();
+		List<ProfileSkill> profileSkillList = profileService.getProfileSkillList();
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
-		model.addAttribute("profileIntroList", profileIntroList);
-		return "user/profile/profile_intro_insert";
+		model.addAttribute("profileSkillList", profileSkillList);
+		return "user/profile/profile_Skill_insert";
 	}
-
 	/**
 	 * 보유기술 화면
 	 * @param model
@@ -84,9 +118,12 @@ public class ProfileController {
 	 */
 	@GetMapping("/profileWorkSpecList")
 	public String profileWorkSpecList(Model model) {
+		List<ProfileWorkSpec>profileWorkSpecList = profileService.getProfileWorkSpecList();
 		model.addAttribute("title", "경력");
 		model.addAttribute("titleText", "경력 관리");
 		model.addAttribute("contents", "경력을 관리할 수 있는 페이지입니다.");
+		model.addAttribute("profileWorkSpecList", profileWorkSpecList);
+		
 		return "user/profile/profile_work_spec_list";
 	}
 	
@@ -97,9 +134,12 @@ public class ProfileController {
 	 */
 	@GetMapping("/profileEduSpecList")
 	public String profileEduSpecList(Model model) {
+		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList();
 		model.addAttribute("title", "학력");
 		model.addAttribute("titleText", "학력 관리");
 		model.addAttribute("contents", "학력을 관리할 수 있는 페이지입니다.");
+		model.addAttribute("profileEduSpecList", profileEduSpecList);
+		
 		return "user/profile/profile_edu_spec_list";
 	}
 	
@@ -122,12 +162,25 @@ public class ProfileController {
 		return "user/profile/profile_certificate_list";
 	}
 	
+	/**
+	 * 자격증 등록화면
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/profileCertificateInsert")
-	public String profileCertificateInsert() {
+	public String profileCertificateInsert(Model model) {
 		
-		
+		model.addAttribute("title", "자격증 등록화면");
 		
 		return "user/profile/profile_certificate_insert";
+	}
+	
+	@PostMapping("/profileCertificateInsert")
+	public String profileCertificateInsert(ProfileCertificate profileCertificate) {
+		
+		profileService.profileCertificateInsert(profileCertificate);
+		
+		return "redirect:/profile/profileCertificateList";
 	}
 	
 	/**

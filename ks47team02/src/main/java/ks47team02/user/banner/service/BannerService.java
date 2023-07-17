@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class BannerService {
 
-    private final BannerMapper bannerMapper;
+	private final BannerMapper bannerMapper;
 
     /**
      * 배너광고 신청 기업 목록 조회
@@ -23,8 +23,12 @@ public class BannerService {
      */
     public List<BannerRequestCompany> bannerRequestCompanyList(){
         List<BannerRequestCompany> bannerRequestCompanyList = bannerMapper.bannerRequestCompanyList();
-        log.info("수상이력 목록 조회: {}", bannerRequestCompanyList);
+        log.info("신청 이력 조회: {}", bannerRequestCompanyList);
 
         return bannerRequestCompanyList;
+    }
+
+    public void request(BannerRequestCompany bannerRequestCompany){
+        bannerMapper.request(bannerRequestCompany);
     }
 }

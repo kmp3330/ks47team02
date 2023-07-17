@@ -5,6 +5,35 @@
 
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
+	<script>
+		
+		// 유효성 검사 함수
+		const vaildCheck = ele => {
+		
+			let eleValue = $(ele).val();
+			let elePlaceholder = $(ele).attr('placeholder');
+			if(typeof eleValue == 'undefined' || eleValue == null || eleValue == '') {
+				alert(`${elePlaceholder} 필수 입력 항목입니다.`);
+				$(ele).focus();
+				return false;
+			}
+			return true;			
+		}
+		
+		$('#certificateInsertbtn').click(function () {
+		
+			let inputEles = $('#addCertificateForm input[type="text"],input[type="date"]');
+			let isSubmit = false;
+			inputEles.each( (idx, item) => {
+				isSubmit = vaildCheck(item);
+				return isSubmit;
+			});
+			if (isSubmit) $('#addCertificateForm').submit();		
+		});
+		
+		$('')
+		
+	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -39,16 +68,16 @@
 							<div class="card-header border-0">
 								<h3 class="mb-0 title_color text-left">자격증 등록</h3>
 								<div class="card-tools">
-									<a th:href="@{#}" class="genric-btn info-border circle">
-										<i class="fas">등록 완료</i>
-									</a>
-									<a th:href="@{#}" class="genric-btn danger-border circle">
+									<a th:href="@{#}" id="certificateInsertbtn" 
+										class="genric-btn info-border circle"> <i
+										class="fas">등록 완료</i>
+									</a> <a th:href="@{#}" id="certificateResetbtn" class="genric-btn danger-border circle">
 										<i class="fas">취소</i>
 									</a>
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">
-								<form action="#" class="d-md-flex justify-content-between">
+								<form id="addCertificateForm" th:action="@{#}" class="d-md-flex justify-content-between">
 									<table class="table table-valign-middle">
 										<thead>
 											<tr>
@@ -67,7 +96,7 @@
 												<td><input class="genric-btn" type="text"
 													placeholder="기관명" onfocus="this.placeholder = ''"
 													onblur="this.placeholder = '기관명'" required=""></td>
-												<td><input class="genric-btn" type="date"></td>
+												<td><input class="genric-btn" type="date" placeholder="취득일시"></td>
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">

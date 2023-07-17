@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface BannerMapper {
     public List<BannerRequestCompany> bannerRequestCompanyList();
+
+    public int request(BannerRequestCompany bannerRequestCompany);
 }

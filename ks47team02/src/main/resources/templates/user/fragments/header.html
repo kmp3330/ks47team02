@@ -7,15 +7,14 @@
 			<div class="row">
 				<div class="col-lg-2">
 					<div class="logo-area">
-						<a th:href="@{/}"><img th:src="@{/user/assets/images/logo-light.png}" alt="logo"
-								style="width: 180px; height: auto;"></a>
+						<a th:href="@{/}"><img
+							th:src="@{/user/assets/images/logo-light.png}" alt="logo"
+							style="width: 180px; height: auto;"></a>
 					</div>
 				</div>
 				<div class="col-lg-10">
 					<div class="custom-navbar">
-						<span></span>
-						<span></span>
-						<span></span>
+						<span></span> <span></span> <span></span>
 					</div>
 
 					<!-- 상단 메뉴 -->
@@ -27,18 +26,19 @@
 							<!-- 프로젝트 메뉴 -->
 							<li><a th:href="@{#}">프로젝트</a>
 								<ul class="sub-menu">
-									<li><a th:href="@{#}">일반과제 프로젝트</a></li>
-									<li><a th:href="@{#}">전문과제 프로젝트</a></li>
-								</ul>
-							</li>
+									<li><a th:href="@{/normalProject/projectList}">일반과제
+											프로젝트</a></li>
+									<li><a th:href="@{/project/pro/proProjectList}">전문과제
+											프로젝트</a></li>
+								</ul></li>
 
 							<!-- 구인구직 메뉴 -->
-							<li><a href="#">구인구직</a>
+							<li><a th:href="@{/announcement/announcementList}">구인구직</a>
 								<ul class="sub-menu">
-									<li><a th:href="@{#}">구인구직</a></li>
-									<li><a th:href="@{#}">기업 추천 서비스</a></li>
-								</ul>
-							</li>
+									<li><a th:href="@{/announcement/announcementList}">구인구직</a></li>
+									<li><a th:href="@{/recommend/recommendMain}">기업 추천
+											서비스</a></li>
+								</ul></li>
 
 							<!-- 프로필 메뉴 -->
 							<li><a th:href="@{/profile/}">구직 프로필</a>
@@ -50,8 +50,7 @@
 									<li><a th:href="@{/profile/profileCertificateList}">자격증</a></li>
 									<li><a th:href="@{/profile/profileAwardList}">수상이력</a></li>
 									<li><a th:href="@{/profile/profilePortfolioList}">포트폴리오</a></li>
-								</ul>
-							</li>
+								</ul></li>
 
 							<!-- 광고 메뉴 -->
 							<li><a th:href="@{/banner}">광고문의</a>
@@ -60,8 +59,14 @@
 									<li><a th:href="@{/banner/bannerRequest}">광고 신청</a></li>
 									<li><a th:href="@{/banner/bannerRequestList}">광고 신청 현황</a></li>
 									<li><a th:href="@{/banner/bannerProcessList}">광고 진행 현황</a></li>
-								</ul>
-							</li>
+								</ul></li>
+
+							<!-- 로그인 메뉴 -->
+							<li class="menu-btn"><a th:if="${session.SID == null}"
+								th:href="@{/login}" class="login">log in</a> <a
+								th:unless="${session.SID == null}" th:href="@{/logout}"
+								class="login">log out</a> <a href="#" class="template-btn">sign
+									up</a></li>
 						</ul>
 					</div>
 				</div>
@@ -79,4 +84,4 @@
 		</div>
 	</div>
 </header>
-<html>
+</html>

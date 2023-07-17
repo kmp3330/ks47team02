@@ -1,6 +1,10 @@
 package ks47team02.admin.dto;
 
+import lombok.Data;
+
+@Data
 public class Member {
+
 	private String userId;
 	private String userPw;
 	private String userName;
@@ -19,7 +23,4 @@ public class Member {
 	private String totalScore;
 	private String reportScore;
 	
-
-	
-
 }
