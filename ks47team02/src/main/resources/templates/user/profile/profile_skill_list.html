@@ -38,7 +38,7 @@
 							<div class="card-header border-0">
 								<h3 class="mb-0 title_color text-left">보유 기술</h3>
 								<div class="card-tools">
-									<a th:href="@{/profile/profileIntroInsert}" class="genric-btn info-border circle"> <i class="fas">등록</i>
+									<a th:href="@{/profile/profileSkillInsert}" class="genric-btn info-border circle"> <i class="fas">등록</i>
 									</a>
 								</div>
 							</div>
@@ -51,7 +51,7 @@
 											<th>기술명</th>
 											<th>숙련도</th>
 											<th>경험</th>
-											<th>정보 등록 일시</th>
+											<!-- <th>정보 등록 일시</th> -->
 											<th>공개 여부</th>
 											<th>입사지원시 공개여부</th>
 											<th>수정</th>
@@ -66,7 +66,7 @@
 											<td th:text="${l.userSkill}"></td>
 											<td th:text="${l.userSkillRank}"></td>
 											<td th:text="${l.userExperience}"></td>
-											<td th:text="${l.userRegDate}"></td>
+											<!-- <td th:text="${l.userRegDate}"></td> -->
 											<td th:text="${l.profileHidden}"></td>
 											<td th:text="${l.profileApplicationHidden}"></td>
 											<td><a th:href="@{#}" class="genric-btn success-border circle"> <i
