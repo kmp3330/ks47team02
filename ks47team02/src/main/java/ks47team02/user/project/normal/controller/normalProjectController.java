@@ -2,6 +2,7 @@ package ks47team02.user.project.normal.controller;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +14,13 @@ import ks47team02.user.project.normal.dto.joinCate;
 import ks47team02.user.project.normal.dto.subjectCate;
 import ks47team02.user.project.normal.service.NormalProjectService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
 @RequestMapping("/normalProject")
 @AllArgsConstructor
-@lombok.extern.slf4j.Slf4j
+@Slf4j
 public class normalProjectController {
 	
 	/*생성자 메서드*/
