@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/default}">
+      layout:decorate="~{user/layout/default}">
 
 	<head>
     	<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
@@ -24,7 +24,7 @@
     			width: 99%; 
     			height: 25px;
     		}
-    		#addGoodsBtn, #resetBtn {
+    		#addProProjectBtn, #resetBtn {
     			width: 49%;
     			height: 25px;
     		}
@@ -99,7 +99,7 @@
     		
     		//회원가입버튼시 이벤트
     		
-    		$('#addProProjrctBtn').click(function(){
+    		$('#addProProjectBtn').click(function(){
     			const validateEle = $('#addProProjectForm input');
     			let isSubmit = false;
     			validateEle.each((idx, item) => {
@@ -128,13 +128,16 @@
     </th:block>
 
 	<th:block layout:fragment="customContents">
-		<form id="addProProjectForm" th:action="@{/pro/pro_project_insert}" method="post">
+		<form id="addProProjectForm" name="addProProjectForm" th:action="@{user/project/pro/proProjectInsert}" method="post">
 			<table>
 				<tbody>			
 					<tr>
 						<td>
-							<input type="text" id="proProjectTitile" name="proProjectTitile" 
-								   placeholder="제목을 입력해주세요." />
+							<label for="proProjectTiltle">제목</label>
+						</td>
+						<td>
+							<input type="text" id="proProjectTiltle" name="proProjectTiltle" 
+								   placeholder="제목을 입력하세요" />
 						</td>
 					</tr>
 					<tr>
@@ -142,41 +145,41 @@
 						    <label for="joinCate">참여분야</label>
 						</td>
 						<td>
-						    <select id="joinCateChoice" name="joinCateChoice">
+						    <select id="joinCate" name="joinCate">
 						         <option value="">===참여분야를 선택해주세요.===</option>
-						         <option th:unless="${#lists.isEmpty(joinCateList)}"
-						                 th:each="j : ${joinCateList}"
-						                 th:value="${j.joinCateCode}"
+						         <option th:unless="${#lists.isEmpty(joinCate)}"
+						                 th:each="j : ${joinCate}"
+						                 th:value="*{joinCateCode}"
 						                 th:text="|:::: ${j.joinCateName}::::|">
 						         </option>
 						    </select>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
+						<td>
 							<label for="workCate">작업분야</label>
 						</td>
 						<td>
-						    <select id="workCateChoice" name="workCateChoice">
-						         <option value="">===참여분야를 선택해주세요.===</option>
-						         <option th:unless="${#lists.isEmpty(workCateList)}"
-						                 th:each="w : ${workCateList}"
-						                 th:value="${w.workCateCode}"
+						    <select id="workCate" name="workCate">
+						         <option value="">===작업분야를 선택해주세요.===</option>
+						         <option th:unless="${#lists.isEmpty(workCate)}"
+						                 th:each="w : ${workCate}"
+						                 th:value="*{workCateCode}"
 						                 th:text="|:::: ${w.workCateName}::::|">
 						         </option>
 						    </select>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
+						<td>
 							<label for="subjectCate">주제분야</label>
 						</td>
 						<td>
-						    <select id="subjectCateChoice" name="subjectCateChoice">
-						         <option value="">===참여분야를 선택해주세요.===</option>
-						         <option th:unless="${#lists.isEmpty(subjectCateList)}"
-						                 th:each="s : ${subjectCateList}"
-						                 th:value="${s.subjectCateCode}"
+						    <select id="subjectCate" name="subjectCate">
+						         <option value="">===주제분야를 선택해주세요.===</option>
+						         <option th:unless="${#lists.isEmpty(subjectCate)}"
+						                 th:each="s : ${subjectCate}"
+						                 th:value="*{subjectCateCode}"
 						                 th:text="|:::: ${s.subjectCateName}::::|">
 						         </option>
 						    </select>
@@ -229,8 +232,9 @@
 					</tr>
 					<tr>
 						<td colspan="3">
-							<button type="button" id="addProProjrctBtn" disabled="disabled">회원가입</button>
-							<button type="button" id="resetBtn" disabled="disabled">입력취소</button>
+							<button type="submit" id="addProProjectBtn">작성완료</button>
+							<a th:href="@{/project/pro/proProjectList}">뒤로가기</a>
+							<button type="button" id="resetBtn">초기화</button>
 						</td>
 					</tr>	
 				</tbody> 

@@ -1,13 +1,17 @@
-package ks47team02.user.project.pro.dto;
+ package ks47team02.user.project.pro.dto;
 
 
 public class ProProject {
 	
 	private String cpId;
 	private String levelCode;
+	
 	private String joinCateCode;
 	private String workCateCode;
 	private String subjectCateCode;
+	private String joinCateName;
+	private String workCateName;
+	private String subjectCateName;
 	
 	
 	private String proProjectCode;
@@ -15,9 +19,6 @@ public class ProProject {
 	private String applicantUserId;
 	private String cpName;	
 	private String proProjectTitle;
-	private String joinCateName;
-	private String workCateName;
-	private String subjectCateName;
 	private String proProjectDetails;
 	private int proProjectMaxtotal;
 	private String proProjectRunName;
@@ -191,6 +192,12 @@ public class ProProject {
 		builder.append(workCateCode);
 		builder.append(", subjectCateCode=");
 		builder.append(subjectCateCode);
+		builder.append(", joinCateName=");
+		builder.append(joinCateName);
+		builder.append(", workCateName=");
+		builder.append(workCateName);
+		builder.append(", subjectCateName=");
+		builder.append(subjectCateName);
 		builder.append(", proProjectCode=");
 		builder.append(proProjectCode);
 		builder.append(", applicationDate=");
@@ -201,12 +208,6 @@ public class ProProject {
 		builder.append(cpName);
 		builder.append(", proProjectTitle=");
 		builder.append(proProjectTitle);
-		builder.append(", joinCateName=");
-		builder.append(joinCateName);
-		builder.append(", workCateName=");
-		builder.append(workCateName);
-		builder.append(", subjectCateName=");
-		builder.append(subjectCateName);
 		builder.append(", proProjectDetails=");
 		builder.append(proProjectDetails);
 		builder.append(", proProjectMaxtotal=");

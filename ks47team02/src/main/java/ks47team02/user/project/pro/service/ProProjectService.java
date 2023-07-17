@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.PostConstruct;
+import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.project.pro.dto.ProProject;
+import ks47team02.user.project.pro.dto.SubjectCate;
+import ks47team02.user.project.pro.dto.WorkCate;
 import ks47team02.user.project.pro.mapper.ProProjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,15 +33,39 @@ public class ProProjectService {
 	public List<ProProject> getProProjectList(){
 
 		List<ProProject> proProjectList = proProjectMapper.getProProjectList();
-		//log.info("proProject : {}",proProjectList);
+		log.info("proProject : {}", proProjectList);
 		return proProjectList;
 	}
 	
 	// 전문과제 구인글 작성
-	public void proProjectInsert(ProProject proProject) {
+	public void proProjectInsert(ProProject proProject) {  
 		
+		log.info("insert 전 proProject : {}", proProject);
 		proProjectMapper.proProjectInsert(proProject);
 		
+	}
+	// 참여분야 리스트 조회
+	public List<JoinCate> getJoinCateList(){
+		
+		List<JoinCate> JoinCateList = proProjectMapper.getJoinCateList();
+		log.info("JoinCate : {}", JoinCateList);
+
+			
+		return JoinCateList;
+	}
+	// 작업분야 리스트 조회
+	public List<WorkCate> getWorkCateList(){ 
+			
+		List<WorkCate> WorkCateList = proProjectMapper.getWorkCateList();
+			
+		return WorkCateList;
+	}
+	// 주제분야 리스트 조회
+	public List<SubjectCate> getSubjectCateList(){
+			
+		List<SubjectCate> SubjectCateList = proProjectMapper.getSubjectCateList();
+			
+		return SubjectCateList;
 	}
 	
 	

@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.annotation.PostConstruct;
+import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.project.pro.dto.ProProject;
+import ks47team02.user.project.pro.dto.SubjectCate;
+import ks47team02.user.project.pro.dto.WorkCate;
 import ks47team02.user.project.pro.mapper.ProProjectMapper;
 import ks47team02.user.project.pro.service.ProProjectService;
 import lombok.AllArgsConstructor;
@@ -27,7 +30,7 @@ public class ProProjectController {
 
 	
 	private final ProProjectService ProProjectService;
-	private final ProProjectMapper ProProjectMapper;
+
 	
 	@PostConstruct
 	public void proProjectControllerInit() {
@@ -49,33 +52,58 @@ public class ProProjectController {
 	}
 	
 	// 전문과제 구인글 작성
-	
 	@GetMapping("/proProjectInsert")
 	public String proProjectInsert(Model model) {
 		
-		List<ProProject> joinCate = ProProjectService.getProProjectList();
-
+//		List<ProProject> proProjectList = ProProjectService.getProProjectList();
+		List<JoinCate> joinCate = ProProjectService.getJoinCateList();
+		List<WorkCate> workCate = ProProjectService.getWorkCateList();
+		List<SubjectCate> subjectCate = ProProjectService.getSubjectCateList();
 		
 		model.addAttribute("joinCate", joinCate);
+		model.addAttribute("workCate", workCate);
+		model.addAttribute("subjectCate", subjectCate);
+//		model.addAttribute("proProjectList", proProjectList);
 		model.addAttribute("title","회원가입");
 		model.addAttribute("contents", "전문과제 구인글 작성 페이지 입니다.");
 		
-		return "user/project/pro/proProjectInsert";
+		return "user/project/pro/pro_project_insert";
 	}
-
-	
 	@PostMapping("/proProjectInsert")
 	public String proProjectInsert(ProProject proProject) {
-		
-		log.info("구인글 작성시 입력정보: {}", proProject);
-		
-		ProProjectService.proProjectInsert(proProject);
-		
-		// response.sendRedirect("/member/memberList");
-		// spring framework mvc 에서는 controller의 리턴값에 redirect: 키워드로 작성
-		// redirect: 키워드를 작성할 경우 그다음의 문자열은 html파일 논리 경로가 아닌 주소를 의미
-		return "redirect:/user/project/pro/proProjectInsert";
+//		
+//		log.info("구인글 작성시 입력정보: {}", proProject);
+//		ProProjectService.proProjectInsert(proProject);
+		return "redirect:/user/project/pro/proProjectList";
 	}
+	// response.sendRedirect("/member/memberList");
+	// spring framework mvc 에서는 controller의 리턴값에 redirect: 키워드로 작성
+	// redirect: 키워드를 작성할 경우 그 다음의 문자열은 html파일 논리 경로가 아닌 주소를 의미
+
+	
+	
+	
+	
+
+		
+		
+		
+		
+		
+		
+	
+//	@PostMapping("/proProjectInsert")
+//	public String proProjectInsert(ProProject proProject) {
+//		
+//		log.info("구인글 작성시 입력정보: {}", proProject);
+//		
+//		ProProjectService.proProjectInsert(proProject);
+//		
+//		// response.sendRedirect("/member/memberList");
+//		// spring framework mvc 에서는 controller의 리턴값에 redirect: 키워드로 작성
+//		// redirect: 키워드를 작성할 경우 그다음의 문자열은 html파일 논리 경로가 아닌 주소를 의미
+//		return "redirect:/user/project/pro/proProjectInsert";
+//	}
 	
 	
 	
