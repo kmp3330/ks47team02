@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.banner.mapper.BannerMapper">
+    <resultMap type="BannerRequestCompany" id="bannerRequestCompanyResultMap">
+        <!-- id태그는 조회시 테이블의 PK(기본키) -->
+        <id 	column="banner_request_company_code"  property="bannerRequestCompanyCode"/>
+        <!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키 -->
+        <result column="banner_request_company_name"  property="bannerRequestCompanyName"/>
+        <result column="banner_unit_price_code" 	  property="bannerUnitPriceCod"/>
+        <result column="banner_location" 	          property="bannerLocation"/>
+        <result column="banner_period" 	              property="bannerPeriod"/>
+        <result column="banner_price" 	              property="bannerPrice"/>
+    </resultMap>
+
+    <select id="bannerRequestCompany" resultMap="bannerRequestCompanyResultMap">
+        SELECT
+        banner_request_company_code,
+        banner_request_company_name,
+        banner_unit_price_code,
+        banner_location,
+        banner_period,
+        banner_price
+        FROM
+        banner_request_company;
+    </select>
+</mapper>
