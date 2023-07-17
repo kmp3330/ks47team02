@@ -61,9 +61,7 @@ public class ProfileController {
 		model.addAttribute("profileIntroList", profileIntroList);
 		return "user/profile/profile_intro_insert";
 	}
-	
-
-	/**
+	/*
 	 * 자기소개 화면
 	 * @param model
 	 * @return
@@ -78,6 +76,15 @@ public class ProfileController {
 		return "user/profile/profile_intro_list";
 	}
 	
+	@PostMapping("/profileSkillInsert")
+	public String profileSkillInsert(ProfileSkill profileSkill) {
+		
+		log.info("자기소개 등록시 입력정보: {}", profileSkill);
+		
+		profileService.profileSkillInsert(profileSkill);
+		
+		return "redirect:/profile/profileSkillList";
+	}
 	@GetMapping("/profileSkillInsert")
 	public String profilSkillInsert(Model model) {
 
