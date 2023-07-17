@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.project.pro.mapper.ProProjectMapper">
+	<resultMap type="ProProject" id="proProjectResultMap">	
+		<id column="pro_project_code" property="proProjectCode"/>
+		<result column="cp_name" property="cpName"/>		
+		<result column="title" property="proProjectTitle"/>
+		<result column="join_cate_code" property="joinCateCode"/>
+		<result column="join_cate_name" property="joinCateName"/>
+		<result column="work_cate_code" property="workCateCode"/>
+		<result column="work_cate_name" property="workCateName"/>
+		<result column="subject_cate_code" property="subjectCateCode"/>
+		<result column="subject_cate_name" property="subjectCateName"/>
+		<result column="details" property="proProjectDetails"/>
+		<result column="max_total" property="proProjectMaxtotal"/>
+		<result column="run_name" property="proProjectRunName"/>
+		<result column="project_price" property="proProjectPrice"/>
+		<result column="cp_commission" property="cpCommisson"/>
+		<result column="write_date" property="proProjectWriteDate"/>
+		<result column="due_date" property="proProjectDueDate"/>
+		<result column="complete_date" property="proProjectCompleteDate"/>
+		<result column="project_start_date" property="proProjectStartDate"/>
+		<result column="project_complete_date" property="proProjectCompleteDate"/>
+		<result column="project_days" property="proProjectDays"/>
+		<result column="applicant_user_id" property="applicantUserId"/>
+		<result column="application_date" property="applicationDate"/>
+		<result column="run_name" property="runName"/>
+	</resultMap>
+	
+	<resultMap type="ProProject" id="joinCateResultMap">
+		<id column="join_cate_code" property="joinCateCode"/>
+		<result column="join_cate_name" property="joinCateName"/>
+	</resultMap>
+		
+	<resultMap type="ProProject" id="workCateResultMap">
+		<id column="work_cate_code" property="workCateCode"/>
+		<result column="work_cate_name" property="workCateName"/>
+	</resultMap>
+	
+	<resultMap type="ProProject" id="subjectCateResultMap">
+		<id column="subject_cate_code" property="subjectCateCode"/>
+		<result column="subject_cate_name" property="subjectCateName"/>
+	</resultMap>
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전문 과제 전체 목록 조회 -->
+	<select id="getProProjectList" parameterType="map" resultMap="proProjectResultMap">
+	
+					/* 전문 과제 전체 목록 조회 */
+						SELECT
+							cp_name,
+							title,
+							join_cate_code,
+							join_cate_name,
+							work_cate_code,
+							work_cate_name,
+							subject_cate_code,
+							subject_cate_name,
+							details,
+							max_total,
+							run_name,
+							project_price,
+							write_date,
+							due_date,
+							due_complete_date,
+							project_start_date,
+							project_complete_date,
+							project_days
+						FROM
+							pro_project AS pp
+							INNER join
+							cp_info AS ci
+							on
+							pp.cp_id = ci.cp_id;
+	</select>
+	<!-- 참여분야 리스트 조회 -->
+	<select id="getJoinCateList" parameterType="map" resultMap="joinCateResultMap">
+		/* 참야분야 리스트 조회 */
+		SELECT
+			*
+		FROM
+			join_cate;
+	
+	</select>
+	<!-- 작업분야 리스트 조회 -->
+	<select id="getWorkCateList" parameterType="map" resultMap="workCateResultMap">
+		/* 작업분야 리스트 조회 */
+		SELECT
+			*
+		FROM
+			work_cate;
+	
+	</select>
+	<!-- 주제분야 리스트 조회 -->
+	<select id="getSubjectCateList" parameterType="map" resultMap="subjectCateResultMap">
+		/* 주제분야 리스트 조회 */
+		SELECT
+			*
+		FROM
+			subject_cate;
+	
+	
+	</select>
+	<!-- 전문과제 작성 -->
+	<insert id="proProjectInsert" parameterType="ProProject">
+	 				/* 전문과제 구인글 작성 */
+						 INSERT INTO `pro_project`
+					        (`pro_project_code`,`cp_id`, `title`, `join_cate_code`, `join_cate_name`, `work_cate_code`,`work_cate_name`,`subject_cate_code`,`subject_cate_name`,`skill`,`details`,`max_total`,`normal_run_code`,`run_name`,`project_price`,`cp_commission`,`write_date`,`due_date`,`due_complete_date`,`project_start_date`,`project_complete_date`,`project_days`)
+						VALUES
+					        ('pro_project010','cp009','제목9','join_cate_code001','기획','work_cate_code010','프레임워크','subject_cate_code009','대학','블라블라','블라블라','5','normal_run_code01','모집중','4000','400',CURDATE(),'2023-07-30',null,null,NULL,null);
+	  
+	 </insert>
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전문과제별 신청자 목록 -->
+	<select id="getProProjectApplicantList" parameterType="map" resultMap="proProjectResultMap">
+		
+				/* 전문과제별 신청자 목록 */
+					SELECT
+						ppa.applicant_user_id,
+						ppa.application_date,
+						ppa.run_name
+					FROM
+						pro_project_applicant AS ppa
+					WHERE
+						ppa.pro_project_code = #{proProjectCode};
+	</select>
+	
+	
+	
+	
+</mapper>

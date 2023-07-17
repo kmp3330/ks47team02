@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{user/layout/default}">
+<head>
+<meta charset="UTF-8">
+<style>
+	table {
+		border : 1px solid black;
+		width: 1000px;
+		table-layout: fixed;
+		text-align: center;
+	}
+
+
+</style>
+	</head>
+		<th:block layout:fragment="customContents">
+			<table>
+				<thead>
+					<tr>
+						<th>회사명</th>
+						<th>전문과제 제목</th>
+						<th>참여분류</th>
+						<th>작업분류</th>
+						<th>주제분류</th>
+						<th>상세내용</th>
+						<th>최대인원</th>
+						<th>진행상태</th>
+						<th>성과금</th>
+						<th>작성일자</th>
+						<th>마감일자</th>
+						<th>마감완료일자</th>
+						<th>전문과제 시작일자</th>
+						<th>전문과제 완료일자</th>
+						<th>전문과제 일수</th>
+						<th>
+							<a th:href="@{#}"></a>
+						</th>
+						<th>
+							<a th:href="@{#}"></a>
+						</th>
+						<th>
+							<a th:href="@{/project/pro/proProjectInsert}">구인글 등록하기</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(proProjectList)}">
+						<td colspan="7">등록된 전문과제가 없습니다.</td>
+					</tr>
+					<tr th:unless="${#lists.isEmpty(proProjectList)}"
+						th:each="p : ${proProjectList}">
+						<td th:text="${p.cpName}"></td>
+						<td th:text="${p.proProjectTitle}"></td>
+						<td th:text="${p.joinCateName}"></td>
+						<td th:text="${p.workCateName}"></td>
+						<td th:text="${p.subjectCateName}"></td>
+						<td th:text="${p.proProjectDetails}"></td>
+						<td th:text="${p.proProjectMaxtotal}"></td>
+						<td th:text="${p.proProjectRunName}"></td>
+						<td th:text="${p.proProjectPrice}"></td>
+						<td th:text="${p.proProjectWriteDate}"></td>
+						<td th:text="${p.proProjectDueDate}"></td>
+						<td th:text="${p.dueCompleteDate}"></td>
+						<td th:text="${p.proProjectStartDate}"></td>
+						<td th:text="${p.proProjectCompleteDate}"></td>
+						<td th:text="${p.proProjectDays}"></td>
+						<td>
+							<a th:href="@{#}">신청자 목록 보기</a>
+						</td>
+						<td>
+							<a th:href="@{#}">수정</a>
+						</td>
+						<td>
+							<a th:href="@{#}">삭제</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+</html>
