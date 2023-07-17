@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
-import ks47team02.user.project.normal.dto.joinCate;
-import ks47team02.user.project.normal.dto.subjectCate;
 import ks47team02.user.project.normal.service.NormalProjectService;
+import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.project.pro.dto.SubjectCate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,8 +55,8 @@ public class normalProjectController {
 	 * */
 	@GetMapping("/addProject")
 	public String addProject(Model model) {
-		List<joinCate> joinCateList = normalProjectService.getJoinCateList();
-		List<subjectCate> subjectCateList = normalProjectService.getSubjectCateList();
+		List<JoinCate> joinCateList = normalProjectService.getJoinCateList();
+		List<SubjectCate> subjectCateList = normalProjectService.getSubjectCateList();
 		
 		model.addAttribute("joinCateList", joinCateList);
 		model.addAttribute("subjectCateList", subjectCateList);

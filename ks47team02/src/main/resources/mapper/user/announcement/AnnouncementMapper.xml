@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.announcement.mapper.AnnouncementMapper">
+
+	<resultMap type="Announcement"   	 id="announcementResultMap">
+		<!-- id태그는 조회시 테이블의 PK(기본키) -->
+		<id 	column="announcement_code"   property="announcementCode"/>
+		<!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키 -->
+		<result column="cp_id" 		  	 	 property="cpId"/>
+		<result column="cp_name" 		  	 property="cpName"/>
+		<result column="cp_cate_code"  	 	 property="cpCateCode"/>
+		<result column="join_cate_code"  	 property="joinCateCode"/>
+		<result column="join_cate_name"  	 property="joinCateName"/>
+		<result column="area_code" 			 property="areaCode"/>
+		<result column="area_cate" 			 property="areaCate"/>
+		<result column="job_opening" 		 property="jobOpening"/>
+		<result column="required_skills"	 property="requiredSkills"/>
+		<result column="career"				 property="career"/>
+		<result column="recruitment"		 property="recruitment"/>
+		<result column="wage" 				 property="wage"/>
+		<result column="start_date" 		 property="startDate"/>
+		<result column="due_date" 			 property="dueDate"/>
+		<result column="hiring_status_code"  property="hiringStatusCode"/>
+		<result column="hiring_status"  	 property="hiringStatus"/>
+	</resultMap>
+	
+	<insert id="announcementInsert" parameterType="Announcement" >
+
+		<selectKey resultType="String" keyColumn="newAnnouncementCode" keyProperty="announcementCode" order="BEFORE">
+			/* 공고코드 자동 증가 코드 */
+			<![CDATA[
+			SELECT 
+				CASE
+				WHEN COUNT(*) = 0 THEN 'announcement_code001'
+				WHEN CAST(SUBSTRING_INDEX(announcement_code,'code',-1) AS UNSIGNED) < 999
+				THEN CONCAT('announcement_code',LPAD(MAX(CAST(SUBSTRING_INDEX(announcement_code,'code',-1) AS UNSIGNED))+1,3,'0'))	
+				ELSE
+					CONCAT('announcement_code',MAX(CAST(SUBSTRING_INDEX(announcement_code,'code',-1) AS UNSIGNED))+1)	
+				END AS newAnnouncementCode
+			FROM 
+				announcement
+			]]>
+		</selectKey>
+		/* 채용공고 등록 */
+		INSERT INTO announcement (announcement_code,
+								  cp_id,
+								  cp_name,
+								  cp_cate_code,
+								  join_cate_code,
+								  join_cate_name,
+								  area_code,
+								  area_cate,
+						          job_opening,
+								  required_skills,
+								  career,
+								  recruitment,
+							      wage,
+							      start_date,
+							      due_date,
+							      hiring_status_code,
+								  hiring_status)
+		VALUES 
+								 (#{announcementCode},
+								  'cp004',
+								  '엘지SW',
+							 	  'cp_cate_code004',
+						 		  'join_cate_code004',
+								  #{joinCateName},
+								  'area_code004',
+								  #{areaCate},
+								  #{jobOpening},
+								  #{requiredSkills},
+								  #{career},
+								  #{recruitment},
+								  #{wage},
+								  CURDATE(),
+								  CURDATE(),
+								  'hiring_status_code01',
+								  #{hiringStatus});
+	</insert>
+	
+	<select id="getAnnouncementList" parameterType="map" resultType="Announcement">
+		/* 채용공고 조회 */
+		SELECT
+			announcement_code AS announcementCode,
+			cp_name 		  AS cpName,
+			join_cate_name    AS joinCateName,
+			area_cate 		  AS areaCate,
+			job_opening 	  AS jobOpening,
+			required_skills   AS requiredSkills,
+			career 			  AS career,
+			recruitment 	  AS recruitment,
+			wage			  AS wage,
+			hiring_status	  AS hiringStatus
+		FROM
+			announcement
+	</select>
+</mapper>

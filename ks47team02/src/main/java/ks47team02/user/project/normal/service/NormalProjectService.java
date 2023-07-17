@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
-import ks47team02.user.project.normal.dto.joinCate;
-import ks47team02.user.project.normal.dto.subjectCate;
+import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.normal.mapper.NormalProjectMapper;
+import ks47team02.user.project.pro.dto.JoinCate;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -43,16 +43,16 @@ public class NormalProjectService {
 		
 	}
 	
-	public List<joinCate> getJoinCateList(){
-		List<joinCate> joinCateList = normalProjectMapper.getjoinCateList();
+	public List<JoinCate> getJoinCateList(){
+		List<JoinCate> joinCateList = normalProjectMapper.getjoinCateList();
 		log.info("joinCateListService : {}", joinCateList);
 		
 		return joinCateList;
 		
 		
 	}
-	public List<subjectCate> getSubjectCateList(){
-		List<subjectCate> subjectCateList = normalProjectMapper.getSubjectCateList();
+	public List<SubjectCate> getSubjectCateList(){
+		List<SubjectCate> subjectCateList = normalProjectMapper.getSubjectCateList();
 		log.info("subjectCateList : {}", subjectCateList);
 		return subjectCateList;
 	}

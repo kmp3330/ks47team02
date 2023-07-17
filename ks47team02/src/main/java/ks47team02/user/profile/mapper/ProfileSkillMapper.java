@@ -9,6 +9,6 @@ import ks47team02.user.profile.dto.ProfileSkill;
 @Mapper
 public interface ProfileSkillMapper {
 
-	//회원 보유기술 목록
+	//자기소개 보유기술 목록
 	public List<ProfileSkill> getProfileSkillList();
 }
