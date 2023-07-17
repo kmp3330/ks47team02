@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{user/banner/layout/default}">
+      layout:decorate="~{user/layout/default}">
 <head>
   <meta charSet="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,23 +10,38 @@
   <style>
     #payment-button{ width:100%; padding:15px; background-color:#3065AC; color:white; border-radius:3px; font-size:16px; border:none; margin-top:10px}
     .title {margin: 0 0 4px; font-size: 24px; font-weight: 600;color: #4e5968;}
+    .single-job {
+      padding: 80px 200px;
+      background: #f9f9f9;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -ms-border-radius: 3px;
+      -o-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-transition: .5s;
+      -moz-transition: .5s;
+      -o-transition: .5s;
+      transition: .5s;
+    }
   </style>
 </head>
 <th:block layout:fragment="customContents">
-  <!-- 상품 정보 영역-->
-  <div class="title">상품 정보</div>
-  <p>상단배너 예약금(2주)</p>
-  <p>결제 금액: 15,000원</p>
-  <form id="discount-coupon">
-    <input type="checkbox" id="coupon"/>5,000원 할인받기
-  </form>
-  <hr>
-  
-  <!-- 결제 방법 영역-->
-  <div class="title">결제 방법</div>
-  <div id="payment-method"></div>
-  <div id="agreement"></div>
-  <button id="payment-button">결제하기</button>
+  <div class="single-job mb-4 justify-content-between text-center">
+    <!-- 상품 정보 영역-->
+    <div class="title">상품 정보</div>
+    <p>상단배너 예약금(2주)</p>
+    <p>결제 금액: 15,000원</p>
+    <form id="discount-coupon">
+      <input type="checkbox" id="coupon"/>5,000원 할인받기
+    </form>
+    <hr>
+    
+    <!-- 결제 방법 영역-->
+    <div class="title">결제 방법</div>
+    <div id="payment-method"></div>
+    <div id="agreement"></div>
+    <button id="payment-button">결제하기</button>
+  </div>
 </th:block>
 <th:block layout:fragment="customJs">
   <script src="https://js.tosspayments.com/v1/payment-widget"></script>
