@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
 import ks47team02.user.project.normal.dto.joinCate;
@@ -101,8 +102,25 @@ public class normalProjectController {
 	
 	
 	/*수정영역*/
-	@GetMapping("/modifyProject")
+	@PostMapping("/modifyProject")
 	public String modifyProject(Model model) {
+		log.info("안녕");
+		
+		
+		return "redirect:/normalProject/projectList";
+	}
+	
+	
+	/**
+	 * @Param normalProjects normalProjectCode
+	 * 
+	 * return 
+	 * */
+	@GetMapping("/modifyProject")
+	public String modifyProject(@RequestParam(value="normalProjectCode") String normalProjectCode
+			,Model model) {
+		
+		log.info("일반과제 수정할거 번호 :{}",normalProjectCode);
 		model.addAttribute("title", "일반과제 수정 페이지");
 		
 		return "user/project/normal/list/modifyProject";

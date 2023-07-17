@@ -27,7 +27,7 @@
 	  </th:block>
 
 	<th:block layout:fragment="customContents">
-		<form id="addProjectForm" th:action="@{/user/project/normal/list/addProject}" method="post">
+		<form id="modifyProjectForm" th:action="@{/normalProject/modifyProject}" method="post">
 			<table border="1">
 				<tbody>
 					<tr>
@@ -132,7 +132,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<button type="submit">작성완료</button>
+			<button type="submit">수정완료</button>
 			<button type="reset">입력초기화</button>
 		</form> 			
 	</th:block>
