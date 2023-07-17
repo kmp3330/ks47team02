@@ -13,12 +13,13 @@ import ks47team02.user.project.normal.dto.joinCate;
 import ks47team02.user.project.normal.dto.subjectCate;
 import ks47team02.user.project.normal.service.NormalProjectService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
 @RequestMapping("/normalProject")
+@Slf4j
 @AllArgsConstructor
-@lombok.extern.slf4j.Slf4j
 public class normalProjectController {
 	
 	/*생성자 메서드*/
@@ -99,10 +100,6 @@ public class normalProjectController {
 	/*등록영역 끝*/
 	
 	
-	
-	
-	
-	
 	/*수정영역*/
 	@GetMapping("/modifyProject")
 	public String modifyProject(Model model) {
@@ -176,10 +173,7 @@ public class normalProjectController {
 		
 		log.info("normalProjectList = {}", "안녕");
 		List<NormalProjects> normalProjectList =  normalProjectService.getNormalProjects();
-		
 		model.addAttribute("normalProjectList", normalProjectList);
-		
-		
 		model.addAttribute("title", "일반과제 목록");
 		
 		return "user/project/normal/list/projectList";

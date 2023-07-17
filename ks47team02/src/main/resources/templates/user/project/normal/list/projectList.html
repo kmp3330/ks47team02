@@ -31,6 +31,8 @@
 					<th>프로젝트 일수</th>
 					<th>일별점수</th>
 					<th>프로젝트 완료시 점수</th>
+					<th>수정버튼</th>
+					<th>삭제버튼</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -54,6 +56,12 @@
 					<td th:text="${l.projectDay}"></td>
 					<td th:text="${l.projectDayScore}"></td>
 					<td th:text="${l.projectFinishScore}"></td>
+					<td>
+						<a th:href="@{/normalProject/modifyProject(goodsCode=${l.goodsCode})}">수정</a>
+					</td>
+					<td>
+						<a th:href="@{/normalProject/removeProject}">삭제</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>
