@@ -2,7 +2,6 @@ package ks47team02.user.project.normal.controller;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -93,10 +92,10 @@ public class normalProjectController {
 	}
 	
 	@PostMapping("/addApplicantAccept")
-	public String addApplicantAccept(@RequestParam(value="normalProjectCode") String normalProjectCode ,Model model) {
-		model.addAttribute("title", "일반과제 신청");
+	public String addApplicantAccept() {
 		
-		return "user/project/normal/applyApplicant/addApplicantAccept";
+		
+		return "redirect:/normalProject/projectList";
 	}
 	
 	@GetMapping("/addAcceptApprove")
