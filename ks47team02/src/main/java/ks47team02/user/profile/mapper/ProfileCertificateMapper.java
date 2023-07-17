@@ -11,5 +11,8 @@ public interface ProfileCertificateMapper {
 	
 	// 자격증 조회
 	public List<ProfileCertificate> certificateList();
+	
+	// 자격증 등록
+	public int profileCertificateInsert(ProfileCertificate profileCertificate);
 
 }
