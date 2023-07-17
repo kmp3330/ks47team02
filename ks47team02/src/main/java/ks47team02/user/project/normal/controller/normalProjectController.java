@@ -81,11 +81,18 @@ public class normalProjectController {
 		log.info("addProject normalProjects : {}", normalProjects);
 		
 		
-		return "redirect:/user/project/normal/list/projectList";
+		return "redirect:/normalProject/projectList";
 	}
 	
 	@GetMapping("/addApplicantAccept")
 	public String addApplicantAccept(Model model) {
+		model.addAttribute("title", "일반과제 신청");
+		
+		return "user/project/normal/applyApplicant/addApplicantAccept";
+	}
+	
+	@PostMapping("/addApplicantAccept")
+	public String addApplicantAccept(@RequestParam(value="normalProjectCode") String normalProjectCode ,Model model) {
 		model.addAttribute("title", "일반과제 신청");
 		
 		return "user/project/normal/applyApplicant/addApplicantAccept";
