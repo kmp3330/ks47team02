@@ -47,10 +47,12 @@
 	<!-- 프로젝트 패키지 안 클래스에 설정된 로그 출력 -->
 	<logger name="ks47team02" level="INFO" additivity="false">
 		<appender-ref ref="STDOUT" />
+		<appender-ref ref="QSTDOUT" />
 	</logger>
 	<!-- 아직 싱글톤 안나가서 하지 않는 것이 맞음 -->
 	<logger name="org.springframework" level="INFO" additivity="false">
 		<appender-ref ref="STDOUT" />
+		<appender-ref ref="QSTDOUT" />
 	</logger>
 
 	<!-- log4jdbc 옵션 설정 --> 
@@ -90,5 +92,6 @@
 
 	<root level="ERROR">
 		<appender-ref ref="STDOUT" />
+		<appender-ref ref="QSTDOUT" />
 	</root>
 </configuration>
