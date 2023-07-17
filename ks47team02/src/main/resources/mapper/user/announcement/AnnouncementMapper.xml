@@ -27,6 +27,7 @@
 	</resultMap>
 	
 	<insert id="announcementInsert" parameterType="Announcement" >
+
 		<selectKey resultType="String" keyColumn="newAnnouncementCode" keyProperty="announcementCode" order="BEFORE">
 			/* 공고코드 자동 증가 코드 */
 			<![CDATA[

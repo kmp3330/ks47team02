@@ -1,7 +1,6 @@
 package ks47team02.user.announcement.dto;
 
 
-
 import java.sql.Date;
 
 import lombok.Data;
@@ -27,4 +26,5 @@ public class Announcement {
 	private String hiringStatusCode;
 	private String hiringStatus;
 	
+
 }
