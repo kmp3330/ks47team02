@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.banner.mapper.BannerMapper">
+    <resultMap type="BannerRequestCompany" id="bannerRequestCompanyResultMap">
+        <!-- id태그는 조회시 테이블의 PK(기본키) -->
+        <id 	column="banner_request_company_code"  property="bannerRequestCompanyCode"/>
+        <!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키 -->
+        <result column="banner_request_company_name"  property="bannerRequestCompanyName"/>
+        <result column="banner_unit_price_code" 	  property="bannerUnitPriceCod"/>
+        <result column="banner_location" 	          property="bannerLocation"/>
+        <result column="banner_period" 	              property="bannerPeriod"/>
+        <result column="banner_price" 	              property="bannerPrice"/>
+    </resultMap>
+
+    <select id="bannerRequestCompany" resultMap="bannerRequestCompanyResultMap">
+        SELECT
+        banner_request_company_code,
+        banner_request_company_name,
+        banner_unit_price_code,
+        banner_location,
+        banner_period,
+        banner_price
+        FROM
+        banner_request_company;
+    </select>
+
+    <insert id="Request" parameterType="BannerRequestCompany">
+        <selectKey resultType="String" keyColumn="newRequestCode" keyProperty="bannerRequestCompanyCode" order="BEFORE">
+            /* 자동 증가 코드 */
+            <![CDATA[
+			SELECT
+				CASE
+				WHEN COUNT(*) = 0 THEN 'banner_request_company_code001'
+				WHEN CAST(SUBSTRING_INDEX(banner_request_company_code,'banner_request_company',-1) AS UNSIGNED) < 999
+				THEN CONCAT('g',LPAD(MAX(CAST(SUBSTRING_INDEX(banner_request_company_code,'banner_request_company',-1) AS UNSIGNED))+1,3,'0'))
+				ELSE
+					CONCAT('banner_request_company_code',MAX(CAST(SUBSTRING_INDEX(banner_request_company_code,'banner_request_company',-1) AS UNSIGNED))+1)
+				END AS newRequestCode
+			FROM
+				banner_request_company
+			]]>
+        </selectKey>
+        INSERT INTO banner_request_company
+        (banner_request_company_code, banner_request_company_name, banner_unit_price_code, banner_location, banner_period, banner_price)
+        VALUES
+        (#{bannerRequestCompanyCode}, #{bannerRequestCompanyName}, #{bannerUnitPriceCode}, #{bannerLocation}, #{bannerPeriod}, #{bannerPrice})
+    </insert>
+    
+</mapper>

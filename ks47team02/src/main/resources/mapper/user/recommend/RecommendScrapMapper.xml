@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper
+    namespace="ks47team02.user.recommend.mapper.RecommendScrapMapper">
+	    <resultMap type="RecommendScrap" 			id="RecommendScrapResultMap">
+		 	<id 	column="company_scrap_code" 	property="companyScrapCode"/>
+		 	<result column="announcement_code"	 	property="announcemnetCode"/>
+		 	<result column="user_id"				property="userId"/>
+		 	<result column="join_cate_code"		 	property="joinCateCode"/>
+		 	<result column="join_cate_name"			property="joinCateName"/>
+		 	<result column="area_code"			    property="areaCode"/>
+		 	<result column="area_cate"				property="areaCate"/>
+		 	<result column="job_opening"			property="jobOpening"/>
+		 	<result column="required_skills"		property="requiredSkills"/>
+		 	<result column="career"		 			property="career"/>
+		 	<result column="wage"				 	property="wage"/>
+		 	<result column="registration_time"		property="registrationTime"/>
+	 	</resultMap>	
+	 	
+	 	<select id="getRecommendScrap" resultMap="RecommendScrapResultMap">
+    		SELECT
+				user_id,
+				join_cate_name,
+				area_cate,
+				job_opening,
+				required_skills,
+				career,
+				wage,
+				registration_time
+			FROM
+				company_scrap
+   		</select>
+	 	
+    </mapper>
+    
+   

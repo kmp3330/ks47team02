@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+
+<th:block layout:fragment="customJs">
+	<script>
+		//유효성 검사 함수 (등록눌렀을때 빈값이 없도록 유효성 검사 하는거) => 하 진짜 이해 안감ㅠ 물어봐 
+		const validCheck = element => {
+			let data = $(element).val();
+			let eleId = $(element).attr('placeholder');
+			if (typeof data == 'undefined' || data == null || data == '') {
+				// let cate = $(`input[id="${eleId}"]`).text();
+				alert(`${eleId} 필수 입력항목입니다.`);
+				$(element).focus();
+				return false;
+			}
+			return true;
+		}
+
+		//자기소개 등록 버튼 시 이벤트 => 하 진짜 이해 안감ㅠ 물어봐 
+		$('#insertBtn').click(function () {
+			// const validateEle = $('#insertProfileForm input').not('#introTitle');
+			const validateEle = $('#insertProfileForm input');
+			let isSubmit = false;
+			validateEle.each((idx, item) => {
+				isSubmit = validCheck(item);
+				return isSubmit;
+			});
+			if (isSubmit) {
+				console.log('전송');
+				$('#insertProfileForm').submit();
+			}
+		});
+
+		//입력 취소 버튼 클릭시 이벤트 처리
+		$('#resetBtn').click(function (e) {
+			//태그가 가지고 있는 기본 이벤트 동작 방지
+			e.preventDefault();
+			$('#insertProfileForm input').val('');
+		});
+
+	</script>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<section class="jobs-area section-padding">
+		<div class="container col-lg-12">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="sidebar">
+						<div class="single-item mb-4">
+							<h4 class="mb-4">프로필</h4>
+							<a th:href="@{/profile/profileIntroList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
+							</a> <a th:href="@{/profile/profileSkillList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
+							</a> <a th:href="@{/profile/profileWorkSpecList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
+							</a> <a th:href="@{/profile/profileEduSpecList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
+							</a> <a th:href="@{/profile/profileCertificateList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
+							</a> <a th:href="@{/profile/profileAwardList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
+							</a> <a th:href="@{/profile/profilePortfolioList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="single-job mb-4 justify-content-between text-center">
+						<div class="card">
+							<div class="card-header border-0">
+								<h3 class="mb-0 title_color text-left">보유기술</h3>
+								<div class="card-tools">
+									<a class="genric-btn info-border circle" id="insertBtn">
+										<i class="fas">등록 완료</i>
+									</a>
+									<a th:href="@{#}" class="genric-btn danger-border circle">
+										<i type="button" id="resetBtn" class="fas">취소</i>
+									</a>
+								</div>
+							</div>
+							<div class="card-body table-responsive p-0">
+								<form id="insertProfileForm" th:action="@{/profile/profileSkillInsert}"
+									class="d-md-flex justify-content-between" method="post">
+									<table class="table table-valign-middle">
+										<thead>
+											<tr>
+												<th>기술명</th>
+												<th>숙련도</th>
+												<th>경험</th>
+												<th>공개 여부</th>
+												<th>입사지원시 공개여부</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><input class="genric-btn" type="text" placeholder="기술명"
+														name="userSkill" onfocus="this.placeholder = ''"
+														onblur="this.placeholder = '기술명'" required=""></td>
+												<td>
+													<div class="col-lg-3 col-md-4 mt-sm-30 element-wrap">
+														<div class="single-element-widget">
+															<h3 class="mb-30 title_color">숙련도</h3>
+															<div class="default-select" id="default-select">
+																<select style="display: none;">
+																	<option value="1">특급</option>
+																	<option value="1">고급</option>
+																	<option value="1">중급</option>
+																	<option value="1">초급</option>
+																</select>
+																<div class="nice-select" tabindex="0">
+																	<span class="current">English</span>
+																	<ul class="list">
+																		<li data-value="1"
+																			class="option selected focus">English</li>
+																		<li data-value="1" class="option">Spanish</li>
+																		<li data-value="1" class="option">Arabic</li>
+																		<li data-value="1" class="option">Portuguise
+																		</li>
+																		<li data-value="1" class="option">Bengali</li>
+																	</ul>
+																</div>
+															</div>
+														</div>
+														<!--
+													<div class="nice-select open" tabindex="0" name="userSkillRank">
+														<select class="list">숙련도</select>
+															<option data-value="1" class="option selected focus">특급</option>
+															<option data-value="2" class="option">고급</option>
+															<option data-value="3" class="option">중급</option>
+															<option data-value="4" class="option">초급</option>
+														</select>
+													</div> -->
+												</td>
+
+												<td><input class="genric-btn" type="text" placeholder="경험(몇년차)"
+														name="userExperience" onfocus="this.placeholder = ''"
+														onblur="this.placeholder = '경험(몇년차)'" required="">
+												<td>
+													<div class="d-flex justify-content-center">
+														<div class="confirm-switch">
+															<input type="checkbox" id="confirm-switch2"
+																name="userHidden" checked="">
+															<label for="confirm-switch2"></label>
+														</div>
+													</div>
+												</td>
+												<td>
+													<div class="d-flex justify-content-center">
+														<div class="confirm-switch">
+															<input type="checkbox" id="confirm-switch2"
+																name="userApplicationHidden" checked="">
+															<label for="confirm-switch2"></label>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</th:block>
+
+</html>

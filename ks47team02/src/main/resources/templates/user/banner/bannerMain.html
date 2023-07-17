@@ -3,7 +3,171 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/layout/default}">
 
-	<th:block layout:fragment="customContents">
-		
-	</th:block>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
+</head>
+<th:block layout:fragment="customContents">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="sidebar">
+        <div class="single-item mb-4">
+          <h4 class="mb-4">배너 광고</h4>
+          <a th:href="@{/profile/profileIntroList}"
+             class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 문의</span>
+          </a> <a th:href="@{/profile/profileSkillList}"
+                  class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 신청</span>
+        </a> <a th:href="@{/profile/profileWorkSpecList}"
+                class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 신청 현황</span>
+        </a> <a th:href="@{/profile/profileEduSpecList}"
+                class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 진행 현황</span>
+        </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="single-job mb-4 justify-content-between text-center">
+      <h4>예상 가격 알아보기</h4>
+      <br>
+      <form id="adForm" action="#" class="d-md-flex justify-content-between">
+        <select id="adTypeSelect">
+          <option value="" selected disabled>광고 유형을 선택해주세요.</option>
+          <option value="상단 배너 광고">상단 배너 광고</option>
+          <option value="측면 배너 광고">측면 배너 광고</option>
+        </select>
+        <select id="adDurationSelect">
+          <option value="" selected disabled>광고 일수를 선택해주세요.</option>
+          <option value="1">1주</option>
+          <option value="2">2주</option>
+          <option value="3">3주</option>
+          <option value="4">4주</option>
+          <option value="5">5주</option>
+          <option value="6">6주</option>
+          <option value="7">7주</option>
+          <option value="8">8주</option>
+        </select>
+        <div class="buttonAndPriceContainer">
+          <button type="submit" id="calculateBtn" class="template-btn">예상 금액</button>
+          <div id="estimatedPrice"></div>
+        </div>
+      </form>
+      <table class="type10">
+        <thead>
+        <tr>
+          <th scope="cols">광고 배너위치</th>
+          <th scope="cols">광고 기간</th>
+          <th scope="cols">할인률</th>
+          <th scope="cols">할인가</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">상단 배너</th>
+          <td>1주</td>
+          <td>할인 미적용</td>
+          <td>500,000</td>
+        </tr>
+        <tr>
+          <th scope="row" class="even">측면 배너</th>
+          <td class="even">1주</td>
+          <td class="even">할인 미적용</td>
+          <td class="even">600,000</td>
+        </tr>
+        <tr>
+          <th scope="row">상단 배너</th>
+          <td>2주</td>
+          <td>5%</td>
+          <td>475,000</td>
+        </tr>
+        <tr>
+          <th scope="row" class="even">측면 배너</th>
+          <td class="even">2주</td>
+          <td class="even">5%</td>
+          <td class="even">570,000</td>
+        </tr>
+        <tr>
+          <th scope="row">상단 배너</th>
+          <td>3주</td>
+          <td>7%</td>
+          <td>465,000</td>
+        </tr>
+        <tr>
+          <th scope="row" class="even">측면 배너</th>
+          <td class="even">3주</td>
+          <td class="even">7%</td>
+          <td class="even">558,000</td>
+        </tr>
+        <tr>
+          <th scope="row">상단 배너</th>
+          <td>4주</td>
+          <td>10%</td>
+          <td>450,000</td>
+        </tr>
+        <tr>
+          <th scope="row" class="even">측면 배너</th>
+          <td class="even">4주</td>
+          <td class="even">10%</td>
+          <td class="even">540,000</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <p>광고 문의는 신청 페이지 혹은 000-0000-0000으로 연락 바랍니다.</p>
+    </div>
+  </div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="customJs">
+  <script th:src="@{/js/jquery-3.7.0.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  
+  <script>
+    // 가격 정보를 객체로 저장
+    var prices = {
+      '상단 배너 광고': {
+        '1': { price: 500000, discount: 0 },
+        '2': { price: 475000, discount: 0.05 },
+        '3': { price: 465000, discount: 0.07 },
+        '4': { price: 450000, discount: 0.10 },
+        '5': { price: 450000, discount: 0.10 },
+        '6': { price: 450000, discount: 0.10 },
+        '7': { price: 450000, discount: 0.10 },
+        '8': { price: 450000, discount: 0.10 }
+      },
+      '측면 배너 광고': {
+        '1': { price: 600000, discount: 0 },
+        '2': { price: 570000, discount: 0.05 },
+        '3': { price: 558000, discount: 0.07 },
+        '4': { price: 540000, discount: 0.10 },
+        '5': { price: 540000, discount: 0.10 },
+        '6': { price: 540000, discount: 0.10 },
+        '7': { price: 540000, discount: 0.10 },
+        '8': { price: 540000, discount: 0.10 }
+      }
+    };
+    
+    $(document).ready(function() {
+      // 'submit' 이벤트를 폼에 등록
+      $('#adForm').on('submit', function(e) {
+        e.preventDefault(); // 폼 제출 방지
+        
+        var adType = $("#adTypeSelect").val();
+        var adWeeks = $("#adDurationSelect").val();
+        var pricePerWeek = prices[adType][adWeeks].price;  // 1주 단위 가격
+        var discount = prices[adType][adWeeks].discount;  // 할인율
+        var totalEstimatedPrice = pricePerWeek * adWeeks;  // 주수와 할인율에 따른 가격 계산
+        Swal.fire({
+          title: ('예상 금액: ' + totalEstimatedPrice.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")),
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          }
+        })
+      });
+    });
+  </script>
+</th:block>
 </html>
