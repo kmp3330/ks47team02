@@ -43,27 +43,39 @@
 	</resultMap>
 	
 	<insert id="addNormalProject" parameterType="NormalProjects">
-		<selectKey resultType="String" keyColumn="newNormalProjectCode" keyProperty="normalProjectCode" order="BEFORE">
-			/* 상품 자동 증가 코드 */
-			<![CDATA[
-			SELECT 
-				CASE
-				WHEN COUNT(*) = 0 THEN 'normal_project_code_001'
-				WHEN CAST(SUBSTRING_INDEX(normal_project_code,'e',-1) AS UNSIGNED) < 999
-				THEN CONCAT('e',LPAD(MAX(CAST(SUBSTRING_INDEX(normal_project_code,'e',-1) AS UNSIGNED))+1,3,'0'))	
-				ELSE
-					CONCAT('e',MAX(CAST(SUBSTRING_INDEX(normal_project_code,'e',-1) AS UNSIGNED))+1)	
-				END AS newNormalProjectCode
-			FROM 
-				normal_project
-			]]>
-		</selectKey>
 		
-		
-	
-		INSERT INTO normal_project
-			(normal_project_code, user_id, normal_project_name, join_cate_code, join_cate_name, work_cate_code, work_cate_name, subject_cate_code, subject_cate_name, required_skill, normal_project_detail, project_max_people_num, normal_run_code, run_name, project_advertise_start_date, project_advertise_finish_date, project_startup_date, project_finish_date, project_day, project_day_score, project_finish_score)
-		VALUES ("프로젝트코드", 'id001', #{normalProjectName}, #{joinCateCode}, "조인케이트네임", #{workCateCode}, "워크케이트네임", #{subjectCateCode}, "서브젝트네임", #{requiredSkill}, #{normalProjectDetail}, #{projectMaxPeopleNum}, #{normalRunCode}, "런네임", CURDATE(), #{projectAdvertiseFinishDate} ,#{projectStartUpDate}, #{projectFinishDate}, #{projectDay}, 10, 500)
+		INSERT 
+			INTO normal_project
+			(normal_project_code, user_id, normal_project_name, join_cate_code, join_cate_name, 
+			work_cate_code, work_cate_name, subject_cate_code, subject_cate_name, required_skill, 
+			normal_project_detail, project_max_people_num, normal_run_code, run_name, 
+			project_advertise_start_date, project_advertise_finish_date, project_startup_date, 
+			project_finish_date, project_day, project_day_score, project_finish_score)
+			
+		SELECT 
+			CONCAT('normal_project',LPAD(CAST(SUBSTRING(MAX(normal_project_code),20)+1 as UNSIGNED),3,'0')),
+			'id001',
+			#{normalProjectName},
+			#{joinCateCode},
+			(SELECT join_cate_name FROM join_cate WHERE join_cate_code = '#{joinCateCode}'),
+			#{workCateCode},
+			(SELECT work_cate_name FROM work_cate WHERE work_cate_code = 'workCateCode'),
+			#{subjectCateCode},
+			(SELECT subject_cate_name FROM subject_cate WHERE subject_cate_code='#{subjectCateCode}'),
+			#{requiredSkill},
+			#{normalProjectDetail},
+			#{projectMaxPeopleNum},
+			'normal_run_code01',
+			(SELECT nr.run_name FROM normal_run AS nr WHERE nr.normal_run_code = 'normal_run_code01'),
+			CURDATE(),
+			#{projectAdvertiseFinishDate},
+			#{projectStartUpDate},
+			#{projectFinishDate},
+			#{projectDay},
+			10,
+			500
+			FROM normal_project
+                WHERE normal_project_code LIKE 'normal_project_code_%';
 	</insert>
 	
 	<select id="getNormalProjectList" resultMap="NormalProjectMap">
