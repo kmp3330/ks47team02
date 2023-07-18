@@ -57,6 +57,14 @@ public class BannerController {
 		return "user/banner/bannerRequestList";
 	}
 
+	@GetMapping("/banner/bannerPayment")
+	public String payment(Model model){
+		model.addAttribute("title", "결제하기");
+		model.addAttribute("titleText", "결제하기");
+		model.addAttribute("contents", "배너 결제");
+		return "user/banner/bannerPayment";
+	}
+
 
 
 	
