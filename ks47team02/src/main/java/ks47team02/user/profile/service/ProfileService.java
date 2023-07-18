@@ -87,9 +87,9 @@ public class ProfileService {
 	 * 자격증 목록 조회
 	 * @return
 	 */
-	public List<ProfileCertificate> certificateList() {
+	public List<ProfileCertificate> certificateList(String sessionId) {
 		
-		List<ProfileCertificate> certificateList = profileCertificateMapper.certificateList();
+		List<ProfileCertificate> certificateList = profileCertificateMapper.certificateList(sessionId);
 		log.info("자격증 목록 조회 : {}", certificateList);
 		
 		return certificateList;
@@ -103,6 +103,18 @@ public class ProfileService {
 		log.info("profileCertificate : {}", profileCertificate);
 		profileCertificateMapper.profileCertificateInsert(profileCertificate);
 		log.info("profileCertificate : {}", profileCertificate);
+	}
+	
+	/**
+	 * 아이디별 자격증 조회
+	 * @param userId
+	 * @return
+	 */
+	public ProfileCertificate certificateByCode(String certificateCode) {
+		
+		ProfileCertificate certificateInfo = profileCertificateMapper.certificateByCode(certificateCode); 
+		
+		return certificateInfo;
 	}
 	
 	/**

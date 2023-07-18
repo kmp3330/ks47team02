@@ -19,7 +19,7 @@
 			property="profileApplicationHidden" />
 	</resultMap>
 
-	<select id="certificateList" resultMap="ProfileResultMap">
+	<select id="certificateList" parameterType="String" resultMap="ProfileResultMap">
 		/* 자격증 조회 */
 			SELECT
 				user_certificate_code,
@@ -30,10 +30,12 @@
 				profile_hidden,
 				profile_application_hidden
 			FROM
-				profile_certificate;
+				profile_certificate
+			WHERE
+				user_id = #{sessionId};
 	</select>
 
-	<insert id="profileCertificateInsert" parameterType="String">
+	<insert id="profileCertificateInsert" parameterType="ProfileCertificate">
 		<selectKey resultType="String"
 			keyColumn="newCertificateCode" keyProperty="certificateCode"
 			order="BEFORE">
@@ -60,5 +62,21 @@
 				#{certificatePublication}, #{certificateDate}, ${profileHidden},
 				${profileApplicationHidden})
 	</insert>
+	
+	<select id="certificateByCode" parameterType="String" resultMap="ProfileResultMap">
+		/* 자격증 코드별 자격증 조회 */
+		SELECT
+			user_certificate_code,
+			user_id,
+			user_certificate_name,
+			user_certificate_publication,
+			user_certificate_date,
+			profile_hidden,
+			profile_application_hidden
+		FROM
+			profile_certificate
+		WHERE
+			user_certificate_code = #{certificateCode};
+	</select>
 
 </mapper>

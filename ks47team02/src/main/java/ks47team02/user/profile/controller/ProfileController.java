@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
 import ks47team02.user.profile.dto.ProfileAward;
 import ks47team02.user.profile.dto.ProfileCertificate;
 import ks47team02.user.profile.dto.ProfileEduSpec;
@@ -149,9 +151,11 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profileCertificateList")
-	public String profileCertificateList(Model model) {
+	public String profileCertificateList(Model model, HttpSession session) {
 		
-		List<ProfileCertificate> certificateList = profileService.certificateList();
+		String sessionId = (String) session.getAttribute("SID");
+		
+		List<ProfileCertificate> certificateList = profileService.certificateList(sessionId);
 		
 		model.addAttribute("title", "자격증");
 		model.addAttribute("titleText", "보유 자격증");
@@ -175,12 +179,39 @@ public class ProfileController {
 		return "user/profile/profile_certificate_insert";
 	}
 	
+	/**
+	 * 자격증 등록 처리
+	 * @param profileCertificate
+	 * @return
+	 */
 	@PostMapping("/profileCertificateInsert")
-	public String profileCertificateInsert(ProfileCertificate profileCertificate) {
+	public String profileCertificateInsert(ProfileCertificate profileCertificate, HttpSession session) {
+		
+		// if(sessionId == null) 조건을 넣어서 null 이면 로그인 페이지로 이동하게 하면 되는데
+		// 지금은 인터셉터에서 이미 처리가 되어있는 상태라 필요없다.
+		String sessionId = (String) session.getAttribute("SID");
+		profileCertificate.setUserId(sessionId);
 		
 		profileService.profileCertificateInsert(profileCertificate);
 		
 		return "redirect:/profile/profileCertificateList";
+	}
+	
+	/**
+	 * 자격증 수정 화면
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/profileCertificateModify")
+	public String profileCertificateModify(Model model,
+										   @RequestParam(value="certificateCode") String certificateCode) {
+		
+		ProfileCertificate certificateInfo = profileService.certificateByCode(certificateCode);
+		
+		model.addAttribute("title", "자격증 수정 화면");
+		model.addAttribute("certificateInfo", certificateInfo);
+		
+		return "user/profile/profile_certificate_modify";
 	}
 	
 	/**
