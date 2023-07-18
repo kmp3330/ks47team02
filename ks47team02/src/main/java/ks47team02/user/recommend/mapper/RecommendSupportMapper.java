@@ -14,10 +14,6 @@ public interface RecommendSupportMapper {
 	 */
 	public List <RecommendSupport> getRecommendSupportRank();
 	
-	/*
-	 *  기업 지원 코드 조회
-	 */
-	public List <RecommendSupport> getRecommendSupportCode();
 	
 	/*
 	 *  기업 지원 순 목록 조회

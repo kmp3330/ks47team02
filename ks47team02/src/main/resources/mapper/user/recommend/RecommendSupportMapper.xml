@@ -34,17 +34,7 @@
 			company_support AS cs
  	</select>
  	
- 	<select id="getRecommendSupportCode" resultMap="RecommendSupportResultMap">
- 		SELECT
-			cs.company_support_code
-		FROM
-			company_support AS cs
-			
- 	</select>
- 	
- 	<select id="getRecommendSupportUserId" resultMap="RecommendSupportResultMap">
- 	
- 	</select>
+ 
  	
  	<select id="getRecommendSupportRank" resultMap="RecommendSupportResultMap">
  		SELECT 

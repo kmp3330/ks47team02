@@ -23,6 +23,7 @@
  </resultMap>
  
  <select id="getRecommendEmployment" resultMap="RecommendEmploymentResultMap">
+ 	/*  채용 단계 목록 조회 */
  	SELECT
 		user_id,
 		join_cate_name,
@@ -38,7 +39,22 @@
 		company_employment  
  </select>
  
- <insert id="addRecommendEmploymnet" parameterType="RecommendEmployment">
+ <insert id="recommendInsertEmployment" parameterType="RecommendEmployment">
+ 	<selectKey resultType="String" keyColumn="newRecommendEmploymentCode" keyProperty="companyEmploymentCode" order="BEFORE">
+			/* 채용 공고 자동 증가 코드 */
+			<![CDATA[
+			SELECT 
+				CASE
+				WHEN COUNT(*) = 0 THEN 'company_employment_code001'
+				WHEN CAST(SUBSTRING_INDEX(company_employment_code,'code',-1) AS UNSIGNED) < 999
+				THEN CONCAT('company_employment_code',LPAD(MAX(CAST(SUBSTRING_INDEX(company_employment_code,'code',-1) AS UNSIGNED))+1,3,'0'))	
+				ELSE
+					CONCAT('company_employment_code',MAX(CAST(SUBSTRING_INDEX(company_employment_code,'code',-1) AS UNSIGNED))+1)	
+				END AS newRecommendEmploymentCode
+			FROM 
+				company_employment
+			]]>
+	</selectKey>
  	INSERT INTO company_employment 
 	(company_employment_code,
 	company_support_code,
@@ -58,12 +74,12 @@
 	job_normal_run)
 VALUE	
 	(#{companyEmploymentCode},
-	#{companySupportCode},
-	#{userId},
-	#{announcementCode},
-	#{joinCateCode},
+	'company_support_code001',
+	'id001',
+	'announcement_code001',
+	'join_cate_code001',
 	#{joinCateName},
-	#{areaCode},
+	'area_code001',
 	#{areaCate},
 	#{jobOpening},
 	#{requiredSkills},
@@ -71,7 +87,7 @@ VALUE
 	#{wage},
 	CURDATE(),
 	CURDATE(),
-	#{jobNormalRunCode},
+	'job_normal_run_code001',
 	#{jobNormalRun})
  </insert>
  

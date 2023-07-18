@@ -18,7 +18,7 @@ public interface RecommendEmploymentMapper {
 	/*
 	 * 채용 단계 순 목록 등록
 	 */
-	public int addRecommendEmploymnet(RecommendEmployment recommend);
+	public int recommendInsertEmployment(RecommendEmployment recommendEmployment);
 	
 	
 	/*

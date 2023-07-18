@@ -20,16 +20,16 @@ import ks47team02.user.recommend.mapper.RecommendSupportMapper;
 @Transactional
 public class RecommendService {
 
-	public final RecommendEmploymentMapper recommendMapper;
+	public final RecommendEmploymentMapper recommendEmploymentMapper;
 	public final RecommendSupportMapper recommendSupportMapper;
 	public final RecommendScrapMapper recommendScrapMapper;
 	
 	public RecommendService
-		  (RecommendEmploymentMapper recommendMapper, 
+		  (RecommendEmploymentMapper recommendEmploymentMapper, 
 		   RecommendSupportMapper recommendSupportMapper,
 		   RecommendScrapMapper recommendScrapMapper) {
 		
-		this.recommendMapper = recommendMapper;
+		this.recommendEmploymentMapper = recommendEmploymentMapper;
 		this.recommendSupportMapper = recommendSupportMapper; 
 		this.recommendScrapMapper = recommendScrapMapper;
 	}
@@ -50,13 +50,7 @@ public class RecommendService {
 		return recommendSupportInfo;
 	}
 	
-	/*
-	 *  기업 지원 코드
-	 */
-	public List <RecommendSupport> getRecommendSupportCode(){
-		List <RecommendSupport> recommendSupportCode = recommendSupportMapper.getRecommendSupportCode();
-		return recommendSupportCode;
-	}
+
 	
 	/*
 	 *  기업 지원 top5 순위
@@ -71,15 +65,15 @@ public class RecommendService {
 	 *  채용 단계 순 목록 등록
 	 */
 	
-	public void addEmployment(RecommendEmployment recommend) {
-		recommendMapper.addRecommendEmploymnet(recommend);
+	public void recommendInsertEmployment(RecommendEmployment recommendEmployment) {
+		recommendEmploymentMapper.recommendInsertEmployment(recommendEmployment);
 	}
 	
 	/*
 	 * 채용 단계 순 목록 
 	 */
 	public List <RecommendEmployment> getRecommendEmploymentInfo(){
-		List <RecommendEmployment> RecommendEmploymentInfo = recommendMapper.getRecommendEmployment();
+		List <RecommendEmployment> RecommendEmploymentInfo = recommendEmploymentMapper.getRecommendEmployment();
 		return RecommendEmploymentInfo;
 	}
 	
