@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
 import ks47team02.user.project.pro.dto.SubjectCate;
+import ks47team02.user.project.pro.dto.WorkCate;
 import ks47team02.user.project.normal.mapper.NormalProjectMapper;
 import ks47team02.user.project.pro.dto.JoinCate;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +32,7 @@ public class NormalProjectService {
 	
 	public List<NormalProjects> getNormalProjects(){
 		List<NormalProjects> normalProjectList = normalProjectMapper.getNormalProjectList();
-		
 		log.info("normalProjectList : {}", normalProjectList);
-		
-		
-		
-		
-		
 		return normalProjectList;
 		
 		
@@ -55,6 +50,12 @@ public class NormalProjectService {
 		List<SubjectCate> subjectCateList = normalProjectMapper.getSubjectCateList();
 		log.info("subjectCateList : {}", subjectCateList);
 		return subjectCateList;
+	}
+	public List<WorkCate> getWorkCateList(){
+		List<WorkCate> workCateList =  normalProjectMapper.getWorkCateList();
+		log.info("getWorkCateListService : {}", workCateList);
+		return workCateList;
+		
 	}
 	
 	public void addNormalProject(NormalProjects norproject) {

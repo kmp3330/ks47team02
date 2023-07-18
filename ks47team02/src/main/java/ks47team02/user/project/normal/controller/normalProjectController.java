@@ -13,6 +13,8 @@ import ks47team02.user.project.normal.dto.NormalProjects;
 import ks47team02.user.project.normal.service.NormalProjectService;
 import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.project.pro.dto.SubjectCate;
+import ks47team02.user.project.pro.dto.WorkCate;
+import ks47team02.user.project.pro.service.ProProjectService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +28,7 @@ public class normalProjectController {
 	/*생성자 메서드*/
 	
 	private final NormalProjectService normalProjectService;
+	private final ProProjectService proProjectService;
 	
 
 	
@@ -55,11 +58,16 @@ public class normalProjectController {
 	 * */
 	@GetMapping("/addProject")
 	public String addProject(Model model) {
+		//joinCateList 가져오기
 		List<JoinCate> joinCateList = normalProjectService.getJoinCateList();
-		List<SubjectCate> subjectCateList = normalProjectService.getSubjectCateList();
-		
+		log.info("joinCateList arr : {}", joinCateList);
+		List<SubjectCate> subjectCateList = proProjectService.getSubjectCateList();
+		log.info("subjectCateList ida", subjectCateList);
+		List<WorkCate> workCateList = normalProjectService.getWorkCateList();
+		log.info("WorkCateList controller : {}", workCateList);
 		model.addAttribute("joinCateList", joinCateList);
 		model.addAttribute("subjectCateList", subjectCateList);
+		model.addAttribute("workCateList", workCateList);
 		model.addAttribute("title", "일반과제 등록 페이지");
 		
 		
@@ -73,7 +81,7 @@ public class normalProjectController {
 	 */
 	@PostMapping("/addProject")
 	public String addProject(NormalProjects normalProjects) {
-		log.info("안녕하시오");
+		
 		
 		log.info("addProject normalProjects 전송 : {}", normalProjects);
 		normalProjectService.addNormalProject(normalProjects);
@@ -85,17 +93,20 @@ public class normalProjectController {
 	}
 	
 	@GetMapping("/addApplicantAccept")
-	public String addApplicantAccept(Model model) {
+	public String addApplicantAccept(@RequestParam(value="normalProjectCode") String normalProjectCode, Model model) {
 		model.addAttribute("title", "일반과제 신청");
+		model.addAttribute("normalProjectCode" ,normalProjectCode);
+		
+		
 		
 		return "user/project/normal/applyApplicant/addApplicantAccept";
 	}
 	
 	@PostMapping("/addApplicantAccept")
-	public String addApplicantAccept(@RequestParam(value="normalProjectCode") String normalProjectCode ,Model model) {
+	public String addApplicantAccept(Model model) {
 		model.addAttribute("title", "일반과제 신청");
 		
-		return "user/project/normal/applyApplicant/addApplicantAccept";
+		return "redirect:/normalProject/getAcceptList";
 	}
 	
 	@GetMapping("/addAcceptApprove")
