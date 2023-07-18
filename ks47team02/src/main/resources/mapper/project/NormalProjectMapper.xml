@@ -17,7 +17,7 @@
 		<result column="normal_project_detail" 			property="normalProjectDetail" />
 		<result column="project_max_people_num" 		property="projectMaxPeopleNum" />
 		<result column="normal_run_code" 				property="normalRunCode" />
-		<result column="run_name" 				property="runName" />
+		<result column="run_name" 						property="runName" />
 		<result column="project_advertise_start_date" 	property="projectAdvertiseStartDate" />
 		<result column="project_advertise_finish_date" 	property="projectAdvertiseFinishDate" />
 		<result column="project_startup_date" 			property="projectStartUpDate" />
