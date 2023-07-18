@@ -7,6 +7,8 @@ import ks47team02.user.profile.dto.ProfileEduSpec;
 
 @Mapper
 public interface ProfileEduSpecMapper {
+	//학력 등록
+	public int profileEduSpecInsert(ProfileEduSpec profileEduSpec);
 	//회원별 경력 목록
 	public List<ProfileEduSpec> getProfileEduSpecList();
 }

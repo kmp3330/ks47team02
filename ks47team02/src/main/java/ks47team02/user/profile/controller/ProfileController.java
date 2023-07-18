@@ -112,6 +112,25 @@ public class ProfileController {
 
 		return "user/profile/profile_skill_list";
 	}
+	@PostMapping("/profileWorkSpecInsert")
+	public String profileWorkSpecInsert(ProfileWorkSpec profileWorkSpec) {
+		
+		log.info("일경력  등록시 입력정보: {}", profileWorkSpec);
+		
+		profileService.profileWorkSpecInsert(profileWorkSpec);
+		
+		return "redirect:/profile/profileWorkSpecList";
+	}
+	@GetMapping("/profileWorkSpecInsert")
+	public String profilWorkSpecInsert(Model model) {
+
+		List<ProfileWorkSpec> profileWorkSpecList = profileService.getProfileWorkSpecList();
+		model.addAttribute("title", "메인화면");
+		model.addAttribute("titleText", "크게 보이는 글씨");
+		model.addAttribute("contents", "작게 보이는 글씨");
+		model.addAttribute("profileWorkSpecList", profileWorkSpecList);
+		return "user/profile/profile_work_spec_insert";
+	}
 	
 	/**
 	 * 경력 화면
@@ -127,6 +146,26 @@ public class ProfileController {
 		model.addAttribute("profileWorkSpecList", profileWorkSpecList);
 		
 		return "user/profile/profile_work_spec_list";
+	}
+	
+	@PostMapping("/profileEduSpecInsert")
+	public String profileEduSpecInsert(ProfileEduSpec profileEduSpec) {
+		
+		log.info("학력 등록시 입력정보: {}", profileEduSpec);
+		
+		profileService.profileEduSpecInsert(profileEduSpec);
+		
+		return "redirect:/profile/profileEduSpecList";
+	}
+	@GetMapping("/profileEduSpecInsert")
+	public String profileEduSpecInsert(Model model) {
+
+		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList();
+		model.addAttribute("title", "메인화면");
+		model.addAttribute("titleText", "크게 보이는 글씨");
+		model.addAttribute("contents", "작게 보이는 글씨");
+		model.addAttribute("profileEduSpecList", profileEduSpecList);
+		return "user/profile/profile_edu_spec_insert";
 	}
 	
 	/**
