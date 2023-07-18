@@ -103,10 +103,19 @@ public class normalProjectController {
 	}
 	
 	@PostMapping("/addApplicantAccept")
+
 	public String addApplicantAccept(Model model) {
 		model.addAttribute("title", "일반과제 신청");
+
+
+
 		
+
 		return "redirect:/normalProject/getAcceptList";
+
+		
+
+
 	}
 	
 	@GetMapping("/addAcceptApprove")
