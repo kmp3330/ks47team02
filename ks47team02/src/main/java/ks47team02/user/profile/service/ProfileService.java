@@ -64,7 +64,13 @@ public class ProfileService {
 		
 		return profileSkillList;
 	}
-	/*회원별 보유기술 목록 조회 */
+	/*일경력 등록
+	 * @param profileWorkSpec*/
+	public void profileWorkSpecInsert(ProfileWorkSpec profileWorkSpec) {
+		profileWorkSpecMapper.profileWorkSpecInsert(profileWorkSpec);
+	}
+	
+	/*회원별 일경력 목록 조회 */
 	public List<ProfileWorkSpec> getProfileWorkSpecList() {
 		
 		List<ProfileWorkSpec>profileWorkSpecList = profileWorkSpecMapper.getProfileWorkSpecList();
@@ -72,6 +78,11 @@ public class ProfileService {
 		log.info("profileWorkSpecList : {}", profileWorkSpecList);
 		
 		return profileWorkSpecList;
+	}
+	/*학력 등록
+	 * @param profileEduSpec*/
+	public void profileEduSpecInsert(ProfileEduSpec profileEduSpec) {
+		profileEduSpecMapper.profileEduSpecInsert(profileEduSpec);
 	}
 	/*회원별 학력 목록 조회 */
 	public List<ProfileEduSpec> getProfileEduSpecList(){
