@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.user.profile.dto.ProfileAward;
 import ks47team02.user.profile.dto.ProfileCertificate;
@@ -39,6 +40,33 @@ public class ProfileController {
 		model.addAttribute("contents", "전체 프로필을 볼 수 있는 페이지입니다.");
 		
 		return "user/profile/profileList";
+	}
+	
+	@PostMapping("/profileIntroModify")
+	public String profileIntroModify(ProfileIntro profileIntro) {
+		
+		profileService.profileIntroModify(profileIntro);
+		
+		return "redirect:/profile/profileIntroList";
+	}
+	
+	/*
+	 * 사용자 요청 시 쿼리스트링 : ex) userIntrocode=user_intro_code001
+	 * @RequestParam(value="userIntroCode") String userIntroCode
+	 * @return
+	 * */
+	@GetMapping("/profileIntroModify")
+	public String profileIntroModify(@RequestParam(value="userIntroCode") String userIntroCode, Model model) {
+		//회원 상세조회
+		ProfileIntro profileIntroInfo = profileService.getProfileIntroInfoByCode(userIntroCode);
+		//회원등급 목록 조회
+		//List<ProfileLevel> profileLevelList = profileService.getProfileLevelList
+		model.addAttribute("title","회원수정");
+		model.addAttribute("profileIntroInfo",profileIntroInfo);
+		model.addAttribute("title","회원수정");
+		
+		return "user/profile/profile_intro_modify";
+		
 	}
 	
 	@PostMapping("/profileIntroInsert")
@@ -76,6 +104,25 @@ public class ProfileController {
 		return "user/profile/profile_intro_list";
 	}
 	
+	/*
+	 * 사용자 요청 시 쿼리스트링 : ex) userSkillcode=user_Skill_code001
+	 * @RequestParam(value="userSkillCode") String userSkillCode
+	 * @return
+	 * */
+	@GetMapping("/profileSkillModify")
+	public String profileSkillModify(@RequestParam(value="userSkillCode") String userSkillCode, Model model) {
+		//회원 상세조회
+		ProfileSkill profileSkillInfo = profileService.getProfileSkillInfoByCode(userSkillCode);
+		//회원등급 목록 조회
+		//List<ProfileLevel> profileLevelList = profileService.getProfileLevelList
+		model.addAttribute("title","회원수정");
+		model.addAttribute("profileSkillInfo",profileSkillInfo);
+		model.addAttribute("title","회원수정");
+		
+		return "user/profile/profile_skill_modify";
+		
+	}
+	
 	@PostMapping("/profileSkillInsert")
 	public String profileSkillInsert(ProfileSkill profileSkill) {
 		
@@ -93,7 +140,7 @@ public class ProfileController {
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
 		model.addAttribute("profileSkillList", profileSkillList);
-		return "user/profile/profile_Skill_insert";
+		return "user/profile/profile_skill_insert";
 	}
 	/**
 	 * 보유기술 화면
@@ -109,6 +156,24 @@ public class ProfileController {
 		model.addAttribute("profileSkillList", profileSkillList);
 
 		return "user/profile/profile_skill_list";
+	}
+	/*
+	 * 사용자 요청 시 쿼리스트링 : ex) userWorkSpeccode=user_WorkSpec_code001
+	 * @RequestParam(value="userWorkSpecCode") String userWorkSpecCode
+	 * @return
+	 * */
+	@GetMapping("/profileWorkSpecModify")
+	public String profileWorkSpecModify(@RequestParam(value="userWorkSpecCode") String userWorkSpecCode, Model model) {
+		//회원 상세조회
+		ProfileWorkSpec profileWorkSpecInfo = profileService.getProfileWorkSpecInfoByCode(userWorkSpecCode);
+		//회원등급 목록 조회
+		//List<ProfileLevel> profileLevelList = profileService.getProfileLevelList
+		model.addAttribute("title","회원수정");
+		model.addAttribute("profileWorkSpecInfo",profileWorkSpecInfo);
+		model.addAttribute("title","회원수정");
+		
+		return "user/profile/profile_work_spec_modify";
+		
 	}
 	@PostMapping("/profileWorkSpecInsert")
 	public String profileWorkSpecInsert(ProfileWorkSpec profileWorkSpec) {
@@ -145,6 +210,24 @@ public class ProfileController {
 		
 		return "user/profile/profile_work_spec_list";
 	}
+	/*
+	 * 사용자 요청 시 쿼리스트링 : ex) userEduSpeccode=user_work_spec_code001
+	 * @RequestParam(value="userEduSpecCode") String userEduSpecCode
+	 * @return
+	 * */
+	@GetMapping("/profileEduSpecModify")
+	public String profileEduSpecModify(@RequestParam(value="userEduSpecCode") String userEduSpecCode, Model model) {
+		//회원 상세조회
+		ProfileEduSpec profileEduSpecInfo = profileService.getProfileEduSpecInfoByCode(userEduSpecCode);
+		//회원등급 목록 조회
+		//List<ProfileLevel> profileLevelList = profileService.getProfileLevelList
+		model.addAttribute("title","회원수정");
+		model.addAttribute("profileEduSpecInfo",profileEduSpecInfo);
+		
+		return "user/profile/profile_edu_spec_modify";
+		
+	}
+	
 	
 	@PostMapping("/profileEduSpecInsert")
 	public String profileEduSpecInsert(ProfileEduSpec profileEduSpec) {

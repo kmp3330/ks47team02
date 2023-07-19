@@ -4,9 +4,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks47team02.user.profile.dto.ProfileEduSpec;
+import ks47team02.user.profile.dto.ProfileWorkSpec;
 
 @Mapper
 public interface ProfileEduSpecMapper {
+	//학력 상세조회 
+	public ProfileEduSpec getProfileEduSpecInfoByCode(String userEduSpecCode);
 	//학력 등록
 	public int profileEduSpecInsert(ProfileEduSpec profileEduSpec);
 	//회원별 경력 목록

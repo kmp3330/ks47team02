@@ -60,5 +60,37 @@
 			#{profileHidden},
 			#{profileApplicationHidden});
 	</insert>
+	
+	<update id="profileIntroModify" parameterType="ProfileIntro">
+		/*회원수정*/
+		UPDATE profile_intro
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="userIntro !=null and userIntro !=''">
+				user_intro = #{userIntro},
+			</if>
+			<if test="profileHidden !=null and profileHidden !=''">
+				profile_hidden = #{profileHidden},
+			</if>
+			<if test="profileApplicationHidden !=null and profileApplicationHidden !=''">
+				profile_application_hidden = #{profileApplicationHidden},
+			</if>
+		</trim>
+		WHERE
+			user_intro_code = #{userIntroCode}
+	</update>
+	
+	<select id="getProfileIntroInfoByCode" parameterType="String" resultMap = "profileIntroResultMap">
+		/*자기소개별 상세조회 */
+		select
+		    pi.user_intro_code,
+		    pi.user_id,
+		    pi.user_intro,
+		    pi.profile_hidden,
+		    pi.profile_application_hidden
+		from
+		    profile_intro as pi
+		where
+		    pi.user_intro_code = #{userIntroCode};
+	</select>
 
 </mapper>

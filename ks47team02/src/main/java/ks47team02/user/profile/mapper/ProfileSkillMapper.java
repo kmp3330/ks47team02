@@ -9,7 +9,8 @@ import ks47team02.user.profile.dto.ProfileSkill;
 
 @Mapper
 public interface ProfileSkillMapper {
-
+	//보유기술 상세조회
+	public ProfileSkill getProfileSkillInfoByCode(String userSkillCode);
 	//보유기술 등록
 	public int profileSkillInsert(ProfileSkill profileSkill);
 	//회원 보유기술 목록
