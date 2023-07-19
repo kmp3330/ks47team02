@@ -9,16 +9,22 @@
 			  let $dateCalculateBtn = $('#dateCalculate');
 			  
 			  $dateCalculateBtn.click(function(){
-				  let $projectStartDay = $('#projectStartUpDate');
-				  let $projectFinishDay = $('#projectFinishDate');
-				  const startDate = $projectStartDay.val();
-				  const finishDate = $projectFinishDay.val();
+				  const $projectStartDay = $('#projectStartUpDate').val();
+				  const $projectFinishDay = $('#projectFinishDate').val();
+				  const $projectFinishScore = $('#projectFinishScore');
 				 
-				  const date1 = new Date(startDate);
-				  const date2 = new Date(finishDate);
+				  const date1 = new Date($projectStartDay);
+				  const date2 = new Date($projectFinishDay);
 				  const result =  Math.abs(date1-date2) /(1000 * 60 * 60 * 24);
 				  $('#projectDay').val(result);
+				  
+				  $projectFinishScore.val(result*10);
+				  
 			  });
+			  
+			  
+			  
+			  
 			  
 			  
 			  
@@ -152,7 +158,7 @@
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
 														<input type="date" id="projectFinishDate" name="projectFinishDate">
-														<button type="button" id="dateCalculate">날짜 계산</button>
+														<button type="button" id="dateCalculate">날짜, 점수 계산</button>
 													</td>
 												</tr>
 												<tr>
@@ -162,6 +168,22 @@
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
 														<input type="number" id="projectDay" name="projectDay" disabled>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label>일일점수</label>
+													</td>
+													<td>
+														<h2 id="dayScore">10</h2>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label>개인별 밭는 점수</label>
+													</td>
+													<td>
+														<input id="projectFinishScore" name="projectFinishScore" placeholder="0"></input>
 													</td>
 												</tr>
 												<tr>
