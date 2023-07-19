@@ -39,4 +39,23 @@
 			user_id = #{userId}
 	</select>
 
+	<insert id="addUser" parameterType="User">
+		INSERT INTO user_info
+		(user_id, user_pw, user_Name, level_code, level_name, user_gender, career_check,
+		freelancer_check, user_addr, user_email, user_phone, user_join_date, grade_fee_code,
+		user_grade, total_score, report_score)
+		VALUES
+		(#{userId}, #{userPw}, #{userPw}, 'level_code002', '일반회원', #{userGender}, #{careerCheck},
+		#{freelancerCheck}, #{userAddr}, #{userEmail}, #{userPhone}, CURDATE(), 'grade_fee_code001',
+		'브론즈', 0, 0);
+	</insert>
+
+	<select id="checkId" resultType="boolean" parameterType="String">
+		SELECT
+		IF(COUNT(u.user_id) > 0, 1, 0)
+		FROM
+		user_info AS u
+		WHERE
+		u.user_id = #{userId};
+	</select>
 </mapper>

@@ -3,8 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/layout/default}">
 <head>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
   <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
   
   <style>
     
@@ -194,9 +194,8 @@
               <label for="inputStatus">Status</label>
               <select id="inputStatus" class="form-control custom-select">
                 <option selected="" disabled="">광고 유형을 선택하세요</option>
-                <option>On Hold</option>
-                <option>Canceled</option>
-                <option>Success</option>
+                <option>측면 광고</option>
+                <option>하단 광고</option>
               </select>
             </div>
             <div class="form-group">

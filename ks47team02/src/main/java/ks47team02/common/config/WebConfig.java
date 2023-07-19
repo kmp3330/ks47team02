@@ -39,6 +39,11 @@ public class WebConfig implements WebMvcConfigurer{
 				.excludePathPatterns("/")
 				.excludePathPatterns("/login")
 				.excludePathPatterns("/logout")
+				.excludePathPatterns("/addMember")
+				.excludePathPatterns("/addNormalMember")
+				.excludePathPatterns("/addCompanyMember")
+				.excludePathPatterns("/checkId")
+				.excludePathPatterns("#readTerms")
 				.excludePathPatterns(excludePathList);
 		
 		WebMvcConfigurer.super.addInterceptors(registry);
