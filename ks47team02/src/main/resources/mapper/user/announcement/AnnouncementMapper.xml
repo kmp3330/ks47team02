@@ -26,6 +26,64 @@
 		<result column="hiring_status"  	 property="hiringStatus"/>
 	</resultMap>
 	
+	<select id="getAnnouncementInfoById" parameterType="String" resultMap="announcementResultMap">
+		/* 구인구직공고 수정조회 */
+		SELECT
+			announcement_code,
+			cp_name,
+			join_cate_name,
+			area_cate,
+			job_opening,
+			required_skills,
+			career,
+			recruitment,
+			wage,
+			due_date,
+			hiring_status
+		FROM
+			announcement
+		WHERE
+			announcement_code = #{announcementCode};
+	</select>
+	
+	<update id="announcementModify" parameterType="Announcement">
+		/* 구인구직공고 수정 */
+		UPDATE	announcement
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="cpName != null and cpName != ''">						
+				cp_name 	= #{cpName},
+			</if>
+			<if test="joinCateName != null and joinCateName != ''">						
+				join_cate_name 	= #{joinCateName},
+			</if>
+			<if test="areaCate != null and areaCate != ''">						
+				area_cate 	= #{areaCate},
+			</if>
+			<if test="jobOpening != null and jobOpening != ''">						
+				job_opening 	= #{jobOpening},
+			</if>
+			<if test="requiredSkills != null and requiredSkills != ''">						
+				required_skills 	= #{requiredSkills},
+			</if>
+			<if test="career != null and career != ''">						
+				career 	= #{career},
+			</if>
+			<if test="recruitment != null and recruitment != ''">						
+				recruitment 	= #{recruitment},
+			</if>
+			<if test="wage != null and wage != ''">						
+				wage 	= #{wage},
+			</if>
+				start_date 	= #{startDate},
+				due_date 	= #{dueDate},
+			<if test="hiringStatus != null and hiringStatus != ''">						
+				hiring_status 	= #{hiringStatus}
+			</if>
+		</trim>
+		WHERE
+			 	announcement_code = #{announcementCode};
+	</update>
+	
 	<insert id="announcementInsert" parameterType="Announcement" >
 
 		<selectKey resultType="String" keyColumn="newAnnouncementCode" keyProperty="announcementCode" order="BEFORE">
@@ -43,7 +101,7 @@
 				announcement
 			]]>
 		</selectKey>
-		/* 채용공고 등록 */
+		/* 구인구직공고 등록 */
 		INSERT INTO announcement (announcement_code,
 								  cp_id,
 								  cp_name,
@@ -82,7 +140,7 @@
 	</insert>
 	
 	<select id="getAnnouncementList" parameterType="map" resultType="Announcement">
-		/* 채용공고 조회 */
+		/* 구인구직공고 조회 */
 		SELECT
 			announcement_code AS announcementCode,
 			cp_name 		  AS cpName,
@@ -93,7 +151,7 @@
 			career 			  AS career,
 			recruitment 	  AS recruitment,
 			wage			  AS wage,
-			hiring_status	  AS hiringStatus
+			due_date	  	  AS dueDate
 		FROM
 			announcement
 	</select>

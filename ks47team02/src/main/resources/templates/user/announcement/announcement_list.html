@@ -34,7 +34,7 @@
 											<th>관련업무경력</th>
 											<th>채용인원</th>
 											<th>급여</th>
-											<th>진행상태분류</th>
+											<th>마감시간</th>
 											<th>수정</th>
 											<th>삭제</th>
 										</tr>
@@ -50,8 +50,8 @@
 											<td th:text="${l.career}"></td>
 											<td th:text="${l.recruitment}"></td>
 											<td th:text="${l.wage}"></td>
-											<td th:text="${l.hiringStatus}"></td>
-											<td><a th:href="@{#}"
+											<td th:text="${l.dueDate}"></td>
+											<td><a th:href="@{/announcement/announcementModify(announcementCode=${l.announcementCode})}"
 												class="genric-btn success-border circle"> <i class="fas">수정</i>
 											</a></td>
 											<td><a th:href="@{#}"
