@@ -46,22 +46,39 @@
 		
 		INSERT 
 			INTO normal_project
-			(normal_project_code, user_id, normal_project_name, join_cate_code, join_cate_name, 
-			work_cate_code, work_cate_name, subject_cate_code, subject_cate_name, required_skill, 
-			normal_project_detail, project_max_people_num, normal_run_code, run_name, 
-			project_advertise_start_date, project_advertise_finish_date, project_startup_date, 
-			project_finish_date, project_day, project_day_score, project_finish_score)
+			(normal_project_code, 
+			user_id, 
+			normal_project_name, 
+			join_cate_code, 
+			join_cate_name, 
+			work_cate_code, 
+			work_cate_name, 
+			subject_cate_code, 
+			subject_cate_name, 
+			required_skill, 
+			normal_project_detail, 
+			project_max_people_num, 
+			normal_run_code, 
+			run_name, 
+			project_advertise_start_date,
+			project_advertise_finish_date, 
+			project_startup_date, 
+			project_finish_date, 
+			project_day, 
+			project_day_score, 
+			project_finish_score
+			)
 			
 		SELECT 
-			CONCAT('normal_project',LPAD(CAST(SUBSTRING(MAX(normal_project_code),20)+1 as UNSIGNED),3,'0')),
+			CONCAT('normal_project',LPAD(CAST(SUBSTRING(MAX(normal_project_code),21)+1 as UNSIGNED),3,'0')),
 			'id001',
 			#{normalProjectName},
 			#{joinCateCode},
-			(SELECT join_cate_name FROM join_cate WHERE join_cate_code = '#{joinCateCode}'),
+			(SELECT join_cate_name FROM join_cate WHERE join_cate_code = #{joinCateCode}),
 			#{workCateCode},
-			(SELECT work_cate_name FROM work_cate WHERE work_cate_code = 'workCateCode'),
+			(SELECT work_cate_name FROM work_cate WHERE work_cate_code = #{workCateCode}),
 			#{subjectCateCode},
-			(SELECT subject_cate_name FROM subject_cate WHERE subject_cate_code='#{subjectCateCode}'),
+			(SELECT subject_cate_name FROM subject_cate WHERE subject_cate_code=#{subjectCateCode}),
 			#{requiredSkill},
 			#{normalProjectDetail},
 			#{projectMaxPeopleNum},
