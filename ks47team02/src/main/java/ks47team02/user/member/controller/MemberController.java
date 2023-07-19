@@ -2,6 +2,7 @@ package ks47team02.user.member.controller;
 
 import java.util.Map;
 
+import ks47team02.admin.dto.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,5 +79,18 @@ public class MemberController {
 		
 		return "redirect:/";
 	}
-	
+
+	@GetMapping("/addMember")
+	public String addMember(Member member, HttpSession session, Model model){
+		model.addAttribute("titleText", "회원가입");
+		model.addAttribute("contents", "가입하려는 회원의 유형을 선택해주세요");
+
+		return "user/member/addMember";
+	}
+
+	@GetMapping("/addNormalMember")
+	public String addNormalMember(Member member, HttpSession session, Model model){
+		model.addAttribute("titleText", "일반 회원 가입");
+		return "user/member/addNormalMember";
+	}
 }

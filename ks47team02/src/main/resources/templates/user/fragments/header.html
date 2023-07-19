@@ -64,9 +64,9 @@
 							<!-- 로그인 메뉴 -->
 							<li class="menu-btn"><a th:if="${session.SID == null}"
 								th:href="@{/login}" class="login">log in</a> <a
-								th:unless="${session.SID == null}" th:href="@{/logout}"
-								class="login">log out</a> <a href="#" class="template-btn">sign
-									up</a></li>
+								th:unless="${session.SID == null}"
+                th:href="@{/logout}" class="login">log out</a> <a
+                th:href="@{/addMember}" class="template-btn">sign up</a></li>
 						</ul>
 					</div>
 				</div>

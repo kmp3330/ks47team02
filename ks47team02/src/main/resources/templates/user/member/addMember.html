@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+<head>
+  <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
+  <style>
+    .card-primary.card-outline {
+      border-top: 40px solid #4d7eb1;
+      margin-top: 160px;
+    }
+    .card-body {
+      -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+      min-height: 1px;
+      padding: 6.25rem;
+    }
+    .card {
+      box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+      margin-bottom: 11rem;
+      margin-right: 30px;
+    }
+    .btn-primary {
+      color: #fff;
+      background-color: #0056ffbd;
+      border-color: #007bff;
+      box-shadow: none;
+    }
+    b, sup, sub, u, del {
+      color: #fffffc;
+    }
+  </style>
+</head>
+<th:block layout:fragment="customContents">
+  <div class="row justify-content-center">
+    <div class="card card-primary card-outline col-lg-3">
+      <div class="card-body box-profile">
+        <div class="text-center">
+          <img class="profile-user-img img-fluid img-circle" src="admin/dist/img/person.png" alt="User profile picture">
+        </div>
+        <br>
+        <h3 class="profile-username text-center">일반 회원으로 가입하기</h3>
+        
+        
+        <ul class="list-group list-group-unbordered mb-3">
+        
+        </ul>
+        
+        <a th:href="@{/addNormalMember}" class="btn btn-primary btn-block"><b>가입하기</b></a>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <div class="card card-primary card-outline col-lg-3">
+      <div class="card-body box-profile">
+        <div class="text-center">
+          <img class="profile-user-img img-fluid img-circle" src="admin/dist/img/company.jpg" alt="User profile picture">
+        </div>
+        <br>
+        <h3 class="profile-username text-center">기업 회원으로 가입하기</h3>
+        <ul class="list-group list-group-unbordered mb-3">
+        </ul>
+        
+        <a th:href="@{/addCompanyMember}" class="btn btn-primary btn-block"><b>가입하기</b></a>
+      
+      
+      </div>
+      <!-- /.card-body -->
+    </div>
+  </div>
+</th:block>
+</html>
