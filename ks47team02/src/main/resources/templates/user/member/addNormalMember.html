@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:justify-content="http://www.w3.org/1999/xhtml"
       layout:decorate="~{user/banner/layout/default}">
 <head>
   <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
@@ -9,6 +9,12 @@
   <style>
     .card-primary.card-outline {
       border-top: 3px solid #20c997;
+    }
+    .btn-primary {
+      color: #fff;
+      background-color: #00adff;
+      border-color: #007bff;
+      box-shadow: none;
     }
     b, sup, sub, u, del {
       color: #00cf13;
@@ -74,11 +80,11 @@
       <div class="card-body">
         <p class="login-box-msg">Register a new membership</p>
         
-        <form id="addNormalForm" th:action="@{/user/member/addNormalMember.html}" method="post">
+        <form id="addUserForm" th:action="@{/addNormalMember}" method="post">
           <div class="input-group mb-3">
-            <input type="text" id="userId" name="userId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
+            <input type="id" id="userId" name="userId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
             <div class="input-group-append">
-              <button class="genric-btn primary-border small" id="idCheck">아이디중복체크</button>
+              <button class="genric-btn primary-border small" id="checkId">아이디중복체크</button>
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
@@ -86,7 +92,7 @@
           </div>
           <br>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="비밀번호를 입력해주세요.">
+            <input type="password" id="userPw" name="userPw" class="form-control" placeholder="비밀번호를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -94,7 +100,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="비밀번호를 다시 입력해주세요.">
+            <input type="password" class="form-control pwEq" placeholder="비밀번호를 다시 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -103,16 +109,16 @@
           </div>
           <br><br>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="이름을 입력해주세요.">
+            <input type="text" id="userName" name="userName" class="form-control pwEq" style="text-transform: none" placeholder="이름을 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
+                <span class="fas fa-user"></span>
               </div>
             </div>
           </div>
           <br><br>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="이메일을 입력해주세요.">
+            <input type="email" id="userEmail" name="userEmail" class="form-control" placeholder="이메일을 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -120,7 +126,7 @@
             </div>
           </div><br>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="주소를 입력해주세요.">
+            <input type="address" id="userAddr" name="userAddr" class="form-control" placeholder="주소를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -129,7 +135,7 @@
           </div>
           <br>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="번호를 입력해주세요.">
+            <input type="phone" id="userPhone" name="userPhone" class="form-control" placeholder="번호를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-phone"></span>
@@ -137,32 +143,30 @@
             </div>
           </div>
           <br>
-          <h5>연차를 선택해주세요</h5>
-          <div class="nice-select col-lg-12 margin-bot" tabindex="0"><span class="current">select</span>
-            <ul class="list">
-              <li data-value="1" class="option selected focus">Country</li>
-              <li data-value="1" class="option">Bangladesh</li>
-              <li data-value="1" class="option">India</li>
-              <li data-value="1" class="option">England</li>
-              <li data-value="1" class="option">Srilanka</li>
-            </ul>
+          <div class="switch-wrap d-flex justify-content-between margin-bot">
+            <h5>경력 여부를 선택해주세요</h5>
+            <div class="confirm-switch">
+              <input type="checkbox" id="careerCheck" name="careerCheck" checked="">
+              <label for="careerCheck"></label>
+            </div>
           </div>
-          
-          
-          <div class="switch-wrap margin-bot">
-            <h5 class="margin-bottom">성별을 선택해주세요.</h5>
-            남<input type="radio" id="option1" name="option" value="option1">
-            <label for="option1"><span></span></label>&nbsp;
-            
-            여<input type="radio" id="option2" name="option" value="option2">
-            <label for="option2"><span></span></label><br>
+          <div class="switch-wrap d-flex margin-bot" style="display: flex; justify-content: space-between;">
+            <div>
+              <h5 class="margin-bottom">성별을 선택해주세요.</h5>
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+              남&nbsp;&nbsp;<input type="radio" id="userGender1" name="userGender" value="남">
+              <label for="userGender1"><span></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+              
+              여&nbsp;&nbsp;<input type="radio" id="userGender2" name="userGender" value="여">
+              <label for="userGender2"><span></span></label><br>
+            </div>
           </div>
-          
           <div class="switch-wrap d-flex justify-content-between margin-bot">
             <h5>프리랜서 여부를 선택해주세요.</h5>
             <div class="confirm-switch">
-              <input type="checkbox" id="confirm-switch" checked="">
-              <label for="confirm-switch"></label>
+              <input type="checkbox" id="freelancerCheck" name="freelancerCheck" checked="">
+              <label for="freelancerCheck"></label>
             </div>
           </div>
           <div class="row">
@@ -179,21 +183,21 @@
             <!-- /.col -->
           </div>
           <br><br>
-          <button type="submit" class="btn btn-primary btn-block">Register</button>
+          <button type="submit" id="addUserBtn" class="btn btn-primary btn-block">Register</button>
         </form>
         
         <div class="social-auth-links text-center">
-          <a href="#" class="btn btn-block btn-primary">
-            <i class="fab fa-facebook mr-2"></i>
-            Sign up using Facebook
-          </a>
-          <a href="#" class="btn btn-block btn-danger">
+          <a href="#" class="btn btn-block btn-danger" id="cantUse1">
             <i class="fab fa-google-plus mr-2"></i>
             Sign up using Google+
           </a>
+          <a href="#" class="btn btn-block btn-primary" id="cantUse2">
+            <i class="fab fa-facebook mr-2"></i>
+            Sign up using Facebook
+          </a>
         </div>
         
-        <a href="login.html" class="text-center">이미 가입된 아이디가 있습니다.</a>
+        <a th:href="@{/login}" class="text-center">이미 가입된 아이디가 있습니다.</a>
       </div>
       <!-- /.form-box -->
     </div>
@@ -203,6 +207,77 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
   <script>
     $(document).ready(function (){
+      $('#checkId').click(function (e){
+        e.preventDefault();
+        var userId = $('#userId').val();
+        $.ajax({
+          url: '/checkId',
+          type: 'POST',
+          data: {userId: userId},
+          success: function (response){
+            if(response == true){
+              Swal.fire({
+                icon: 'error',
+                title: '이미 존재하는 아이디입니다.'
+              })
+            } else {
+              Swal.fire({
+                icon: 'success',
+                title: '사용 가능한 아이디입니다.'
+              })
+            }
+          },
+          error: function(jqXHR, textStatus, errorThrown) {   // error handling
+            console.log(textStatus, errorThrown);
+          }
+        });
+      });
+      
+      $('#addUserForm').submit(function (e){
+        let pw1 = $('#userPw').val();
+        let pw2 = $('.pwEq:eq(1)').val();
+        if(pw1 !== pw2){
+          e.preventDefault();
+          Swal.fire({
+            icon: 'error',
+            title: '패스워드가 일치하지 않습니다.'
+          })
+        }
+      });
+      
+      $('#addUserBtn').click(function (){
+        const validateEle = $('#addUserBtn input').not('#userId');
+        let isSubmit = false;
+        validateEle.each((idx, item) => {
+          isSubmit = validCheck(item);
+          return isSubmit;
+        })
+        if(isSubmit) $('#addUserForm').submit();
+      });
+      // 회원 가입 버튼 시 이벤트
+     /* $('#addMemberBtn').click(function(){
+        const validateEle = $('#addMemberForm input').not('#memberId');
+        let isSubmit = false;
+        validateEle.each((idx, item) => {
+          isSubmit = validCheck(item);
+          return isSubmit;
+        })
+        if(isSubmit) $('#addMemberForm').submit();
+      });*/
+      $('#cantUse1').click(function (e){
+        e.preventDefault();
+        Swal.fire({
+          icon: 'error',
+          title: 'SNS 로그인 기능은 추후 지원 예정입니다.'
+        })
+      });
+      $('#cantUse2').click(function (e){
+        e.preventDefault();
+        Swal.fire({
+          icon: 'error',
+          title: 'SNS 로그인 기능은 추후 지원 예정입니다.'
+        })
+      });
       $('#readTerms').click(function (e){
         e.preventDefault();
         Swal.fire({
