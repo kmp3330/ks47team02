@@ -4,25 +4,37 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="ks47team02.user.member.mapper.CompanyMapper">
-	
-	<!-- <resultMap type="User" id="userResultMap">
-		<id column="user_id" property="userId"></id>
-		<result column="user_pw" property="userPw"></result>
-		<result column="user_name" property="userName"></result>
+	<!-- 
+	<resultMap type="Cp" id="cpResultMap">
+		<id column="cp_id" property="cpId"></id>
+		<result column="cp_pw" property="cpPw"></result>
 		<result column="level_code" property="levelCode"></result>
 		<result column="level_name" property="levelName"></result>
-		<result column="user_gender" property="userGender"></result>
-		<result column="career_check" property="careerCheck"></result>
-		<result column="freelancer_check" property="freelancerCheck"></result>
-		<result column="user_addr" property="userAddr"></result>
-		<result column="user_eamil" property="userEmail"></result>
-		<result column="user_phone" property="userPhone"></result>
-		<result column="user_join_date" property="userJoinDate"></result>
-		<result column="grade_fee_code" property="gradeFeeCode"></result>
-		<result column="user_grade" property="userGrade"></result>
-		<result column="total_score" property="totalScore"></result>
-		<result column="report_score" property="reportScore"></result>
-	</resultMap> -->
+		<result column="cp_reg_number" property="cpRegNumber"></result>
+		<result column="cp_cate_code" property="cpCateCode"></result>
+		<result column="cp_name" property="cpName"></result>
+		<result column="area_code" property="areaCode"></result>
+		<result column="area_name" property="areaName"></result>
+		<result column="ceo_name" property="ceoName"></result>
+		<result column="ceo_gender" property="ceoGender"></result>
+		<result column="cp_addr" property="cpAddr"></result>
+		<result column="cp_email" property="cpEmail"></result>
+		<result column="cp_phone" property="cpPhone"></result>
+		<result column="cp_join_date" property="cpJoinDate"></result>
+	</resultMap> 
 	
-	
+	<select id="loginCheck" parameterType="String" resultType="Cp">
+		/* 로그인 시 아이디, 비밀번호, 권한 조회 */
+		SELECT
+			ci.cp_id AS cpId,
+			ci.cp_pw AS cpPw,
+			ci.cp_name AS cpName,
+			ci.level_code AS levelCode,
+			ci.level_name AS levelName
+		FROM
+			cp_info AS ci
+		WHERE
+			cp_id = #{cpId}
+	</select>
+	 -->
 </mapper>

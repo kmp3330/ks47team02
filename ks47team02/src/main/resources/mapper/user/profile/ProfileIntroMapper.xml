@@ -8,7 +8,7 @@
 	<resultMap type="ProfileIntro" id="profileIntroResultMap">
 		<!--  id태그는 조회시 테이블의 PK(기본키)  -->
 		<id	column="user_intro_code" property="userIntroCode" />
-		<!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키를 의 -->
+		<!-- result태그는 조회시 테이3블의 일반컬럼 혹은 외래키를 의 -->
 		<result	column="user_id" property="userId" />
 		<result	column="user_intro" property="userIntro" />
 		<result	column="profile_hidden" property="profileHidden" />

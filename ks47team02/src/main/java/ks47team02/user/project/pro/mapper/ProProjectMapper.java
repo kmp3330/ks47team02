@@ -16,14 +16,36 @@ public interface ProProjectMapper {
 	public List<ProProject> getProProjectList();
 		// 전문 과제 구인글 작성
 	public int proProjectInsert(ProProject proProject);
-
-		// 참여분야 리스트
-	public List<JoinCate> getJoinCateList();
-		// 작업분야 리스트
-	public List<WorkCate> getWorkCateList();
-		// 주제분야 리스트
-	public List<SubjectCate> getSubjectCateList();
+		// 전문 과제 상세 조회
+	public ProProject getProjectInfoById(String proProjectCode);
+		// 전문 과제 수정
+	public int proProjectModify(ProProject proProject);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 		// 전문 과제 별 신청자 목록
 	public List<ProProject> getProProjectApplcantList();
+	// 참여분야 리스트
+	public List<JoinCate> getJoinCateList();
+	// 작업분야 리스트
+	public List<WorkCate> getWorkCateList();
+	// 주제분야 리스트
+	public List<SubjectCate> getSubjectCateList();
 }

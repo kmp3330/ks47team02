@@ -51,17 +51,19 @@
 					</tr>
 					<tr th:unless="${#lists.isEmpty(proProjectList)}"
 						th:each="p : ${proProjectList}">
+						<td th:text="${p.proProjectCode}" hidden></td>
 						<td th:text="${p.cpName}"></td>
-						<td th:text="${p.proProjectTitle}"></td>
+						<td th:text="${p.title}"></td>
 						<td th:text="${p.joinCateName}"></td>
 						<td th:text="${p.workCateName}"></td>
 						<td th:text="${p.subjectCateName}"></td>
-						<td th:text="${p.proProjectDetails}"></td>
-						<td th:text="${p.proProjectMaxtotal}"></td>
-						<td th:text="${p.proProjectRunName}"></td>
+						<td th:text="${p.skill}"></td>
+						<td th:text="${p.details}"></td>
+						<td th:text="${p.maxTotal}"></td>
+						<td th:text="${p.runName}"></td>
 						<td th:text="${p.proProjectPrice}"></td>
 						<td th:text="${p.proProjectWriteDate}"></td>
-						<td th:text="${p.proProjectDueDate}"></td>
+						<td th:text="${p.dueDate}"></td>
 						<td th:text="${p.dueCompleteDate}"></td>
 						<td th:text="${p.proProjectStartDate}"></td>
 						<td th:text="${p.proProjectCompleteDate}"></td>
@@ -70,7 +72,7 @@
 							<a th:href="@{#}">신청자 목록 보기</a>
 						</td>
 						<td>
-							<a th:href="@{#}">수정</a>
+							<a th:href="@{/project/pro/proProjectModify(proProjectCode=${p.proProjectCode})}">수정</a>
 						</td>
 						<td>
 							<a th:href="@{#}">삭제</a>

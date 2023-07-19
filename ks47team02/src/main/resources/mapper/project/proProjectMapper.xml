@@ -5,30 +5,32 @@
 <mapper namespace="ks47team02.user.project.pro.mapper.ProProjectMapper">
 	<resultMap type="ProProject" id="proProjectResultMap">	
 		<id column="pro_project_code" property="proProjectCode"/>
+		<result column="cp_id" property="cpId"/>
 		<result column="cp_name" property="cpName"/>		
-		<result column="title" property="proProjectTitle"/>
+		<result column="title" property="title"/>
 		<result column="join_cate_code" property="joinCateCode"/>
 		<result column="join_cate_name" property="joinCateName"/>
 		<result column="work_cate_code" property="workCateCode"/>
 		<result column="work_cate_name" property="workCateName"/>
 		<result column="subject_cate_code" property="subjectCateCode"/>
 		<result column="subject_cate_name" property="subjectCateName"/>
-		<result column="details" property="proProjectDetails"/>
-		<result column="max_total" property="proProjectMaxtotal"/>
-		<result column="run_name" property="proProjectRunName"/>
+		<result column="skill" property="skill"/>
+		<result column="details" property="details"/>
+		<result column="max_total" property="maxTotal"/>
+		<result column="normal_run_code" property="normalRunCode"/>
+		<result column="run_name" property="runName"/>
 		<result column="project_price" property="proProjectPrice"/>
 		<result column="cp_commission" property="cpCommisson"/>
 		<result column="write_date" property="proProjectWriteDate"/>
-		<result column="due_date" property="proProjectDueDate"/>
-		<result column="complete_date" property="proProjectCompleteDate"/>
+		<result column="due_date" property="dueDate"/>
+		<result column="due_complete_date" property="dueCompleteDate"/>
 		<result column="project_start_date" property="proProjectStartDate"/>
 		<result column="project_complete_date" property="proProjectCompleteDate"/>
 		<result column="project_days" property="proProjectDays"/>
 		<result column="applicant_user_id" property="applicantUserId"/>
 		<result column="application_date" property="applicationDate"/>
-		<result column="run_name" property="runName"/>
 	</resultMap>
-	
+	 
 	<resultMap type="ProProject" id="joinCateResultMap">
 		<id column="join_cate_code" property="joinCateCode"/>
 		<result column="join_cate_name" property="joinCateName"/>
@@ -43,28 +45,23 @@
 		<id column="subject_cate_code" property="subjectCateCode"/>
 		<result column="subject_cate_name" property="subjectCateName"/>
 	</resultMap>
-		
-	
-	
-	
-	
-	
-	
-	
-	
+
 	<!-- 전문 과제 전체 목록 조회 -->
 	<select id="getProProjectList" parameterType="map" resultMap="proProjectResultMap">
 	
 					/* 전문 과제 전체 목록 조회 */
-						SELECT
+					SELECT
+							pro_project_code,
+							ci.cp_id,
 							cp_name,
 							title,
-							join_cate_code,
-							join_cate_name,
-							work_cate_code,
-							work_cate_name,
-							subject_cate_code,
-							subject_cate_name,
+							jc.join_cate_code,
+							jc.join_cate_name,
+							wc.work_cate_code,
+							wc.work_cate_name,
+							sc.subject_cate_code,
+							sc.subject_cate_name,
+							skill,
 							details,
 							max_total,
 							run_name,
@@ -76,12 +73,157 @@
 							project_complete_date,
 							project_days
 						FROM
-							pro_project AS pp
-							INNER join
 							cp_info AS ci
+							INNER join
+							pro_project AS pp
 							on
-							pp.cp_id = ci.cp_id;
+							pp.cp_id = ci.cp_id
+							INNER JOIN
+							join_cate AS jc
+							on
+							pp.join_cate_code = jc.join_cate_code
+							INNER JOIN
+							work_cate AS wc
+							on
+							pp.work_cate_code = wc.work_cate_code
+							INNER join
+							subject_cate AS sc
+							on
+							pp.subject_cate_code = sc.subject_cate_code;
 	</select>
+	
+	
+	<!-- 전문 과제 작성 -->
+	<insert id="proProjectInsert" parameterType="ProProject">
+				/* 전문과제 insert문 */
+				INSERT INTO pro_project
+					(`pro_project_code`, `cp_id`, `title`, `join_cate_code`,
+					`join_cate_name`, `work_cate_code`,`work_cate_name`,
+					`subject_cate_code`,`subject_cate_name`,`skill`,`details`,
+					`max_total`,`normal_run_code`,`run_name`,`project_price`,
+					`cp_commission`,`write_date`,`due_date`,`due_complete_date`,
+					`project_start_date`,`project_complete_date`,`project_days`)
+				SELECT
+					CONCAT('pro_project',LPAD(CAST(SUBSTRING(MAX(pro_project_code),12)+1 as UNSIGNED),3,'0')),
+					'cp001',
+					#{title},
+					#{joinCateCode},
+					(SELECT join_cate_name FROM join_cate WHERE join_cate_code = #{joinCateCode}),
+					#{workCateCode},
+					(SELECT work_cate_name FROM work_cate WHERE work_cate_code = #{workCateCode}),
+					#{subjectCateCode},
+					(SELECT subject_cate_name FROM subject_cate WHERE subject_cate_code = #{subjectCateCode}),
+					#{skill},
+					#{details},
+					#{maxTotal},
+					'normal_run_code01',
+					'모집중',
+					#{proProjectPrice},
+					#{cpCommisson},
+					CURDATE(),
+					#{dueDate},
+					null,
+					null,
+					NULL,
+					#{proProjectDays}
+				FROM pro_project
+				WHERE pro_project_code LIKE 'pro_project%';
+				
+	 </insert>
+	
+	
+	 <!-- 전문 과제 상세 조회-->
+    <select id="getProjectInfoById" parameterType="String" resultMap="proProjectResultMap">
+    	/* 전문 과제 상세 조회 */
+    	SELECT
+			pro_project_code,
+			cp_id,
+			title,
+			join_cate_code,
+			join_cate_name, 
+			work_cate_code,
+			work_cate_name,
+			subject_cate_code,
+			subject_cate_name,
+			skill,
+			details,
+			max_total,
+			normal_run_code,
+			run_name,
+			project_price,
+			cp_commission,
+			write_date,
+			due_date,
+			due_complete_date,
+			project_start_date,
+			project_complete_date,
+			project_days
+		FROM
+			pro_project
+		WHERE
+			pro_project_code = #{proProjectCode}
+    </select>
+    
+    <!-- 전문 과제 수정 -->
+    <update id="proProjectModify" parameterType="ProProject">
+    	/* 전문 과제 수정 */
+		    UPDATE pro_project
+			<trim prefix="SET" suffixOverrides=",">
+				<if test="skill != null and skill != '' ">
+					skill = #{skill},
+				</if>
+				<if test="details != null and details != '' ">
+					details = #{details},
+				</if>
+				<if test="maxTotal != null and maxTotal != '' ">
+					max_total = #{maxTotal},
+				</if>
+				<if test="proProjectPrice != null and proProjectPrice != '' ">
+					project_price = #{proProjectPrice},
+				</if>
+				<if test="dueDate != null and dueDate != '' ">
+					due_date = #{dueDate}
+				</if>
+			</trim>
+				WHERE
+					pro_project_code = #{proProjectCode};
+    </update>
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	<!-- 참여분야 리스트 조회 -->
 	<select id="getJoinCateList" parameterType="map" resultMap="joinCateResultMap">
 		/* 참야분야 리스트 조회 */
@@ -108,20 +250,7 @@
 		FROM
 			subject_cate;
 	
-	
 	</select>
-	<!-- 전문과제 작성 -->
-	<insert id="proProjectInsert" parameterType="ProProject">
-	 				/* 전문과제 구인글 작성 */
-						 INSERT INTO `pro_project`
-					        (`pro_project_code`,`cp_id`, `title`, `join_cate_code`, `join_cate_name`, `work_cate_code`,`work_cate_name`,`subject_cate_code`,`subject_cate_name`,`skill`,`details`,`max_total`,`normal_run_code`,`run_name`,`project_price`,`cp_commission`,`write_date`,`due_date`,`due_complete_date`,`project_start_date`,`project_complete_date`,`project_days`)
-						VALUES
-					        ('pro_project010','cp009','제목9','join_cate_code001','기획','work_cate_code010','프레임워크','subject_cate_code009','대학','블라블라','블라블라','5','normal_run_code01','모집중','4000','400',CURDATE(),'2023-07-30',null,null,NULL,null);
-	  
-	 </insert>
-	 
-	
-	
 	<!-- 전문과제별 신청자 목록 -->
 	<select id="getProProjectApplicantList" parameterType="map" resultMap="proProjectResultMap">
 		
@@ -135,7 +264,6 @@
 					WHERE
 						ppa.pro_project_code = #{proProjectCode};
 	</select>
-	
 	
 	
 	
