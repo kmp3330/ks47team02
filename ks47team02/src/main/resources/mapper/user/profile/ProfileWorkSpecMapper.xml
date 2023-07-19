@@ -87,5 +87,45 @@
 			#{profileHidden},
 			#{profileApplicationHidden});
 	</insert>
+	
+	<update id="profileWorkSpecModify" parameterType="ProfileWorkSpec">
+		/*일경력 수정*/
+		UPDATE profile_work_spec
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="userWorkSpec !=null and userWorkSpec !=''">
+				user_work_spec_code = #{userWorkSpecCode},
+			</if>
+			<if test="profileHidden !=null and profileHidden !=''">
+				profile_hidden = #{profileHidden},
+			</if>
+			<if test="profileApplicationHidden !=null and profileApplicationHidden !=''">
+				profile_application_hidden = #{profileApplicationHidden},
+			</if>
+		</trim>
+		WHERE
+			user_work_spec_code = #{userWorkSpecCode}
+	</update>
+	
+	<select id="getProfileWorkSpecInfoByCode" parameterType="String" resultMap = "profileWorkSpecResultMap">
+		/*일경력 상세조회 */
+		select
+		    pws.user_work_spec_code,
+		    pws.user_id,
+		    pws.user_company,
+		    pws.user_skill,
+		    pws.user_enter_date,
+		    pws.user_leave_date,
+		    pws.user_department,
+		    pws.user_rank,
+		    pws.user_work,
+		    pws.profile_reg_date,
+		    pws.profile_hidden,
+		    pws.profile_application_hidden
+		from
+		    profile_work_spec as pws
+		where
+		    pws.user_work_spec_code = #{userWorkSpecCode}
+	</select>
+	
 
 </mapper>

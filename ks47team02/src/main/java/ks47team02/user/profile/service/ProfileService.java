@@ -32,6 +32,26 @@ public class ProfileService {
 	private final ProfileSkillMapper profileSkillMapper;
 	private final ProfileWorkSpecMapper profileWorkSpecMapper;
 	private final ProfileEduSpecMapper profileEduSpecMapper;
+
+	/*
+	 *자기소개 정보 수정
+	 *@param ProfileIntro
+	 *@return excuteUpdate() 메소드 리턴 값:(수정처리 완료:1, 미완료:0)
+	 * */
+	public int profileIntroModify(ProfileIntro profileIntro) {
+		int result = profileIntroMapper.profileIntroModify(profileIntro);
+		return result;
+	}
+	
+	/*자기소개별 상세조회
+	 * @param userIntroCode(자기소개코드)
+	 * @return ProfileIntro(프로필 자기소개 정보)
+	 * */
+	public ProfileIntro getProfileIntroInfoByCode(String userIntroCode) {
+		ProfileIntro profileIntroInfo = profileIntroMapper.getProfileIntroInfoByCode(userIntroCode);
+		log.info("profileIntroInfo : {}", profileIntroInfo);
+		return profileIntroInfo;
+	}
 	
 	/*자기소개 등록
 	 * @param profileIntro*/
@@ -49,6 +69,18 @@ public class ProfileService {
 		
 		return profileIntroList;
 	}
+
+	/*보유기술 별 상세조회
+	 * @param userSkillCode(보유기술 코드)
+	 * @return ProfileIntro(프로필 자기소개 정보)
+	 * */
+	public ProfileSkill getProfileSkillInfoByCode(String userSkillCode) {
+		ProfileSkill profileSkillInfo = profileSkillMapper.getProfileSkillInfoByCode(userSkillCode);
+		log.info("profileSkillInfo : {}", profileSkillInfo);
+		return profileSkillInfo;
+	}
+	
+	
 	/*보유기술 등록
 	 * @param profileSkill*/
 	public void profileSkillInsert(ProfileSkill profileSkill) {
@@ -63,6 +95,15 @@ public class ProfileService {
 		log.info("profileSkillList : {}", profileSkillList);
 		
 		return profileSkillList;
+	}
+	/*일경력 별 상세조회
+	 * @param userWorkSpecCode(일경력 코드)
+	 * @return ProfileWorkSpec (프로필 일경력 정보)
+	 * */
+	public ProfileWorkSpec getProfileWorkSpecInfoByCode(String userWorkSpecCode){
+		ProfileWorkSpec profileWorkSpecInfo = profileWorkSpecMapper.getProfileWorkSpecInfoByCode(userWorkSpecCode);
+		log.info("profileWorkSpecInfo : {}", profileWorkSpecInfo);
+		return profileWorkSpecInfo;
 	}
 	/*일경력 등록
 	 * @param profileWorkSpec*/
@@ -79,6 +120,16 @@ public class ProfileService {
 		
 		return profileWorkSpecList;
 	}
+	/*학력 별 상세조회
+	 * @param userEduSpecCode(학력 코드)
+	 * @return ProfileEduSpec (프로필 일경력 정보)
+	 * */
+	public ProfileEduSpec getProfileEduSpecInfoByCode(String userEduSpecCode) {
+		ProfileEduSpec profileEduSpecInfo = profileEduSpecMapper.getProfileEduSpecInfoByCode(userEduSpecCode);
+		log.info("profileEduInfo : {}", profileEduSpecInfo);
+		return profileEduSpecInfo;
+	}
+	
 	/*학력 등록
 	 * @param profileEduSpec*/
 	public void profileEduSpecInsert(ProfileEduSpec profileEduSpec) {
