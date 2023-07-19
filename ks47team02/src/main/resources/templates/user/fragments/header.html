@@ -62,12 +62,12 @@
 								</ul></li>
 
 							<!-- 로그인 메뉴 -->
-							<li class="menu-btn"><a th:if="${session.SID == null}"
-								th:href="@{/login}" class="login">log in</a> <a
-								th:unless="${session.SID == null}"
-                th:href="@{/logout}" class="login">log out</a> <a
-                th:href="@{/addMember}" class="template-btn">sign up</a></li>
-						</ul>
+              <li class="menu-btn">
+                <a th:if="${session.SID == null}" th:href="@{/login}" class="login">log in</a>
+                <a th:unless="${session.SID == null}" th:href="@{/logout}" class="login template-btn">log out</a>
+                <a th:if="${session.SID == null}" th:href="@{/addMember}" class="template-btn">sign up</a>
+              </li>
+            </ul>
 					</div>
 				</div>
 			</div>
