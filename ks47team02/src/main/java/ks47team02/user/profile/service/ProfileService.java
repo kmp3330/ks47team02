@@ -64,7 +64,13 @@ public class ProfileService {
 		
 		return profileSkillList;
 	}
-	/*회원별 보유기술 목록 조회 */
+	/*일경력 등록
+	 * @param profileWorkSpec*/
+	public void profileWorkSpecInsert(ProfileWorkSpec profileWorkSpec) {
+		profileWorkSpecMapper.profileWorkSpecInsert(profileWorkSpec);
+	}
+	
+	/*회원별 일경력 목록 조회 */
 	public List<ProfileWorkSpec> getProfileWorkSpecList() {
 		
 		List<ProfileWorkSpec>profileWorkSpecList = profileWorkSpecMapper.getProfileWorkSpecList();
@@ -72,6 +78,11 @@ public class ProfileService {
 		log.info("profileWorkSpecList : {}", profileWorkSpecList);
 		
 		return profileWorkSpecList;
+	}
+	/*학력 등록
+	 * @param profileEduSpec*/
+	public void profileEduSpecInsert(ProfileEduSpec profileEduSpec) {
+		profileEduSpecMapper.profileEduSpecInsert(profileEduSpec);
 	}
 	/*회원별 학력 목록 조회 */
 	public List<ProfileEduSpec> getProfileEduSpecList(){
@@ -87,9 +98,9 @@ public class ProfileService {
 	 * 자격증 목록 조회
 	 * @return
 	 */
-	public List<ProfileCertificate> certificateList() {
+	public List<ProfileCertificate> certificateList(String sessionId) {
 		
-		List<ProfileCertificate> certificateList = profileCertificateMapper.certificateList();
+		List<ProfileCertificate> certificateList = profileCertificateMapper.certificateList(sessionId);
 		log.info("자격증 목록 조회 : {}", certificateList);
 		
 		return certificateList;
@@ -103,6 +114,18 @@ public class ProfileService {
 		log.info("profileCertificate : {}", profileCertificate);
 		profileCertificateMapper.profileCertificateInsert(profileCertificate);
 		log.info("profileCertificate : {}", profileCertificate);
+	}
+	
+	/**
+	 * 아이디별 자격증 조회
+	 * @param userId
+	 * @return
+	 */
+	public ProfileCertificate certificateByCode(String certificateCode) {
+		
+		ProfileCertificate certificateInfo = profileCertificateMapper.certificateByCode(certificateCode); 
+		
+		return certificateInfo;
 	}
 	
 	/**

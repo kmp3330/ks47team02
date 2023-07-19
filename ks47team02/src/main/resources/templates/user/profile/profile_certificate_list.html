@@ -65,7 +65,7 @@
 											<td th:text="${l.certificateDate}"></td>
 											<td th:text="${l.profileHidden}"></td>
 											<td th:text="${l.profileApplicationHidden}"></td>
-											<td><a th:href="@{#}"
+											<td><a th:href="@{/profile/profileCertificateModify(certificateCode=${l.certificateCode})}"
 												class="genric-btn success-border circle"> <i class="fas">수정</i>
 											</a></td>
 											<td><a th:href="@{#}"
