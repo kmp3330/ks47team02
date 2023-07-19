@@ -8,12 +8,12 @@ public class ProfileWorkSpec {
 	private String userId;
 	private String userCompany;
 	private String userSkill;
-	private Date userEnterDate;
-	private Date userLeaveDate;
+	private String userEnterDate;
+	private String userLeaveDate;
 	private String userDepartment;
 	private String userRank;
 	private String userWork;
-	private Date profileRegDate;
+	private String profileRegDate;
 	private boolean profileHidden;
 	private boolean profileApplicationHidden;
 	
@@ -41,16 +41,16 @@ public class ProfileWorkSpec {
 	public void setUserSkill(String userSkill) {
 		this.userSkill = userSkill;
 	}
-	public Date getUserEnterDate() {
+	public String getUserEnterDate() {
 		return userEnterDate;
 	}
-	public void setUserEnterDate(Date userEnterDate) {
+	public void setUserEnterDate(String userEnterDate) {
 		this.userEnterDate = userEnterDate;
 	}
-	public Date getUserLeaveDate() {
+	public String getUserLeaveDate() {
 		return userLeaveDate;
 	}
-	public void setUserLeaveDate(Date userLeaveDate) {
+	public void setUserLeaveDate(String userLeaveDate) {
 		this.userLeaveDate = userLeaveDate;
 	}
 	public String getUserDepartment() {
@@ -71,10 +71,10 @@ public class ProfileWorkSpec {
 	public void setUserWork(String userWork) {
 		this.userWork = userWork;
 	}
-	public Date getProfileRegDate() {
+	public String getProfileRegDate() {
 		return profileRegDate;
 	}
-	public void setProfileRegDate(Date profileRegDate) {
+	public void setProfileRegDate(String profileRegDate) {
 		this.profileRegDate = profileRegDate;
 	}
 	public boolean isProfileHidden() {

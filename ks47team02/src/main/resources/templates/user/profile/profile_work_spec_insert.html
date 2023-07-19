@@ -72,13 +72,14 @@
 					<div class="single-job mb-4 justify-content-between text-center">
 						<div class="card">
 							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">회원별 경력</h3>
+								<h3 class="mb-0 title_color text-left">일경력</h3>
 								<div class="card-tools">
 									<a class="genric-btn info-border circle" id="insertBtn">
 										<i class="fas">등록 완료</i>
 									</a>
-									<a class="genric-btn danger-border circle" id="resetBtn">
-										<i class="fas">취소</i>
+									<a th:href="@{#}" class="genric-btn danger-border circle">
+										<i type="button" id="resetBtn" class="fas">취소</i>
+									</a>
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">
@@ -86,9 +87,9 @@
 									class="d-md-flex justify-content-between" method="post">
 									<table class="table table-valign-middle">
 										<thead>
-											<tr>a
+											<tr>
 												<th>회사명</th>
-												<th>기술</th>
+												<th>기술명</th>
 												<th>입사 일시</th>
 												<th>퇴사 일시</th>
 												<th>근무부서</th>
@@ -100,65 +101,38 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td><input class="genric-btn" type="text" placeholder="회사명" name="useCompany"
-														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '회사명'" required=""></td>
 												<td>
-													<div class="col-lg-3 col-md-4 mt-sm-30 element-wrap">
-								<div class="single-element-widget">
-									<h3 class="mb-30 title_color">Switches</h3>
-									<div class="switch-wrap d-flex justify-content-between">
-										<p>01. Sample Switch</p>
-										<div class="primary-switch">
-											<input type="checkbox" id="default-switch">
-											<label for="default-switch"></label>
-										</div>
-									</div>
-									<div class="switch-wrap d-flex justify-content-between">
-										<p>02. Primary Color Switch</p>
-										<div class="primary-switch">
-											<input type="checkbox" id="primary-switch" checked="">
-											<label for="primary-switch"></label>
-										</div>
-									</div>
-									<div class="switch-wrap d-flex justify-content-between">
-										<p>03. Confirm Color Switch</p>
-										<div class="confirm-switch">
-											<input type="checkbox" id="confirm-switch" checked="">
-											<label for="confirm-switch"></label>
-										</div>
-									</div>
-								</div>
-								<div class="single-element-widget">
-									<h3 class="mb-30 title_color">Selectboxes</h3>
-									<div class="default-select" id="default-select">
-										<select style="display: none;">
-											<option value="1">English</option>
-											<option value="1">Spanish</option>
-											<option value="1">Arabic</option>
-											<option value="1">Portuguise</option>
-											<option value="1">Bengali</option>
-										</select><div class="nice-select" tabindex="0"><span class="current">English</span><ul class="list"><li data-value="1" class="option selected focus">English</li><li data-value="1" class="option">Spanish</li><li data-value="1" class="option">Arabic</li><li data-value="1" class="option">Portuguise</li><li data-value="1" class="option">Bengali</li></ul></div>
-									</div>
-								</div>
-													<!--
-													<div class="nice-select open" tabindex="0" name="userSkillRank">
-														<select class="list">숙련도</select>
-															<option data-value="1" class="option selected focus">특급</option>
-															<option data-value="2" class="option">고급</option>
-															<option data-value="3" class="option">중급</option>
-															<option data-value="4" class="option">초급</option>
-														</select>
-													</div> -->
+													<input class="genric-btn" type="text" placeholder="회사명"
+														name="userCompany" onfocus="this.placeholder = ''"
+														onblur="this.placeholder = '회사명'" required="">
 												</td>
-
-												<td><input class="genric-btn" type="text" placeholder="경험(몇년차)" name="userExperience"
-														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '경험(몇년차)'" required="">
+												<td>
+													<input class="genric-btn" type="text" placeholder="기술명"
+														name="userSkill" onfocus="this.placeholder = ''"
+														onblur="this.placeholder = '기술명'" required="">
+												</td>
+												<td><input class="genric-btn" type="date" placeholder="입사일시" name="userEnterDate"></td>
+												<td><input class="genric-btn" type="date" placeholder="퇴사일시" name="userLeaveDate"></td>
+												<td>
+													<input class="genric-btn" type="text" placeholder="근무부서"
+														name="userDepartment" onfocus="this.placeholder = ''"
+														onblur="this.placeholder = '근무부서'" required="">
+												</td>
+												<td>
+													<input class="genric-btn" type="text" placeholder="직위"
+														name="userRank" onfocus="this.placeholder = ''"
+														onblur="this.placeholder = '직위'" required="">
+												</td>
+												<td>
+													<input class="genric-btn" type="text" placeholder="담당업무"
+														name="userWork" onfocus="this.placeholder = ''"
+														onblur="this.placeholder = '담당업무'" required="">
+												</td>
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2" name="userHidden" checked="">
+															<input type="checkbox" id="confirm-switch2"
+																name="userHidden" checked="">
 															<label for="confirm-switch2"></label>
 														</div>
 													</div>
@@ -166,7 +140,8 @@
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2" name="userApplicationHidden" checked="">
+															<input type="checkbox" id="confirm-switch2"
+																name="userApplicationHidden" checked="">
 															<label for="confirm-switch2"></label>
 														</div>
 													</div>

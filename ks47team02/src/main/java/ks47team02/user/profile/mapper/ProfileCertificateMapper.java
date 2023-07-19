@@ -10,9 +10,12 @@ import ks47team02.user.profile.dto.ProfileCertificate;
 public interface ProfileCertificateMapper {
 	
 	// 자격증 조회
-	public List<ProfileCertificate> certificateList();
+	public List<ProfileCertificate> certificateList(String sessionId);
 	
 	// 자격증 등록
 	public int profileCertificateInsert(ProfileCertificate profileCertificate);
+	
+	// 자격증 코드별 자격증 조회
+	public ProfileCertificate certificateByCode(String certificateCode);
 
 }
