@@ -11,16 +11,21 @@ import ks47team02.user.recommend.dto.RecommendEmployment;
 public interface RecommendEmploymentMapper {
 	
 	/*
-	 * 회사 지원 코드 조회
+	 * 코드 별 상세 조회
 	 */
+	public RecommendEmployment getRecommendEmploymentByCode(String companyEmploymentCode);
+	
+	/*
+	 * 채용 단계 순 목록 수정
+	 */
+	public int recommendModifyEmployment(RecommendEmployment recommendEmployment);
 	
 	
 	/*
 	 * 채용 단계 순 목록 등록
 	 */
-	public int addRecommendEmploymnet(RecommendEmployment recommend);
-	
-	
+	public int recommendInsertEmployment(RecommendEmployment recommendEmployment);
+		
 	/*
 	 * 채용 단계 순 목록
 	 */
