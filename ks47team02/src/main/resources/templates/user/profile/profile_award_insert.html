@@ -20,15 +20,15 @@
 			return true;			
 		}
 		
-		$('#certificateInsertbtn').click(function () {
-		
-			let inputEles = $('#addCertificateForm input[type="text"],input[type="date"]');
+		$('#awardInsertBtn').click(function () {
+			
+			let inputEles = $('#addAwardForm input[type="text"],input[type="date"]');
 			let isSubmit = false;
 			inputEles.each( (idx, item) => {
 				isSubmit = vaildCheck(item);
 				return isSubmit;
 			});
-			if (isSubmit) $('#addCertificateForm').submit();		
+			if (isSubmit) $('#addAwardForm').submit();		
 		});
 		
 	</script>
@@ -64,41 +64,45 @@
 					<div class="single-job mb-4 justify-content-between text-center">
 						<div class="card">
 							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">자격증 등록</h3>
+								<h3 class="mb-0 title_color text-left">수상이력 등록</h3>
 								<div class="card-tools">
-									<a th:href="@{#}" id="certificateInsertbtn" 
+									<a th:href="@{#}" id="awardInsertBtn" 
 										class="genric-btn info-border circle"> <i
 										class="fas">등록 완료</i>
-									</a> <a th:href="@{/profile/profileCertificateList}" id="certificateResetbtn" class="genric-btn danger-border circle">
+									</a> <a th:href="@{/profile/profileAwardList}" id="awardResetBtn" class="genric-btn danger-border circle">
 										<i class="fas">취소</i>
 									</a>
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">
-								<form id="addCertificateForm" th:action="@{/profile/profileCertificateInsert}" method="post" class="d-md-flex justify-content-between">
+								<form id="addAwardForm" th:action="@{/profile/profileAwardInsert}" method="post" class="d-md-flex justify-content-between">
 									<table class="table table-valign-middle">
 										<thead>
 											<tr>
-												<th>자격증명</th>
+												<th>상훈명</th>
 												<th>기관명</th>
-												<th>취득 일시</th>
+												<th>수상일시</th>
+												<th>수상내역 및 역할</th>
 												<th>공개 여부</th>
 												<th>입사지원시 공개여부</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td><input class="genric-btn" type="text" name="certificateName"
-													placeholder="자격증명" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '자격증명'" required=""></td>
-												<td><input class="genric-btn" type="text" name="certificatePublication"
+												<td><input class="genric-btn" type="text" name="userAwardName"
+													placeholder="상훈명" onfocus="this.placeholder = ''"
+													onblur="this.placeholder = '상훈명'"></td>
+												<td><input class="genric-btn" type="text" name="userAwardPublication"
 													placeholder="기관명" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '기관명'" required=""></td>
-												<td><input class="genric-btn" type="date" placeholder="취득일시" name="certificateDate"></td>
+													onblur="this.placeholder = '기관명'"></td>
+												<td><input class="genric-btn" type="date" placeholder="수상일시" name="userAwardDate"></td>
+												<td><input class="genric-btn" type="text" name="awardDetails"
+													placeholder="수상내역 및 역할" onfocus="this.placeholder = ''"
+													onblur="this.placeholder = '수상내역 및 역할'"></td>
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch1" name="profileHidden" checked="">
+															<input type="checkbox" id="confirm-switch1" name="profileHidden" checked>
 															<label for="confirm-switch1"></label>
 														</div>
 													</div>
@@ -106,7 +110,7 @@
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2" name="profileApplicationHidden" checked="">
+															<input type="checkbox" id="confirm-switch2" name="profileApplicationHidden" checked>
 															<label for="confirm-switch2"></label>
 														</div>
 													</div>

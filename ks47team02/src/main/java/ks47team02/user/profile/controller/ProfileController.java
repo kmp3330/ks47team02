@@ -14,6 +14,7 @@ import ks47team02.user.profile.dto.ProfileAward;
 import ks47team02.user.profile.dto.ProfileCertificate;
 import ks47team02.user.profile.dto.ProfileEduSpec;
 import ks47team02.user.profile.dto.ProfileIntro;
+import ks47team02.user.profile.dto.ProfilePortfolio;
 import ks47team02.user.profile.dto.ProfileSkill;
 import ks47team02.user.profile.dto.ProfileWorkSpec;
 import ks47team02.user.profile.service.ProfileService;
@@ -207,11 +208,41 @@ public class ProfileController {
 										   @RequestParam(value="certificateCode") String certificateCode) {
 		
 		ProfileCertificate certificateInfo = profileService.certificateByCode(certificateCode);
+		log.info("certificateInfo : {}", certificateInfo);
 		
 		model.addAttribute("title", "자격증 수정 화면");
 		model.addAttribute("certificateInfo", certificateInfo);
 		
 		return "user/profile/profile_certificate_modify";
+	}
+	/**
+	 * 자격증 수정 처리
+	 * @param profileCertificate
+	 * @return
+	 */
+	@PostMapping("/profileCertificateModify")
+	public String profileCertificateModify(ProfileCertificate profileCertificate) {
+		
+		log.info("modifyCertificate profileCertificate : {}", profileCertificate);
+		profileService.profileCertificateModify(profileCertificate);
+		
+		return "redirect:/profile/profileCertificateList";
+	}
+	
+	/**
+	 * 자격증 삭제 화면
+	 * @param certificateCode
+	 * @return
+	 */
+	@GetMapping("/profileCertificateDelete")
+	public String profileCertificateDelete(@RequestParam(value="certificateCode") String certificateCode,
+										   Model model) {
+		
+		profileService.profileCertificateDelete(certificateCode);
+		
+		model.addAttribute("title", "자격증 삭제 화면");
+		
+		return "redirect:/profile/profileCertificateList";
 	}
 	
 	/**
@@ -220,9 +251,11 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profileAwardList")
-	public String profileAward(Model model) {
+	public String profileAward(Model model, HttpSession session) {
 		
-		List<ProfileAward> profileAwardList = profileService.profileAwardList();
+		String sessionId = (String) session.getAttribute("SID");
+		
+		List<ProfileAward> profileAwardList = profileService.getProfileAwardList(sessionId);
 		
 		model.addAttribute("title", "수상이력");
 		model.addAttribute("titleText", "수상이력 관리");
@@ -234,17 +267,109 @@ public class ProfileController {
 	}
 	
 	/**
-	 * 포트폴리오 화면
+	 * 수상이력 등록 화면
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/profileAwardInsert")
+	public String profileAwardInsert(Model model) {
+		
+		model.addAttribute("title", "수상이력 등록 화면");
+		
+		return "user/profile/profile_award_insert";
+	}
+	/**
+	 * 수상이력 등록 처리
+	 * @param profileAward
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/profileAwardInsert")
+	public String profileAwardInsert(ProfileAward profileAward,
+									 HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
+		profileAward.setUserId(sessionId);
+		
+		profileService.addProfileAward(profileAward);
+		
+		return "redirect:/profile/profileAwardList";
+	}
+	
+	/**
+	 * 수상이력 수정 화면
+	 * @param model
+	 * @param userAwardCode
+	 * @return
+	 */
+	@GetMapping("/profileAwardModify")
+	public String profileAwardModify(Model model,
+									 @RequestParam(value="profileAwardCode") String userAwardCode) {
+		
+		ProfileAward profileAwardInfo = profileService.profileAwardByCode(userAwardCode);
+		
+		model.addAttribute("title", "수상이력 수정화면");
+		model.addAttribute("profileAwardInfo", profileAwardInfo);
+		
+		return "user/profile/profile_award_modify";
+	}
+	/**
+	 * 수상이력 수정처리
+	 * @param profileAward
+	 * @return
+	 */
+	@PostMapping("/profileAwardModify")
+	public String profileAwardModify(ProfileAward profileAward) {
+		
+		profileService.modifyProfileAward(profileAward);
+		
+		return "redirect:/profile/profileAwardList";
+	}
+	
+	/**
+	 * 수상이력 삭제
+	 * @param profileAwardCode
+	 * @return
+	 */
+	@GetMapping("/profileAwardDelete")
+	public String profileAwardDelete(@RequestParam(value="profileAwardCode") String profileAwardCode) {
+		
+		profileService.deleteProfileAward(profileAwardCode);
+		
+		return "redirect:/profile/profileAwardList";
+	}
+	
+	/**
+	 * 포트폴리오 조회
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/profilePortfolioList")
-	public String profilePortfolioList(Model model) {
+	public String profilePortfolioList(Model model, HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
+		
+		List<ProfilePortfolio> portfolioList = profileService.getProfilePortfolioList(sessionId);
+		
 		model.addAttribute("title", "포트폴리오");
 		model.addAttribute("titleText", "포트폴리오 관리");
 		model.addAttribute("contents", "자신의 포트폴리오를 관리할 수 있는 페이지입니다.");
+		model.addAttribute("portfolioList", portfolioList);
+		
 		return "user/profile/profile_portfolio_list";
-			
-
 	}
+	
+	/**
+	 * 포트폴리오 등록
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/profilePortfolioInsert")
+	public String profilePortfolioInsert(Model model) {
+		
+		model.addAttribute("title", "포트폴리오 등록 화면");
+		
+		return "user/profile/profile_portfolio_insert";
+	}
+	
 }
