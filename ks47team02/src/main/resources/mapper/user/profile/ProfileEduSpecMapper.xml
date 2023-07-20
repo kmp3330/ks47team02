@@ -151,5 +151,12 @@
 		where
 		    pes.user_edu_spec_code = #{userEduSpecCode};
 	</select>
+	<delete id="profileEduSpecDelete" parameterType="String">
+	DELETE
+		FROM
+			profile_edu_spec
+		WHERE
+			user_edu_spec_code = #{userEduSpecCode}
+	</delete>
 	
 </mapper>

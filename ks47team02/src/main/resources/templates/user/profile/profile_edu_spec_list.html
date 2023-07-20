@@ -4,6 +4,22 @@
 
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script> -->
+	<script>
+		
+		$('.danger-border').click(function (e) {
+			e.preventDefault();
+			
+			let isDelete = confirm('정말로 삭제하시겠습니까?');
+				
+			if(isDelete) {
+				const userEduSpecCode = this.dataset.userEduSpecCode;
+				location.replace(`/profile/profileEduSpecDelete?userEduSpecCode=${userEduSpecCode}`);
+			}
+		});
+		
+		
+	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -83,7 +99,7 @@
 											<td><a th:href="@{/profile/profileEduSpecModify(userEduSpecCode=${l.userEduSpecCode})}" class="genric-btn success-border circle"> <i
 														class="fas">수정</i>
 												</a></td>
-											<td><a th:href="@{#}" class="genric-btn danger-border circle"> <i
+											<td><a th:href="@{#}" id="profileEduSpecDelete" th:data-user-edu-spec-code="${l.userEduSpecCode}"   class="genric-btn danger-border circle"> <i
 														class="fas">삭제</i>
 												</a></td>
 										</tr>

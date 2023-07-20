@@ -8,6 +8,8 @@ import ks47team02.user.profile.dto.ProfileWorkSpec;
 
 @Mapper
 public interface ProfileWorkSpecMapper {
+	//보유기술 삭제
+	public int profileWorkSpecDelete(String userWorkSpecCode);
 	//보유기술 수정
 	public int profileWorkSpecModify(ProfileWorkSpec profileWorkSpec);
 	//보유기술 상세조회
