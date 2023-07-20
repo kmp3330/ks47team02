@@ -17,5 +17,11 @@ public interface ProfileCertificateMapper {
 	
 	// 자격증 코드별 자격증 조회
 	public ProfileCertificate certificateByCode(String certificateCode);
+	
+	// 자격증 수정
+	public int profileCertificateModify(ProfileCertificate profileCertificate);
+	
+	// 자격증 삭제
+	public int profileCertificateDelete(String certificateCode);
 
 }

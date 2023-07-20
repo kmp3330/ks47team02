@@ -10,12 +10,12 @@
 		<result column="user_award_name" property="userAwardName"/>
 		<result column="user_award_publication" property="userAwardPublication"/>
 		<result column="user_award_date" property="userAwardDate"/>
-		<result column="award_details" property="AwardDetails"/>
+		<result column="award_details" property="awardDetails"/>
 		<result column="profile_hidden" property="profileHidden"/>
 		<result column="profile_application_hidden" property="profileApplicationHidden"/>
 	</resultMap>
 
-	<select id="profileAwardList" resultMap="ProfileAwardResultMap">
+	<select id="getProfileAwardList" resultMap="ProfileAwardResultMap" parameterType="String">
 		/* 수상이력 조회 */
 		SELECT
 			profile_award_code,
@@ -27,7 +27,96 @@
 			profile_hidden,
 			profile_application_hidden
 		FROM
-			profile_award;
+			profile_award
+		WHERE
+			user_id = #{sessionId}
 	</select>
+	
+	<insert id="addProfileAward" parameterType="ProfileAward">
+		<selectKey resultType="String" keyColumn="newAwardCode" keyProperty="profileAwardCode" order="BEFORE">
+			<![CDATA[
+			/* 자동증가코드 */
+			SELECT
+				CASE
+					WHEN COUNT(*) = 0
+						THEN 'user_award_code001'
+					WHEN CAST(SUBSTRING_INDEX(profile_award_code, 'code', -1) AS UNSIGNED) < 999
+						THEN CONCAT('profile_award_code', LPAD(MAX(CAST(SUBSTRING_INDEX(profile_award_code, 'code', -1) AS UNSIGNED))+1, 3, '0'))
+					ELSE
+						CONCAT('profile_award_code', MAX(CAST(SUBSTRING_INDEX(profile_award_code, 'code', -1) AS UNSIGNED))+1)
+					END
+						AS newAwardCode
+			FROM
+				profile_award;
+			]]>
+		</selectKey>
+		/* 수상이력 등록 */
+		INSERT INTO profile_award
+			(profile_award_code,
+			 user_id,
+			 user_award_name,
+			 user_award_publication,
+			 user_award_date,
+			 award_details,
+			 profile_hidden,
+			 profile_application_hidden)
+		VALUES (
+			#{profileAwardCode},
+			#{userId}, 
+			#{userAwardName}, 
+			#{userAwardPublication}, 
+			#{userAwardDate}, 
+			#{awardDetails}, 
+			#{profileHidden}, 
+			#{profileApplicationHidden})
+	</insert>
+	
+	<select id="profileAwardByCode" parameterType="String" resultMap="ProfileAwardResultMap">
+		/* 수상이력 코드별 조회 */
+		SELECT
+			profile_award_code,
+			user_id,
+			user_award_name,
+			user_award_publication,
+			user_award_date,
+			award_details,
+			profile_hidden,
+			profile_application_hidden
+		FROM
+			profile_award
+		WHERE
+			profile_award_code = #{userAwardCode};
+	</select>
+	
+	<update id="modifyProfileAward" parameterType="ProfileAward">
+		UPDATE profile_award
+		<set>
+			<if test="userAwardName != null and userAwardName != ''">
+				user_award_name = #{userAwardName},
+			</if>
+			<if test="userAwardPublication != null and userAwardPublication != ''">
+				user_award_publication = #{userAwardPublication},
+			</if>
+			<if test="userAwardDate != null and userAwardDate != ''">
+				user_award_date = #{userAwardDate},
+			</if>
+			<if test="awardDetails != null and awardDetails != ''">
+				award_details = #{awardDetails},
+			</if>
+			profile_hidden = #{profileHidden},
+			profile_application_hidden = #{profileApplicationHidden},
+		</set>
+		WHERE
+			profile_award_code = #{profileAwardCode};
+	</update>
+	
+	<delete id="deleteProfileAward" parameterType="String">
+		/* 수상이력 삭제 */
+		DELETE
+		FROM
+			profile_award
+		WHERE
+			profile_award_code = #{profileAwardCode}
+	</delete>
 
 </mapper>
