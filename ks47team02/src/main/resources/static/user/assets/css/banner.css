@@ -12,7 +12,7 @@ table.type10 thead th {
     font-weight: bold;
     vertical-align: top;
     color: #fff;
-    background: #00a8c6;
+    background: #0F192A;
     margin: 20px 10px;
 }
 table.type10 tbody th {
@@ -258,6 +258,30 @@ textarea {
 
     input[type='text'], [type='email'], select, textarea {
         font-size: 0.875em;
+    }
+    input[type=radio] {
+        display: none;
+    }
+
+    input[type=radio] + label {
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+    }
+
+    input[type=radio] + label span {
+        display: inline-block;
+        width: 19px;
+        height: 19px;
+        margin: -1px 4px 0 0;
+        vertical-align: middle;
+        cursor: pointer;
+        border-radius: 50%;
+        border: 2px solid #333;
+    }
+
+    input[type=radio]:checked + label span {
+        background-color: #333;
     }
 }
 

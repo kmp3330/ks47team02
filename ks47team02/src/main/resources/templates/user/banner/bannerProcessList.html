@@ -1,8 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{user/banner/layout/default}">
-	<th:block layout:fragment="customContents">
-		
-	</th:block>
+      layout:decorate="~{user/layout/default}">
+<head>
+  <style>
+    .card-primary:not(.card-outline)>.card-header {
+      background-color: #0F192A;
+    }
+    .genric-btn.success.circle {
+      margin-right: 10px;
+      background-color: #1d6fa5;
+    }
+  </style>
+</head>
+<th:block layout:fragment="customContents">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="sidebar">
+        <div class="single-item mb-4">
+          <h4 class="mb-4">배너 광고</h4>
+          <a th:href="@{/banner}"
+             class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 문의</span>
+          </a> <a th:href="@{/banner/bannerRequest}"
+                  class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 신청</span>
+        </a> <a th:href="@{/banner/bannerRequestList}"
+                class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 신청 현황</span>
+        </a> <a th:href="@{/banner/bannerProcessList}"
+                class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 진행 현황</span>
+        </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h4 class="card-title">측면 배너 신청 현황</h4>
+        </div>
+        <ul class="mt-4">
+          <li class="mb-3"><h5><i class="fa fa-map-marker"></i> 광고 유형: 측면배너 </h5></li>
+          <br>
+          <li class="mb-3"><h5><i class="fa fa-clock-o"></i> 신청 시각: 0000-00-00</h5></li>
+          <br>
+          <li class="mb-3"><h5><i class="fa fa-pie-chart"></i> 신청 현황: 예약금 입금 요청</h5></li>
+          <br>
+          <li class="mb-3"><h5><i class="fa fa-pie-chart"></i> 선입급 해야 할 예약금: 50,000</h5></li>
+          <br>
+          <li><h5><i class="fa fa-dice"></i> 신청이 통과되고 1주일내로 예약금이 입금되지 않으면 주문이 취소됩니다.</h5></li>
+          <br>
+          <a href="#" class="genric-btn success circle">예약금 입금</a>
+          <a href="#" class="genric-btn info-border circle">신청 취소</a>
+        </ul>
+      </div>
+    </div>
+  </div>
+</th:block>
 </html>

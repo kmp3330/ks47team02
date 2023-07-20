@@ -72,9 +72,9 @@
 					<div class="single-job mb-4 justify-content-between text-center">
 						<div class="card">
 							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">보유기술</h3>
+								<h3 class="mb-0 title_color text-left">일경력</h3>
 								<div class="card-tools">
-									<a class="genric-btn info-border circle" id="insertBtn">
+									<a href="#" class="genric-btn info-border circle" id="modifyBtn">
 										<i class="fas">등록 완료</i>
 									</a>
 									<a th:href="@{#}" class="genric-btn danger-border circle">
@@ -83,41 +83,51 @@
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">
-								<form id="insertProfileForm" th:action="@{/profile/profileSkillInsert}"
+								<form id="modifyProfileForm" th:action="@{/profile/profileWorkSpecModify}"
 									class="d-md-flex justify-content-between" method="post">
 									<table class="table table-valign-middle">
 										<thead>
 											<tr>
+												<th>회사명</th>
 												<th>기술명</th>
-												<th>숙련도</th>
-												<th>경험</th>
+												<th>입사 일시</th>
+												<th>퇴사 일시</th>
+												<th>근무부서</th>
+												<th>직위</th>
+												<th>담당업무</th>\
 												<th>공개 여부</th>
 												<th>입사지원시 공개여부</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td><input class="genric-btn" type="text" placeholder="기술명"
-														name="userSkill" onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '기술명'" required=""></td>
 												<td>
-													<div class="default-select" id="default-select">
-														<select style="display: none;" name="userSkillRank">
-															<option value="특급">특급</option>
-															<option value="고급">고급</option>
-															<option value="중급">중급</option>
-															<option value="초급">초급</option>
-														</select>
-													</div>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userCompany}"
+														name="userCompany" required="">
 												</td>
-												<td><input class="genric-btn" type="text" placeholder="경험(몇년차)"
-														name="userExperience" onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '경험(몇년차)'" required="">
+												<td>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userSkill}"
+														name="userSkill" required="">
+												</td>
+												<td><input class="genric-btn" type="date" th:value="${profileWorkSpecInfo.userEnterDate}" name="userEnterDate"></td>
+												<td><input class="genric-btn" type="date" th:value="${profileWorkSpecInfo.userLeaveDate}" name="userLeaveDate"></td>
+												<td>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userDepartment}"
+														name="userDepartment"  required="">
+												</td>
+												<td>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userRank}"
+														name="userRank"  required="">
+												</td>
+												<td>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userWork}"
+														name="userWork"  required="">
+												</td>
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2"
-																name="userHidden" checked="">
+															<input type="checkbox" id="confirm-switch2" th:chekced="${profileWorkSpecInfo.profileHidden}"
+																name="profileHidden">
 															<label for="confirm-switch2"></label>
 														</div>
 													</div>
@@ -126,7 +136,7 @@
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
 															<input type="checkbox" id="confirm-switch2"
-																name="userApplicationHidden" checked="">
+																name="profileApplicationHidden" th:chekced="${profileWorkSpecInfo.profileApplicationHidden}">
 															<label for="confirm-switch2"></label>
 														</div>
 													</div>

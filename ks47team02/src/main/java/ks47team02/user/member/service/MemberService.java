@@ -3,6 +3,7 @@ package ks47team02.user.member.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import ks47team02.admin.dto.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,13 +27,13 @@ public class MemberService {
 	 * @return
 	 */
 	public Map<String, Object> loginCheck(String userId, String userPw) {
-		
+
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		
+
 		boolean isValid = false;
 		User userInfo = userMapper.loginCheck(userId);
 		log.info("userInfo : {}", userInfo);
-		
+
 		if(userInfo != null) {
 			String checkPw = userInfo.getUserPw();
 			if(checkPw.equals(userPw)) {
@@ -41,10 +42,17 @@ public class MemberService {
 			}
 		}
 		resultMap.put("isValid", isValid);
-		
+
 		log.info("resultMap : {}", resultMap);
-		
+
 		return resultMap;
 	}
 
+	public void addUser(User user){
+		userMapper.addUser(user);
+	}
+
+	public boolean checkId(String userId) {
+		return userMapper.checkId(userId);
+	}
 }

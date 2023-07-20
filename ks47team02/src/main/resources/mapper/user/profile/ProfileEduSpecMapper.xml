@@ -43,4 +43,92 @@
 		    profile_edu_spec as pes
 	</select>
 	
+	<insert id="profileEduSpecInsert" parameterType="ProfileEduSpec">
+		<selectKey resultType="String" keyColumn="newEduSpecCode" keyProperty="userEduSpecCode" order="BEFORE">
+			/*자기소개 자동 증가 코드*/
+			<![CDATA[
+			SELECT
+			    CASE
+			    WHEN COUNT(*) = 0 THEN 'user_edu_spec_code001'
+			    WHEN CAST(SUBSTRING_INDEX(user_edu_spec_code, 'user_edu_spec_code',-1) AS UNSIGNED) < 999
+			    THEN CONCAT('user_edu_spec_code', LPAD(MAX(CAST(SUBSTRING_INDEX(user_edu_spec_code, 'user_edu_spec_code',-1) AS UNSIGNED))+1,3,'0'))
+			    ELSE
+			        CONCAT('user_edu_spec_code', MAX(CAST(SUBSTRING_INDEX(user_edu_spec_code, 'user_edu_spec_code',-1) AS UNSIGNED))+1)
+			    END AS newEduSpecCode
+			FROM
+			    profile_edu_spec
+			]]>
+		</selectKey>
+			INSERT INTO profile_edu_spec(
+			    user_edu_spec_code,
+			    user_id,
+			    user_degree,
+			    user_univ_name,
+			    user_univ_major,
+			    user_univ_grad,
+			    user_univ_enter_date,
+			    user_univ_grad_date,
+			    user_univ_score,
+			    user_univ_total_score,
+			    profile_reg_date,
+			    profile_hidden,
+			    profile_application_hidden
+			)
+			VALUES(
+	          #{userEduSpecCode},
+	          'id010',
+	          #{userDegree},
+	          #{userUnivName},
+	          #{userUnivMajor},
+	          #{userUnivGrad},
+	          #{userUnivEnterDate},
+	          #{userUnivGradDate},
+	          #{userUnivScore},
+	          #{userUnivTotalScore},
+	         	CURDATE(),
+	            #{profileHidden},
+	            #{profileApplicationHidden}
+	         );
+	</insert>
+	
+	<update id="profileEduSpecModify" parameterType="ProfileEduSpec">
+		/*일경력 수정*/
+		UPDATE profile_edu_spec
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="userEduSpec !=null and userEduSpec !=''">
+				user_work_edu_code = #{userEduSpecCode},
+			</if>
+			<if test="profileHidden !=null and profileHidden !=''">
+				profile_hidden = #{profileHidden},
+			</if>
+			<if test="profileApplicationHidden !=null and profileApplicationHidden !=''">
+				profile_application_hidden = #{profileApplicationHidden},
+			</if>
+		</trim>
+		WHERE
+			user_edu_spec_code = #{userEduSpecCode}
+	</update>
+	
+	<select id="getProfileEduSpecInfoByCode" parameterType="String" resultMap = "profileEduSpecResultMap">
+		/*일경력 상세조회 */
+		select
+		    pes.user_edu_spec_code,
+		    pes.user_id,
+		    pes.user_degree,
+		    pes.user_univ_name,
+		    pes.user_univ_major,
+		    pes.user_univ_grad,
+		    pes.user_univ_enter_date,
+		    pes.user_univ_grad_date,
+		    pes.user_univ_score,
+		    pes.user_univ_total_score,
+		    pes.profile_reg_date,
+		    pes.profile_hidden,
+		    pes.profile_application_hidden
+		from
+		    profile_edu_spec as pes
+		where
+		    pes.user_edu_spec_code = #{userEduSpecCode};
+	</select>
+	
 </mapper>

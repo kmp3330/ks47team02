@@ -1,12 +1,16 @@
 package ks47team02.user.member.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import ks47team02.admin.dto.Member;
+import ks47team02.user.member.dto.Company;
+import ks47team02.user.member.mapper.UserMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,11 +22,13 @@ import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
+@Slf4j
 public class MemberController {
 	
 	// 의존성 주입
 	private final MemberService memberService;
-	
+	private final UserMapper userMapper;
+
 	/**
 	 * 로그인 화면
 	 * @return
@@ -78,5 +84,36 @@ public class MemberController {
 		
 		return "redirect:/";
 	}
-	
+
+	@PostMapping("/checkId")
+	@ResponseBody
+	public boolean checkId(@RequestParam(value="userId") String userId) {
+		boolean result = memberService.checkId(userId);
+		return result;
+	}
+	@PostMapping("/addNormalMember")
+	public String addUser(User user){
+		memberService.addUser(user);
+		return "redirect:/";
+	}
+
+	@GetMapping("/addMember")
+	public String addMember(Member member, HttpSession session, Model model){
+		model.addAttribute("titleText", "회원가입");
+		model.addAttribute("contents", "가입하려는 회원의 유형을 선택해주세요");
+
+		return "user/member/addMember";
+	}
+
+	@GetMapping("/addNormalMember")
+	public String addUser(User user, HttpSession session, Model model){
+		model.addAttribute("titleText", "일반 회원 가입");
+		return "user/member/addNormalMember";
+	}
+
+	@GetMapping("/addCompanyUser")
+	public String addCompany(Company company, HttpSession session, Model model){
+		model.addAttribute("titleText", "기업 회원 가입");
+		return "user/member/addCompanyMember";
+	}
 }

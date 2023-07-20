@@ -3,8 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/layout/default}">
 <head>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
   <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
   
   <style>
     
@@ -48,6 +48,17 @@
       display: inline-block;
       line-height: 56px;
     }
+    .genric-btn.success.circle {
+      margin-right: 10px;
+      background-color: #1d6fa5;
+    }
+    .genric-btn.danger.circle{
+      background-color: #c9dae1;
+    }
+    .card-primary:not(.card-outline)>.card-header {
+      background-color: #0F192A;
+    }
+  
   </style>
 </head>
 
@@ -147,13 +158,13 @@
         <div class="sidebar">
           <div class="single-item mb-4">
             <h4 class="mb-4">배너 광고</h4>
-            <a th:href="@{/profile/profileIntroList}"
+            <a th:href="@{/banner}"
                class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 문의</span>
-            </a> <a th:href="@{/profile/profileSkillList}"
+            </a> <a th:href="@{/banner/bannerRequest}"
                     class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 신청</span>
-          </a> <a th:href="@{/profile/profileWorkSpecList}"
+          </a> <a th:href="@{/banner/bannerRequestList}"
                   class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 신청 현황</span>
-          </a> <a th:href="@{/profile/profileEduSpecList}"
+          </a> <a th:href="@{/banner/bannerProcessList}"
                   class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 진행 현황</span>
           </a>
           </div>
@@ -183,9 +194,8 @@
               <label for="inputStatus">Status</label>
               <select id="inputStatus" class="form-control custom-select">
                 <option selected="" disabled="">광고 유형을 선택하세요</option>
-                <option>On Hold</option>
-                <option>Canceled</option>
-                <option>Success</option>
+                <option>측면 광고</option>
+                <option>하단 광고</option>
               </select>
             </div>
             <div class="form-group">
@@ -196,6 +206,8 @@
               <label for="inputProjectLeader">Project Leader</label>
               <input type="text" id="inputProjectLeader" class="form-control">
             </div>
+            <a href="/banner/bannerRequestList" class="genric-btn success circle">신청</a>
+            <a href="/banner" class="genric-btn info-border circle">신청 취소</a>
           </div>
           <!-- /.card-body -->
         </div>

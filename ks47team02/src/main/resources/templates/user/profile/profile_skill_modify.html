@@ -50,7 +50,7 @@
 					<div class="sidebar">
 						<div class="single-item mb-4">
 							<h4 class="mb-4">프로필</h4>
-							<a th:href="@{/profile/profileIntroList}"
+							<a th:href="@{/profile/profileSkillList}"
 								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
 							</a> <a th:href="@{/profile/profileSkillList}"
 								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
@@ -74,7 +74,7 @@
 							<div class="card-header border-0">
 								<h3 class="mb-0 title_color text-left">보유기술</h3>
 								<div class="card-tools">
-									<a class="genric-btn info-border circle" id="insertBtn">
+									<a class="genric-btn info-border circle" id="modifyBtn">
 										<i class="fas">등록 완료</i>
 									</a>
 									<a th:href="@{#}" class="genric-btn danger-border circle">
@@ -83,7 +83,7 @@
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">
-								<form id="insertProfileForm" th:action="@{/profile/profileSkillInsert}"
+								<form id="modifyProfileForm" th:action="@{/profile/profileSkillModify}" 
 									class="d-md-flex justify-content-between" method="post">
 									<table class="table table-valign-middle">
 										<thead>
@@ -97,27 +97,25 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td><input class="genric-btn" type="text" placeholder="기술명"
-														name="userSkill" onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '기술명'" required=""></td>
+												<td><input class="genric-btn" type="text" id="userSkill" name="userSkill"
+														th:value="${profileSkillInfo.userSkill}" required=""></td>
 												<td>
 													<div class="default-select" id="default-select">
-														<select style="display: none;" name="userSkillRank">
-															<option value="특급">특급</option>
+														<select style="display: none;" name="userSkillRank"> //이거 물어봐 수
+															<option value="특급" th:selected:"${{profileSkillInfo.userSkillRank}">특급</option>
 															<option value="고급">고급</option>
 															<option value="중급">중급</option>
 															<option value="초급">초급</option>
 														</select>
 													</div>
 												</td>
-												<td><input class="genric-btn" type="text" placeholder="경험(몇년차)"
-														name="userExperience" onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '경험(몇년차)'" required="">
+												<td><input class="genric-btn" type="text" placeholder="경험(몇년차)" th:value="${profileSkillInfo.userExperience}"
+														name="userExperience"  required="">
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
 															<input type="checkbox" id="confirm-switch2"
-																name="userHidden" checked="">
+																name="profileHidden" th:checked="${profileSkillInfo.profileHidden}">
 															<label for="confirm-switch2"></label>
 														</div>
 													</div>
@@ -126,7 +124,7 @@
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
 															<input type="checkbox" id="confirm-switch2"
-																name="userApplicationHidden" checked="">
+																name="profileApplicationHidden" th:checked="${profileSkillInfo.profileApplicationHidden}">
 															<label for="confirm-switch2"></label>
 														</div>
 													</div>
