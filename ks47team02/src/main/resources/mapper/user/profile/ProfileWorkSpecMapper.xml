@@ -92,8 +92,20 @@
 		/*일경력 수정*/
 		UPDATE profile_work_spec
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="userWorkSpec !=null and userWorkSpec !=''">
-				user_work_spec_code = #{userWorkSpecCode},
+			<if test="userCompany !=null and userCompany !=''">
+				user_company = #{userCompany},
+			</if>
+			<if test="userSkill !=null and userSkill !=''">
+				user_skill = #{userSkill},
+			</if>
+			<if test="userEnterDate !=null and userEnterDate !=''">
+				user_enter_date = #{userEnterDate},
+			</if>
+			<if test="userLeaveDate !=null and userLeaveDate !=''">
+				user_leave_date = #{userLeaveDate},
+			</if>
+			<if test="userSkill !=null and userSkill !=''">
+				user_skill = #{userSkill},
 			</if>
 			<if test="profileHidden !=null and profileHidden !=''">
 				profile_hidden = #{profileHidden},

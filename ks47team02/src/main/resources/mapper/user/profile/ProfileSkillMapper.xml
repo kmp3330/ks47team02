@@ -77,7 +77,7 @@
 		UPDATE profile_skill
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="userSkill !=null and userSkill !=''">
-				user_intro = #{userIntro},
+				user_skill = #{userSkill},
 			</if>
 			<if test="profileHidden !=null and profileHidden !=''">
 				profile_hidden = #{profileHidden},
