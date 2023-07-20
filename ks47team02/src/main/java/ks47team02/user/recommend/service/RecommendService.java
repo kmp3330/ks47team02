@@ -50,7 +50,15 @@ public class RecommendService {
 		return recommendSupportInfo;
 	}
 	
-
+	/*
+	 *  기업 지원 코드 조회
+	 */
+	
+	public List <RecommendSupport> getRecommendSupportCode(){
+		List <RecommendSupport> recommendSupportCode = recommendSupportMapper.getRecommendSupportCode();
+		return recommendSupportCode;
+	}
+	
 	
 	/*
 	 *  기업 지원 top5 순위
@@ -59,6 +67,22 @@ public class RecommendService {
 	public List <RecommendSupport> getRecommendSupportRank(){
 		List <RecommendSupport> recommendSupportRank = recommendSupportMapper.getRecommendSupportRank();
 		return recommendSupportRank;
+	}
+	/*
+	 * 코드 별 상세 조회
+	 */
+	public RecommendEmployment getRecommendEmploymentByCode(String companyEmploymentCode) {
+		RecommendEmployment recommendEmploymentByCode = recommendEmploymentMapper.getRecommendEmploymentByCode(companyEmploymentCode);
+		return recommendEmploymentByCode;
+	}
+	
+	/*
+	 *  채용 단계 순 목록 수정
+	 */
+	
+	public int recommendModifyEmployment(RecommendEmployment recommendEmployment) {
+		int recommendModifyEmployment = recommendEmploymentMapper.recommendModifyEmployment(recommendEmployment);
+		return recommendModifyEmployment;
 	}
 	
 	/*

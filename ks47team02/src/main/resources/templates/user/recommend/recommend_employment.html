@@ -65,7 +65,7 @@
 											<td th:text="${l.startDate}"></td>
 											<td th:text="${l.dueDate}"></td>
 											<td th:text="${l.jobNormalRun}"></td>
-											<td><a th:href="@{#}"
+											<td><a th:href="@{/recommend/recommendModifyEmployment(companyEmploymentCode=${l.companyEmploymentCode})}"
 												class="genric-btn success-border circle"> <i class="fas">수정</i>
 											</a></td>
 											<td><a th:href="@{#}"

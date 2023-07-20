@@ -112,6 +112,32 @@ public class RecommendController {
 	}
 	
 	/*
+	 *  채용 단계 순 기업 추천 서비스 목록 수정
+	 */
+	
+	@PostMapping("/recommendModifyEmployment")
+	public String recommendModifyEmployment(RecommendEmployment recommendEmployment) {
+		
+		recommendService.recommendModifyEmployment(recommendEmployment);
+		log.info("목록 수정시 입력정보: {}", recommendEmployment);
+		return "redirect:/recommend/recommendEmployment";
+	}
+	
+	/*
+	 *  채용 단계 순 기업 추천 서비스 목록 수정 (폼)
+	 */
+	
+	@GetMapping("/recommendModifyEmployment")
+	public String recommendModifyEmployment(Model model, String companyEmploymentCode) {
+		
+		RecommendEmployment recommendEmploymentByCode = recommendService.getRecommendEmploymentByCode(companyEmploymentCode);
+		
+		model.addAttribute("title", "메인화면");
+		model.addAttribute("recommendEmploymentByCode", recommendEmploymentByCode);
+		return "user/recommend/recommend_employment_modify";
+	}
+	
+	/*
 	 *  채용 단계 순 기업 추천 서비스 목록 등록
 	 */
 	@PostMapping("/recommendInsertEmployment")
@@ -122,18 +148,21 @@ public class RecommendController {
 		return "redirect:/recommend/recommendEmployment";
 	}
 	
+
 	/*
 	 *  채용 단계 순 기업 추천 서비스 목록 등록 (폼)
 	 */
 	@GetMapping("/recommendInsertEmployment")
 	public String recommendInsertEmployment(Model model) {
 		
-		
+		List <RecommendEmployment> RecommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
+		List<RecommendSupport>	recommendSupportCodeInfo =recommendService.getRecommendSupportCode();
 		
 		model.addAttribute("title", "채용 단계 순 목록 등록");
 		model.addAttribute("titleText", "채용 단계 순 목록 등록");
 		model.addAttribute("contents", "채용 단계 순 목록 등록 화면입니다.");
-		
+		model.addAttribute("RecommendEmploymentInfo", RecommendEmploymentInfo);
+		model.addAttribute("recommendSupportCodeInfo", recommendSupportCodeInfo);
 		return "user/recommend/recommend_employment_insert";
 	}
 	

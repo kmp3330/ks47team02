@@ -20,16 +20,16 @@
     		}
 
 
-			// 등록버튼 
-			$('#addEmploymentBtn').click(function(){
-				const validateEle = $('#employmentInsertForm input');
+			// 수정버튼 
+			$('#modifyEmploymentBtn').click(function(){
+				const validateEle = $('#employmentModifyForm input');
 				let isSubmit= false;
 				
 				validateEle.each((idx, item) => {    				
 	    			isSubmit = validCheck(item);
 	    			return isSubmit;
     			})
-				if(isSubmit)$('#employmentInsertForm').submit();
+				if(isSubmit)$('#employmentModifyForm').submit();
 				
 			})
 
@@ -38,7 +38,7 @@
     		$('#resetBtn').click(function(e){
     			
     			e.preventDefault();
-    			$('#employmentInsertForm input').val('');
+    			$('#employmentModifyForm input').val('');
     		});
 		</script>
 </th:block>
@@ -67,11 +67,11 @@
 						<div class="single-job mb-4 justify-content-between text-center">
 							<div class="card">
 								<div class="card-header border-0">
-									<h3 class="mb-0 title_color text-left">채용 단계 순 목록 등록</h3>
+									<h3 class="mb-0 title_color text-left">채용 단계 순 목록 수정</h3>
 									<div class="card-tools">
 										<button th:href="@{/recommend/recommendEmployment}"
-											id="addEmploymentBtn"
-											class="genric-btn info-border circle"> <i class="fas">등록
+											id="modifyEmploymentBtn"
+											class="genric-btn info-border circle"> <i class="fas">수정
 												완료</i>
 										</button> <button th:href="@{#}" id="resetBtn"
 											class="genric-btn danger-border circle"> <i class="fas">취소</i>
@@ -79,11 +79,11 @@
 									</div>
 								</div>
 								<div class="card-body table-responsive p-0">
-									<form id="employmentInsertForm"
-										th:action="@{/recommend/recommendInsertEmployment}"
+									<form id="employmentModifyForm"
+										th:action="@{/recommend/recommendModifyEmployment}"
 										method="post"
 										class="d-md-flex justify-content-between">
-										<table class="table table-valign-middle">
+										<table class="table table-valign-middle" th:object="${recommendEmploymentByCode}">
 											<thead>
 												<tr>
 													<th>채용 공고 코드</th>
@@ -104,90 +104,99 @@
 													<th>진행 상태 분류</th>
 												</tr>
 											</thead>
-											<tbody>
+												<tbody>
 												<tr>
 													<td><input class="genric-btn" type="text"
 														id="companyEmploymentCode" name="companyEmploymentCode" placeholder="채용 공고 코드"
+														th:value="*{companyEmploymentCode}"
 														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '채용 공고 코드'" required=""></td>
-													<td>
-														<select class="genric-btn"
-														id="companySupportCode" name="companySupportCode"
+														onblur="this.placeholder = '채용 공고 코드'" required="" readonly="readonly"></td>
+													<td><input class="genric-btn" type="text"
+														id="companySupportCode" name="companySupportCode" placeholder="회사 지원 코드"
+														th:value="*{companySupportCode}"
 														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '회사 지원 일시'" required="">
-														<th:block th:unless="${#lists.isEmpty(recommendSupportCodeInfo)}"
-																  th:each="l : ${recommendSupportCodeInfo}">
-															<option th:value="${l.companySupportCode}">[[${l.companySupportCode}]]</option>
-														</th:block>											
-														</select>
-													</td>
+														onblur="this.placeholder = '회사 지원 코드'" required=""></td>	
 													<td><input class="genric-btn" type="text" id="userId"
 														name="userId"
+														th:value="*{userId}"
 														placeholder="회원 아이디" onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '회원 아이디'" required=""></td>
 
 													<td><input class="genric-btn" type="text"
 														id="announcementCode" name="announcementCode" placeholder="공고 코드"
+														th:value="*{announcementCode}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '공고 코드'" required=""></td>
 
 													<td><input class="genric-btn" type="text"
 														id="joinCateCode" name="joinCateCode" placeholder="참여 분야 코드"
+														th:value="*{joinCateCode}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '참여 분야 코드'" required=""></td>
 
 													<td><input class="genric-btn" type="text"
 														id="joinCateName" name="joinCateName" placeholder="참여 분야"
+														th:value="*{joinCateName}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '참여 분야'" required=""></td>
 													
 													<td><input class="genric-btn" type="text"
 														id="areaCode" name="areaCode" placeholder="지역 코드"
+														th:value="*{areaCode}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '지역 코드'" required=""></td>
 
 													<td><input class="genric-btn" type="text"
 														id="areaCate" name="areaCate" placeholder="지역"
+														th:value="*{areaCate}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '지역'" required=""></td>
 													
 													<td><input class="genric-btn" type="text"
 														id="jobOpening" name="jobOpening"	placeholder="채용직"
+														th:value="*{jobOpening}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '채용직'" required=""></td>
 													
 													<td><input class="genric-btn" type="text"
 														id="requiredSkills" name="requiredSkills" placeholder="요구 기술"
+														th:value="*{requiredSkills}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '요구 기술'" required=""></td>
 													
 													<td><input class="genric-btn" type="text"
 														id="career" name="career" placeholder="경력"
+														th:value="*{career}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '경력'" required=""></td>
 													
 													<td><input class="genric-btn" type="text"
 														id="wage" name="wage" placeholder="임금"
+														th:value="*{wage}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '임금'" required=""></td>
 													
 													<td><input class="genric-btn" type="date"
 														id="startDate" name="startDate" placeholder="시작일자"
+														th:value="*{startDate}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '시작일자'" required=""></td>
 													
 													<td><input class="genric-btn" type="date"
-														id="duedate" name="duedate" placeholder="마감일자"
+														id="dueDate" name="dueDate" placeholder="마감일자"
+														th:value="*{dueDate}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '마감일자'" required=""></td>
 													
 													<td><input class="genric-btn" type="text"
 														id="jobNormalRunCode" name="jobNormalRunCode" placeholder="진행 상황 분류 코드"
+														th:value="*{jobNormalRunCode}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '진행 상황 분류 코드'" required=""></td>
 													
 													<td><input class="genric-btn" type="text"
 														id="jobNormalRun"  name="jobNormalRun" placeholder="진행 상황 분류"
+														th:value="*{jobNormalRun}"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '진행 상황 분류'" required=""></td>
 												</tr>

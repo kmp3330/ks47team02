@@ -20,6 +20,7 @@
  	</resultMap>
  	
  	<select id="getRecommendSupport" resultMap="RecommendSupportResultMap">
+
  		SELECT
 			cs.user_id,
 			cs.cp_id,
@@ -47,5 +48,13 @@
 			cs.cp_name DESC
 		LIMIT 
 			5
+ 	</select>
+ 	
+ 	
+ 	<select id="getRecommendSupportCode" resultMap="RecommendSupportResultMap">
+ 		SELECT
+			cs.company_support_code
+		FROM
+			company_support AS cs
  	</select>
 </mapper>
