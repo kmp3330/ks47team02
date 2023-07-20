@@ -3,42 +3,13 @@
 	layout:decorate="~{user/layout/default}">
 
 <th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
 	<script>
-		//유효성 검사 함수 (등록눌렀을때 빈값이 없도록 유효성 검사 하는거) => 하 진짜 이해 안감ㅠ 물어봐 
-		const validCheck = element => {
-			let data = $(element).val();
-			let eleId = $(element).attr('placeholder');
-			if (typeof data == 'undefined' || data == null || data == '') {
-				// let cate = $(`input[id="${eleId}"]`).text();
-				alert(`${eleId} 필수 입력항목입니다.`);
-				$(element).focus();
-				return false;
-			}
-			return true;
-		}
-
-		//자기소개 등록 버튼 시 이벤트 => 하 진짜 이해 안감ㅠ 물어봐 
-		$('#insertBtn').click(function () {
-			// const validateEle = $('#insertProfileForm input').not('#introTitle');
-			const validateEle = $('#insertProfileForm input');
-			let isSubmit = false;
-			validateEle.each((idx, item) => {
-				isSubmit = validCheck(item);
-				return isSubmit;
-			});
-			if (isSubmit) {
-				console.log('전송');
-				$('#insertProfileForm').submit();
-			}
-		});
-
-		//입력 취소 버튼 클릭시 이벤트 처리
-		$('#resetBtn').click(function (e) {
-			//태그가 가지고 있는 기본 이벤트 동작 방지
+		$('#modifyBtn').click(function (e) {
 			e.preventDefault();
-			$('#insertProfileForm input').val('');
-		});
 
+			$('#modifyProfileForm').submit();
+		});
 	</script>
 </th:block>
 
@@ -74,8 +45,8 @@
 							<div class="card-header border-0">
 								<h3 class="mb-0 title_color text-left">보유기술</h3>
 								<div class="card-tools">
-									<a class="genric-btn info-border circle" id="modifyBtn">
-										<i class="fas">등록 완료</i>
+									<a href="#" class="genric-btn info-border circle" >
+										<i id="modifyBtn" class="fas">수정 완료</i>
 									</a>
 									<a th:href="@{#}" class="genric-btn danger-border circle">
 										<i type="button" id="resetBtn" class="fas">취소</i>
@@ -97,20 +68,21 @@
 										</thead>
 										<tbody>
 											<tr>
+												<input type="hidden" name="userSkillCode" th:value="${profileSkillInfo.userSkillCode}">
 												<td><input class="genric-btn" type="text" id="userSkill" name="userSkill"
-														th:value="${profileSkillInfo.userSkill}" required=""></td>
+														th:value="${profileSkillInfo.userSkill}"></td>
 												<td>
 													<div class="default-select" id="default-select">
-														<select style="display: none;" name="userSkillRank"> //이거 물어봐 수
-															<option value="특급" th:selected:"${{profileSkillInfo.userSkillRank}">특급</option>
+														<select style="display: none;" name="userSkillRank"> <!-- 이거 물어봐 수정 -->
+															<option value="특급" th:selected:"${profileSkillInfo.userSkillRank}">특급</option>
 															<option value="고급">고급</option>
 															<option value="중급">중급</option>
 															<option value="초급">초급</option>
 														</select>
 													</div>
 												</td>
-												<td><input class="genric-btn" type="text" placeholder="경험(몇년차)" th:value="${profileSkillInfo.userExperience}"
-														name="userExperience"  required="">
+												<td><input class="genric-btn" type="text" th:value="${profileSkillInfo.userExperience}"
+														name="userExperience">
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
