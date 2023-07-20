@@ -8,6 +8,8 @@ import ks47team02.user.profile.dto.ProfileWorkSpec;
 
 @Mapper
 public interface ProfileEduSpecMapper {
+	//학력 삭제 
+	public int profileEduSpecDelete(String userEduSpecCode);
 	//학력 수정
 	public int profileEduSpecModify(ProfileEduSpec profileEduSpec);
 	//학력 상세조회 

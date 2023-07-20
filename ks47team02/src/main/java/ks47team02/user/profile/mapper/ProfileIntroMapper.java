@@ -8,6 +8,9 @@ import ks47team02.user.profile.dto.ProfileIntro;
 
 @Mapper
 public interface ProfileIntroMapper {
+	//자기소개 삭제
+	public int profileIntroDelete(String userIntroCode);
+	
 	//자기소개 정보 수정
 	public int profileIntroModify(ProfileIntro profileIntro);
 	

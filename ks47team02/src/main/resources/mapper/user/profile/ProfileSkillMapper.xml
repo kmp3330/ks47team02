@@ -106,5 +106,12 @@
 		where
 		    ps.user_skill_code = #{userSkillCode};
 	</select>
+	<delete id="profileSkillDelete" parameterType="String">
+		DELETE
+		FROM
+			profile_skill
+		WHERE
+			user_skill_code = #{userSkillCode}
+	</delete>
 	
 </mapper>
