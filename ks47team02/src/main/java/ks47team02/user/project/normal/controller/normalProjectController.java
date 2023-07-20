@@ -130,8 +130,8 @@ public class normalProjectController {
 	
 	/*수정영역*/
 	@PostMapping("/modifyProject")
-	public String modifyProject(Model model) {
-		log.info("안녕");
+	public String modifyProject(NormalProjects normalProject) {
+		log.info("normalProject : {}", normalProject);
 		
 		
 		return "redirect:/normalProject/projectList";
@@ -139,16 +139,32 @@ public class normalProjectController {
 	
 	
 	/**
-	 * @Param normalProjects normalProjectCode
+	 * @Param String normalProjectCode
+	 * @Param Model model
 	 * 
-	 * return 
+	 * 
+	 * @return 일반과제 수정 페이지로 이동 
 	 * */
 	@GetMapping("/modifyProject")
 	public String modifyProject(@RequestParam(value="normalProjectCode") String normalProjectCode
 			,Model model) {
+		//일반과제 리스트
+		List<NormalProjects> normalProject = normalProjectService.getNormalProjectByCode(normalProjectCode);
+		//참여분야 리스트
+		List<JoinCate> joinCateList = normalProjectService.getJoinCateList();
+		//작업분류 리스트
+		List<WorkCate> workCateList = normalProjectService.getWorkCateList();
+		//주제분류 리스트
+		List<SubjectCate> subjectCateList = normalProjectService.getSubjectCateList();
 		
-		log.info("일반과제 수정할거 번호 :{}",normalProjectCode);
+		model.addAttribute("joinCateList", joinCateList);
+		model.addAttribute("workCateList", workCateList);
+		log.info("normalProjectController = {}", normalProject);
+		model.addAttribute("normalProjectList" ,normalProject);
+		model.addAttribute("subjectCateList" ,subjectCateList);
 		model.addAttribute("title", "일반과제 수정 페이지");
+		
+		
 		
 		return "user/project/normal/list/modifyProject";
 	}
@@ -223,6 +239,12 @@ public class normalProjectController {
 	
 	/*get영역*/
 	
+	/**
+	 * 일반과제 전체 리스트 가져오는 폼
+	 * @param Model model 모델 가져옴
+	 * @return 프로젝트 리스트 화면
+	 * 
+	 * */
 	@GetMapping("/projectList")
 	public String getProjectList(Model model) {
 		

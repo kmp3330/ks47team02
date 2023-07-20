@@ -66,6 +66,13 @@ public class NormalProjectService {
 		log.info("insert 후 norproject : {}", norproject);
 	}
 	
+	public List<NormalProjects> getNormalProjectByCode(String normalProjectCode) {
+		List<NormalProjects> normalProjects = normalProjectMapper.getNormalPrjectByCode(normalProjectCode);
+		log.info("normalProjectsByCode : {}", normalProjects);
+		
+		
+		return normalProjects;
+	}
 	
 	
 

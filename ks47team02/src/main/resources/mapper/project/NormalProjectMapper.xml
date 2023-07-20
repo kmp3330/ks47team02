@@ -148,4 +148,35 @@
 			work_cate AS wc
 		
 	</select>
+	
+	<!-- 프로젝트 코드로 일반과제 게시글 조회 -->
+	<select id="getNormalPrjectByCode" parameterType="String" resultMap="NormalProjectMap">
+		SELECT
+			normal_project_code,
+			user_id,
+			normal_project_name,
+			join_cate_code,
+			join_cate_name,
+			work_cate_code,
+			work_cate_name,
+			subject_cate_code,
+			subject_cate_name,
+			required_skill,
+			normal_project_detail,
+			project_max_people_num,
+			normal_run_code,
+			run_name,
+			project_advertise_start_date,
+			project_advertise_finish_date,
+			project_startup_date,
+			project_finish_date,
+			project_day,
+			project_day_score,
+			project_finish_score
+		FROM
+			normal_project
+		WHERE
+			normal_project_code = #{normalProjectCode};
+	
+	</select>
 </mapper>

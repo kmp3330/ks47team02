@@ -22,6 +22,14 @@ public interface NormalProjectMapper {
 	
 	public int addNormalProject(NormalProjects normalProject);
 	
+	/**
+	 * 일반과제 WHERE 코드로 가져옴
+	 * @param String normalProjectCode 일반과제코드
+	 * @return NormalProjects 일반과제 정보
+	 * 
+	 * */
+	public List<NormalProjects> getNormalPrjectByCode(String normalProjectCode); 
+	
 
 	
 
