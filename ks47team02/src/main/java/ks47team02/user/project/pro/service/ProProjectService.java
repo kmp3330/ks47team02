@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.PostConstruct;
+
 import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.project.pro.dto.ProProject;
 import ks47team02.user.project.pro.dto.SubjectCate;
@@ -19,10 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Slf4j
 public class ProProjectService {
-	
-	
 	private final ProProjectMapper proProjectMapper;
-	
 	// 생성자 메소드 의존성 주입방식
 	public ProProjectService(ProProjectMapper proProjectMapper) {
 		this.proProjectMapper = proProjectMapper;
@@ -32,7 +30,7 @@ public class ProProjectService {
 		System.out.println("proProjectMapperService 객체 생성");
 	}
 
-	
+//-------------------------------------------------------------------------------------------------------------------------
 	// 전문과제 전체 목록
 	public List<ProProject> getProProjectList(){
 
@@ -40,13 +38,11 @@ public class ProProjectService {
 //		log.info("proProject : {}", proProjectList);
 		return proProjectList;
 	}
-	
 	// 전문과제 구인글 작성
 	public void proProjectInsert(ProProject proProject) {  
 		//log.info("insert 전 proProject : {}", proProject);
 		proProjectMapper.proProjectInsert(proProject);
 	}
-		
 	// 전문과제 수정
 	public int proProjectModify(ProProject proProject) {
 		int result = proProjectMapper.proProjectModify(proProject);
@@ -54,13 +50,34 @@ public class ProProjectService {
 		
 	}
 	// 전문과제 상세 조회
-	public ProProject getProjectInfoById(String proProjectCode) {
-		ProProject proProjectInfo = proProjectMapper.getProjectInfoById(proProjectCode);
+	public ProProject getProjectInfoByCode(String proProjectCode) {
+		ProProject proProjectInfo = proProjectMapper.getProjectInfoByCode(proProjectCode);
 		log.info("db에 저장된 정보 - Service : {}", proProjectInfo);
 		return proProjectInfo;
 	}
 	
+	//	
+    public ProProject getProProjectByCode(String proProjectCode) {
+
+    	ProProject proProjectInfo = proProjectMapper.getProjectInfoByCode(proProjectCode);
+    	
+        return proProjectInfo;
+    }
 	
+	
+	// 전문과제 삭제
+	public void proProjectDelete(String proProjectCode) {
+		
+		proProjectMapper.depositDeleteByProProjectCode(proProjectCode);
+		proProjectMapper.progressStatusDeleteByProProjectCode(proProjectCode);
+		proProjectMapper.proProjectApplicantDeleteByProProjectCode(proProjectCode);
+		proProjectMapper.proProjectPersonalFunctionDeleteByProProjectCode(proProjectCode);
+		proProjectMapper.sendMoneyCompleteDeleteByProProjectCode(proProjectCode);
+		proProjectMapper.proProjectDelete(proProjectCode);
+		
+	}
+	
+//-------------------------------------------------------------------------------------------------------------------------	
 	
 	
 	
@@ -110,4 +127,24 @@ public class ProProjectService {
 		List<SubjectCate> SubjectCateList = proProjectMapper.getSubjectCateList();
 		return SubjectCateList;
 	}
+	
+//	public Map<String, Object> isValidCp(String cpId, String cpPw) {
+//		Map<String, Object> resultMap = new HashMap<String, Object>();
+//				
+//				boolean isValid = false;
+//				
+//				// 회원 검증 
+//				Company company = CompanyMapper.getMemberInfoById(cpId);
+//				if(company != null) {
+//					String checkPw = company.getCompanyPw();
+//					if(checkPw.equals(companyPw)) {
+//						isValid = true;
+//						resultMap.put("companyInfo", company);
+//					}
+//				}
+//				
+//				resultMap.put("isValid", isValid);
+//				
+//				return resultMap;
+//	}
 }

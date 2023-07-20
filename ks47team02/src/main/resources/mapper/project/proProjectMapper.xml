@@ -30,17 +30,83 @@
 		<result column="applicant_user_id" property="applicantUserId"/>
 		<result column="application_date" property="applicationDate"/>
 	</resultMap>
-	 
+	<resultMap type="ProProject" id="depositResultMap">
+		<id column="deposit_list_code" property="depositListCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="admin_id" property="adminId"/>
+		<result column="cp_id" property="cpId"/>
+		<result column="sender" property="sender"/>
+		<result column="bank" property="bank"/>
+		<result column="bank_account" property="bankAccount"/>
+		<result column="project_payment" property="projectPayment"/>
+		<result column="total_commission" property="totalCommission"/>
+		<result column="total_payment" property="totalPayment"/>
+		<result column="sender_date" property="senderDate"/>
+	</resultMap>
+	<resultMap type="ProProject" id="progressStatusResultMap">
+		<id column="progress_status_code" property="progressStatusCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="project_details" property="projectDetails"/>
+		<result column="progress_rate" property="progressRate"/>
+		<result column="progress_status" property="progressStatus"/>
+		<result column="write_date" property="writeDate"/>
+	</resultMap>
+	<resultMap type="ProProject" id="ProProjectApplicantResultMap">
+		<id column="pro_project_applicantCode" property="proProjectApplicantCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="applicant_user_id" property="applicantUserId"/>
+		<result column="applicant_account_code" property="applicantAccountCode"/>
+		<result column="bank" property="bank"/>
+		<result column="bank_account" property="bankAccount"/>
+		<result column="wish_price" property="wishPrice"/>
+		<result column="applicant_date" property="applicantDate"/>
+		<result column="normal_applyer_run_code" property="normalApplyerRunCode"/>
+		<result column="run_name" property="runName"/>
+		<result column="reject_apprval_code" property="rejectApprvalCode"/>
+		<result column="reject_apprval_name" property="rejectApprvalName"/>
+		<result column="reject_apprval_msg" property="rejectApprvalMsg"/>
+		<result column="rejecta_apprval_date" property="rejectApprvalDate"/>
+		<result column="cp_id" property="cpId"/>
+	</resultMap>
+	<resultMap type="ProProject" id="ProProjectPersonalFunctionResultMap">
+		<id column="pro_project_personal_function" property="proProjectPersonalFunction"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="skill" property="skill"/>
+		<result column="project_day" property="projectDay"/>
+		<result column="day_score" property="dayScore"/>
+		<result column="project_complete_score" property="projectCompleteScore"/>
+		<result column="individual_work_day" property="individualWorkDay"/>
+		<result column="individual_complete_possible_score" property="individualCompletePossibleScore"/>
+		<result column="individual_complete_score" property="individualCompleteScore"/>
+		<result column="work_day_price" property="workDayPrice"/>
+		<result column="grade_commision" property="gradeCommision"/>
+		<result column="user_commision" property="userCommision"/>
+		<result column="project_price" property="projectPrice"/>
+		<result column="progress_rate" property="progressRate"/>
+		<result column="run_name" property="runName"/>
+		<result column="start_date" property="startDate"/>
+		<result column="complete_date" property="completeDate"/>
+		<result column="registeration_date" property="registerationDate"/>
+		<result column="period" property="period"/>
+	</resultMap>
+	<resultMap type="ProProject" id="SendMoneyCompleteResultMap">
+		<id column="send_money_complete_code" property="sendMoneyCompleteCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="admin_id" property="adminId"/>
+		<result column="pro_project_applicant" property="proProjectApplicant"/>
+		<result column="user_id" property="userId"/>
+		<result column="project_payment" property="projectPayment"/>
+		<result column="send_date" property="sendDate"/>
+	</resultMap>
 	<resultMap type="ProProject" id="joinCateResultMap">
 		<id column="join_cate_code" property="joinCateCode"/>
 		<result column="join_cate_name" property="joinCateName"/>
 	</resultMap>
-		
 	<resultMap type="ProProject" id="workCateResultMap">
 		<id column="work_cate_code" property="workCateCode"/>
 		<result column="work_cate_name" property="workCateName"/>
 	</resultMap>
-	
 	<resultMap type="ProProject" id="subjectCateResultMap">
 		<id column="subject_cate_code" property="subjectCateCode"/>
 		<result column="subject_cate_name" property="subjectCateName"/>
@@ -91,8 +157,6 @@
 							on
 							pp.subject_cate_code = sc.subject_cate_code;
 	</select>
-	
-	
 	<!-- 전문 과제 작성 -->
 	<insert id="proProjectInsert" parameterType="ProProject">
 				/* 전문과제 insert문 */
@@ -130,10 +194,8 @@
 				WHERE pro_project_code LIKE 'pro_project%';
 				
 	 </insert>
-	
-	
-	 <!-- 전문 과제 상세 조회-->
-    <select id="getProjectInfoById" parameterType="String" resultMap="proProjectResultMap">
+	<!-- 전문 과제 상세 조회-->
+    <select id="getProjectInfoByCode" parameterType="String" resultMap="proProjectResultMap">
     	/* 전문 과제 상세 조회 */
     	SELECT
 			pro_project_code,
@@ -163,7 +225,6 @@
 		WHERE
 			pro_project_code = #{proProjectCode}
     </select>
-    
     <!-- 전문 과제 수정 -->
     <update id="proProjectModify" parameterType="ProProject">
     	/* 전문 과제 수정 */
@@ -188,11 +249,62 @@
 				WHERE
 					pro_project_code = #{proProjectCode};
     </update>
-	 
-	 
-	 
-	 
-	 
+	
+	<!-- 성과금 예치 목록 삭제 -->
+	<delete id="depositDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 성과금 예치 삭제 */
+		DELETE
+		FROM
+			deposit_list AS dl
+		WHERE
+			dl.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 기업이 올린 전문과제 진행 상태 삭제 -->
+	<delete id="progressStatusDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 진행상태 삭제 */
+		DELETE
+		FROM
+			progress_status AS ps
+		WHERE
+			ps.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 해당 전문과제 신청자 목록 삭제 -->
+	<delete id="proProjectApplicantDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 신청자 목록 삭제 */
+		DELETE
+		FROM
+			pro_project_applicant AS ppa
+		WHERE
+			ppa.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 해당 전문과제 별 개인별 맡은 기능 삭제 -->
+	<delete id="proProjectPersonalFunctionDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 별 개인별 맡은 기능 삭제 */
+		DELETE
+		FROM
+			pro_project_personal_function AS pppf
+		WHERE
+			pppf.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 해당 전문과제 성과금 송금 완료 삭제 -->
+	<delete id="sendMoneyCompleteDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 성과금 송금 완료 삭제 */
+		DELETE
+		FROM
+			send_money_complete AS smc
+		WHERE
+			smc.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 해당 전문과제 삭제 -->
+	<delete id="proProjectDelete" parameterType="String">
+		/* 해당 전문과제 삭제 */
+		DELETE
+		FROM
+			pro_project AS pp
+		WHERE
+			pp.pro_project_code = #{proProjectCode};
+	</delete>
+
 	 
 	 
 	 
@@ -264,7 +376,5 @@
 					WHERE
 						ppa.pro_project_code = #{proProjectCode};
 	</select>
-	
-	
 	
 </mapper>

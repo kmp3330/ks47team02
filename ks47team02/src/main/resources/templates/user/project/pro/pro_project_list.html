@@ -14,7 +14,20 @@
 
 
 </style>
-	</head>
+</head>
+<th:block layout:fragment="customJs">
+	<script>
+		$('.proProjectDeleteBtn').click(function (e) {
+		    e.preventDefault();
+			let isDelete = confirm('정말로 삭제하시겠습니까?');
+			if(isDelete) {
+		        const proProjectCode = this.dataset.proProjectCode;
+		        location.href=`/project/pro/proProjectDelete?proProjectCode=${proProjectCode}`;
+		        //location.replace(/project/pro/proProjectDelete?proProjectCode=${proProjectCode});
+		    }
+		});
+	</script>
+</th:block>
 		<th:block layout:fragment="customContents">
 			<table>
 				<thead>
@@ -52,6 +65,7 @@
 					<tr th:unless="${#lists.isEmpty(proProjectList)}"
 						th:each="p : ${proProjectList}">
 						<td th:text="${p.proProjectCode}" hidden></td>
+						<td th:text="${p.cpId}" hidden></td>
 						<td th:text="${p.cpName}"></td>
 						<td th:text="${p.title}"></td>
 						<td th:text="${p.joinCateName}"></td>
@@ -75,7 +89,7 @@
 							<a th:href="@{/project/pro/proProjectModify(proProjectCode=${p.proProjectCode})}">수정</a>
 						</td>
 						<td>
-							<a th:href="@{#}">삭제</a>
+							<a class="proProjectDeleteBtn" th:href="@{#}" th:data-pro-project-code="${p.proProjectCode}">삭제</a>
 						</td>
 					</tr>
 				</tbody>

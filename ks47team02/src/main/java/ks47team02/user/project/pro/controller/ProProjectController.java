@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import jakarta.annotation.PostConstruct;
 import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.project.pro.dto.ProProject;
@@ -25,17 +26,15 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 public class ProProjectController {
-
-	
 	private final ProProjectService ProProjectService;
-	
-
-	
 	@PostConstruct
 	public void proProjectControllerInit() {
 		System.out.println("proProjectController 생성");
 	}
 	
+	
+	
+//-----------------------------------전문과제 등록, 수정, 삭제---------------------------------------------------------------------
 	// 모든 전문과제 목록
 	@GetMapping("/proProjectList")
 	public String getProProjectList(Model model) {
@@ -48,7 +47,7 @@ public class ProProjectController {
 		
 		return "user/project/pro/pro_project_list";
 	}
-	// 전문과제 구인글 작성
+	// 전문과제 구인글 작성 후 처리
 	@PostMapping("/proProjectInsert")
 	public String proProjectInsert(ProProject proProject) {
 		
@@ -56,7 +55,7 @@ public class ProProjectController {
 		ProProjectService.proProjectInsert(proProject);
 		return "redirect:/project/pro/proProjectList";
 	}
-	// 전문과제 구인글 작성
+	// 전문과제 구인글 작성 전 처리
 	@GetMapping("/proProjectInsert")
 	public String proProjectInsert(Model model) {
 		
@@ -74,10 +73,7 @@ public class ProProjectController {
 		
 		return "user/project/pro/pro_project_insert";
 	}
-	// response.sendRedirect("/member/memberList");
-	// spring framework mvc 에서는 controller의 리턴값에 redirect: 키워드로 작성
-	// redirect: 키워드를 작성할 경우 그 다음의 문자열은 html파일 논리 경로가 아닌 주소를 의미
-	
+	// 전문과제 구인글 수정 후 처리
 	@PostMapping("/proProjectModify")
 	public String proProjectModify(ProProject proProject) {
 		
@@ -85,12 +81,12 @@ public class ProProjectController {
 		
 		return "redirect:/project/pro/proProjectList";
 	}
-	// 전문과제 구인글 수정
+	// 전문과제 구인글 수정 전 처리
 	@GetMapping("/proProjectModify")
 	public String proProjectModify(@RequestParam(value="proProjectCode") String proProjectCode, Model model) {
 		  
 		// 전문과제 상세조회
-		ProProject proProjectInfo = ProProjectService.getProjectInfoById(proProjectCode);		
+		ProProject proProjectInfo = ProProjectService.getProjectInfoByCode(proProjectCode);		
 		// 전문과제 전체 목록 조회
 		List<ProProject> proProjectsList = ProProjectService.getProProjectList();
 		//log.info(" db에 저장된 정보 - Controller: {}",proProjectInfo);
@@ -108,7 +104,39 @@ public class ProProjectController {
 		
 		return "user/project/pro/pro_project_modify";
 	}
+	// 전문과제 구인글 삭제 전 처리
+	@GetMapping("/proProjectDelete")
+	public String proProjectDelete(@RequestParam(value="proProjectCode") String proProjectCode,
+									Model model) {
+		ProProjectService.proProjectDelete(proProjectCode);
+
+		model.addAttribute("title","전문과제 삭제");
+		model.addAttribute("contents", "전문과제 구인글 삭제 페이지 입니다.");
+		
+		return "redirect:/project/pro/proProjectList";
+	}
+//	// 전문과제 구인글 삭제 후 처리
+//	@PostMapping("/proProjectDelete")
+//	public String proProjectDelete(@RequestParam(value="proProjectCode") String proProjectCode){
+//		
+//		ProProjectService.getProjectInfoByCode(proProjectCode);
+////		String cpId = proProjectInfo.getCpId();
+////		// 회원 여부 검증
+////		Map<String, Object> isValidMap = ProProjectService.isValidCp(cpId, cpPw);
+////		boolean isValid = (boolean) isValidMap.get("isValid");
+////		
+////		if(isValid) {
+////			ProProjectService.proProjectDelete(proProjectInfo);
+////			return "redirect:/goods/goodsList";
+////		}
+////		reAttr.addAttribute("proProjectCode", proProjectCode);
+////		reAttr.addAttribute("msg", "회원 정보 불일치");
+////		
+//		return "redirect:/goods/removeGoods";
+//		
+//	}
 	
+//-------------------------------------------------------------------------------------------------------------------------
 	
 	
 	
