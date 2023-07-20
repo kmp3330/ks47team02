@@ -1,44 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{user/layout/default}">
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+	<script>
+		$('#modifyProfileIntroBtn').click(function (e) {
+			e.preventDefault();
+
+			$('#modifyProfileForm').submit();
+		});
+
+
+
+	</script>
+</th:block>
 
 <th:block layout:fragment="customContents">
 	<div class="section-top-border">
 		<div class="row">
 			<div class="col-lg-8 col-md-8">
 				<h3 class="mb-30 title_color">자기소개 등록 양식</h3>
-				<form id="modifyProfileForm" th:action="@{/profile/profileIntroModify}" method="post" >
+				<form id="modifyProfileForm" th:action="@{/profile/profileIntroModify}" method="post">
 					<!-- th:object="${profileIntroInfo}"
 						<div class="mt-10">
 						<input type="text" id="introTitle" name="introTitle" placeholder="자기소개 제목" onfocus="this.placeholder = ''"
 							onblur="this.placeholder = 'First Name'" required="" class="single-input">
 					</div>
 					-->
-					<div class="mt-10"> 
-						<textarea class="single-textarea" id="userIntro" name="userIntro" th:text="${profileIntroInfo.userIntro}"
-							></textarea> <!-- if type is "textarea", th:text  -->
+					<div class="mt-10"> <!--type="hidden" 를 해야 자기소개 코드가 숨겨져서 안나옴  -->
+						<input  type="hidden" name="userIntroCode" th:value="${profileIntroInfo.userIntroCode}">
+						<!-- 쿼리문 Mapper.xml에
+							WHERE
+							user_intro_code = #{userIntroCode}
+							이니까 userIntroCode가 꼭 들고 와야함. 하지만 화면 상에서는 보이면 안되니 type="hidden"으로 숨겨준거
+							-->
+						<textarea class="single-textarea" id="userIntro" name="userIntro"
+							th:text="${profileIntroInfo.userIntro}"></textarea> <!-- if type is "textarea", th:text  -->
 					</div>
 					<div class="col-lg-3 col-md-6 mt-sm-30 element-wrap">
 						<div class="single-element-widget">
 							<div class="switch-wrap d-flex justify-content-between">
 								<p>공개여부</p>
 								<div class="confirm-switch">
-									<input type="checkbox" id="confirm-switch1" name="profileHidden" th:checked="${profileIntroInfo.profileHidden}" >
+									<input type="checkbox" id="confirm-switch1" name="profileHidden"
+										th:checked="${profileIntroInfo.profileHidden}">
 									<label for="confirm-switch1"></label> <!-- if type is "checkbox", th:checked  -->
 								</div>
 							</div>
 							<div class="switch-wrap d-flex justify-content-between">
 								<p>입사지원 시 공개여부</p>
 								<div class="confirm-switch">
-									<input type="checkbox" id="confirm-switch2"
-										name="profileApplicationHidden" th:checked="${profileIntroInfo.profileApplicationHidden}" >
+									<input type="checkbox" id="confirm-switch2" name="profileApplicationHidden"
+										th:checked="${profileIntroInfo.profileApplicationHidden}">
 									<label for="confirm-switch2"></label> <!-- if type is "input", th:value  -->
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="job-btn align-self-center">
-						<button type="submit" id="modifyProfileIntroBtn" class="third-btn job-btn1">등록완료</button>
+						<button type="submit" id="modifyProfileIntroBtn" class="third-btn job-btn1">수정 완료</button>
 						<button type="button" id="resetBtn" class="third-btn">취소</button>
 						<!-- <a th:href="@{/profile/profileIntroList}"type="button" class="third-btn">취소</a> -->
 					</div>

@@ -95,8 +95,29 @@
 		/*일경력 수정*/
 		UPDATE profile_edu_spec
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="userEduSpec !=null and userEduSpec !=''">
-				user_work_edu_code = #{userEduSpecCode},
+			<if test="userDegree !=null and userDegree !=''">
+				user_degree = #{userDegree},
+			</if>
+			<if test="userUnivName !=null and userUnivName !=''">
+				user_univ_name = #{userUnivName},
+			</if>
+			<if test="userUnivMajor !=null and userUnivMajor !=''">
+				user_univ_major = #{userUnivMajor},
+			</if>
+			<if test="userUnivGrad !=null and userUnivGrad !=''">
+				user_univ_grad = #{userUnivGrad},
+			</if>
+			<if test="userUnivEnterDate !=null and userUnivEnterDate !=''">
+				user_univ_enter_date = #{userUnivEnterDate},
+			</if>
+			<if test="userUnivGradDate !=null and userUnivGradDate !=''">
+				user_univ_grad_date = #{userUnivGradDate},
+			</if>
+			<if test="userUnivScore !=null and userUnivScore !=''">
+				user_univ_score = #{userUnivScore},
+			</if>
+			<if test="userUnivTotalScore !=null and userUnivTotalScore !=''">
+				user_univ_total_score = #{userUnivTotalScore},
 			</if>
 			<if test="profileHidden !=null and profileHidden !=''">
 				profile_hidden = #{profileHidden},

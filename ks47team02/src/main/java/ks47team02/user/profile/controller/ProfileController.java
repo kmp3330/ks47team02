@@ -97,7 +97,10 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profileIntroList")
-	public String profileIntroList(Model model) {
+	public String profileIntroList(Model model, HttpSession session) {
+		
+		 String sessionID = (String)session.getAttribute("SID");
+		
 		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList();
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
@@ -105,7 +108,19 @@ public class ProfileController {
 		model.addAttribute("profileIntroList", profileIntroList);
 		return "user/profile/profile_intro_list";
 	}
-	
+	/*
+	 * 사용자 요청 시 쿼리스트링 : ex) userSkillcode=user_skill_code001
+	 * @RequestParam(value="userSkillCode") String userSkillCode
+	 * @return
+	 * */
+	@PostMapping("/profileSkillModify")
+	public String profileSkillModify(ProfileSkill profileSkill) {
+		
+		profileService.profileSkillModify(profileSkill);
+		
+		return "redirect:/profile/profileSkillList";
+	}
+
 	/*
 	 * 사용자 요청 시 쿼리스트링 : ex) userSkillcode=user_Skill_code001
 	 * @RequestParam(value="userSkillCode") String userSkillCode
@@ -124,6 +139,7 @@ public class ProfileController {
 		return "user/profile/profile_skill_modify";
 		
 	}
+	
 	
 	@PostMapping("/profileSkillInsert")
 	public String profileSkillInsert(ProfileSkill profileSkill) {
@@ -159,6 +175,12 @@ public class ProfileController {
 
 		return "user/profile/profile_skill_list";
 	}
+	@PostMapping("/profileWorkSpecModify")
+	public String profileWorkSpecModify(ProfileWorkSpec profileWorkSpec) {
+		profileService.profileWorkSpecModify(profileWorkSpec);
+		
+		return "redirect:/profile/profileWorkSpecList";
+	}
 	/*
 	 * 사용자 요청 시 쿼리스트링 : ex) userWorkSpeccode=user_WorkSpec_code001
 	 * @RequestParam(value="userWorkSpecCode") String userWorkSpecCode
@@ -172,7 +194,6 @@ public class ProfileController {
 		//List<ProfileLevel> profileLevelList = profileService.getProfileLevelList
 		model.addAttribute("title","회원수정");
 		model.addAttribute("profileWorkSpecInfo",profileWorkSpecInfo);
-		model.addAttribute("title","회원수정");
 		
 		return "user/profile/profile_work_spec_modify";
 		
@@ -211,6 +232,11 @@ public class ProfileController {
 		model.addAttribute("profileWorkSpecList", profileWorkSpecList);
 		
 		return "user/profile/profile_work_spec_list";
+	}
+	@PostMapping("/profileEduSpecModify")
+	public String profileEduSpecModify(ProfileEduSpec profileEduSpec) {
+		profileService.profileEduSpecModify(profileEduSpec);
+		return "redirect:/profile/profileEduSpecList";
 	}
 	/*
 	 * 사용자 요청 시 쿼리스트링 : ex) userEduSpeccode=user_work_spec_code001

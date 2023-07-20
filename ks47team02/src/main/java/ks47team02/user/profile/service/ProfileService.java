@@ -41,9 +41,8 @@ public class ProfileService {
 	 *@param ProfileIntro
 	 *@return excuteUpdate() 메소드 리턴 값:(수정처리 완료:1, 미완료:0)
 	 * */
-	public int profileIntroModify(ProfileIntro profileIntro) {
-		int result = profileIntroMapper.profileIntroModify(profileIntro);
-		return result;
+	public void profileIntroModify(ProfileIntro profileIntro) {
+		 profileIntroMapper.profileIntroModify(profileIntro);
 	}
 	
 	/*자기소개별 상세조회
@@ -73,6 +72,9 @@ public class ProfileService {
 		return profileIntroList;
 	}
 
+	public void profileSkillModify(ProfileSkill profileSkill){
+		profileSkillMapper.profileSkillModify(profileSkill);
+	}
 	/*보유기술 별 상세조회
 	 * @param userSkillCode(보유기술 코드)
 	 * @return ProfileIntro(프로필 자기소개 정보)
@@ -99,6 +101,10 @@ public class ProfileService {
 		
 		return profileSkillList;
 	}
+	
+	public void profileWorkSpecModify(ProfileWorkSpec profileWorkSpec){
+		profileWorkSpecMapper.profileWorkSpecModify(profileWorkSpec);
+	}
 	/*일경력 별 상세조회
 	 * @param userWorkSpecCode(일경력 코드)
 	 * @return ProfileWorkSpec (프로필 일경력 정보)
@@ -122,6 +128,12 @@ public class ProfileService {
 		log.info("profileWorkSpecList : {}", profileWorkSpecList);
 		
 		return profileWorkSpecList;
+	}
+	/*@param ProfileIntro
+	 *@return excuteUpdate() 메소드 리턴 값:(수정처리 완료:1, 미완료:0)
+	학력 수정*/
+	public void profileEduSpecModify(ProfileEduSpec profileEduSpec) {
+		profileEduSpecMapper.profileEduSpecModify(profileEduSpec);
 	}
 	/*학력 별 상세조회
 	 * @param userEduSpecCode(학력 코드)
