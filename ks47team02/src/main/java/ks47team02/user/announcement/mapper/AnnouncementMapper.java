@@ -10,6 +10,9 @@ import ks47team02.user.announcement.dto.Announcement;
 @Mapper
 public interface AnnouncementMapper {
 	
+	// 구인구직공고 삭제
+	public int announcementRemove(String announcementCode);
+	
 	// 구인구직공고 수정상세조회
 	public Announcement getAnnouncementInfoById(String announcementCode);
 	

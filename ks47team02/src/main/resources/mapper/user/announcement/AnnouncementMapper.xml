@@ -26,6 +26,15 @@
 		<result column="hiring_status"  	 property="hiringStatus"/>
 	</resultMap>
 	
+	<delete id="announcementRemove" parameterType="String">
+		/* 구인구직공고 삭제 */
+		DELETE
+		FROM
+			announcement
+		WHERE
+			announcement_code = #{announcementCode};
+	</delete>
+	
 	<select id="getAnnouncementInfoById" parameterType="String" resultMap="announcementResultMap">
 		/* 구인구직공고 수정조회 */
 		SELECT

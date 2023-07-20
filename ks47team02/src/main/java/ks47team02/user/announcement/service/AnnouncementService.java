@@ -21,6 +21,15 @@ public class AnnouncementService {
 	private final AnnouncementMapper announcementMapper;
 	
 	/**
+	 * 구인구직공고 삭제
+	 * @param announcement
+	 */
+	public void announcementRemove(String announcement) {
+		announcementMapper.announcementRemove(announcement);
+	}
+	
+	
+	/**
 	 * 구인구직공고 수정상세조회
 	 * @param announcementCode(공고코드)
 	 * @return Announcement (공고정보)
