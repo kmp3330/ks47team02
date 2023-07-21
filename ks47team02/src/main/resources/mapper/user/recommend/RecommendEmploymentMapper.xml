@@ -21,6 +21,8 @@
  	<result column="job_normal_run_code"	 property="jobNormalRunCode"/>
  	<result column="job_normal_run"			 property="jobNormalRun"/>
  </resultMap>
+
+ 
  
  <select id="getRecommendEmploymentByCode" parameterType="String" resultMap="RecommendEmploymentResultMap">
  	/*  코드 별 상세 조회 */
@@ -174,5 +176,13 @@ VALUE
 	WHERE
 		company_employment_code=#{companyEmploymentCode}
  </update>
- 
+  
+ <delete id="recommendRemoveEmployment" parameterType="RecommendEmployment">
+ 	/* 채용 단계 목록 수정 */ 
+ 	DELETE
+	FROM
+		company_employment
+	WHERE
+		company_employment_code = #{company_employment_code}
+ </delete>
 </mapper>

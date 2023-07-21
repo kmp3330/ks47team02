@@ -9,6 +9,10 @@ import ks47team02.user.recommend.dto.RecommendEmployment;
 
 @Mapper
 public interface RecommendEmploymentMapper {
+	/*
+	 * 채용 단계 순 목록 삭제
+	 */
+	public int recommendRemoveEmployment(String companyEmploymentCode);
 	
 	/*
 	 * 코드 별 상세 조회

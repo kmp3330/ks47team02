@@ -77,6 +77,14 @@ public class RecommendService {
 	}
 	
 	/*
+	 *  채용 단계 순 목록 삭제 
+	 */
+	public void recommendRemoveEmployment(String companyEmploymentCode) {
+		recommendEmploymentMapper.recommendRemoveEmployment(companyEmploymentCode);
+	}
+	
+	
+	/*
 	 *  채용 단계 순 목록 수정
 	 */
 	

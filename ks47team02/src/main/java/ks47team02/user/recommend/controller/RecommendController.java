@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.dto.RecommendScrap;
@@ -109,6 +110,20 @@ public class RecommendController {
 		model.addAttribute("contents","기업 지원 목록 삭제 화면입니다.");
 	
 		return "user/recommend/recommend_support_delete";
+	}
+	
+	/*
+	 * 채용 단계 순 기업 추천 서비스 목록 삭제
+	 */
+	
+	@GetMapping("/recommendRemoveEmployment")
+	public String recommendRemoveEmployment(@RequestParam(value="companyEmploymentCode")String companyEmploymentCode) {
+		
+		recommendService.recommendRemoveEmployment(companyEmploymentCode);
+		
+		log.info("채용 단계 삭제시 입력정보: {}", companyEmploymentCode);
+
+		return "redirect:/recommend/recommendEmployment";
 	}
 	
 	/*
