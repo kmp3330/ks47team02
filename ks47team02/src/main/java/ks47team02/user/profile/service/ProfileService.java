@@ -36,6 +36,10 @@ public class ProfileService {
 	private final ProfileEduSpecMapper profileEduSpecMapper;
 	private final ProfilePortfolioMapper profilePortfolioMapper;
 
+	/*자기소개 삭제 */
+	public void profileIntroDelete(String userIntroCode) {
+		profileIntroMapper.profileIntroDelete(userIntroCode);
+	}
 	/*
 	 *자기소개 정보 수정
 	 *@param ProfileIntro
@@ -72,6 +76,11 @@ public class ProfileService {
 		return profileIntroList;
 	}
 
+	/*보유기술 삭제 */
+	public void profileSkillDelete(String userSkillCode) {
+		profileSkillMapper.profileSkillDelete(userSkillCode);
+	}
+	
 	public void profileSkillModify(ProfileSkill profileSkill){
 		profileSkillMapper.profileSkillModify(profileSkill);
 	}
@@ -101,10 +110,16 @@ public class ProfileService {
 		
 		return profileSkillList;
 	}
-	
+	/*자기소개 삭제 */
+	public void profileWorkSpecDelete(String userWorkSpecCode) {
+		profileWorkSpecMapper.profileWorkSpecDelete(userWorkSpecCode);
+	}
+	/*보유기술 수정 */
 	public void profileWorkSpecModify(ProfileWorkSpec profileWorkSpec){
 		profileWorkSpecMapper.profileWorkSpecModify(profileWorkSpec);
 	}
+	
+	
 	/*일경력 별 상세조회
 	 * @param userWorkSpecCode(일경력 코드)
 	 * @return ProfileWorkSpec (프로필 일경력 정보)
@@ -129,6 +144,11 @@ public class ProfileService {
 		
 		return profileWorkSpecList;
 	}
+	/*학력 삭*/
+	public void profileEduSpecDelete(String userEduSpecCode) {
+		profileEduSpecMapper.profileEduSpecDelete(userEduSpecCode);
+	}
+	
 	/*@param ProfileIntro
 	 *@return excuteUpdate() 메소드 리턴 값:(수정처리 완료:1, 미완료:0)
 	학력 수정*/

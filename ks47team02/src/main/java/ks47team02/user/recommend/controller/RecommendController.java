@@ -29,15 +29,15 @@ import lombok.extern.slf4j.Slf4j;
 public class RecommendController {
 	
 	public final RecommendService recommendService;
-	public final RecommendEmploymentMapper recommendMapper;
+	public final RecommendEmploymentMapper recommendEmploymentMapper;
 	public final RecommendSupportMapper recommendSupportMapper;
 	public final RecommendScrapMapper recommendScrapMapper;
 	
-	public RecommendController(RecommendEmploymentMapper recommendMapper, 
+	public RecommendController(RecommendEmploymentMapper recommendEmploymentMapper, 
 			RecommendService recommendService, 
 			RecommendSupportMapper recommendSupportMapper,
 			RecommendScrapMapper recommendScrapMapper) {
-		this.recommendMapper = recommendMapper;
+		this.recommendEmploymentMapper = recommendEmploymentMapper;
 		this.recommendService = recommendService;
 		this.recommendSupportMapper = recommendSupportMapper;
 		this.recommendScrapMapper = recommendScrapMapper;
@@ -112,29 +112,57 @@ public class RecommendController {
 	}
 	
 	/*
-	 *  채용 단계 순 기업 추천 서비스 목록 등록
+	 *  채용 단계 순 기업 추천 서비스 목록 수정
 	 */
-	@PostMapping("/addRecommendEmployment")
-	public String addRecommendEmployment(RecommendEmployment recommend) {
-		log.info("목록 등록시 입력정보: {}", recommend);
+	
+	@PostMapping("/recommendModifyEmployment")
+	public String recommendModifyEmployment(RecommendEmployment recommendEmployment) {
 		
-		recommendService.addEmployment(recommend);
-		return "redirect:/user/recommend/recommend_employment";
+		recommendService.recommendModifyEmployment(recommendEmployment);
+		log.info("목록 수정시 입력정보: {}", recommendEmployment);
+		return "redirect:/recommend/recommendEmployment";
 	}
 	
 	/*
+	 *  채용 단계 순 기업 추천 서비스 목록 수정 (폼)
+	 */
+	
+	@GetMapping("/recommendModifyEmployment")
+	public String recommendModifyEmployment(Model model, String companyEmploymentCode) {
+		
+		RecommendEmployment recommendEmploymentByCode = recommendService.getRecommendEmploymentByCode(companyEmploymentCode);
+		
+		model.addAttribute("title", "메인화면");
+		model.addAttribute("recommendEmploymentByCode", recommendEmploymentByCode);
+		return "user/recommend/recommend_employment_modify";
+	}
+	
+	/*
+	 *  채용 단계 순 기업 추천 서비스 목록 등록
+	 */
+	@PostMapping("/recommendInsertEmployment")
+	public String recommendInsertEmployment(RecommendEmployment recommendEmployment) {
+		
+		recommendService.recommendInsertEmployment(recommendEmployment);
+		log.info("목록 등록시 입력정보: {}", recommendEmployment);
+		return "redirect:/recommend/recommendEmployment";
+	}
+	
+
+	/*
 	 *  채용 단계 순 기업 추천 서비스 목록 등록 (폼)
 	 */
-	@GetMapping("/addRecommendEmployment")
-	public String addRecommendEmployment(Model model) {
+	@GetMapping("/recommendInsertEmployment")
+	public String recommendInsertEmployment(Model model) {
 		
-		List <RecommendSupport> recommendSupportCode = recommendService.getRecommendSupportCode();
+		List <RecommendEmployment> RecommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
+		List<RecommendSupport>	recommendSupportCodeInfo =recommendService.getRecommendSupportCode();
 		
 		model.addAttribute("title", "채용 단계 순 목록 등록");
 		model.addAttribute("titleText", "채용 단계 순 목록 등록");
 		model.addAttribute("contents", "채용 단계 순 목록 등록 화면입니다.");
-		model.addAttribute("recommendSupportCode", recommendSupportCode);
-		
+		model.addAttribute("RecommendEmploymentInfo", RecommendEmploymentInfo);
+		model.addAttribute("recommendSupportCodeInfo", recommendSupportCodeInfo);
 		return "user/recommend/recommend_employment_insert";
 	}
 	

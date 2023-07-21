@@ -43,6 +43,17 @@ public class ProfileController {
 		
 		return "user/profile/profileList";
 	}
+	/*자기소개 삭제 */
+	@GetMapping("/profileIntroDelete")
+	public String profileIntroDelete(@RequestParam(value="userIntroCode") String userIntroCode,
+										   Model model) {
+		
+		profileService.profileIntroDelete(userIntroCode);
+		
+		model.addAttribute("title", "자격증 삭제 화면");
+		
+		return "redirect:/profile/profileIntroList";
+	}
 	
 	@PostMapping("/profileIntroModify")
 	public String profileIntroModify(ProfileIntro profileIntro) {
@@ -108,6 +119,13 @@ public class ProfileController {
 		model.addAttribute("profileIntroList", profileIntroList);
 		return "user/profile/profile_intro_list";
 	}
+
+	@GetMapping("/profileSkillDelete")
+	public String profileSkillDelete(@RequestParam(value="userSkillCode") String userSkillCode, Model model) {
+		profileService.profileSkillDelete(userSkillCode);
+		model.addAttribute("title", "보유기술 삭제화면");
+		return "redirect:/profile/profileSkillList";
+	}
 	/*
 	 * 사용자 요청 시 쿼리스트링 : ex) userSkillcode=user_skill_code001
 	 * @RequestParam(value="userSkillCode") String userSkillCode
@@ -120,6 +138,7 @@ public class ProfileController {
 		
 		return "redirect:/profile/profileSkillList";
 	}
+	
 
 	/*
 	 * 사용자 요청 시 쿼리스트링 : ex) userSkillcode=user_Skill_code001
@@ -175,6 +194,14 @@ public class ProfileController {
 
 		return "user/profile/profile_skill_list";
 	}
+	
+	@GetMapping("/profileWorkSpecDelete")
+	public String profileWorkSpecDelete(@RequestParam(value="userWorkSpecCode") String userWorkSpecCode, Model model) {
+		profileService.profileWorkSpecDelete(userWorkSpecCode);
+		model.addAttribute("title","보유기술 삭제화면");
+		return "redirect:/profile/profileWorkSpecList";
+	}
+	
 	@PostMapping("/profileWorkSpecModify")
 	public String profileWorkSpecModify(ProfileWorkSpec profileWorkSpec) {
 		profileService.profileWorkSpecModify(profileWorkSpec);
@@ -233,6 +260,18 @@ public class ProfileController {
 		
 		return "user/profile/profile_work_spec_list";
 	}
+	/*학력 수*/
+	@GetMapping("/profileEduSpecDelete")
+	public String profileEduSpecDelete(@RequestParam(value="userEduSpecCode") String userEduSpecCode,
+										   Model model) {
+		
+		profileService.profileEduSpecDelete(userEduSpecCode);
+		
+		model.addAttribute("title", "학력 삭제 화면");
+		
+		return "redirect:/profile/profileEduSpecList";
+	}
+	
 	@PostMapping("/profileEduSpecModify")
 	public String profileEduSpecModify(ProfileEduSpec profileEduSpec) {
 		profileService.profileEduSpecModify(profileEduSpec);
@@ -391,6 +430,7 @@ public class ProfileController {
 		
 		return "redirect:/profile/profileCertificateList";
 	}
+	
 	
 	/**
 	 * 수상이력 화면

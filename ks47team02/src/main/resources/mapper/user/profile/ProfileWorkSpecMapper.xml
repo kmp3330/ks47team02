@@ -138,6 +138,13 @@
 		where
 		    pws.user_work_spec_code = #{userWorkSpecCode}
 	</select>
+	<delete id="profileWorkSpecDelete" parameterType="String">
+		DELETE
+		FROM
+			profile_work_spec
+		WHERE
+			user_work_spec_code = #{userWorkSpecCode}
+	</delete>
 	
 
 </mapper>

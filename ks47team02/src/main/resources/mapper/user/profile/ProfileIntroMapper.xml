@@ -92,5 +92,13 @@
 		where
 		    pi.user_intro_code = #{userIntroCode};
 	</select>
+	
+	<delete id="profileIntroDelete" parameterType="String">
+		DELETE
+		FROM
+			profile_intro
+		WHERE
+			user_intro_code = #{userIntroCode}
+	</delete>
 
 </mapper>

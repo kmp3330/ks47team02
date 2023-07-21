@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.user.announcement.dto.Announcement;
-import ks47team02.user.announcement.mapper.AnnouncementMapper;
 import ks47team02.user.announcement.service.AnnouncementService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +22,44 @@ public class AnnouncementController {
 	
 	// 생성자 메소드 의존성 주입
 	private final AnnouncementService announcementService;
+	
+	@GetMapping("/announcementRemove")
+	public String announcementRemove(@RequestParam(value="announcementCode") String announcementCode,
+									 Model model) {
+		
+		announcementService.announcementRemove(announcementCode);
+		
+		log.info("공고삭제시 입력정보: {}", announcementCode);
+		
+		model.addAttribute("title","구인구직공고삭제화면");
+		model.addAttribute("titleText","구인구직공고삭제");
+		model.addAttribute("contents","구인구직공고삭제 페이지입니다.");
+		model.addAttribute("announcementCode", announcementCode);
+		
+		return "redirect:/announcement/announcementList";
+	}
+	
+	@PostMapping("/announcementModify")
+	public String announcementModify(Announcement announcement) {
+		
+		announcementService.announcementModify(announcement);
+		
+		return "redirect:/announcement/announcementList";
+	}
+	
+	@GetMapping("/announcementModify")
+	public String announcementModify(@RequestParam(value="announcementCode") String announcementCode, Model model) {
+		
+		// 구인구직공고 목록 상세조회
+		Announcement announcementInfo = announcementService.getAnnouncementInfoById(announcementCode);
+		
+		model.addAttribute("title", "구인구직공고수정화면");
+		model.addAttribute("titleText", "구인구직공고수정");
+		model.addAttribute("contents", "구인구직공고수정 페이지입니다.");
+		model.addAttribute("announcementInfo", announcementInfo);
+		
+		return "user/announcement/announcement_modify";
+	}
 
 	@PostMapping("/announcementInsert")
 	public String announcementInsert(Announcement announcement) {
