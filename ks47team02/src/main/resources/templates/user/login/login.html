@@ -2,11 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{user/layout/default}">
+<head>
 
+</head>
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
 	<script>
-		
 		let msg = '[[${msg}]]';
 		if(msg != 'null' && msg != '') {
 			console.log(msg);
@@ -49,6 +50,33 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
+ <!-- <div class="col-lg-8 card card-outline card-primary">
+    <div class="title-text justify-content-center">
+    <h1 class="title login">로그인</h1>
+  </div>
+  <div class="form-container">
+    <div class="form-inner">
+      <form action="#" class="login">
+            <pre>
+            </pre>
+        <div class="field">
+          <input type="text" placeholder="Email Address" required>
+        </div>
+        <div class="field">
+          <input type="password" placeholder="Password" required>
+        </div>
+        <div class="pass-link"><a href="#">Forgot password?</a></div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Login">
+        </div>
+      </form>
+      </form>
+    </div>
+  </div>
+  </div>
+  </div>
+  -->
 
 	<section class="jobs-area section-padding">
 		<div class="container">
@@ -63,13 +91,13 @@
 								<div class="form-group row">
 									<div class="col-sm-12">
 										<input type="text" class="form-control" id="userId" name="userId"
-											placeholder="아이디">
+											value="id001">
 									</div>
 								</div>
 								<div class="form-group row">
 									<div class="col-sm-12">
 										<input type="password" class="form-control" id="userPw" name="userPw"
-											placeholder="비밀번호">
+											passward="pw001">
 									</div>
 								</div>
 							</div>
