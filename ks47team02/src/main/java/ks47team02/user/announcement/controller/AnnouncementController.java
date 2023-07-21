@@ -24,17 +24,9 @@ public class AnnouncementController {
 	private final AnnouncementService announcementService;
 	
 	@GetMapping("/announcementRemove")
-	public String announcementRemove(@RequestParam(value="announcementCode") String announcementCode,
-									 Model model) {
+	public String announcementRemove(@RequestParam(value="announcementCode") String announcementCode) {
 		
 		announcementService.announcementRemove(announcementCode);
-		
-		log.info("공고삭제시 입력정보: {}", announcementCode);
-		
-		model.addAttribute("title","구인구직공고삭제화면");
-		model.addAttribute("titleText","구인구직공고삭제");
-		model.addAttribute("contents","구인구직공고삭제 페이지입니다.");
-		model.addAttribute("announcementCode", announcementCode);
 		
 		return "redirect:/announcement/announcementList";
 	}
