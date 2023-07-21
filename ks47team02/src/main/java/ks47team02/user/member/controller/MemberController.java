@@ -111,7 +111,7 @@ public class MemberController {
 		return "user/member/addNormalMember";
 	}
 
-	@GetMapping("/addCompanyUser")
+	@GetMapping("/addCompanyMember")
 	public String addCompany(Company company, HttpSession session, Model model){
 		model.addAttribute("titleText", "기업 회원 가입");
 		return "user/member/addCompanyMember";
