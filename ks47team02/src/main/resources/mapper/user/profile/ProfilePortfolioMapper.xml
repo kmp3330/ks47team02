@@ -50,4 +50,50 @@
 			user_id = #{sessionId}
 	</select>
 	
+	<insert id="addProfilePortfolio" parameterType="ProfilePortfolio">
+		<selectKey resultType="String" keyColumn="newPortfolioCode" keyProperty="userPortfolioCode" order="BEFORE">
+			<![CDATA[
+			/* 자동증가코드 */
+			SELECT
+				CASE
+					WHEN COUNT(*) = 0
+						THEN 'user_portfolio_code001'
+					WHEN CAST(SUBSTRING_INDEX(user_portfolio_code, 'code', -1) AS UNSIGNED) < 999
+						THEN CONCAT('user_portfolio_code', LPAD(MAX(CAST(SUBSTRING_INDEX(user_portfolio_code, 'code', -1) AS UNSIGNED))+1, 3, '0'))
+					ELSE
+						CONCAT('user_portfolio_code', MAX(CAST(SUBSTRING_INDEX(user_portfolio_code, 'code', -1) AS UNSIGNED))+1)
+					END
+						AS newPortfolioCode
+			FROM
+				profile_portfolio;
+			]]>
+		</selectKey>
+		/* 수상이력 등록 */
+		INSERT INTO profile_portfolio
+			(
+			user_portfolio_code,
+			user_id, 
+			user_project_name, 
+			join_cate_code, 
+			join_cate_name, 
+			work_cate_code, 
+			work_cate_name, 
+			subject_cate_code, 
+			subject_cate_name, 
+			user_required_skill, 
+			user_details, 
+			user_project_start_date, 
+			user_project_end_date, 
+			user_project_days, 
+			user_project_gen, 
+			profile_hidden, 
+			profile_application_hidden
+			)
+		VALUES (#{userPortfolioCode}, #{sessionId}, #{userProjectName}, #{}, #{}, #{}, #{}, #{}, #{}, #{}, #{},)
+	</insert>
+	
+	<!-- <select id="getJoinCateList" resultType="JoinCate">
+	
+	</select> -->
+	
 </mapper>

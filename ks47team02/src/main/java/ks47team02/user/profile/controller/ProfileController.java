@@ -519,4 +519,20 @@ public class ProfileController {
 		return "user/profile/profile_portfolio_insert";
 	}
 	
+	/**
+	 * 포트폴리오 등록 처리
+	 * @param profilePortfolio
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/profilePortfolioInsert")
+	public String profilePortfolioInsert(ProfilePortfolio profilePortfolio,
+										 HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
+		profilePortfolio.setUserId(sessionId);
+		
+		return "redirect:/profile/profilePortfolioList";
+	}
+	
 }

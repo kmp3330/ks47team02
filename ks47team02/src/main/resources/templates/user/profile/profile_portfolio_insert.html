@@ -3,13 +3,6 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{user/layout/default}">
 
-<head>
-<link rel="stylesheet"
-	th:href="@{/admin/plugins/select2/css/select2.min.css}">
-<link rel="stylesheet"
-	th:href="@{/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
-</head>
-
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
 	<script>
@@ -27,15 +20,15 @@
 			return true;			
 		}
 		
-		$('#certificateInsertbtn').click(function () {
+		$('#portfolioInsertBtn').click(function () {
 		
-			let inputEles = $('#addCertificateForm input[type="text"],input[type="date"]');
+			let inputEles = $('#addPortfolioForm input[type="text"],input[type="date"]');
 			let isSubmit = false;
 			inputEles.each( (idx, item) => {
 				isSubmit = vaildCheck(item);
 				return isSubmit;
 			});
-			if (isSubmit) $('#addCertificateForm').submit();		
+			if (isSubmit) $('#addPortfolioForm').submit();		
 		});
 		
 	</script>
@@ -73,22 +66,23 @@
 							<div class="card-header border-0">
 								<h3 class="mb-0 title_color text-left">포트폴리오 등록</h3>
 								<div class="card-tools">
-									<a th:href="@{#}" id="certificateInsertbtn"
+									<a th:href="@{#}" id="portfolioInsertbtn"
 										class="genric-btn info-border circle"> <i class="fas">등록
 											완료</i>
-									</a> <a th:href="@{/profile/profileCertificateList}"
-										id="certificateResetbtn"
+									</a> <a th:href="@{/profile/profilePortfolioList}"
+										id="portfolioResetbtn"
 										class="genric-btn danger-border circle"> <i class="fas">취소</i>
 									</a>
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">
-								<form id="addCertificateForm"
-									th:action="@{/profile/profileCertificateInsert}" method="post"
+								<form id="addPortfolioForm"
+									th:action="@{/profile/profilePortfolioInsert}" method="post"
 									class="d-md-flex justify-content-between">
 									<table class="table table-valign-middle">
 										<thead>
 											<tr>
+												<th>참여한 프로젝트</th>
 												<th>프로젝트 제목</th>
 												<th>참여 분야 이름</th>
 												<th>작업 분류 이름</th>
@@ -105,26 +99,37 @@
 										</thead>
 										<tbody>
 											<tr>
+												<td><select style="display: none;">
+														<option value="1">English</option>
+														<option value="1">Spanish</option>
+														<option value="1">Arabic</option>
+												</select></td>
 												<td><input class="genric-btn" type="text"
 													name="userProjectName" placeholder="프로젝트 제목"
 													onfocus="this.placeholder = ''"
 													onblur="this.placeholder = '프로젝트 제목'"></td>
+												<td><select style="display: none;" name="joinCateName">
+														<option value="">==참여 분야==</option>
+														<option value="1">English</option>
+														<option value="1">Spanish</option>
+														<option value="1">Arabic</option>
+												</select></td>
+												<td><select style="display: none;" name="workCateName">
+														<option value="">==작업 분류==</option>
+														<option value="1">English</option>
+														<option value="1">Spanish</option>
+														<option value="1">Arabic</option>
+												</select></td>
+												<td><select style="display: none;" name="subjectCateName">
+														<option value="">==주제 분류==</option>
+														<option value="1">English</option>
+														<option value="1">Spanish</option>
+														<option value="1">Arabic</option>
+												</select></td>
 												<td><input class="genric-btn" type="text"
-													name="joinCateName" placeholder="참여 분야"
+													name="userRequiredSkill" placeholder="맡은기능"
 													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '참여 분야'"></td>
-												<td><input class="genric-btn" type="text"
-													name="workCateName" placeholder="작업 분류"
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '작업 분류'"></td>
-												<td><input class="genric-btn" type="text"
-													name="subjectCateName" placeholder="주제 분류"
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '주제 분류'"></td>
-												<td><input class="genric-btn" type="text"
-													name="userRequiredSkill" placeholder="요구기술"
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '요구기술'"></td>
+													onblur="this.placeholder = '맡은기능'"></td>
 												<td><input class="genric-btn" type="text"
 													name="userDetails" placeholder="내용"
 													onfocus="this.placeholder = ''"
@@ -164,161 +169,12 @@
 									</table>
 								</form>
 							</div>
-
-						</div>
-					</div>
-					<div class="container-fluid" data-select2-id="32">
-						<div class="card card-default">
-							<div class="card-header">
-								<h3 class="card-title">포트폴리오 등록</h3>
-								
-								<div class="card-tools">
-									<a th:href="@{#}" id="certificateInsertbtn"
-										class="genric-btn info-border circle"> <i class="fas">등록
-											완료</i>
-									</a> <a th:href="@{/profile/profileCertificateList}"
-										id="certificateResetbtn"
-										class="genric-btn danger-border circle"> <i class="fas">취소</i>
-									</a>
-								</div>
-							</div>
-							
-							<!-- /.card-header -->
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>프로젝트 조회</label> <select
-												class="form-control select2bs4 select2-hidden-accessible"
-												style="width: 100%;" >
-												<option>Alabama</option>
-												<option>Alaska</option>
-												<option>California</option>
-												<option>Delaware</option>
-												<option>Tennessee</option>
-												<option>Texas</option>
-												<option>Washington</option>
-											</select><span
-												class="select2 select2-container select2-container--bootstrap4"
-												dir="ltr" data-select2-id="18" style="width: 100%;"><span
-												class="selection"><span
-													class="select2-selection select2-selection--single"
-													role="combobox" aria-haspopup="true" aria-expanded="false"
-													tabindex="0" aria-disabled="false"
-													aria-labelledby="select2-co01-container"><span
-														class="select2-selection__rendered"
-														id="select2-co01-container" role="textbox"
-														aria-readonly="true" title="Alabama">Alabama</span><span
-														class="select2-selection__arrow" role="presentation"><b
-															role="presentation"></b></span></span></span><span class="dropdown-wrapper"
-												aria-hidden="true"></span></span>
-										</div>
-										<!-- /.form-group -->
-										<div class="form-group">
-											<label>Disabled</label> <select
-												class="form-control select2bs4 select2-hidden-accessible"
-												disabled="" style="width: 100%;" data-select2-id="20"
-												tabindex="-1" aria-hidden="true">
-												<option selected="selected" data-select2-id="22">Alabama</option>
-												<option>Alaska</option>
-												<option>California</option>
-												<option>Delaware</option>
-												<option>Tennessee</option>
-												<option>Texas</option>
-												<option>Washington</option>
-											</select><span
-												class="select2 select2-container select2-container--bootstrap4 select2-container--disabled"
-												dir="ltr" data-select2-id="21" style="width: 100%;"><span
-												class="selection"><span
-													class="select2-selection select2-selection--single"
-													role="combobox" aria-haspopup="true" aria-expanded="false"
-													tabindex="-1" aria-disabled="true"
-													aria-labelledby="select2-7djo-container"><span
-														class="select2-selection__rendered"
-														id="select2-7djo-container" role="textbox"
-														aria-readonly="true" title="Alabama">Alabama</span><span
-														class="select2-selection__arrow" role="presentation"><b
-															role="presentation"></b></span></span></span><span class="dropdown-wrapper"
-												aria-hidden="true"></span></span>
-										</div>
-										<!-- /.form-group -->
-									</div>
-									<!-- /.col -->
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Multiple</label> <select
-												class="select2bs4 select2-hidden-accessible" multiple=""
-												data-placeholder="Select a State" style="width: 100%;"
-												data-select2-id="23" tabindex="-1" aria-hidden="true">
-												<option>Alabama</option>
-												<option>Alaska</option>
-												<option>California</option>
-												<option>Delaware</option>
-												<option>Tennessee</option>
-												<option>Texas</option>
-												<option>Washington</option>
-											</select><span
-												class="select2 select2-container select2-container--bootstrap4"
-												dir="ltr" data-select2-id="24" style="width: 100%;"><span
-												class="selection"><span
-													class="select2-selection select2-selection--multiple"
-													role="combobox" aria-haspopup="true" aria-expanded="false"
-													tabindex="-1" aria-disabled="false"><ul
-															class="select2-selection__rendered">
-															<li class="select2-search select2-search--inline"><input
-																class="select2-search__field" type="search" tabindex="0"
-																autocomplete="off" autocorrect="off"
-																autocapitalize="none" spellcheck="false"
-																role="searchbox" aria-autocomplete="list"
-																placeholder="Select a State" style="width: 452.8px;"></li>
-														</ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-										</div>
-										<!-- /.form-group -->
-										<div class="form-group">
-											<label>Disabled Result</label> <select
-												class="form-control select2bs4 select2-hidden-accessible"
-												style="width: 100%;" data-select2-id="25" tabindex="-1"
-												aria-hidden="true">
-												<option selected="selected" data-select2-id="27">Alabama</option>
-												<option>Alaska</option>
-												<option disabled="disabled">California (disabled)</option>
-												<option>Delaware</option>
-												<option>Tennessee</option>
-												<option>Texas</option>
-												<option>Washington</option>
-											</select><span
-												class="select2 select2-container select2-container--bootstrap4"
-												dir="ltr" data-select2-id="26" style="width: 100%;"><span
-												class="selection"><span
-													class="select2-selection select2-selection--single"
-													role="combobox" aria-haspopup="true" aria-expanded="false"
-													tabindex="0" aria-disabled="false"
-													aria-labelledby="select2-vdcg-container"><span
-														class="select2-selection__rendered"
-														id="select2-vdcg-container" role="textbox"
-														aria-readonly="true" title="Alabama">Alabama</span><span
-														class="select2-selection__arrow" role="presentation"><b
-															role="presentation"></b></span></span></span><span class="dropdown-wrapper"
-												aria-hidden="true"></span></span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="card-footer">
-							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
-
 	</section>
-
-	<!-- <div class="content-wrapper" data-select2-id="34"
-		style="min-height: 2171.6px;">
-		<section class="content" data-select2-id="33"></section>
-	</div> -->
 
 </th:block>
 </html>
