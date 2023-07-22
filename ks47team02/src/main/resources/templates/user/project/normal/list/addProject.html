@@ -8,10 +8,13 @@
 			  
 			  let $dateCalculateBtn = $('#dateCalculate');
 			  
+			  
 			  $dateCalculateBtn.click(function(){
 				  const $projectStartDay = $('#projectStartUpDate').val();
 				  const $projectFinishDay = $('#projectFinishDate').val();
-				  const $projectFinishScore = $('#projectFinishScore');
+				  const $projectFinishScore = $('#projectFinishScore');+
+				  
+				  console.log($projectStartDay);
 				 
 				  const date1 = new Date($projectStartDay);
 				  const date2 = new Date($projectFinishDay);

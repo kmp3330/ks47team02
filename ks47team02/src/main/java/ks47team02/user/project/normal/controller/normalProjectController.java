@@ -139,7 +139,7 @@ public class normalProjectController {
 	
 	
 	/**
-	 * @Param String normalProjectCode
+	 * @Param String normalProjectCode 일반과제코드
 	 * @Param Model model
 	 * 
 	 * 
@@ -148,13 +148,15 @@ public class normalProjectController {
 	@GetMapping("/modifyProject")
 	public String modifyProject(@RequestParam(value="normalProjectCode") String normalProjectCode
 			,Model model) {
+		
+		/*월요일날 물어볼것 : 이거 각 LIST를 한번씩 가져오기 좀 번거로운데 한꺼번에 가져오게 할 수 있는 방법을 물어보기*/
 		//일반과제 리스트
 		List<NormalProjects> normalProject = normalProjectService.getNormalProjectByCode(normalProjectCode);
 		//참여분야 리스트
 		List<JoinCate> joinCateList = normalProjectService.getJoinCateList();
 		//작업분류 리스트
 		List<WorkCate> workCateList = normalProjectService.getWorkCateList();
-		//주제분류 리스트
+		//주제분류 리스트 
 		List<SubjectCate> subjectCateList = normalProjectService.getSubjectCateList();
 		
 		model.addAttribute("joinCateList", joinCateList);
