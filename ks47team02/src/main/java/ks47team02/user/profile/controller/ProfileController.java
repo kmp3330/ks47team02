@@ -37,9 +37,9 @@ public class ProfileController {
 	@GetMapping("/")
 	public String profileList(Model model) {
 		
-		model.addAttribute("title", "전체 프로필");
-		model.addAttribute("titleText", "전체 프로필");
-		model.addAttribute("contents", "전체 프로필을 볼 수 있는 페이지입니다.");
+		model.addAttribute("title", "구직 프로필");
+		model.addAttribute("titleText", "구직 프로필");
+		model.addAttribute("contents", "구직 프로필을 볼 수 있는 페이지입니다.");
 		
 		return "user/profile/profileList";
 	}
