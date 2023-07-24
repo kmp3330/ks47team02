@@ -337,7 +337,7 @@ public class ProfileController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/profileCertificateList")
+	@GetMapping("/profileCertificateList") //session: 해당 session 에 담겨져있는 값을 가져와서 String sessionid에 담아
 	public String profileCertificateList(Model model, HttpSession session) {
 		
 		String sessionId = (String) session.getAttribute("SID");

@@ -53,10 +53,10 @@ public class MemberController {
 						HttpServletRequest request,
 						HttpServletResponse response,
 						HttpSession session,
-						RedirectAttributes reAttr) {
+						RedirectAttributes reAttr) { //redirect를 될때 데이터를 전달 (모델이랑 같은 역할)
 		
 		Map<String, Object> validMap = memberService.loginCheck(userId, userPw);
-		boolean isValid = (boolean) validMap.get("isValid");
+		boolean isValid = (boolean) validMap.get("isValid"); //get: MAP에 담아져있는 데이터를 가져옴 
 		
 		if(isValid) {
 			User userInfo = (User) validMap.get("userInfo");

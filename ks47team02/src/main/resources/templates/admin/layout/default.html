@@ -28,18 +28,20 @@
 	  <link rel="stylesheet" th:href="@{/admin/plugins/summernote/summernote-bs4.min.css}">
 	</head>
 	<body>
-		<div class="wrapper">
-			<!-- top navigation start-->
-				<div th:replace="~{admin/fragments/header :: headerFragment}"></div>
-				<!-- top navigation end-->
-			<!-- aside start -->
-				<div th:replace="~{admin/fragments/aside :: asideFragment}"></div>
-			<!-- aside end -->
-			<!-- footer content -->
-				<div th:replace="~{admin/fragments/footer :: footerFragment}"></div>
-			
-			<!-- footer end-->
-		</div>
+		<!-- top navigation start-->
+		<div th:replace="~{admin/fragments/header :: headerFragment}"></div>
+		<!-- top navigation end-->
+		<!-- aside start -->
+		<div th:replace="~{admin/fragments/aside :: asideFragment}"></div>
+		<!-- aside end -->
+		<!-- contents start -->
+		<div layout:fragment="customContents"></div>
+		<!-- contents end -->
+		<!-- footer content -->
+		<div th:replace="~{admin/fragments/footer :: footerFragment}"></div>
+		<!-- footer end-->
+		
+		
 		<!-- jQuery -->
 		<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
 		<!-- jQuery UI 1.11.4 -->
@@ -50,13 +52,12 @@
 		<script th:src="@{/admin/dist/js/adminlte.js}"></script>
 		<!-- AdminLTE for demo purposes -->
 		<script th:src="@{/admin/dist/js/demo.js}"></script>
+		<!-- Custom Theme Scripts -->
+		<script th:src="@{/admin/build/js/custom.min.js}"></script>
 		
 		<!-- 사용자 정의 javascript파일 -->
 		<th:block layout:fragment="customJs"></th:block>
 		
-		<!-- Custom Theme Scripts -->
-		<script th:src="@{/admin/build/js/custom.min.js}"></script>
-	
 	</body>
 	
 </html>
