@@ -18,7 +18,7 @@ public class ProfilePortfolio {
 	private String userDetails;
 	private String userProjectStartDate;
 	private String userProjectEndDate;
-	private String userProjectDays;
+	private int userProjectDays;
 	private String userProjectGen;
 	private boolean profileHidden;
 	private boolean profileApplicationHidden;

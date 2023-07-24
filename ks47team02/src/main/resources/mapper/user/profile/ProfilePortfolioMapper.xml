@@ -50,6 +50,93 @@
 			user_id = #{sessionId}
 	</select>
 	
+	<select id="getJoinCateList" resultType="JoinCate">
+		/* 참여분야 조회 */
+		SELECT
+			join_cate_code AS joinCateCode,
+			join_cate_name AS joinCateName
+		FROM
+			join_cate
+	</select>
+	
+	<select id="getWorkCateList" resultType="WorkCate">
+		/* 작업분류 조회 */
+		SELECT
+			work_cate_code AS workCateCode,
+			work_cate_name AS workCateName
+		FROM
+			work_cate
+	</select>
+	
+	<select id="getSubjectCateList" resultType="SubjectCate">
+		/* 주제분류 조회 */
+		SELECT
+			subject_cate_code AS subjectCateCode,
+			subject_cate_name AS subjectCateName
+		FROM
+			subject_cate
+	</select>
+	
+	<select id="getJoinCateByCode" parameterType="String" resultType="JoinCate">
+		/* 참여코드별 참여분야 조회 */
+		SELECT
+			join_cate_code AS joinCateCode,
+			join_cate_name AS joinCateName
+		FROM
+			join_cate
+		WHERE
+			join_cate_code = #{joinCateCode}
+	</select>
+	
+	<select id="getWorkCateByCode" parameterType="String" resultType="WorkCate">
+		/* 작업코드별 작업분야 조회 */
+		SELECT
+			work_cate_code AS workCateCode,
+			work_cate_name AS workCateName
+		FROM
+			work_cate
+		WHERE
+			work_cate_code = #{workCateCode}
+	</select>
+
+	<select id="getSubjectCateByCode" parameterType="String" resultType="SubjectCate">
+		/* 주제코드별 주제분류 조회 */
+		SELECT
+			subject_cate_code AS subjectCateCode,
+			subject_cate_name AS subjectCateName
+		FROM
+			subject_cate
+		WHERE
+			subject_cate_code = #{subjectCateCode}
+	</select>
+	
+	<select id="getProfilePortfolioByCode" parameterType="String" resultMap="portfolioResultMap">
+		/* 포트폴리오 코드별 분류 코드,이름 조회 */
+		SELECT
+			pp.join_cate_code,
+			jc.join_cate_name,
+			pp.work_cate_code,
+			wc.work_cate_name,
+			pp.subject_cate_code,
+			sc.subject_cate_name
+		FROM
+			profile_portfolio AS pp
+			INNER JOIN
+			join_cate AS jc
+			on
+			pp.join_cate_code = jc.join_cate_code
+			INNER JOIN
+			work_cate AS wc
+			ON
+			pp.work_cate_code = wc.work_cate_code
+			INNER JOIN
+			subject_cate AS sc
+			ON
+			pp.subject_cate_code = sc.subject_cate_code
+		WHERE
+			pp.user_portfolio_code = #{userPortfolioCode}
+	</select>
+	
 	<insert id="addProfilePortfolio" parameterType="ProfilePortfolio">
 		<selectKey resultType="String" keyColumn="newPortfolioCode" keyProperty="userPortfolioCode" order="BEFORE">
 			<![CDATA[
@@ -68,7 +155,7 @@
 				profile_portfolio;
 			]]>
 		</selectKey>
-		/* 수상이력 등록 */
+		/* 포트폴리오 등록 */
 		INSERT INTO profile_portfolio
 			(
 			user_portfolio_code,
@@ -89,11 +176,75 @@
 			profile_hidden, 
 			profile_application_hidden
 			)
-		VALUES (#{userPortfolioCode}, #{sessionId}, #{userProjectName}, #{}, #{}, #{}, #{}, #{}, #{}, #{}, #{},)
+		VALUES (#{userPortfolioCode}, #{userId}, #{userProjectName}, #{joinCateCode}, #{joinCateName}, #{workCateCode}, #{workCateName}, #{subjectCateCode}, #{subjectCateName}, #{userRequiredSkill}, #{userDetails}, #{userProjectStartDate}, #{userProjectEndDate}, #{userProjectDays}, #{userProjectGen}, #{profileHidden}, #{profileApplicationHidden})
 	</insert>
 	
-	<!-- <select id="getJoinCateList" resultType="JoinCate">
+	<select id="profilePortfolioByCode" parameterType="String" resultMap="portfolioResultMap">
+		/* 포트폴리오 코드별 조회 */
+		SELECT
+			*
+		FROM
+			profile_portfolio AS pp
+		WHERE
+			pp.user_portfolio_code = #{profilePortfolioCode}
+	</select>
 	
-	</select> -->
+	<update id="profilePortfolioModify" parameterType="ProfilePortfolio">
+		UPDATE profile_portfolio
+		<set>
+			<if test="userProjectName != null and userProjectName != ''">
+				user_project_name = #{userProjectName},
+			</if>
+			<if test="joinCateCode != null and joinCateCode != ''">
+				join_cate_code = #{joinCateCode},
+			</if>
+			<if test="joinCateName != null and joinCateName != ''">
+				join_cate_name = #{joinCateName},
+			</if>
+			<if test="workCateCode != null and workCateCode != ''">
+				work_cate_code = #{workCateCode},
+			</if>
+			<if test="workCateName != null and workCateName != ''">
+				work_cate_name = #{workCateName},
+			</if>
+			<if test="subjectCateCode != null and subjectCateCode != ''">
+				subject_cate_code = #{subjectCateCode},
+			</if>
+			<if test="subjectCateName != null and subjectCateName != ''">
+				subject_cate_name = #{subjectCateName},
+			</if>
+			<if test="userRequiredSkill != null and userRequiredSkill != ''">
+				user_required_skill = #{userRequiredSkill},
+			</if>
+			<if test="userDetails != null and userDetails != ''">
+				user_details = #{userDetails},
+			</if>
+			<if test="userProjectStartDate != null and userProjectStartDate != ''">
+				user_project_start_date = #{userProjectStartDate},
+			</if>
+			<if test="userProjectEndDate != null and userProjectEndDate != ''">
+				user_project_end_date = #{userProjectEndDate},
+			</if>
+			<if test="userProjectDays != null and userProjectDays != ''">
+				user_project_days = #{userProjectDays},
+			</if>
+			<if test="userProjectGen != null and userProjectGen != ''">
+				user_project_gen = #{userProjectGen},
+			</if>
+		</set>
+			profile_hidden = #{profileHidden},
+			profile_application_hidden = #{profileApplicationHidden}
+		WHERE
+			user_portfolio_code = #{userPortfolioCode}
+	</update>
+	
+	<delete id="profilePortfolioDelete" parameterType="String">
+		/* 포트폴리오 삭제 */
+		DELETE
+		FROM
+			profile_portfolio
+		WHERE
+			user_portfolio_code = #{profilePortfolioCode}
+	</delete>
 	
 </mapper>
