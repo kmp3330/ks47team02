@@ -18,6 +18,9 @@ import ks47team02.user.profile.dto.ProfilePortfolio;
 import ks47team02.user.profile.dto.ProfileSkill;
 import ks47team02.user.profile.dto.ProfileWorkSpec;
 import ks47team02.user.profile.service.ProfileService;
+import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.project.pro.dto.SubjectCate;
+import ks47team02.user.project.pro.dto.WorkCate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -576,9 +579,110 @@ public class ProfileController {
 	@GetMapping("/profilePortfolioInsert")
 	public String profilePortfolioInsert(Model model) {
 		
+		List<JoinCate> joinCateList = profileService.getJoinCateList();
+		List<WorkCate> workCateList = profileService.getWorkCateList();
+		List<SubjectCate> subjectCateList = profileService.getSubjectCateList();
+		
 		model.addAttribute("title", "포트폴리오 등록 화면");
+		model.addAttribute("joinCateList", joinCateList);
+		model.addAttribute("workCateList", workCateList);
+		model.addAttribute("subjectCateList", subjectCateList);
 		
 		return "user/profile/profile_portfolio_insert";
+	}
+	
+	/**
+	 * 포트폴리오 등록 처리
+	 * @param profilePortfolio
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/profilePortfolioInsert")
+	public String profilePortfolioInsert(ProfilePortfolio profilePortfolio,
+										 HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
+		profilePortfolio.setUserId(sessionId);
+		
+		String joinCateCode = profilePortfolio.getJoinCateCode();
+		String workCateCode = profilePortfolio.getWorkCateCode();
+		String subjectCateCode = profilePortfolio.getSubjectCateCode();
+		
+		JoinCate joinCateInfo = profileService.getJoinCateByCode(joinCateCode);
+		WorkCate workCateInfo = profileService.getWorkCateByCode(workCateCode);
+		SubjectCate subjectCateInfo = profileService.getSubjectCateByCode(subjectCateCode);
+		
+		profilePortfolio.setJoinCateName(joinCateInfo.getJoinCateName());
+		profilePortfolio.setWorkCateName(workCateInfo.getWorkCateName());
+		profilePortfolio.setSubjectCateName(subjectCateInfo.getSubjectCateName());
+		log.info("profilePortfolio : {}", profilePortfolio);
+		
+		profileService.addProfilePortfolio(profilePortfolio);
+		
+		return "redirect:/profile/profilePortfolioList";
+	}
+	
+	/**
+	 * 포트폴리오 수정
+	 * @param model
+	 * @param profilePortfolioCode
+	 * @return
+	 */
+	@GetMapping("/profilePortfolioModify")
+	public String profilePortfolioModify(Model model,
+										 @RequestParam(value="profilePortfolioCode") String profilePortfolioCode) {
+		
+		ProfilePortfolio profilePortfolioInfo = profileService.profilePortfolioByCode(profilePortfolioCode);
+		
+		List<JoinCate> joinCateList = profileService.getJoinCateList();
+		List<WorkCate> workCateList = profileService.getWorkCateList();
+		List<SubjectCate> subjectCateList = profileService.getSubjectCateList();
+		
+		model.addAttribute("title", "포트폴리오 수정");
+		model.addAttribute("profilePortfolioInfo", profilePortfolioInfo);
+		model.addAttribute("joinCateList", joinCateList);
+		model.addAttribute("workCateList", workCateList);
+		model.addAttribute("subjectCateList", subjectCateList);
+		
+		return "user/profile/profile_portfolio_modify";
+	}
+	/**
+	 * 포트폴리오 수정처리
+	 * @param profilePortfolio
+	 * @return
+	 */
+	@PostMapping("/profilePortfolioModify")
+	public String profilePortfolioModify(ProfilePortfolio profilePortfolio) {
+		
+		String joinCateCode = profilePortfolio.getJoinCateCode();
+		String workCateCode = profilePortfolio.getWorkCateCode();
+		String subjectCateCode = profilePortfolio.getSubjectCateCode();
+		
+		JoinCate joinCateInfo = profileService.getJoinCateByCode(joinCateCode);
+		WorkCate workCateInfo = profileService.getWorkCateByCode(workCateCode);
+		SubjectCate subjectCateInfo = profileService.getSubjectCateByCode(subjectCateCode);
+		
+		profilePortfolio.setJoinCateName(joinCateInfo.getJoinCateName());
+		profilePortfolio.setWorkCateName(workCateInfo.getWorkCateName());
+		profilePortfolio.setSubjectCateName(subjectCateInfo.getSubjectCateName());
+		log.info("profilePortfolio : {}", profilePortfolio);
+		
+		profileService.profilePortfolioModify(profilePortfolio);
+		
+		return "redirect:/profile/profilePortfolioList";
+	}
+	
+	/**
+	 * 포트폴리오 삭제
+	 * @param profilePortfolioCode
+	 * @return
+	 */
+	@GetMapping("/profilePortfolioDelete")
+	public String profilePortfolioDelete(@RequestParam(value="profilePortfolioCode") String profilePortfolioCode) {
+		
+		profileService.profilePortfolioDelete(profilePortfolioCode);
+		
+		return "redirect:/profile/profilePortfolioList";
 	}
 	
 }

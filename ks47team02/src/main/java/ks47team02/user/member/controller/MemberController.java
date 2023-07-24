@@ -3,7 +3,6 @@ package ks47team02.user.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import ks47team02.admin.dto.Member;
 import ks47team02.user.member.dto.Company;
 import ks47team02.user.member.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -98,7 +97,7 @@ public class MemberController {
 	}
 
 	@GetMapping("/addMember")
-	public String addMember(Member member, HttpSession session, Model model){
+	public String addMember(User user, HttpSession session, Model model){
 		model.addAttribute("titleText", "회원가입");
 		model.addAttribute("contents", "가입하려는 회원의 유형을 선택해주세요");
 
