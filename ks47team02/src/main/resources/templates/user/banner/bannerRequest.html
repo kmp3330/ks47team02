@@ -1,78 +1,282 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{user/banner/layout/default}">
+      layout:decorate="~{user/layout/default}">
 <head>
-  <meta charSet="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>결제 위젯</title>
+  <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
+  
   <style>
-    #payment-button{ width:100%; padding:15px; background-color:#3065AC; color:white; border-radius:3px; font-size:16px; border:none; margin-top:10px}
-    .title {margin: 0 0 4px; font-size: 24px; font-weight: 600;color: #4e5968;}
-  </style>
-</head>
-<th:block layout:fragment="customContents">
-<!-- 상품 정보 영역-->
-<div class="title">상품 정보</div>
-<p>상단배너 예약금(2주)</p>
-<p>결제 금액: 15,000원</p>
-<form id="discount-coupon">
-  <input type="checkbox" id="coupon"/>5,000원 할인받기
-</form>
-<hr>
-
-<!-- 결제 방법 영역-->
-<div class="title">결제 방법</div>
-<div id="payment-method"></div>
-<div id="agreement"></div>
-<button id="payment-button">결제하기</button>
-</th:block>
-<th:block layout:fragment="customJs">
-  <script src="https://js.tosspayments.com/v1/payment-widget"></script>
-  <script>
-    const clientKey = 'test_ck_OALnQvDd2VJkwqLeJnxrMj7X41mN' // 상점을 특정하는 키
-    const customerKey = 'YbX2HuSlsC9uVJWNQMRMj' // 결제 고객을 특정하는 키
-    const amount = 15_000 // 결제 금액
-    const couponAmount = 5_000 // 할인 쿠폰 금액
-  
-    /*결제위젯 영역 렌더링*/
-    const paymentWidget = PaymentWidget(clientKey, customerKey) // 회원 결제
-    // const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
-    paymentMethods = paymentWidget.renderPaymentMethods('#payment-method', amount)
-  
-    /*약관 영역 렌더링*/
-    const paymentAgreement = paymentWidget.renderAgreement('#agreement')
-  
-    /*결제창 열기*/
-    document.querySelector("#payment-button").addEventListener("click",()=>{
-      paymentWidget.requestPayment({
-        orderId: 'AD8aZDpbzXs4EQa-UkGJ6',
-        orderName: '상단배너 예약금(2주)',
-        successUrl: 'http://192.168.10.24/userPayment/userPaymentSuccess',
-        failUrl: 'http://localhost:8080/fail',
-        customerEmail: 'customer123@gmail.com',
-        customerName: '김토스'
-      }).catch(function (error) {
-        if (error.code === 'USER_CANCEL') {
-          // 결제 고객이 결제창을 닫았을 때 에러 처리
-        } if (error.code === 'INVALID_CARD_COMPANY') {
-          // 유효하지 않은 카드 코드에 대한 에러 처리
-        }
-      })
-    })
-  
-    /*할인 쿠폰 적용*/
-    document.querySelector("#coupon").addEventListener("click", applyDiscount)
-  
-    function applyDiscount(e) {
-      if (e.target.checked) {
-        paymentMethods.updateAmount(amount - couponAmount, "쿠폰")
-      } else {
-        paymentMethods.updateAmount(amount)
-      }
+    
+    input{
+      width: 98%;
+      height: 23px;
+    }
+    td:nth-child(3n+1):not(:last-child){
+      color: white;
+      font-weight: 700;
+      background-color: cornflowerblue;
+    }
+    select{
+      width: 99%;
+      text-align: center;
+      height: 23px;
+    }
+    #idCheck{
+      width: 99%;
+      height: 25px;
+    }
+    #addMemberBtn, #resetBtn {
+      width: 49%;
+      height: 25px;
     }
     
+    .parent-element-class {
+      overflow: auto;
+    }
+    
+    .overflowing-text-element-class {
+      word-wrap: break-word;
+      white-space: normal;
+    }
+    .custom-select{
+      padding-bottom: 3rem;
+      font-size: 20px;
+    }
+    .nice-select span.current {
+      font-size: 20px;
+      display: inline-block;
+      line-height: 56px;
+    }
+    .genric-btn.success.circle {
+      margin-right: 10px;
+      background-color: #1d6fa5;
+    }
+    .genric-btn.danger.circle{
+      background-color: #c9dae1;
+    }
+    .card-primary:not(.card-outline)>.card-header {
+      background-color: #0F192A;
+    }
+  
+  </style>
+</head>
+
+<th:block layout:fragment="customJs">
+  <script th:src="@{/js/jquery-3.7.0.js}"></script>
+  <script>
+    /*
+    const $idCheckBtn = document.querySelector('#idCheck');
+    $idCheckBtn.addEventListener('click', e => {
+      alert('test');
+    });
+    */
+    // 유효성검사 함수
+    const validCheck = element => {
+      let data = $(element).val();
+      let eleId = $(element).attr('id');
+      if(typeof data == 'undefined' || data == null || data == '' ){
+        let cate = $(`label[for="${eleId}"]`).text();
+        alert(`${cate} 필수 입력항목입니다.`);
+        $(element).focus();
+        return false;
+      }
+      return true;
+    }
+    
+    // 회원아이디 변경 시 이벤트 처리
+    $('#memberId').change(function(){
+      $('#addMemberForm input').not('#memberId').val('');
+      $('#addMemberForm input').not('#memberId').prop('disabled', true);
+      $('#addMemberForm select').prop('disabled', true);
+      $('#addMemberForm button').not('#idCheck').prop('disabled', true);
+    });
+    
+    // 회원 가입 버튼 시 이벤트
+    $('#addMemberBtn').click(function(){
+      const validateEle = $('#addMemberForm input').not('#memberId');
+      let isSubmit =  false;
+      validateEle.each((idx, item) => {
+        isSubmit = validCheck(item);
+        return isSubmit;
+      })
+      if(isSubmit) $('#addMemberForm').submit();
+    });
+    
+    // 입력 취소 버튼 클릭시 이벤트 처리
+    $('#resetBtn').click(function(e){
+      // 태그가 가지고 있는 기본 이벤트 동작 방지
+      e.preventDefault();
+      $('#addMemberForm input').not('#memberId').val('');
+    });
+    
+    // 아이디중복버튼 이벤트
+    $('#idCheck').click(function(){
+      const $memberId = $('#memberId');
+      let memberId = $memberId.val();
+      
+      // 유효성검사
+      let valid = validCheck($memberId);
+      if(!valid) return false;
+      
+      // ajax 호출
+      const request = $.ajax({
+        url: '/member/idCheck',
+        method: 'POST',
+        data: { 'memberId' : memberId },
+        dataType: 'text'
+      });
+      
+      request.done(function( response ) {
+        if(response == 'true'){
+          alert('이미 등록된 아이디입니다.');
+          $memberId.val('');
+          $memberId.focus();
+          return false;
+        }else{
+          $('#addMemberForm input').prop('disabled', false);
+          $('#addMemberForm select').prop('disabled', false);
+          $('#addMemberForm button').prop('disabled', false);
+        }
+        //console.log(response);
+      });
+      
+      request.fail(function( jqXHR, textStatus ) {
+        alert( "Request failed: " + textStatus );
+      });
+      
+    });
   </script>
+</th:block>
+
+
+<th:block layout:fragment="customContents">
+  
+  <form id="requestForm" th:action="@{/banner/bannerRequest}" method="post">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="sidebar">
+          <div class="single-item mb-4">
+            <h4 class="mb-4">배너 광고</h4>
+            <a th:href="@{/banner}"
+               class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 문의</span>
+            </a> <a th:href="@{/banner/bannerRequest}"
+                    class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 신청</span>
+          </a> <a th:href="@{/banner/bannerRequestList}"
+                  class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 신청 현황</span>
+          </a> <a th:href="@{/banner/bannerProcessList}"
+                  class="sidebar-btn d-flex justify-content-between mb-3"> <span>광고 진행 현황</span>
+          </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">배너광고 신청</h3>
+            
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="inputName">Project Name</label>
+              <input type="text" id="inputName" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="inputDescription">Project Description</label>
+              <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="inputStatus">Status</label>
+              <select id="inputStatus" class="form-control custom-select">
+                <option selected="" disabled="">광고 유형을 선택하세요</option>
+                <option>측면 광고</option>
+                <option>하단 광고</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inputClientCompany">Client Company</label>
+              <input type="text" id="inputClientCompany" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="inputProjectLeader">Project Leader</label>
+              <input type="text" id="inputProjectLeader" class="form-control">
+            </div>
+            <a href="/banner/bannerRequestList" class="genric-btn success circle">신청</a>
+            <a href="/banner" class="genric-btn info-border circle">신청 취소</a>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--<div class="col-lg-9">
+        <div class="single-job mb-4 justify-content-between text-center">
+          <div class="card">
+            <div class="card-header border-0">
+              <h3 class="mb-0 title_color">배너 신청</h3>
+              <table class="table table-striped table-valign-middle">
+                <tr>
+                  <td>
+                    <label for="bannerRequestCompanyName">기업이름</label>
+                  </td>
+                  <td colspan="2">
+                    <input type="text" id="bannerRequestCompanyName" name="bannerRequestCompanyName"
+                           placeholder="회원의 비밀번호를 입력해주세요."/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="bannerUnitPriceCode">배너 단가코드</label>
+                  </td>
+                  <td colspan="2">
+                    <input type="text" id="bannerUnitPriceCode" name="bannerUnitPriceCode"
+                           placeholder="회원의 이름을 입력해주세요."/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="bannerLocation">배너위치</label>
+                  </td>
+                  <td colspan="2">
+                    <input type="text" id="bannerLocation" name="bannerLocation"
+                           placeholder="회원의 이름을 입력해주세요."/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="bannerPeriod">배너기간</label>
+                  </td>
+                  <td colspan="2">
+                    <input type="text" id="bannerPeriod" name="bannerPeriod" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="bannerPrice">배너가격</label>
+                  </td>
+                  <td colspan="2">
+                    <input type="text" id="bannerPrice" name="bannerPrice"
+                           placeholder="회원의 이름을 입력해주세요."/>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <button type="button" id="addMemberBtn" disabled="disabled">신청완료</button>
+                    <button type="reset" id="resetBtn" disabled="disabled">신청취소</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>-->
+    </div>
+    </div>
+  </form>
 </th:block>
 </html>

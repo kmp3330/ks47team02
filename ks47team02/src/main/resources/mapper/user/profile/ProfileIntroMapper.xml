@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="ks47team02.user.profile.mapper.ProfileIntroMapper">
+	<!-- 회원별 자기소개  -->
+	<resultMap type="ProfileIntro" id="profileIntroResultMap">
+		<!--  id태그는 조회시 테이블의 PK(기본키)  -->
+		<id	column="user_intro_code" property="userIntroCode" />
+		<!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키를 의 -->
+		<result	column="user_id" property="userId" />
+		<result	column="user_intro" property="userIntro" />
+		<result	column="profile_hidden" property="profileHidden" />
+		<result	column="profile_application_hidden" property="profileApplicationHidden" />
+	</resultMap>
+	<!-- 회원별 보유기술  -->
+	
+	<select id="getProfileIntroList" resultMap="profileIntroResultMap">
+		/*자기소개 목록 조회 */
+		SELECT
+		    pi.user_intro_code,
+		    pi.user_id,
+		    pi.user_intro,
+		    pi.profile_hidden,
+		    pi.profile_application_hidden
+		FROM
+		    profile_intro as pi
+	</select>
+	
+	<insert id="profileIntroInsert" parameterType="ProfileIntro">
+		<selectKey resultType="String" keyColumn="newIntroCode" keyProperty="userIntroCode" order="BEFORE">
+			/*자기소개 자동 증가 코드*/
+			<![CDATA[
+			SELECT
+			    CASE
+			    WHEN COUNT(*) = 0 THEN 'user_intro_code001'
+			    WHEN CAST(SUBSTRING_INDEX(user_intro_code, 'user_intro_code',-1) AS UNSIGNED) < 999
+			    THEN CONCAT('user_intro_code', LPAD(MAX(CAST(SUBSTRING_INDEX(user_intro_code, 'user_intro_code',-1) AS UNSIGNED))+1,3,'0'))
+			    ELSE
+			        CONCAT('user_intro_code', MAX(CAST(SUBSTRING_INDEX(user_intro_code, 'user_intro_code',-1) AS UNSIGNED))+1)
+			    END AS newIntroCode
+			FROM
+			    profile_intro
+			]]>
+		</selectKey>
+	
+		/*회원가입*/
+		INSERT INTO profile_intro(
+	        user_intro_code,
+	        user_id,
+	        user_intro,
+	        profile_hidden,
+	        profile_application_hidden
+		    )
+		VALUES(
+			#{userIntroCode},
+			'id010',
+			#{userIntro},
+			#{profileHidden},
+			#{profileApplicationHidden});
+	</insert>
+	
+	<update id="profileIntroModify" parameterType="ProfileIntro">
+		/*회원수정*/
+		UPDATE profile_intro
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="userIntro !=null and userIntro !=''">
+				user_intro = #{userIntro},
+			</if>
+			<if test="profileHidden !=null and profileHidden !=''">
+				profile_hidden = #{profileHidden},
+			</if>
+			<if test="profileApplicationHidden !=null and profileApplicationHidden !=''">
+				profile_application_hidden = #{profileApplicationHidden},
+			</if>
+		</trim>
+		WHERE
+			user_intro_code = #{userIntroCode}
+	</update>
+	
+	<select id="getProfileIntroInfoByCode" parameterType="String" resultMap = "profileIntroResultMap">
+		/*자기소개별 상세조회 */
+		select
+		    pi.user_intro_code,
+		    pi.user_id,
+		    pi.user_intro,
+		    pi.profile_hidden,
+		    pi.profile_application_hidden
+		from
+		    profile_intro as pi
+		where
+		    pi.user_intro_code = #{userIntroCode};
+	</select>
+	
+	<delete id="profileIntroDelete" parameterType="String">
+		DELETE
+		FROM
+			profile_intro
+		WHERE
+			user_intro_code = #{userIntroCode}
+	</delete>
+
+</mapper>

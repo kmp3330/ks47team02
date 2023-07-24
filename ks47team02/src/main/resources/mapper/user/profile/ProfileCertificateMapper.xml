@@ -2,20 +2,69 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ks47team02.user.profile.mapper.ProfileCertificateMapper">
+<mapper
+	namespace="ks47team02.user.profile.mapper.ProfileCertificateMapper">
 
 	<resultMap id="ProfileResultMap" type="ProfileCertificate">
-		<id column="user_certificate_code" property="certificateCode"/>
-		<result column="user_id" property="userId"/>
-		<result column="user_certificate_name" property="certificateName"/>
-		<result column="user_certificate_publication" property="certificatePublication"/>
-		<result column="user_certificate_date" property="certificateDate"/>
-		<result column="profile_hidden" property="profileHidden"/>
-		<result column="profile_application_hidden" property="profileApplicationHidden"/>
+		<id column="user_certificate_code" property="certificateCode" />
+		<result column="user_id" property="userId" />
+		<result column="user_certificate_name"
+			property="certificateName" />
+		<result column="user_certificate_publication"
+			property="certificatePublication" />
+		<result column="user_certificate_date"
+			property="certificateDate" />
+		<result column="profile_hidden" property="profileHidden" />
+		<result column="profile_application_hidden"
+			property="profileApplicationHidden" />
 	</resultMap>
 
-	<select id="certificateList" resultMap="ProfileResultMap">
+	<select id="certificateList" parameterType="String" resultMap="ProfileResultMap">
 		/* 자격증 조회 */
+			SELECT
+				user_certificate_code,
+				user_id,
+				user_certificate_name,
+				user_certificate_publication,
+				user_certificate_date,
+				profile_hidden,
+				profile_application_hidden
+			FROM
+				profile_certificate
+			WHERE
+				user_id = #{sessionId};
+	</select>
+
+	<insert id="profileCertificateInsert" parameterType="ProfileCertificate">
+		<selectKey resultType="String"
+			keyColumn="newCertificateCode" keyProperty="certificateCode"
+			order="BEFORE">
+			<![CDATA[
+			/* 자동증가코드 */
+			SELECT
+			    CASE
+			    WHEN COUNT(*) = 0
+			        THEN 'user_certificate_code001'
+			    WHEN CAST(SUBSTRING_INDEX(user_certificate_code, '_code', -1) AS UNSIGNED) < 999
+			        THEN CONCAT('user_certificate_code', LPAD(MAX(CAST(SUBSTRING_INDEX(user_certificate_code, '_code', -1) AS UNSIGNED))+1, 3, '0'))
+			    ELSE
+			        CONCAT('user_certificate_code', MAX(CAST(SUBSTRING_INDEX(user_certificate_code, '_code', -1) AS UNSIGNED))+1)
+			    END AS newCertificateCode
+			FROM
+			    profile_certificate;
+			]]>
+		</selectKey>
+		/* 자격증 등록 */
+			INSERT INTO profile_certificate
+				(user_certificate_code, user_id, user_certificate_name, user_certificate_publication,
+				user_certificate_date, profile_hidden, profile_application_hidden)
+			VALUES (#{certificateCode}, #{userId}, #{certificateName},
+				#{certificatePublication}, #{certificateDate}, ${profileHidden},
+				${profileApplicationHidden})
+	</insert>
+	
+	<select id="certificateByCode" parameterType="String" resultMap="ProfileResultMap">
+		/* 자격증 코드별 자격증 조회 */
 		SELECT
 			user_certificate_code,
 			user_id,
@@ -25,7 +74,37 @@
 			profile_hidden,
 			profile_application_hidden
 		FROM
-			profile_certificate;
+			profile_certificate
+		WHERE
+			user_certificate_code = #{certificateCode};
 	</select>
+	
+	<update id="profileCertificateModify" parameterType="ProfileCertificate">
+		/* 자격증 수정 */
+		UPDATE profile_certificate
+		<set>
+			<if test="certificateName != null and certificateName != ''">
+				user_certificate_name = #{certificateName},
+			</if>
+			<if test="certificatePublication != null and certificatePublication != ''">
+				user_certificate_publication = #{certificatePublication},
+			</if>
+			<if test="certificateDate != null and certificateDate != ''">
+				user_certificate_date = #{certificateDate},
+			</if>
+			profile_hidden = #{profileHidden},
+			profile_application_hidden = #{profileApplicationHidden},
+		</set>
+		WHERE
+			user_certificate_code = #{certificateCode};
+	</update>
+	
+	<delete id="profileCertificateDelete" parameterType="String">
+		DELETE
+		FROM
+			profile_certificate
+		WHERE
+			user_certificate_code = #{certificateCode}
+	</delete>
 
 </mapper>

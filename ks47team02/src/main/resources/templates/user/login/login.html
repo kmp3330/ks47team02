@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+<head>
+
+</head>
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+	<script>
+		let msg = '[[${msg}]]';
+		if(msg != 'null' && msg != '') {
+			console.log(msg);
+			alert(msg);
+		}
+		
+		const validCheck = ele => {
+			let data = $(ele).val();
+			let eleMsg = $(ele).attr('placeholder');
+			
+			if(typeof data == 'undefined' || data == null || data == '') {
+				alert(`${eleMsg} 필수 입력 항목입니다.`);
+				$(ele).focus();
+				return false;
+			}
+			return true;
+		}
+		
+		$('#loginBtn').click(function (e) {
+			e.preventDefault();
+			
+			const validateEle = $('#loginForm input');
+			let isSubmit = false;
+			
+			validateEle.each( (idx, item) => {
+				isSubmit = validCheck(item);
+				return isSubmit;
+			});
+			if(isSubmit) $('#loginForm').submit();
+		});
+		
+		$('#resetBtn').click(function (e) {
+			e.preventDefault();
+			
+			$('#loginForm input').val('');
+		});
+		
+	</script>
+	
+</th:block>
+
+<th:block layout:fragment="customContents">
+ <!-- <div class="col-lg-8 card card-outline card-primary">
+    <div class="title-text justify-content-center">
+    <h1 class="title login">로그인</h1>
+  </div>
+  <div class="form-container">
+    <div class="form-inner">
+      <form action="#" class="login">
+            <pre>
+            </pre>
+        <div class="field">
+          <input type="text" placeholder="Email Address" required>
+        </div>
+        <div class="field">
+          <input type="password" placeholder="Password" required>
+        </div>
+        <div class="pass-link"><a href="#">Forgot password?</a></div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Login">
+        </div>
+      </form>
+      </form>
+    </div>
+  </div>
+  </div>
+  </div>
+  -->
+
+	<section class="jobs-area section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-5">
+					<div class="card card-info">
+						<div class="card-header">
+							<h3 class="card-title">로그인</h3>
+						</div>
+						<form id="loginForm" class="form-horizontal" th:action="@{/login}" method="post">
+							<div class="card-body">
+								<div class="form-group row">
+									<div class="col-sm-12">
+										<input type="text" class="form-control" id="userId" name="userId"
+											value="id001">
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-12">
+										<input type="password" class="form-control" id="userPw" name="userPw"
+											value="pw001">
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<button type="submit" id="loginBtn" class="btn btn-info">로그인</button>
+								<button type="reset" id="resetBtn" class="btn btn-default float-right">취소</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</th:block>
+</html>

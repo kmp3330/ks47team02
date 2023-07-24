@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import ks47team02.common.interceptor.LoggerInterceptor;
+import ks47team02.common.interceptor.LoginInterceptor;
 import lombok.AllArgsConstructor;
 
 @Configuration
@@ -15,6 +16,7 @@ import lombok.AllArgsConstructor;
 public class WebConfig implements WebMvcConfigurer{
 	
 	private final LoggerInterceptor loggerInterceptor;
+	private final LoginInterceptor loginInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -27,8 +29,22 @@ public class WebConfig implements WebMvcConfigurer{
 		excludePathList.add("/js/**");
 		excludePathList.add("/user/assets/**");
 		excludePathList.add("/favicon.ico");
+		
 		registry.addInterceptor(loggerInterceptor)
 				.addPathPatterns("/**")
+				.excludePathPatterns(excludePathList);
+		
+		registry.addInterceptor(loginInterceptor)
+				.addPathPatterns("/**")
+				.excludePathPatterns("/")
+				.excludePathPatterns("/login")
+				.excludePathPatterns("/logout")
+				.excludePathPatterns("/addMember")
+				.excludePathPatterns("/addNormalMember")
+				.excludePathPatterns("/addCompanyMember")
+				.excludePathPatterns("/checkId")
+				.excludePathPatterns("#checkId")
+				.excludePathPatterns("#readTerms")
 				.excludePathPatterns(excludePathList);
 		
 		WebMvcConfigurer.super.addInterceptors(registry);

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="ks47team02.user.member.mapper.UserMapper">
+	
+	<resultMap type="User" id="userResultMap">
+		<id column="user_id" property="userId"></id>
+		<result column="user_pw" property="userPw"></result>
+		<result column="user_name" property="userName"></result>
+		<result column="level_code" property="levelCode"></result>
+		<result column="level_name" property="levelName"></result>
+		<result column="user_gender" property="userGender"></result>
+		<result column="career_check" property="careerCheck"></result>
+		<result column="freelancer_check" property="freelancerCheck"></result>
+		<result column="user_addr" property="userAddr"></result>
+		<result column="user_eamil" property="userEmail"></result>
+		<result column="user_phone" property="userPhone"></result>
+		<result column="user_join_date" property="userJoinDate"></result>
+		<result column="grade_fee_code" property="gradeFeeCode"></result>
+		<result column="user_grade" property="userGrade"></result>
+		<result column="total_score" property="totalScore"></result>
+		<result column="report_score" property="reportScore"></result>
+	</resultMap>
+	
+	
+	<select id="loginCheck" parameterType="String" resultType="User">
+		/* 로그인 시 아이디, 비밀번호, 권한 조회 */
+		SELECT
+			ui.user_id AS userId,
+			ui.user_pw AS userPw,
+			ui.user_name AS userName,
+			ui.level_code AS levelCode,
+			ui.level_name AS levelName
+		FROM
+			user_info AS ui
+		WHERE
+			user_id = #{userId}
+	</select>
+
+	<insert id="addUser" parameterType="User">
+		INSERT INTO user_info
+		(user_id, user_pw, user_Name, level_code, level_name, user_gender, career_check,
+		freelancer_check, user_addr, user_email, user_phone, user_join_date, grade_fee_code,
+		user_grade, total_score, report_score)
+		VALUES
+		(#{userId}, #{userPw}, #{userPw}, 'level_code002', '일반회원', #{userGender}, #{careerCheck},
+		#{freelancerCheck}, #{userAddr}, #{userEmail}, #{userPhone}, CURDATE(), 'grade_fee_code001',
+		'브론즈', 0, 0);
+	</insert>
+
+	<select id="checkId" resultType="boolean" parameterType="String">
+		SELECT
+		IF(COUNT(u.user_id) > 0, 1, 0)
+		FROM
+		user_info AS u
+		WHERE
+		u.user_id = #{userId};
+	</select>
+</mapper>

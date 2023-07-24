@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.recommend.mapper.RecommendEmploymentMapper">
+ <resultMap type="RecommendEmployment" id="RecommendEmploymentResultMap">
+ 	<id 	column="company_employment_code" property="companyEmploymentCode"/>
+ 	<result column="company_support_code"	 property="companySupportCode"/>
+ 	<result column="user_id"				 property="userId"/>
+ 	<result column="announcement_code"		 property="announcementCode"/>
+ 	<result column="join_cate_code"			 property="joinCateCode"/>
+ 	<result column="join_cate_name"			 property="joinCateName"/>
+ 	<result column="area_code"				 property="areaCode"/>
+ 	<result column="area_cate"				 property="areaCate"/>
+ 	<result column="job_opening"			 property="jobOpening"/>
+ 	<result column="required_skills"		 property="requiredSkills"/>
+ 	<result column="career"				 	 property="career"/>
+ 	<result column="wage"				 	 property="wage"/>
+ 	<result column="start_date"				 property="startDate"/>
+ 	<result column="due_date"				 property="dueDate"/>
+ 	<result column="job_normal_run_code"	 property="jobNormalRunCode"/>
+ 	<result column="job_normal_run"			 property="jobNormalRun"/>
+ </resultMap>
+ 
+ <select id="getRecommendEmploymentByCode" parameterType="String" resultMap="RecommendEmploymentResultMap">
+ 	/*  코드 별 상세 조회 */
+ 	SELECT
+ 		company_employment_code,
+ 		company_support_code,
+		user_id,
+		announcement_code,
+		join_cate_code,
+		join_cate_name,
+		area_code,
+		area_cate,
+		job_opening,
+		required_skills,
+		career,
+		wage,
+		start_date,
+		due_date,
+		job_normal_run_code,
+		job_normal_run
+	FROM
+		company_employment
+	WHERE
+		company_employment_code = #{companyEmploymentCode}
+ </select>
+  
+ <select id="getRecommendEmployment" resultMap="RecommendEmploymentResultMap">
+ 	/*  채용 단계 목록 조회 */
+ 	SELECT
+ 		company_employment_code,
+ 		company_support_code,
+		user_id,
+		announcement_code,
+		join_cate_code,
+		join_cate_name,
+		area_code,
+		area_cate,
+		job_opening,
+		required_skills,
+		career,
+		wage,
+		start_date,
+		due_date,
+		job_normal_run_code,
+		job_normal_run
+	FROM
+		company_employment  
+ </select>
+ 
+ <insert id="recommendInsertEmployment" parameterType="RecommendEmployment">
+ 	<selectKey resultType="String" keyColumn="newRecommendEmploymentCode" keyProperty="companyEmploymentCode" order="BEFORE">
+			/* 채용 공고 자동 증가 코드 */
+			<![CDATA[
+			SELECT 
+				CASE
+				WHEN COUNT(*) = 0 THEN 'company_employment_code001'
+				WHEN CAST(SUBSTRING_INDEX(company_employment_code,'code',-1) AS UNSIGNED) < 999
+				THEN CONCAT('company_employment_code',LPAD(MAX(CAST(SUBSTRING_INDEX(company_employment_code,'code',-1) AS UNSIGNED))+1,3,'0'))	
+				ELSE
+					CONCAT('company_employment_code',MAX(CAST(SUBSTRING_INDEX(company_employment_code,'code',-1) AS UNSIGNED))+1)	
+				END AS newRecommendEmploymentCode
+			FROM 
+				company_employment
+			]]>
+	</selectKey>
+ 	INSERT INTO company_employment 
+	(company_employment_code,
+	company_support_code,
+	user_id,
+	announcement_code,
+	join_cate_code,
+	join_cate_name,
+	area_code,
+	area_cate,
+	job_opening,
+	required_skills,
+	career,
+	wage,
+	start_date,
+	due_date,
+	job_normal_run_code,
+	job_normal_run)
+VALUE	
+	(#{companyEmploymentCode},
+	'company_support_code001',
+	'id001',
+	'announcement_code001',
+	'join_cate_code001',
+	#{joinCateName},
+	'area_code001',
+	#{areaCate},
+	#{jobOpening},
+	#{requiredSkills},
+	#{career},
+	#{wage},
+	CURDATE(),
+	CURDATE(),
+	'job_normal_run_code001',
+	#{jobNormalRun})
+ </insert>
+ 
+ 
+ 
+ <update id="recommendModifyEmployment" parameterType="RecommendEmployment">
+ 	/* 채용 단계 목록 수정 */
+ 	UPDATE 
+		company_employment
+	<trim prefix="SET" suffixOverrides=",">
+		<if test="companySupportCode !=null and companySupportCode !=''">
+		company_support_code= #{companySupportCode},
+		</if>
+		<if test="userId !=null and userId !=''">
+		user_id= #{userId},
+		</if>
+		<if test="announcementCode !=null and announcementCode !=''">
+		announcement_code=#{announcementCode},
+		</if>
+		<if test="joinCateCode !=null and joinCateCode !=''">
+		join_cate_code=#{joinCateCode},
+		</if>
+		<if test="joinCateName !=null and joinCateName !=''">
+		join_cate_name=#{joinCateName},
+		</if>
+		<if test="areaCode !=null and areaCode !=''">
+		area_code=#{areaCode},
+		</if>
+		<if test="areaCate !=null and areaCate !=''">
+		area_cate=#{areaCate},
+		</if>
+		<if test="jobOpening !=null and jobOpening !=''">
+		job_opening=#{jobOpening},
+		</if>
+		<if test="requiredSkills !=null and requiredSkills !=''">
+		required_skills=#{requiredSkills},
+		</if>
+		<if test="career !=null and career !=''">
+		career=#{career},
+		</if>
+		<if test="wage !=null and wage !=''">
+		wage=#{wage},
+		</if>
+		start_date=#{startDate},
+		due_date=#{dueDate},
+		<if test="jobNormalRunCode !=null and jobNormalRunCode !=''">
+		job_normal_run_code=#{jobNormalRunCode},
+		</if>
+		<if test="jobNormalRun !=null and jobNormalRun !=''">
+		job_normal_run=#{jobNormalRun}
+		</if>
+	</trim>	
+	WHERE
+		company_employment_code=#{companyEmploymentCode}
+ </update>
+ 
+</mapper>

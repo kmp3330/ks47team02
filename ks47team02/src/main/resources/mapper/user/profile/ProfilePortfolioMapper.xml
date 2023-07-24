@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.profile.mapper.ProfilePortfolioMapper">
+
+	<resultMap id="portfolioResultMap" type="ProfilePortfolio">
+		<id column="user_portfolio_code" property="userPortfolioCode"></id>
+		<result column="user_id" property="userId"></result>
+		<result column="user_project_name" property="userProjectName"></result>
+		<result column="join_cate_code" property="joinCateCode"></result>
+		<result column="join_cate_name" property="joinCateName"></result>
+		<result column="work_cate_code" property="workCateCode"></result>
+		<result column="work_cate_name" property="workCateName"></result>
+		<result column="subject_cate_code" property="subjectCateCode"></result>
+		<result column="subject_cate_name" property="subjectCateName"></result>
+		<result column="user_required_skill" property="userRequiredSkill"></result>
+		<result column="user_details" property="userDetails"></result>
+		<result column="user_project_start_date" property="userProjectStartDate"></result>
+		<result column="user_project_end_date" property="userProjectEndDate"></result>
+		<result column="user_project_days" property="userProjectDays"></result>
+		<result column="user_project_gen" property="userProjectGen"></result>
+		<result column="profile_hidden" property="profileHidden"></result>
+		<result column="profile_application_hidden" property="profileApplicationHidden"></result>
+	</resultMap>
+	
+	<select id="getProfilePortfolioList" resultMap="portfolioResultMap" parameterType="String">
+		/* 포트폴리오 조회 */
+		SELECT 
+			user_portfolio_code,
+			user_id,
+			user_project_name,
+			join_cate_code, 
+			join_cate_name, 
+			work_cate_code, 
+			work_cate_name, 
+			subject_cate_code, 
+			subject_cate_name, 
+			user_required_skill, 
+			user_details, 
+			user_project_start_date, 
+			user_project_end_date, 
+			user_project_days, 
+			user_project_gen, 
+			profile_hidden, 
+			profile_application_hidden
+		FROM
+			profile_portfolio
+		WHERE
+			user_id = #{sessionId}
+	</select>
+	
+</mapper>

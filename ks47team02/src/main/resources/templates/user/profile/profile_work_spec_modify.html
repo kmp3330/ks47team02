@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+	<script>
+		$('#modifyBtn').click(function (e) {
+			e.preventDefault();
+
+			$('#modifyProfileForm').submit();
+		});
+	</script>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<section class="jobs-area section-padding">
+		<div class="container col-lg-12">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="sidebar">
+						<div class="single-item mb-4">
+							<h4 class="mb-4">프로필</h4>
+							<a th:href="@{/profile/profileIntroList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
+							</a> <a th:href="@{/profile/profileSkillList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
+							</a> <a th:href="@{/profile/profileWorkSpecList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
+							</a> <a th:href="@{/profile/profileEduSpecList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
+							</a> <a th:href="@{/profile/profileCertificateList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
+							</a> <a th:href="@{/profile/profileAwardList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
+							</a> <a th:href="@{/profile/profilePortfolioList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="single-job mb-4 justify-content-between text-center">
+						<div class="card">
+							<div class="card-header border-0">
+								<h3 class="mb-0 title_color text-left">일경력</h3>
+								<div class="card-tools">
+									<a href="#" class="genric-btn info-border circle" id="modifyBtn">
+										<i class="fas">수정 완료</i>
+									</a>
+									<a th:href="@{#}" class="genric-btn danger-border circle">
+										<i type="button" id="resetBtn" class="fas">취소</i>
+									</a>
+								</div>
+							</div>
+							<div class="card-body table-responsive p-0">
+								<form id="modifyProfileForm" th:action="@{/profile/profileWorkSpecModify}"
+									class="d-md-flex justify-content-between" method="post">
+									<table class="table table-valign-middle">
+										<thead>
+											<tr>
+												<th>회사명</th>
+												<th>기술명</th>
+												<th>입사 일시</th>
+												<th>퇴사 일시</th>
+												<th>근무부서</th>
+												<th>직위</th>
+												<th>담당업무</th>
+												<th>공개 여부</th>
+												<th>입사지원시 공개여부</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<input type="hidden" name="userWorkSpecCode" th:value="${profileWorkSpecInfo.userWorkSpecCode}">
+												<td>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userCompany}"
+														name="userCompany" required="">
+												</td>
+												<td>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userSkill}"
+														name="userSkill" required="">
+												</td>
+												<td><input class="genric-btn" type="date" th:value="${profileWorkSpecInfo.userEnterDate}" name="userEnterDate"></td>
+												<td><input class="genric-btn" type="date" th:value="${profileWorkSpecInfo.userLeaveDate}" name="userLeaveDate"></td>
+												<td>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userDepartment}"
+														name="userDepartment"  required="">
+												</td>
+												<td>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userRank}"
+														name="userRank"  required="">
+												</td>
+												<td>
+													<input class="genric-btn" type="text" th:value="${profileWorkSpecInfo.userWork}"
+														name="userWork"  required="">
+												</td>
+												<td>
+													<div class="d-flex justify-content-center">
+														<div class="confirm-switch">
+															<input type="checkbox" id="confirm-switch2" th:chekced="${profileWorkSpecInfo.profileHidden}"
+																name="profileHidden">
+															<label for="confirm-switch2"></label>
+														</div>
+													</div>
+												</td>
+												<td>
+													<div class="d-flex justify-content-center">
+														<div class="confirm-switch">
+															<input type="checkbox" id="confirm-switch2"
+																name="profileApplicationHidden" th:chekced="${profileWorkSpecInfo.profileApplicationHidden}">
+															<label for="confirm-switch2"></label>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</th:block>
+
+</html>

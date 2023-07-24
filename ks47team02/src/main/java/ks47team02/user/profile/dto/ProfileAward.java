@@ -10,7 +10,7 @@ public class ProfileAward {
 	private String userAwardName;
 	private String userAwardPublication;
 	private String userAwardDate;
-	private String AwardDetails;
+	private String awardDetails;
 	private boolean profileHidden;
 	private boolean profileApplicationHidden;
 	

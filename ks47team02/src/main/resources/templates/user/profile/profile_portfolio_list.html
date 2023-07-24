@@ -1,12 +1,94 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		layout:decorate="~{user/layout/default}">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
 
-</body>
+<th:block layout:fragment="customJs">
+
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<section class="jobs-area section-padding">
+		<div class="container col-lg-12">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="sidebar">
+						<div class="single-item mb-4">
+							<h4 class="mb-4">프로필</h4>
+							<a th:href="@{/profile/profileIntroList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
+							</a> <a th:href="@{/profile/profileSkillList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
+							</a> <a th:href="@{/profile/profileWorkSpecList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
+							</a> <a th:href="@{/profile/profileEduSpecList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
+							</a> <a th:href="@{/profile/profileCertificateList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
+							</a> <a th:href="@{/profile/profileAwardList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
+							</a> <a th:href="@{/profile/profilePortfolioList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="single-job mb-4 justify-content-between text-center">
+						<div class="card">
+							<div class="card-header border-0">
+								<h3 class="mb-0 title_color text-left">포트폴리오</h3>
+								<div class="card-tools">
+									<a th:href="@{/profile/profilePortfolioInsert}"
+										class="genric-btn info-border circle"> <i class="fas">등록</i>
+									</a>
+								</div>
+							</div>
+							<div class="card-body table-responsive p-0">
+								<table class="table table-striped table-valign-middle">
+									<thead>
+										<tr>
+											<th>프로젝트 제목</th>
+											<th>참여 분야 이름</th>
+											<th>작업 분류 이름</th>
+											<th>주제 분류 이름</th>
+											<th>맡은 기능</th>
+											<th>내용</th>
+											<th>기능 시작 일시</th>
+											<th>기능 완료 일시</th>
+											<th>작업 일수</th>
+											<th>전문/일반 구분</th>
+											<th>공개여부</th>
+											<th>입사지원 시 공개여부</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:unless="${#lists.isEmpty(portfolioList)}"
+											th:each="l : ${portfolioList}">
+											<td th:text="${l.userProjectName}"></td>
+											<td th:text="${l.joinCateName}"></td>
+											<td th:text="${l.workCateName}"></td>
+											<td th:text="${l.subjectCateName}"></td>
+											<td th:text="${l.userRequiredSkill}"></td>
+											<td th:text="${l.userDetails}"></td>
+											<td th:text="${l.userProjectStartDate}"></td>
+											<td th:text="${l.userProjectEndDate}"></td>
+											<td th:text="${l.userProjectDays}"></td>
+											<td th:text="${l.userProjectGen}"></td>
+											<td th:text="${l.profileHidden}"></td>
+											<td th:text="${l.profileApplicationHidden}"></td>
+										</tr>
+										<tr th:if="${#lists.isEmpty(portfolioList)}">
+											<td colspan="12">포트폴리오가 없습니다.</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
 </html>
