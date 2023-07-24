@@ -3,7 +3,6 @@ package ks47team02.user.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import ks47team02.admin.dto.Member;
 import ks47team02.user.member.dto.Company;
 import ks47team02.user.member.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
