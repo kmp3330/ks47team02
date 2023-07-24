@@ -3,6 +3,9 @@ package ks47team02.user.member.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import ks47team02.admin.dto.Member;
+import ks47team02.user.member.dto.Company;
+import ks47team02.user.member.mapper.CompanyMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	
 	private final UserMapper userMapper;
-	
+	private final CompanyMapper companyMapper;
+
 	/**
 	 * 로그인 체크
 	 * @param userId
@@ -49,6 +53,10 @@ public class MemberService {
 
 	public void addUser(User user){
 		userMapper.addUser(user);
+	}
+
+	public void addCompany(Company company){
+		companyMapper.addCompany(company);
 	}
 
 	public boolean checkId(String userId) {

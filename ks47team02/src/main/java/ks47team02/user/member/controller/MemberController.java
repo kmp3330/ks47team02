@@ -110,6 +110,12 @@ public class MemberController {
 		return "user/member/addNormalMember";
 	}
 
+	@PostMapping("/addCompanyMember")
+	public String addCompany(Company company){
+		memberService.addCompany(company);
+		return "redirect:/";
+	}
+
 	@GetMapping("/addCompanyMember")
 	public String addCompany(Company company, HttpSession session, Model model){
 		model.addAttribute("titleText", "기업 회원 가입");
