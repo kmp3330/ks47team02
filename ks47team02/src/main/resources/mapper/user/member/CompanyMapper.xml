@@ -22,22 +22,22 @@
 		<result column="cp_join_date" property="cpJoinDate"></result>
 	</resultMap>
 
-	<select id="cpLoginCheck" parameterType="String" resultType="Company">
+	<!--<select id="cpLoginCheck" parameterType="String" resultType="Company">
 		/* 로그인 시 아이디, 비밀번호, 권한 조회 */
 		SELECT
 		FROM
 		cp_info AS ci
 		WHERE
 		cp_id = #{cpId}
-	</select>
+	</select>-->
 
 	<insert id="addCompany" parameterType="Company">
 		INSERT INTO cp_info
-		(cp_id, cp_pw, level_code, level_name, cp_reg_number, cp_cate_code,
+		(cp_id, cp_pw, level_code, level_name, cp_reg_number, cp_cate_code, cp_cate,
 		cp_name, area_code, area_name, cp_addr, cp_email, cp_phone, cp_join_date)
 		VALUES
 		(#{cpId}, #{cpPw}, 'level_code003', '기업회원', #{cpRegNumber},
-		(SELECT
+		(SELECT DISTINCT
 		cc.cp_cate_code
 		FROM
 		cp_info AS ci
@@ -45,9 +45,9 @@
 		ON
 		ci.cp_cate_code = cc.cp_cate_code
 		WHERE
-		ci.cp_cate = '#{cpCate}';),
-		#{cp_name},
-		(SELECT
+		ci.cp_cate = #{cpCate}),
+		#{cpCate}, #{cpName},
+		(SELECT DISTINCT
 		ac.area_code
 		FROM
 		cp_info AS ci
@@ -55,17 +55,18 @@
 		ON
 		ci.area_code = ac.area_code
 		WHERE
-		ci.area_name = '#{areaName}';),
-		#{area_name}, #{cp_addr}, #{cp_email}, #{cp_phone}, CURDATE());
+		ci.area_name = #{areaName}),
+		#{areaName}, #{cpAddr}, #{cpEmail}, #{cpPhone}, CURDATE());
 	</insert>
 
-	<select id="checkId" resultType="boolean" parameterType="String">
+
+	<!--<select id="checkId" resultType="boolean" parameterType="String">
 		SELECT
 		IF(COUNT(u.user_id) > 0, 1, 0)
 		FROM
 		user_info AS u
 		WHERE
 		u.user_id = #{userId};
-	</select>
+	</select>-->
 	
 </mapper>

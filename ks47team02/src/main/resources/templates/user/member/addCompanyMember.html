@@ -89,9 +89,9 @@
       <div class="card-body">
         <p class="login-box-msg">Register a new membership</p>
         
-        <form id="addUserForm" th:action="@{/addNormalMember}" method="post">
+        <form id="addCompanyForm" th:action="@{/addCompanyMember}" method="post">
           <div class="input-group mb-3">
-            <input type="id" id="cpId" name="cpId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
+            <input type="text" id="cpId" name="cpId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
             <div class="input-group-append">
               <button class="genric-btn primary-border small" id="checkCpId">아이디중복체크</button>
               <div class="input-group-text">
@@ -101,7 +101,7 @@
           </div>
           <br>
           <div class="input-group mb-3">
-            <input type="id" id="cpRegNumber" name="cpRegNumber" class="form-control" placeholder="사업자등록번호를 입력해주세요.">
+            <input type="text" id="cpRegNumber" name="cpRegNumber" class="form-control" placeholder="사업자등록번호를 입력해주세요.">
             <div class="input-group-append">
               <button class="genric-btn primary-border small" id="checkCpReg">중복가입체크</button>
               <div class="input-group-text">
@@ -128,7 +128,7 @@
           </div>
           <br><br>
           <div class="input-group mb-3">
-            <input type="text" id="cpName" name="cpName" class="form-control pwEq" style="text-transform: none" placeholder="기업명을 입력해주세요.">
+            <input type="text" id="cpName" name="cpName" class="form-control" style="text-transform: none" placeholder="기업명을 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -137,7 +137,7 @@
           </div>
           <br><br>
           <div class="input-group mb-3">
-            <input type="email" id="userEmail" name="userEmail" class="form-control" placeholder="이메일을 입력해주세요.">
+            <input type="email" id="cpEmail" name="cpEmail" class="form-control" placeholder="이메일을 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -145,25 +145,35 @@
             </div>
           </div><br><br>
           <div class="input-group mb-3">
-            <div class="nice-select" tabindex="0"><span class="current">소재지를 선택해주세요.</span>
-              <ul class="list"><li data-value="" class="option selected disabled">소재지를 선택해주세요.</li>
-                <li data-value="서울" class="option">서울</li>
-                <li data-value="부산" class="option">부산</li>
-                <li data-value="대구" class="option">대구</li>
-                <li data-value="인천" class="option">인천</li>
-                <li data-value="광주" class="option">광주</li>
-                <li data-value="울산" class="option">울산</li>
-                <li data-value="세종" class="option">세종</li>
-                <li data-value="경기" class="option">경기</li>
-                <li data-value="강원" class="option">강원</li>
-                <li data-value="충북" class="option">충북</li>
-                <li data-value="충남" class="option">충남</li>
-                <li data-value="전북" class="option">전북</li>
-                <li data-value="전남" class="option">전남</li>
-                <li data-value="경북" class="option">경북</li>
-                <li data-value="경남" class="option">경남</li>
-                <li data-value="제주" class="option">제주</li>
-              </ul></div>
+            <select class="nice-select" id="cpCate" name="cpCate">
+                <option value="" selected disabled>기업의 규모를 선택해주세요.</option>
+                <option value="대기업">대기업</option>
+                <option value="중견기업">중견기업</option>
+                <option value="중소기업">중소기업</option>
+                <option value="공기업">공기업</option>
+              </select>
+          </div>
+          <br>
+          <div class="input-group mb-3">
+            <select class="nice-select" id="areaName" name="areaName">
+                <option value="" selected disabled>소재지를 선택해주세요.</option>
+                <option value="서울">서울</option>
+                <option value="부산">부산</option>
+                <option value="대구">대구</option>
+                <option value="인천">인천</option>
+                <option value="광주">광주</option>
+                <option value="울산">울산</option>
+                <option value="세종">세종</option>
+                <option value="경기">경기</option>
+                <option value="강원">강원</option>
+                <option value="충북">충북</option>
+                <option value="충남">충남</option>
+                <option value="전북">전북</option>
+                <option value="전남">전남</option>
+                <option value="경북">경북</option>
+                <option value="경남">경남</option>
+                <option value="제주">제주</option>
+              </select>
           </div>
           <br>
           <div class="input-group mb-3">
@@ -176,7 +186,7 @@
           </div>
           <br>
           <div class="input-group mb-3">
-            <input type="text" id="cpPhone" name="cpPhone" class="form-control" placeholder="기업 전화 번호를 입력해주세요.">
+            <input type="tel" id="cpPhone" name="cpPhone" class="form-control" placeholder="기업 전화 번호를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-phone"></span>
@@ -199,7 +209,7 @@
             <!-- /.col -->
           </div>
           <br><br>
-          <button type="submit" id="addUserBtn" class="btn btn-primary btn-block" value="회원가입">회원가입</button>
+          <button type="submit" id="addCompanyBtn" class="btn btn-primary btn-block" value="회원가입">회원가입</button>
         </form>
         <a th:href="@{/login}" class="text-center">이미 가입된 아이디가 있습니다.</a>
       </div>
@@ -231,13 +241,13 @@
         return valid;
       }
       
-      $('#addUserForm').submit(function (e){
+     /* $('#addUserForm').submit(function (e){
         if(!validateForm()){
           e.preventDefault();
         }
-      });
+      });*/
       
-      function isIdValid(){
+      /*function isIdValid(){
         return $('#userId').val().length >= 5 && isIdChecked;
       }
       
@@ -283,11 +293,11 @@
             title: '아이디 중복체크를 해주세요.'
           })
         }
-      })
+      })*/
       
-      $('#addUserForm').submit(function (e){
-        let pw1 = $('#userPw').val();
-        let pw2 = $('#pwEq').val();
+      $('#addCompanyForm').submit(function (e){
+        let pw1 = $('#cpPw').val();
+        let pw2 = $('#cpPwEq').val();
         if(pw1 !== pw2){
           e.preventDefault();
           Swal.fire({
@@ -298,7 +308,7 @@
       });
       
       
-      $('#addUserBtn').click(function (){
+      /*$('#addUserBtn').click(function (){
         const validateEle = $('#addUserBtn input').not('#userId');
         let isSubmit = false;
         validateEle.each((idx, item) => {
@@ -306,7 +316,7 @@
           return isSubmit;
         })
         if(isSubmit) $('#addUserForm').submit();
-      });
+      });*/
       $('#readTerms').click(function (e){
         e.preventDefault();
         Swal.fire({
@@ -344,7 +354,7 @@
           }
         })
       })
-      
+      /*
       
       $('#addUserBtn').click(function (e){
         e.preventDefault();  // prevent the form from being submitted
@@ -373,7 +383,7 @@
             title: '모든 항목을 채워주세요.'
           })
         }
-      });
+      });*/
     });
   </script>
 </th:block>

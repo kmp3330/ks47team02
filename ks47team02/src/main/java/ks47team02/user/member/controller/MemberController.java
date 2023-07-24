@@ -98,7 +98,7 @@ public class MemberController {
 	}
 
 	@GetMapping("/addMember")
-	public String addMember(Member member, HttpSession session, Model model){
+	public String addMember(User user, HttpSession session, Model model){
 		model.addAttribute("titleText", "회원가입");
 		model.addAttribute("contents", "가입하려는 회원의 유형을 선택해주세요");
 
@@ -109,6 +109,12 @@ public class MemberController {
 	public String addUser(User user, HttpSession session, Model model){
 		model.addAttribute("titleText", "일반 회원 가입");
 		return "user/member/addNormalMember";
+	}
+
+	@PostMapping("/addCompanyMember")
+	public String addCompany(Company company){
+		memberService.addCompany(company);
+		return "redirect:/";
 	}
 
 	@GetMapping("/addCompanyMember")
