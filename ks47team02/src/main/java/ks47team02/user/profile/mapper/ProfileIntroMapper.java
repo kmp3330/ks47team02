@@ -23,6 +23,6 @@ public interface ProfileIntroMapper {
 	
 	
 	// 자기소개 목록 조회 
-	public List<ProfileIntro> getProfileIntroList();
+	public List<ProfileIntro> getProfileIntroList(String sessionId);
 
 }

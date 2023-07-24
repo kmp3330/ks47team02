@@ -67,9 +67,9 @@ public class ProfileService {
 	
 	/*자기소개 목록 조회 */
 
-	public List<ProfileIntro> getProfileIntroList() {
+	public List<ProfileIntro> getProfileIntroList(String sessionId) {
 		
-		List<ProfileIntro> profileIntroList = profileIntroMapper.getProfileIntroList();
+		List<ProfileIntro> profileIntroList = profileIntroMapper.getProfileIntroList(sessionId);
 		
 		log.info("profileIntroList : {}", profileIntroList);
 		
@@ -102,9 +102,9 @@ public class ProfileService {
 	}
 	
 	/*회원별 기술 목록 조회 */
-	public List<ProfileSkill> getProfileSkillList() {
+	public List<ProfileSkill> getProfileSkillList(String sessionId) {
 			
-		List<ProfileSkill> profileSkillList = profileSkillMapper.getProfileSkillList();
+		List<ProfileSkill> profileSkillList = profileSkillMapper.getProfileSkillList(sessionId);
 		
 		log.info("profileSkillList : {}", profileSkillList);
 		
@@ -136,9 +136,9 @@ public class ProfileService {
 	}
 	
 	/*회원별 일경력 목록 조회 */
-	public List<ProfileWorkSpec> getProfileWorkSpecList() {
+	public List<ProfileWorkSpec> getProfileWorkSpecList(String sessionId) {
 		
-		List<ProfileWorkSpec>profileWorkSpecList = profileWorkSpecMapper.getProfileWorkSpecList();
+		List<ProfileWorkSpec>profileWorkSpecList = profileWorkSpecMapper.getProfileWorkSpecList(sessionId);
 		
 		log.info("profileWorkSpecList : {}", profileWorkSpecList);
 		
@@ -171,9 +171,9 @@ public class ProfileService {
 		profileEduSpecMapper.profileEduSpecInsert(profileEduSpec);
 	}
 	/*회원별 학력 목록 조회 */
-	public List<ProfileEduSpec> getProfileEduSpecList(){
+	public List<ProfileEduSpec> getProfileEduSpecList(String sessionId){
 		
-		List<ProfileEduSpec> profileEduSpecList = profileEduSpecMapper.getProfileEduSpecList();
+		List<ProfileEduSpec> profileEduSpecList = profileEduSpecMapper.getProfileEduSpecList(sessionId);
 		
 		log.info("profileEduSpeclList : {}", profileEduSpecList);
 		
