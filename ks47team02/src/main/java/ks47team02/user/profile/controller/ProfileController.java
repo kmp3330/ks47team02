@@ -93,9 +93,12 @@ public class ProfileController {
 	}
 	
 	@GetMapping("/profileIntroInsert")
-	public String profileIntroInsert(Model model) {
+	public String profileIntroInsert(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
 
-		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList();
+		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList(sessionId);
+		
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -109,10 +112,11 @@ public class ProfileController {
 	 */
 	@GetMapping("/profileIntroList")
 	public String profileIntroList(Model model, HttpSession session) {
+
+		 String sessionId = (String)session.getAttribute("SID");
 		
-		 String sessionID = (String)session.getAttribute("SID");
+		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList(sessionId);
 		
-		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList();
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -170,9 +174,12 @@ public class ProfileController {
 		return "redirect:/profile/profileSkillList";
 	}
 	@GetMapping("/profileSkillInsert")
-	public String profilSkillInsert(Model model) {
+	public String profilSkillInsert(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
 
-		List<ProfileSkill> profileSkillList = profileService.getProfileSkillList();
+		List<ProfileIntro> profileSkillList = profileService.getProfileIntroList(sessionId);
+
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -185,8 +192,12 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profileSkillList")
-	public String profileSkillList(Model model) {
-		List<ProfileSkill> profileSkillList = profileService.getProfileSkillList();
+	public String profileSkillList(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		
+		List<ProfileSkill> profileSkillList = profileService.getProfileSkillList(sessionId);
+		
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -235,9 +246,11 @@ public class ProfileController {
 		return "redirect:/profile/profileWorkSpecList";
 	}
 	@GetMapping("/profileWorkSpecInsert")
-	public String profilWorkSpecInsert(Model model) {
-
-		List<ProfileWorkSpec> profileWorkSpecList = profileService.getProfileWorkSpecList();
+	public String profilWorkSpecInsert(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		
+		List<ProfileWorkSpec> profileWorkSpecList = profileService.getProfileWorkSpecList(sessionId);
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -251,8 +264,12 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profileWorkSpecList")
-	public String profileWorkSpecList(Model model) {
-		List<ProfileWorkSpec>profileWorkSpecList = profileService.getProfileWorkSpecList();
+	public String profileWorkSpecList(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		
+		List<ProfileWorkSpec>profileWorkSpecList = profileService.getProfileWorkSpecList(sessionId);
+		
 		model.addAttribute("title", "경력");
 		model.addAttribute("titleText", "경력 관리");
 		model.addAttribute("contents", "경력을 관리할 수 있는 페이지입니다.");
@@ -306,9 +323,11 @@ public class ProfileController {
 		return "redirect:/profile/profileEduSpecList";
 	}
 	@GetMapping("/profileEduSpecInsert")
-	public String profileEduSpecInsert(Model model) {
+	public String profileEduSpecInsert(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
 
-		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList();
+		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList(sessionId);
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -322,8 +341,11 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profileEduSpecList")
-	public String profileEduSpecList(Model model) {
-		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList();
+	public String profileEduSpecList(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		
+		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList(sessionId);
 		model.addAttribute("title", "학력");
 		model.addAttribute("titleText", "학력 관리");
 		model.addAttribute("contents", "학력을 관리할 수 있는 페이지입니다.");
