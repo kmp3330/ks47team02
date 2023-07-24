@@ -60,7 +60,7 @@
     .contract .box {width: 100px; height: 40px;  padding: 8px; margin: 0 3px;}
     .nice-select {
       -webkit-tap-highlight-color: transparent;
-      background-color: #00000014;
+      background-color: #00000007;
       width: -webkit-fill-available;
     }
     .margin-bot {
@@ -68,6 +68,15 @@
     }
     .icheck-primary {
       font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .custom-select{
+      padding-bottom: 2.25rem;
+      font-size: 16px;
+    }
+    .nice-select span.current {
+      font-size: 16px;
+      display: inline-block;
+      line-height: 56px;
     }
   </style>
 </head>
@@ -96,7 +105,7 @@
             <div class="input-group-append">
               <button class="genric-btn primary-border small" id="checkCpReg">중복가입체크</button>
               <div class="input-group-text">
-                <span class="fas fa-user"></span>
+                <span class="fas fa-address-card"></span>
               </div>
             </div>
           </div>
@@ -134,18 +143,40 @@
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
-          </div><br>
+          </div><br><br>
+          <div class="input-group mb-3">
+            <div class="nice-select" tabindex="0"><span class="current">소재지를 선택해주세요.</span>
+              <ul class="list"><li data-value="" class="option selected disabled">소재지를 선택해주세요.</li>
+                <li data-value="서울" class="option">서울</li>
+                <li data-value="부산" class="option">부산</li>
+                <li data-value="대구" class="option">대구</li>
+                <li data-value="인천" class="option">인천</li>
+                <li data-value="광주" class="option">광주</li>
+                <li data-value="울산" class="option">울산</li>
+                <li data-value="세종" class="option">세종</li>
+                <li data-value="경기" class="option">경기</li>
+                <li data-value="강원" class="option">강원</li>
+                <li data-value="충북" class="option">충북</li>
+                <li data-value="충남" class="option">충남</li>
+                <li data-value="전북" class="option">전북</li>
+                <li data-value="전남" class="option">전남</li>
+                <li data-value="경북" class="option">경북</li>
+                <li data-value="경남" class="option">경남</li>
+                <li data-value="제주" class="option">제주</li>
+              </ul></div>
+          </div>
+          <br>
           <div class="input-group mb-3">
             <input type="address" id="cpAddr" name="cpAddr" class="form-control" placeholder="기업 주소를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
+                <span class="fas fa-home"></span>
               </div>
             </div>
           </div>
           <br>
           <div class="input-group mb-3">
-            <input type="phone" id="userPhone" name="userPhone" class="form-control" placeholder="번호를 입력해주세요.">
+            <input type="text" id="cpPhone" name="cpPhone" class="form-control" placeholder="기업 전화 번호를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-phone"></span>
@@ -153,32 +184,7 @@
             </div>
           </div>
           <br>
-          <div class="switch-wrap d-flex justify-content-between margin-bot">
-            <h5>경력 여부를 선택해주세요</h5>
-            <div class="confirm-switch">
-              <input type="checkbox" id="careerCheck" name="careerCheck" checked="">
-              <label for="careerCheck"></label>
-            </div>
-          </div>
-          <div class="switch-wrap d-flex margin-bot" style="display: flex; justify-content: space-between;">
-            <div>
-              <h5 class="margin-bottom">성별을 선택해주세요.</h5>
-            </div>
-            <div style="display: flex; justify-content: flex-end;">
-              남&nbsp;&nbsp;<input type="radio" id="userGender1" name="userGender" value="남" checked>
-              <label for="userGender1"><span></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
-              
-              여&nbsp;&nbsp;<input type="radio" id="userGender2" name="userGender" value="여">
-              <label for="userGender2"><span></span></label><br>
-            </div>
-          </div>
-          <div class="switch-wrap d-flex justify-content-between margin-bot">
-            <h5>프리랜서 여부를 선택해주세요.</h5>
-            <div class="confirm-switch">
-              <input type="checkbox" id="freelancerCheck" name="freelancerCheck" checked="">
-              <label for="freelancerCheck"></label>
-            </div>
-          </div>
+          <br>
           <div class="row">
             <div class="col-12">
               <div class="icheck-primary">
@@ -195,17 +201,6 @@
           <br><br>
           <button type="submit" id="addUserBtn" class="btn btn-primary btn-block" value="회원가입">회원가입</button>
         </form>
-        
-        <div class="social-auth-links text-center">
-          <a href="#" class="btn btn-block btn-danger" id="cantUse1">
-            <i class="fab fa-google-plus mr-2"></i>
-            Sign up using Google+
-          </a>
-          <a href="#" class="btn btn-block btn-primary" id="cantUse2">
-            <i class="fab fa-facebook mr-2"></i>
-            Sign up using Facebook
-          </a>
-        </div>
         <a th:href="@{/login}" class="text-center">이미 가입된 아이디가 있습니다.</a>
       </div>
       <!-- /.form-box -->
@@ -311,20 +306,6 @@
           return isSubmit;
         })
         if(isSubmit) $('#addUserForm').submit();
-      });
-      $('#cantUse1').click(function (e){
-        e.preventDefault();
-        Swal.fire({
-          icon: 'error',
-          title: 'SNS 로그인 기능은 추후 지원 예정입니다.'
-        })
-      });
-      $('#cantUse2').click(function (e){
-        e.preventDefault();
-        Swal.fire({
-          icon: 'error',
-          title: 'SNS 로그인 기능은 추후 지원 예정입니다.'
-        })
       });
       $('#readTerms').click(function (e){
         e.preventDefault();

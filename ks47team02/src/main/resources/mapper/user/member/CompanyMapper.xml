@@ -5,24 +5,67 @@
     
 <mapper namespace="ks47team02.user.member.mapper.CompanyMapper">
 	
-	<!-- <resultMap type="User" id="userResultMap">
-		<id column="user_id" property="userId"></id>
-		<result column="user_pw" property="userPw"></result>
-		<result column="user_name" property="userName"></result>
+	 <resultMap type="Company" id="CompanyResultMap">
+		<id column="cp_id" property="cpId"></id>
+		<result column="cp_pw" property="cpPw"></result>
+		<result column="cp_name" property="cpName"></result>
 		<result column="level_code" property="levelCode"></result>
 		<result column="level_name" property="levelName"></result>
-		<result column="user_gender" property="userGender"></result>
-		<result column="career_check" property="careerCheck"></result>
-		<result column="freelancer_check" property="freelancerCheck"></result>
-		<result column="user_addr" property="userAddr"></result>
-		<result column="user_eamil" property="userEmail"></result>
-		<result column="user_phone" property="userPhone"></result>
-		<result column="user_join_date" property="userJoinDate"></result>
-		<result column="grade_fee_code" property="gradeFeeCode"></result>
-		<result column="user_grade" property="userGrade"></result>
-		<result column="total_score" property="totalScore"></result>
-		<result column="report_score" property="reportScore"></result>
-	</resultMap> -->
-	
+		<result column="cp_reg_number" property="cpRegNumber"></result>
+		<result column="cp_cate_code" property="cpCateCode"></result>
+		<result column="cp_cate" property="cpCate"></result>
+		<result column="area_code" property="areaCode"></result>
+		<result column="area_name" property="areaName"></result>
+		<result column="cp_addr" property="cpAddr"></result>
+		<result column="cp_email" property="cpEmail"></result>
+		<result column="cp_phone" property="cpPhone"></result>
+		<result column="cp_join_date" property="cpJoinDate"></result>
+	</resultMap>
+
+	<select id="cpLoginCheck" parameterType="String" resultType="Company">
+		/* 로그인 시 아이디, 비밀번호, 권한 조회 */
+		SELECT
+		FROM
+		cp_info AS ci
+		WHERE
+		cp_id = #{cpId}
+	</select>
+
+	<insert id="addCompany" parameterType="Company">
+		INSERT INTO cp_info
+		(cp_id, cp_pw, level_code, level_name, cp_reg_number, cp_cate_code,
+		cp_name, area_code, area_name, cp_addr, cp_email, cp_phone, cp_join_date)
+		VALUES
+		(#{cpId}, #{cpPw}, 'level_code003', '기업회원', #{cpRegNumber},
+		(SELECT
+		cc.cp_cate_code
+		FROM
+		cp_info AS ci
+		INNER JOIN cp_cate AS cc
+		ON
+		ci.cp_cate_code = cc.cp_cate_code
+		WHERE
+		ci.cp_cate = '#{cpCate}';),
+		#{cp_name},
+		(SELECT
+		ac.area_code
+		FROM
+		cp_info AS ci
+		INNER JOIN area_cate AS ac
+		ON
+		ci.area_code = ac.area_code
+		WHERE
+		ci.area_name = '#{areaName}';),
+		#{area_name}, #{cp_addr}, #{cp_email}, #{cp_phone}, CURDATE());
+	</insert>
+
+	<select id="checkId" resultType="boolean" parameterType="String">
+		SELECT
+		IF(COUNT(u.user_id) > 0, 1, 0)
+		FROM
+		user_info AS u
+		WHERE
+		u.user_id = #{userId};
+	</select>
 	
 </mapper>
