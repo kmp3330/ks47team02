@@ -40,7 +40,79 @@
     			e.preventDefault();
     			$('#employmentInsertForm input').val('');
     		});
-		</script>
+			   
+
+	
+			// 페이지 로딩 시 채용 공고 코드 생성
+			
+			$(document).ready(function () {
+				$.ajax({
+					url: "/recommend/recommendAjaxEmployment",
+					type: "GET",
+					success: function (employmentInfo) {
+						console.log(employmentInfo);
+						
+					
+						let increaseEmploymentCodeInput = document.getElementById("companyEmploymentCode");
+
+						increaseEmploymentCode(employmentInfo);
+						let newCodeNumber = maxNumber + 1;
+						console.log(newCodeNumber);
+						let newCodeSuffix = "";
+						if (newCodeNumber >= 1 && newCodeNumber <= 9) {
+							newCodeSuffix = "00" + newCodeNumber;
+						} else if (newCodeNumber >= 10 && newCodeNumber <= 99) {
+							newCodeSuffix = "0" + newCodeNumber;
+						} else {
+							newCodeSuffix = newCodeNumber;
+						}
+						
+						let newRegistrationCode = "company_employment_code_" + newCodeSuffix;
+						console.log(newRegistrationCode);
+						increaseEmploymentCodeInput.value = newRegistrationCode;
+						increaseEmploymentCodeInput.readOnly = true;
+					},
+					error: function (error) {
+						console.log("에러", error);
+					}
+				});
+			});
+			
+			let maxNumber = 0;
+			function increaseEmploymentCode(employmentInfo) {
+
+				let data = employmentInfo.map(info => {
+					let key = Object.keys(info);
+					let firstkey = key[0];
+					return info[firstkey];
+				});
+				console.log(data);
+
+				data.forEach(function (item) {
+					let code = item;
+					if (code && typeof code === "string") {
+						let codeParts = code.split("00");
+						if (codeParts.length = 2) {
+							let codeNumber = parseInt(codeParts[1]);
+							if (!isNaN(codeNumber) && codeNumber > maxNumber) {
+								maxNumber = codeNumber;
+							}
+							console.log(codeNumber);
+						}
+							console.log(codeParts);
+					}						
+							console.log(code);
+							
+				});	
+				return maxNumber;
+			}
+
+    
+    
+    
+</script>
+			
+
 </th:block>
 <body>
 	<th:block layout:fragment="customContents">
@@ -109,7 +181,7 @@
 													<td><input class="genric-btn" type="text"
 														id="companyEmploymentCode" name="companyEmploymentCode" placeholder="채용 공고 코드"
 														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '채용 공고 코드'" required=""></td>
+														onblur="this.placeholder = '채용 공고 코드'" required="" readonly="readonly"></td>
 													<td>
 														<select class="genric-btn"
 														id="companySupportCode" name="companySupportCode"

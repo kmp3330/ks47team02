@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.dto.RecommendScrap;
@@ -163,7 +164,16 @@ public class RecommendController {
 		return "redirect:/recommend/recommendEmployment";
 	}
 	
-
+	/*
+	 *  ajax로 데이터 요청을 위한 컨트롤러
+	 */
+	  @GetMapping("/recommendAjaxEmployment")
+	  @ResponseBody 
+	  public List<RecommendEmployment> getRecommendEmployment() {
+	    List<RecommendEmployment> recommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
+	    return recommendEmploymentInfo;
+	  }
+	
 	/*
 	 *  채용 단계 순 기업 추천 서비스 목록 등록 (폼)
 	 */
