@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ks47team02.user.profile.dto.ProfileCertificate;
 import ks47team02.user.profile.dto.ProfileIntro;
 
 @Mapper
