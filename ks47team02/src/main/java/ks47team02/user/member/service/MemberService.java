@@ -3,7 +3,6 @@ package ks47team02.user.member.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import ks47team02.admin.dto.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +26,7 @@ public class MemberService {
 	 * @return
 	 */
 	public Map<String, Object> loginCheck(String userId, String userPw) {
-
+		//Map쓰는 이유: 여러 데이터 타입을 담을 수 있어서 쓴다
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 
 		boolean isValid = false;

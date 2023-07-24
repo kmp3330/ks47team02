@@ -31,6 +31,8 @@
 		    ps.profile_application_hidden
 		FROM
 		    profile_skill as ps
+		WHERE
+			user_id = #{sessionId};
 	</select>
 	
 	<insert id="profileSkillInsert" parameterType="ProfileSkill">

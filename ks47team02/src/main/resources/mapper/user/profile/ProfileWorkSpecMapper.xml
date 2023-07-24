@@ -41,6 +41,8 @@
 			pws.profile_application_hidden
 		FROM
 			profile_work_spec as pws
+		WHERE
+			user_id = #{sessionId};
 	</select>
 	<insert id="profileWorkSpecInsert" parameterType="ProfileWorkSpec">
 		<selectKey resultType="String" keyColumn="newWorkSpecCode" keyProperty="userWorkSpecCode" order="BEFORE">

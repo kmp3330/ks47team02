@@ -3,7 +3,6 @@ package ks47team02.user.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import ks47team02.admin.dto.Member;
 import ks47team02.user.member.dto.Company;
 import ks47team02.user.member.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -53,10 +52,10 @@ public class MemberController {
 						HttpServletRequest request,
 						HttpServletResponse response,
 						HttpSession session,
-						RedirectAttributes reAttr) {
+						RedirectAttributes reAttr) { //redirect를 될때 데이터를 전달 (모델이랑 같은 역할)
 		
 		Map<String, Object> validMap = memberService.loginCheck(userId, userPw);
-		boolean isValid = (boolean) validMap.get("isValid");
+		boolean isValid = (boolean) validMap.get("isValid"); //get: MAP에 담아져있는 데이터를 가져옴 
 		
 		if(isValid) {
 			User userInfo = (User) validMap.get("userInfo");
@@ -98,7 +97,7 @@ public class MemberController {
 	}
 
 	@GetMapping("/addMember")
-	public String addMember(Member member, HttpSession session, Model model){
+	public String addMember(User user, HttpSession session, Model model){
 		model.addAttribute("titleText", "회원가입");
 		model.addAttribute("contents", "가입하려는 회원의 유형을 선택해주세요");
 
@@ -111,7 +110,7 @@ public class MemberController {
 		return "user/member/addNormalMember";
 	}
 
-	@GetMapping("/addCompanyUser")
+	@GetMapping("/addCompanyMember")
 	public String addCompany(Company company, HttpSession session, Model model){
 		model.addAttribute("titleText", "기업 회원 가입");
 		return "user/member/addCompanyMember";
