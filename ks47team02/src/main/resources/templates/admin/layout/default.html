@@ -1,63 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<head>
-	  <meta charset="utf-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <title>AdminLTE 3 | Dashboard</title>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title th:text="${title}"></title>
 	
-	  <!-- Google Font: Source Sans Pro -->
-	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-	  <!-- Font Awesome -->
-	  <link rel="stylesheet" th:href="@{/admin/plugins/fontawesome-free/css/all.min.css}">
-	  <!-- Ionicons -->
-	  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-	  <!-- Tempusdominus Bootstrap 4 -->
-	  <link rel="stylesheet" th:href="@{/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css}">
-	  <!-- iCheck -->
-	  <link rel="stylesheet" th:href="@{/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
-	  <!-- JQVMap -->
-	  <link rel="stylesheet" th:href="@{/admin/plugins/jqvmap/jqvmap.min.css}">
-	  <!-- Theme style -->
-	  <link rel="stylesheet" th:href="@{/admin/dist/css/adminlte.min.css}">
-	  <!-- overlayScrollbars -->
-	  <link rel="stylesheet" th:href="@{/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
-	  <!-- Daterange picker -->
-	  <link rel="stylesheet" th:href="@{/admin/plugins/daterangepicker/daterangepicker.css}">
-	  <!-- summernote -->
-	  <link rel="stylesheet" th:href="@{/admin/plugins/summernote/summernote-bs4.min.css}">
-	</head>
-	<body>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<link rel="stylesheet" th:href="@{/admin/plugins/fontawesome-free/css/all.min.css}">
+	<link rel="stylesheet" th:href="@{/admin/dist/css/adminlte.min.css}">
+	<link rel="stylesheet" th:href="@{/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
+</head>
+
+<body class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="height: auto;">
+	<div class="wrapper">
+	
 		<!-- top navigation start-->
 		<div th:replace="~{admin/fragments/header :: headerFragment}"></div>
 		<!-- top navigation end-->
+		
 		<!-- aside start -->
 		<div th:replace="~{admin/fragments/aside :: asideFragment}"></div>
 		<!-- aside end -->
+		
 		<!-- contents start -->
 		<div layout:fragment="customContents"></div>
 		<!-- contents end -->
+		
 		<!-- footer content -->
 		<div th:replace="~{admin/fragments/footer :: footerFragment}"></div>
 		<!-- footer end-->
 		
+		<div th:replace="~{admin/fragments/rightsidebar :: rightsidebarFragment}"></div>
 		
-		<!-- jQuery -->
-		<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
-		<!-- jQuery UI 1.11.4 -->
-		<script th:src="@{/admin/plugins/jquery-ui/jquery-ui.min.js}"></script>
-		<!-- Bootstrap 4 -->
-		<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-		<!-- AdminLTE App -->
-		<script th:src="@{/admin/dist/js/adminlte.js}"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script th:src="@{/admin/dist/js/demo.js}"></script>
-		<!-- Custom Theme Scripts -->
-		<script th:src="@{/admin/build/js/custom.min.js}"></script>
-		
-		<!-- 사용자 정의 javascript파일 -->
-		<th:block layout:fragment="customJs"></th:block>
-		
-	</body>
+		<div id="sidebar-overlay"></div>
+	</div>
+
+	<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+	<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+	<script th:src="@{/admin/dist/js/adminlte.js}"></script>
+	<script th:src="@{/admin/plugins/jquery-mousewheel/jquery.mousewheel.js}"></script>
+	<script th:src="@{/admin/dist/js/pages/dashboard2.js}"></script>
 	
+	<script>
+		// <![CDATA[  <-- For SVG support
+		if ('WebSocket' in window) {
+			(function () {
+				function refreshCSS() {
+					var sheets = [].slice.call(document.getElementsByTagName("link"));
+					var head = document.getElementsByTagName("head")[0];
+					for (var i = 0; i < sheets.length; ++i) {
+						var elem = sheets[i];
+						var parent = elem.parentElement || head;
+						parent.removeChild(elem);
+						var rel = elem.rel;
+						if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+							var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+							elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+						}
+						parent.appendChild(elem);
+					}
+				}
+				var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+				var address = protocol + window.location.host + window.location.pathname + '/ws';
+				var socket = new WebSocket(address);
+				socket.onmessage = function (msg) {
+					if (msg.data == 'reload') window.location.reload();
+					else if (msg.data == 'refreshcss') refreshCSS();
+				};
+				if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+					console.log('Live reload enabled.');
+					sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+				}
+			})();
+		}
+		else {
+			console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+		}
+		// ]]>
+	</script>
+
+	<!-- 사용자 정의 javascript파일 -->
+	<th:block layout:fragment="customJs"></th:block>
+</body>
+
 </html>
