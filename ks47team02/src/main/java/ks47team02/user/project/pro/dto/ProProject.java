@@ -3,76 +3,59 @@
 
 public class ProProject {
 	
-	private String cpId;
-	private String levelCode;
-	
-	private String joinCateCode;
-	private String workCateCode;
-	private String subjectCateCode;
-	private String joinCateName;
-	private String workCateName;
-	private String subjectCateName;
-	
 	
 	private String proProjectCode;
-	private String applicationDate;
-	private String applicantUserId;
+	private String cpId;
 	private String cpName;	
-	private String proProjectTitle;
-	private String proProjectDetails;
-	private int proProjectMaxtotal;
-	private String proProjectRunName;
+	private String title;
+	private String joinCate;
+	private String workCate;
+	private String subjectCate;
+	private String joinCateCode;
+	private String joinCateName;
+	private String workCateCode;
+	private String workCateName;
+	private String subjectCateCode;
+	private String subjectCateName;
+	private String skill;
+	private String details;
+	private int maxTotal;
+	private String normalRunCode;
+	private String runName;
 	private int proProjectPrice;
+	private int cpCommisson;
 	private String proProjectWriteDate;
 	private String proProjectDueDate;
+	private String dueDate;
 	private String dueCompleteDate;
 	private String proProjectStartDate;
 	private String proProjectCompleteDate;
-	private String runName;
 	private int proProjectDays;
+	private String applicationDate;
+	private String applicantUserId;
+	private String levelCode;
+	private String ApplicantAccountCode;
+	private String userId;
+	private String applicantAccountUserId;
 	
 	
-	
-	
-	
-	public String getJoinCateCode() {
-		return joinCateCode;
+	public String getApplicantAccountUserId() {
+		return applicantAccountUserId;
 	}
-	public void setJoinCateCode(String joinCateCode) {
-		this.joinCateCode = joinCateCode;
+	public void setApplicantAccountUserId(String applicantAccountUserId) {
+		this.applicantAccountUserId = applicantAccountUserId;
 	}
-	public String getWorkCateCode() {
-		return workCateCode;
+	public String getUserId() {
+		return userId;
 	}
-	public void setWorkCateCode(String workCateCode) {
-		this.workCateCode = workCateCode;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getSubjectCateCode() {
-		return subjectCateCode;
+	public String getApplicantAccountCode() {
+		return ApplicantAccountCode;
 	}
-	public void setSubjectCateCode(String subjectCateCode) {
-		this.subjectCateCode = subjectCateCode;
-	}
-	public String getCpId() {
-		return cpId;
-	}
-	public void setCpId(String cpId) {
-		this.cpId = cpId;
-	}
-	public String getLevelCode() {
-		return levelCode;
-	}
-	public void setLevelCode(String levelCode) {
-		this.levelCode = levelCode;
-	}
-	public String getRunName() {
-		return runName;
-	}
-	public void setRunName(String runName) {
-		this.runName = runName;
-	}
-	public String getCpName() {
-		return cpName;
+	public void setApplicantAccountCode(String applicantAccountCode) {
+		ApplicantAccountCode = applicantAccountCode;
 	}
 	public String getProProjectCode() {
 		return proProjectCode;
@@ -80,26 +63,47 @@ public class ProProject {
 	public void setProProjectCode(String proProjectCode) {
 		this.proProjectCode = proProjectCode;
 	}
-	public String getApplicationDate() {
-		return applicationDate;
+	public String getCpId() {
+		return cpId;
 	}
-	public void setApplicationDate(String applicationDate) {
-		this.applicationDate = applicationDate;
+	public void setCpId(String cpId) {
+		this.cpId = cpId;
 	}
-	public String getApplicantUserId() {
-		return applicantUserId;
-	}
-	public void setApplicantUserId(String applicantUserId) {
-		this.applicantUserId = applicantUserId;
+	public String getCpName() {
+		return cpName;
 	}
 	public void setCpName(String cpName) {
 		this.cpName = cpName;
 	}
-	public String getProProjectTitle() {
-		return proProjectTitle;
+	public String getTitle() {
+		return title;
 	}
-	public void setProProjectTitle(String proProjectTitle) {
-		this.proProjectTitle = proProjectTitle;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getJoinCate() {
+		return joinCate;
+	}
+	public void setJoinCate(String joinCate) {
+		this.joinCate = joinCate;
+	}
+	public String getWorkCate() {
+		return workCate;
+	}
+	public void setWorkCate(String workCate) {
+		this.workCate = workCate;
+	}
+	public String getSubjectCate() {
+		return subjectCate;
+	}
+	public void setSubjectCate(String subjectCate) {
+		this.subjectCate = subjectCate;
+	}
+	public String getJoinCateCode() {
+		return joinCateCode;
+	}
+	public void setJoinCateCode(String joinCateCode) {
+		this.joinCateCode = joinCateCode;
 	}
 	public String getJoinCateName() {
 		return joinCateName;
@@ -107,11 +111,23 @@ public class ProProject {
 	public void setJoinCateName(String joinCateName) {
 		this.joinCateName = joinCateName;
 	}
+	public String getWorkCateCode() {
+		return workCateCode;
+	}
+	public void setWorkCateCode(String workCateCode) {
+		this.workCateCode = workCateCode;
+	}
 	public String getWorkCateName() {
 		return workCateName;
 	}
 	public void setWorkCateName(String workCateName) {
 		this.workCateName = workCateName;
+	}
+	public String getSubjectCateCode() {
+		return subjectCateCode;
+	}
+	public void setSubjectCateCode(String subjectCateCode) {
+		this.subjectCateCode = subjectCateCode;
 	}
 	public String getSubjectCateName() {
 		return subjectCateName;
@@ -119,29 +135,47 @@ public class ProProject {
 	public void setSubjectCateName(String subjectCateName) {
 		this.subjectCateName = subjectCateName;
 	}
-	public String getProProjectDetails() {
-		return proProjectDetails;
+	public String getSkill() {
+		return skill;
 	}
-	public void setProProjectDetails(String proProjectDetails) {
-		this.proProjectDetails = proProjectDetails;
+	public void setSkill(String skill) {
+		this.skill = skill;
 	}
-	public int getProProjectMaxtotal() {
-		return proProjectMaxtotal;
+	public String getDetails() {
+		return details;
 	}
-	public void setProProjectMaxtotal(int proProjectMaxtotal) {
-		this.proProjectMaxtotal = proProjectMaxtotal;
+	public void setDetails(String details) {
+		this.details = details;
 	}
-	public String getProProjectRunName() {
-		return proProjectRunName;
+	public int getMaxTotal() {
+		return maxTotal;
 	}
-	public void setProProjectRunName(String proProjectRunName) {
-		this.proProjectRunName = proProjectRunName;
+	public void setMaxTotal(int maxTotal) {
+		this.maxTotal = maxTotal;
+	}
+	public String getNormalRunCode() {
+		return normalRunCode;
+	}
+	public void setNormalRunCode(String normalRunCode) {
+		this.normalRunCode = normalRunCode;
+	}
+	public String getRunName() {
+		return runName;
+	}
+	public void setRunName(String runName) {
+		this.runName = runName;
 	}
 	public int getProProjectPrice() {
 		return proProjectPrice;
 	}
 	public void setProProjectPrice(int proProjectPrice) {
 		this.proProjectPrice = proProjectPrice;
+	}
+	public int getCpCommisson() {
+		return cpCommisson;
+	}
+	public void setCpCommisson(int cpCommisson) {
+		this.cpCommisson = cpCommisson;
 	}
 	public String getProProjectWriteDate() {
 		return proProjectWriteDate;
@@ -154,6 +188,12 @@ public class ProProject {
 	}
 	public void setProProjectDueDate(String proProjectDueDate) {
 		this.proProjectDueDate = proProjectDueDate;
+	}
+	public String getDueDate() {
+		return dueDate;
+	}
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
 	}
 	public String getDueCompleteDate() {
 		return dueCompleteDate;
@@ -179,59 +219,168 @@ public class ProProject {
 	public void setProProjectDays(int proProjectDays) {
 		this.proProjectDays = proProjectDays;
 	}
+	public String getApplicationDate() {
+		return applicationDate;
+	}
+	public void setApplicationDate(String applicationDate) {
+		this.applicationDate = applicationDate;
+	}
+	public String getApplicantUserId() {
+		return applicantUserId;
+	}
+	public void setApplicantUserId(String applicantUserId) {
+		this.applicantUserId = applicantUserId;
+	}
+	public String getLevelCode() {
+		return levelCode;
+	}
+	public void setLevelCode(String levelCode) {
+		this.levelCode = levelCode;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("ProProject [cpId=");
-		builder.append(cpId);
-		builder.append(", levelCode=");
-		builder.append(levelCode);
-		builder.append(", joinCateCode=");
-		builder.append(joinCateCode);
-		builder.append(", workCateCode=");
-		builder.append(workCateCode);
-		builder.append(", subjectCateCode=");
-		builder.append(subjectCateCode);
-		builder.append(", joinCateName=");
-		builder.append(joinCateName);
-		builder.append(", workCateName=");
-		builder.append(workCateName);
-		builder.append(", subjectCateName=");
-		builder.append(subjectCateName);
-		builder.append(", proProjectCode=");
+		builder.append("ProProject [proProjectCode=");
 		builder.append(proProjectCode);
-		builder.append(", applicationDate=");
-		builder.append(applicationDate);
-		builder.append(", applicantUserId=");
-		builder.append(applicantUserId);
+		builder.append(", cpId=");
+		builder.append(cpId);
 		builder.append(", cpName=");
 		builder.append(cpName);
-		builder.append(", proProjectTitle=");
-		builder.append(proProjectTitle);
-		builder.append(", proProjectDetails=");
-		builder.append(proProjectDetails);
-		builder.append(", proProjectMaxtotal=");
-		builder.append(proProjectMaxtotal);
-		builder.append(", proProjectRunName=");
-		builder.append(proProjectRunName);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", joinCate=");
+		builder.append(joinCate);
+		builder.append(", workCate=");
+		builder.append(workCate);
+		builder.append(", subjectCate=");
+		builder.append(subjectCate);
+		builder.append(", joinCateCode=");
+		builder.append(joinCateCode);
+		builder.append(", joinCateName=");
+		builder.append(joinCateName);
+		builder.append(", workCateCode=");
+		builder.append(workCateCode);
+		builder.append(", workCateName=");
+		builder.append(workCateName);
+		builder.append(", subjectCateCode=");
+		builder.append(subjectCateCode);
+		builder.append(", subjectCateName=");
+		builder.append(subjectCateName);
+		builder.append(", skill=");
+		builder.append(skill);
+		builder.append(", details=");
+		builder.append(details);
+		builder.append(", maxTotal=");
+		builder.append(maxTotal);
+		builder.append(", normalRunCode=");
+		builder.append(normalRunCode);
+		builder.append(", runName=");
+		builder.append(runName);
 		builder.append(", proProjectPrice=");
 		builder.append(proProjectPrice);
+		builder.append(", cpCommisson=");
+		builder.append(cpCommisson);
 		builder.append(", proProjectWriteDate=");
 		builder.append(proProjectWriteDate);
 		builder.append(", proProjectDueDate=");
 		builder.append(proProjectDueDate);
+		builder.append(", dueDate=");
+		builder.append(dueDate);
 		builder.append(", dueCompleteDate=");
 		builder.append(dueCompleteDate);
 		builder.append(", proProjectStartDate=");
 		builder.append(proProjectStartDate);
 		builder.append(", proProjectCompleteDate=");
 		builder.append(proProjectCompleteDate);
-		builder.append(", runName=");
-		builder.append(runName);
 		builder.append(", proProjectDays=");
 		builder.append(proProjectDays);
+		builder.append(", applicationDate=");
+		builder.append(applicationDate);
+		builder.append(", applicantUserId=");
+		builder.append(applicantUserId);
+		builder.append(", levelCode=");
+		builder.append(levelCode);
+		builder.append(", ApplicantAccountCode=");
+		builder.append(ApplicantAccountCode);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", applicantAccountUserId=");
+		builder.append(applicantAccountUserId);
+		builder.append(", getApplicantAccountUserId()=");
+		builder.append(getApplicantAccountUserId());
+		builder.append(", getUserId()=");
+		builder.append(getUserId());
+		builder.append(", getApplicantAccountCode()=");
+		builder.append(getApplicantAccountCode());
+		builder.append(", getProProjectCode()=");
+		builder.append(getProProjectCode());
+		builder.append(", getCpId()=");
+		builder.append(getCpId());
+		builder.append(", getCpName()=");
+		builder.append(getCpName());
+		builder.append(", getTitle()=");
+		builder.append(getTitle());
+		builder.append(", getJoinCate()=");
+		builder.append(getJoinCate());
+		builder.append(", getWorkCate()=");
+		builder.append(getWorkCate());
+		builder.append(", getSubjectCate()=");
+		builder.append(getSubjectCate());
+		builder.append(", getJoinCateCode()=");
+		builder.append(getJoinCateCode());
+		builder.append(", getJoinCateName()=");
+		builder.append(getJoinCateName());
+		builder.append(", getWorkCateCode()=");
+		builder.append(getWorkCateCode());
+		builder.append(", getWorkCateName()=");
+		builder.append(getWorkCateName());
+		builder.append(", getSubjectCateCode()=");
+		builder.append(getSubjectCateCode());
+		builder.append(", getSubjectCateName()=");
+		builder.append(getSubjectCateName());
+		builder.append(", getSkill()=");
+		builder.append(getSkill());
+		builder.append(", getDetails()=");
+		builder.append(getDetails());
+		builder.append(", getMaxTotal()=");
+		builder.append(getMaxTotal());
+		builder.append(", getNormalRunCode()=");
+		builder.append(getNormalRunCode());
+		builder.append(", getRunName()=");
+		builder.append(getRunName());
+		builder.append(", getProProjectPrice()=");
+		builder.append(getProProjectPrice());
+		builder.append(", getCpCommisson()=");
+		builder.append(getCpCommisson());
+		builder.append(", getProProjectWriteDate()=");
+		builder.append(getProProjectWriteDate());
+		builder.append(", getProProjectDueDate()=");
+		builder.append(getProProjectDueDate());
+		builder.append(", getDueDate()=");
+		builder.append(getDueDate());
+		builder.append(", getDueCompleteDate()=");
+		builder.append(getDueCompleteDate());
+		builder.append(", getProProjectStartDate()=");
+		builder.append(getProProjectStartDate());
+		builder.append(", getProProjectCompleteDate()=");
+		builder.append(getProProjectCompleteDate());
+		builder.append(", getProProjectDays()=");
+		builder.append(getProProjectDays());
+		builder.append(", getApplicationDate()=");
+		builder.append(getApplicationDate());
+		builder.append(", getApplicantUserId()=");
+		builder.append(getApplicantUserId());
+		builder.append(", getLevelCode()=");
+		builder.append(getLevelCode());
+		builder.append(", getClass()=");
+		builder.append(getClass());
+		builder.append(", hashCode()=");
+		builder.append(hashCode());
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
 	
-}
+	
+}	

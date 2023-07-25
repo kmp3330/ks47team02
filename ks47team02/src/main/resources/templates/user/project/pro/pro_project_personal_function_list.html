@@ -4,9 +4,97 @@
 		layout:decorate="~{user/layout/default}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<style>
+  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+    table-layout: auto;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+  }
 
-</body>
+
+</style>
+	</head>
+		<th:block layout:fragment="customJs">
+			<script>
+				$('.proProjectApplicantDeleteBtn').click(function (e) {
+				    e.preventDefault();
+					let isDelete = confirm('정말로 삭제하시겠습니까?');
+					if(isDelete) {
+				        const proProjectCode = this.dataset.proProjectCode;
+				        location.href=`/project/pro/proProjectApplicantDelete?proProjectCode=${proProjectCode}`;
+				        //location.replace(/project/pro/proProjectDelete?proProjectCode=${proProjectCode});
+				    }
+				});
+			</script>
+		</th:block>
+		<th:block layout:fragment="customContents">
+			
+			<table>
+				<thead>
+					<tr>
+						<th hidden></th>
+						<th>신청자 아이디</th>
+						<th>맡은기능</th>
+						<th>프로젝트 전체 일수</th>
+						<th>일별 점수</th>
+						<th>프로젝트 완료시 전체 점수</th>
+						<th>개인별 작업 일수수</th>
+						<th>개인별 완료 후 획득 가능한 총 점수</th>
+						<th>개인별 완료 후 획득한 점수</th>
+						<th>작업 일수별 예정 총 금액</th>
+						<th>등급별 수수료율</th>
+						<th>매출(개인수수료)</th>
+						<th>전문과제 완료 후 받는 금액</th>
+						<th>진행률 (%)</th>
+						<th>진행 상태</th>
+						<th>기능 시작 일시</th>
+						<th>포기 및 완료 일시</th>
+						<th>등록 시각</th>
+						<th>기간</th>
+						<th>수정</th>
+				 		<th>
+					 		<a th:href="@{/project/pro/proProjectList}">뒤로가기</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(proProjectPersonalFunctionList)}">
+						<td colspan="7">신청자가 없습니다.</td>
+					</tr>
+					<tr th:unless="${#lists.isEmpty(proProjectPersonalFunctionList)}"
+						th:each="p : ${proProjectPersonalFunctionList}">
+						<td th:text="${p.proProjectCode}" hidden></td>
+						<td th:text="${p.userId}"></td>
+						<td th:text="${p.skill}"></td>
+						<td th:text="${p.projectDay}"></td>
+						<td th:text="${p.dayScore}"></td>
+						<td th:text="${p.projectCompleteScore}"></td>
+						<td th:text="${p.individualWorkDay}"></td>
+						<td th:text="${p.individualCompletePossibleScore}"></td>
+						<td th:text="${p.individualCompleteScore}"></td>
+						<td th:text="${p.workDayPrice}"></td>
+						<td th:text="${p.gradeCommision}"></td>
+						<td th:text="${p.userCommision}"></td>
+						<td th:text="${p.projectPrice}"></td>
+						<td th:text="${p.progressRate}"></td>
+						<td th:text="${p.runName}"></td>
+						<td th:text="${p.startDate}"></td>
+						<td th:text="${p.completeDate}"></td>
+						<td th:text="${p.registerationDate}"></td>
+						<td th:text="${p.period}"></td>
+						<td>
+							<a th:href="@{/project/pro/proProjectPersonalFunctionModify(proProjectCode=${p.proProjectCode})}" >수정하기</a>
+						</td>
+						<td>
+							<a th:href="@{#}" hidden></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
 </html>
