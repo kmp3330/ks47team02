@@ -7,23 +7,28 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
 import ks47team02.user.project.normal.service.NormalProjectService;
 import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.project.pro.dto.SubjectCate;
+import ks47team02.user.project.pro.dto.WorkCate;
+import ks47team02.user.project.pro.service.ProProjectService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
 @RequestMapping("/normalProject")
+@Slf4j
 @AllArgsConstructor
-@lombok.extern.slf4j.Slf4j
 public class normalProjectController {
 	
 	/*생성자 메서드*/
 	
 	private final NormalProjectService normalProjectService;
+	private final ProProjectService proProjectService;
 	
 
 	
@@ -53,11 +58,16 @@ public class normalProjectController {
 	 * */
 	@GetMapping("/addProject")
 	public String addProject(Model model) {
+		//joinCateList 가져오기
 		List<JoinCate> joinCateList = normalProjectService.getJoinCateList();
-		List<SubjectCate> subjectCateList = normalProjectService.getSubjectCateList();
-		
+		log.info("joinCateList arr : {}", joinCateList);
+		List<SubjectCate> subjectCateList = proProjectService.getSubjectCateList();
+		log.info("subjectCateList ida", subjectCateList);
+		List<WorkCate> workCateList = normalProjectService.getWorkCateList();
+		log.info("WorkCateList controller : {}", workCateList);
 		model.addAttribute("joinCateList", joinCateList);
 		model.addAttribute("subjectCateList", subjectCateList);
+		model.addAttribute("workCateList", workCateList);
 		model.addAttribute("title", "일반과제 등록 페이지");
 		
 		
@@ -71,7 +81,7 @@ public class normalProjectController {
 	 */
 	@PostMapping("/addProject")
 	public String addProject(NormalProjects normalProjects) {
-		log.info("안녕하시오");
+		
 		
 		log.info("addProject normalProjects 전송 : {}", normalProjects);
 		normalProjectService.addNormalProject(normalProjects);
@@ -79,14 +89,33 @@ public class normalProjectController {
 		log.info("addProject normalProjects : {}", normalProjects);
 		
 		
-		return "redirect:/user/project/normal/list/projectList";
+		return "redirect:/normalProject/projectList";
 	}
 	
 	@GetMapping("/addApplicantAccept")
-	public String addApplicantAccept(Model model) {
+	public String addApplicantAccept(@RequestParam(value="normalProjectCode") String normalProjectCode, Model model) {
 		model.addAttribute("title", "일반과제 신청");
+		model.addAttribute("normalProjectCode" ,normalProjectCode);
+		
+		
 		
 		return "user/project/normal/applyApplicant/addApplicantAccept";
+	}
+	
+	@PostMapping("/addApplicantAccept")
+
+	public String addApplicantAccept(Model model) {
+		model.addAttribute("title", "일반과제 신청");
+
+
+
+		
+
+		return "redirect:/normalProject/getAcceptList";
+
+		
+
+
 	}
 	
 	@GetMapping("/addAcceptApprove")
@@ -99,14 +128,45 @@ public class normalProjectController {
 	/*등록영역 끝*/
 	
 	
-	
-	
-	
-	
 	/*수정영역*/
+	@PostMapping("/modifyProject")
+	public String modifyProject(NormalProjects normalProject) {
+		log.info("normalProject : {}", normalProject);
+		
+		
+		return "redirect:/normalProject/projectList";
+	}
+	
+	
+	/**
+	 * @Param String normalProjectCode 일반과제코드
+	 * @Param Model model
+	 * 
+	 * 
+	 * @return 일반과제 수정 페이지로 이동 
+	 * */
 	@GetMapping("/modifyProject")
-	public String modifyProject(Model model) {
+	public String modifyProject(@RequestParam(value="normalProjectCode") String normalProjectCode
+			,Model model) {
+		
+		/*월요일날 물어볼것 : 이거 각 LIST를 한번씩 가져오기 좀 번거로운데 한꺼번에 가져오게 할 수 있는 방법을 물어보기*/
+		//일반과제 리스트
+		List<NormalProjects> normalProject = normalProjectService.getNormalProjectByCode(normalProjectCode);
+		//참여분야 리스트
+		List<JoinCate> joinCateList = normalProjectService.getJoinCateList();
+		//작업분류 리스트
+		List<WorkCate> workCateList = normalProjectService.getWorkCateList();
+		//주제분류 리스트 
+		List<SubjectCate> subjectCateList = normalProjectService.getSubjectCateList();
+		
+		model.addAttribute("joinCateList", joinCateList);
+		model.addAttribute("workCateList", workCateList);
+		log.info("normalProjectController = {}", normalProject);
+		model.addAttribute("normalProjectList" ,normalProject);
+		model.addAttribute("subjectCateList" ,subjectCateList);
 		model.addAttribute("title", "일반과제 수정 페이지");
+		
+		
 		
 		return "user/project/normal/list/modifyProject";
 	}
@@ -150,11 +210,21 @@ public class normalProjectController {
 		return "user/project/normal/applyApplicant/removePerson";
 	}
 	
+	/**
+	 * 일반과제 게시글 삭제
+	 * */
 	@GetMapping("/removeProject")
 	public String removeProject(Model model) {
 		model.addAttribute("title", "일반과제 삭제페이지");
 		
 		return "user/project/normal/list/removeProject";
+	}
+	
+	@PostMapping("/removeProject")
+	public String removeProject(@RequestParam(value="userPw") String userPw ,Model model) {
+		model.addAttribute("title", "일반과제 삭제페이지");
+		
+		return "redirect:/normalProject/projectList";
 	}
 	
 	
@@ -171,15 +241,18 @@ public class normalProjectController {
 	
 	/*get영역*/
 	
+	/**
+	 * 일반과제 전체 리스트 가져오는 폼
+	 * @param Model model 모델 가져옴
+	 * @return 프로젝트 리스트 화면
+	 * 
+	 * */
 	@GetMapping("/projectList")
 	public String getProjectList(Model model) {
 		
 		log.info("normalProjectList = {}", "안녕");
 		List<NormalProjects> normalProjectList =  normalProjectService.getNormalProjects();
-		
 		model.addAttribute("normalProjectList", normalProjectList);
-		
-		
 		model.addAttribute("title", "일반과제 목록");
 		
 		return "user/project/normal/list/projectList";
