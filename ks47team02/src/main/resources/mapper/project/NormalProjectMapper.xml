@@ -41,6 +41,32 @@
 		<id column="work_cate_code" property="workCateCode"/>
 		<result column="work_cate_name" property="workCateName"/>
 	</resultMap>
+
+	<update id="modifyNormalProject" parameterType="NormalProjects">
+
+	UPDATE 	normal_project
+		SET normal_project_name = ${normalProjectName},
+		join_cate_code = ${joinCateCode},
+		(SELECT join_cate_name FROM join_cate WHERE join_cate_code = #{joinCateCode}),
+		work_cate_code = ${workCateCode},
+		(SELECT work_cate_name FROM work_cate WHERE work_cate_code = #{workCateCode}),
+		subject_cate_code = ${subjectCateCode},
+		(SELECT subject_cate_name FROM subject_cate WHERE subject_cate_code = #{subjectCateCode}),
+		required_skill = ${requiredSkill},
+		normal_project_detail = ${normalProjectDetail},
+		project_max_people_num = ${projectMaxPeopleNum},
+		normal_run_code =  'normal_run_code01',
+		run_name = (SELECT nr.run_name FROM normal_run AS nr WHERE nr.normal_run_code = 'normal_run_code01'),
+		project_advertise_finish_date = ${projectAdvertiseFinishDate},
+		project_startup_date = ${projectStartUpDate},
+		project_finish_date = ${projectFinishDate},
+		project_day = ${projectDay},
+		project_finish_score = ${projectFinishScore}
+
+	WHERE
+		user_id = #{userId};
+
+	</update>
 	
 	<insert id="addNormalProject" parameterType="NormalProjects">
 		

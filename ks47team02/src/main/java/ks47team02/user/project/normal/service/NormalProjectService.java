@@ -29,6 +29,13 @@ public class NormalProjectService {
 	public NormalProjectService(NormalProjectMapper normalProjectMapper) {
 		this.normalProjectMapper = normalProjectMapper;
 	}
+
+	/**
+	 *
+	 * */
+	public void modifyNormalProject(NormalProjects normalProjects){
+		normalProjectMapper.modifyNormalProject(normalProjects);
+	}
 	
 	public List<NormalProjects> getNormalProjects(){
 		List<NormalProjects> normalProjectList = normalProjectMapper.getNormalProjectList();

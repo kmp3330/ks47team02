@@ -11,7 +11,8 @@ import ks47team02.user.project.pro.dto.WorkCate;
 
 @Mapper
 public interface NormalProjectMapper {
-	
+
+	public int modifyNormalProject(NormalProjects normalProjects);
 	public List<NormalProjects> getNormalProjectList();
 	
 	public List<JoinCate> getjoinCateList();

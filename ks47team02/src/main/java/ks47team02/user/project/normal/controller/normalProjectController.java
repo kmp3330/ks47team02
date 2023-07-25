@@ -52,7 +52,7 @@ public class normalProjectController {
 	
 	/**
 	 * 일반과제 작성 
-	 * @param Model model
+	 * @param model 모델태그임
 	 * @return 일반과제 추가 페이지
 	 * 
 	 * */
@@ -76,7 +76,7 @@ public class normalProjectController {
 	
 	/**
 	 * 일반과제 작성 폼 post
-	 * @param normalProjects
+	 * @param normalProjects 입력받은 일반과제
 	 * @return 일반과제 리스트
 	 */
 	@PostMapping("/addProject")
@@ -131,7 +131,8 @@ public class normalProjectController {
 	/*수정영역*/
 	@PostMapping("/modifyProject")
 	public String modifyProject(NormalProjects normalProject) {
-		log.info("normalProject : {}", normalProject);
+
+		normalProjectService.modifyNormalProject(normalProject);
 		
 		
 		return "redirect:/normalProject/projectList";
