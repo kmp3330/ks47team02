@@ -5,6 +5,18 @@
 
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
+	<script>
+	$('.danger-border').click(function (e) {
+            e.preventDefault();
+
+            let isDelete = confirm('정말로 삭제하시겠습니까?');
+
+            if(isDelete) {
+                const announcementCode = this.dataset.announcementCode;
+                location.replace(`/announcement/announcementRemove?announcementCode=${announcementCode}`);
+            }
+        });
+	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -34,7 +46,7 @@
 											<th>관련업무경력</th>
 											<th>채용인원</th>
 											<th>급여</th>
-											<th>진행상태분류</th>
+											<th>마감시간</th>
 											<th>수정</th>
 											<th>삭제</th>
 										</tr>
@@ -50,11 +62,11 @@
 											<td th:text="${l.career}"></td>
 											<td th:text="${l.recruitment}"></td>
 											<td th:text="${l.wage}"></td>
-											<td th:text="${l.hiringStatus}"></td>
-											<td><a th:href="@{#}"
+											<td th:text="${l.dueDate}"></td>
+											<td><a th:href="@{/announcement/announcementModify(announcementCode=${l.announcementCode})}"
 												class="genric-btn success-border circle"> <i class="fas">수정</i>
 											</a></td>
-											<td><a th:href="@{#}"
+											<td><a th:href="@{#}" th:data-announcement-code="${l.announcementCode}"
 												class="genric-btn danger-border circle"> <i class="fas">삭제</i>
 											</a></td>
 										</tr>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+
+	<head>
+    	<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
+    	<style>
+    		input{
+    			width: 98%;
+    			height: 23px;
+    		}
+    		td:nth-child(3n+1):not(:last-child){
+    			color: white;
+    			font-weight: 700;
+    			background-color: cornflowerblue;
+    		}
+    		select{
+    			width: 99%;
+    			text-align: center;
+    			height: 23px;
+    		}
+    		#idCheck{
+    			width: 99%; 
+    			height: 25px;
+    		}
+    		#proProjectModifyBtn, #resetBtn {
+    			width: 49%;
+    			height: 25px;
+    		}
+    		#proProjectCode{
+    			display : none;
+    		}
+    	</style>
+    </head>
+    
+    <th:block layout:fragment="customJs">
+    	<script th:src="@{/js/jquery-3.7.0.js}"></script>
+    	<script>
+    		/*
+    		const $idCheckBtn = document.querySelector('#idCheck');
+    		$idCheckBtn.addEventListener('click', e => {
+    			alert('test');
+    		});
+    		
+    		$('#idCheck').click(function(){
+    			const $memberId = $('#memberId');
+    			let memberId = $memberId.val();
+    			// 유효성검사
+    			if(typeof memberId == 'undefined' || memberId == null || memberId == '' ){
+    				alert('아이디를 입력해주세요');
+    				$memberId.focus();
+    				return false;
+    			}
+    		
+    			
+    			// ajax 호출
+    			const request = $.ajax({
+					url: '/member/idCheck',
+					method: 'POST',
+					data: { 'memberId' : memberId },
+					dataType: 'text'
+   				});
+   				 
+   				request.done(function( response ) {
+   					if(response == 'true'){
+   						alert('이미 등록된 아이디입니다.');
+   						$memberId.val('');
+   	    				$memberId.focus();
+   	    				return false;
+   					}else{
+   						$('#addMemberForm input').prop('disabled', false);
+   						$('#addMemberForm select').prop('disabled', false);
+   						$('#addMemberForm button').prop('disabled', false);
+   					}
+					//console.log(typeof response);
+   				});
+   				 
+   				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+   				});		
+    		});
+    		
+    		
+    		//회원 아이디 변경 시 이벤트 처리
+    		$('#memberId').change(function(){
+    			$('#addMemberForm input').not('#memberId').val('');
+    			$('#addMemberForm input').not('#memberId').prop('disabled', true);
+    			$('#addMemberForm select').prop('disabled', true);
+    			$('#addMemberForm button').not('#idCheck').prop('disabled', true);
+    			
+    		});
+    		
+    		*/
+    		
+    		// 리셋버튼
+    		/* $('#resetBtn').click(function(e){
+    			//태그가 가지고 있는 기본 이벤트 동작 방지
+    			e.preventDefault();
+    			$('#proProjectPersonalFunctionModifyForm input').val('');
+    			
+    		})    */
+    	
+    		
+    		
+    		$('#progressStautsModifyBtn').click(function(){
+    			const validateEle = $('#proProjectModifyForm input');
+    								
+    			let isSubmit = false;
+    			validateEle.each((idx, item) => {
+    				isSubmit = validCheck(item);
+    				return isSubmit
+    			})
+    			if(isSubmit) {
+    				$('#progressStautsModifyForm').submit();
+    			}
+    		});
+    		
+    		// 유효성 검사 함수
+    		const validCheck = element => {
+    			let data = $(element).val();
+    			let eleId = $(element).attr('id');
+    			let text = $(element).text();
+    			if(typeof data == 'undefined' || data == null || data == '' ){
+    				let cate = $(`label[for="${eleId}"]`).text();
+    				alert(`${cate} 은/는 필수 입력항목입니다.`);
+    				$(element).focus();
+    				return false;    
+    			}
+    			return true;
+    		}
+    	
+    	
+    	</script>
+    </th:block>
+
+	<th:block layout:fragment="customContents">
+		<form id="progressStautsModifyForm" th:action="@{/project/pro/progressStautsModify}" method="post">
+  			<table th:object="${progressStatusInfo}">
+  			<thead></thead>
+				<tbody>
+					<tr>
+						<th:block>
+							<input type="text" id="progressStatusCode" name="progressStatusCode" th:value="*{progressStatusCode}" hidden />
+						</th:block>
+						<th:block>
+							<input type="text" id="proProjectCode" name="proProjectCode" th:value="*{proProjectCode}" hidden />
+						</th:block>
+						<td>
+							<label for="projectDetails">전문과제 상세설명</label>
+						</td>
+						<td>
+							<input type="text" id="projectDetails" name="projectDetails" th:value="*{projectDetails}"
+									readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="progressRate">진행률</label>
+						</td>
+						<td>
+							<input type="text" id="progressRate" name="progressRate" th:value="*{progressRate}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="statusName">진행상태</label>
+						</td>
+						<td>
+							<input type="text" id="statusName" name="statusName" th:value="*{statusName}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="writeDate">작성시간</label>
+						</td>
+						<td>
+							<input type="text" id="writeDate" name="writeDate" th:value="*{writeDate}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="3">
+							<button type="submit" id="progressStautsModifyBtn">작성완료</button>
+							<a th:href="@{/project/pro/progressStautsList}">뒤로가기</a>
+						</td>
+					</tr>	
+				</tbody> 
+			</table>
+		</form>
+	</th:block>
+</html>

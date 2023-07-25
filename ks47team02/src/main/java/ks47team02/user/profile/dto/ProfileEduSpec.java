@@ -9,11 +9,11 @@ public class ProfileEduSpec {
 	private String userUnivName;
 	private String userUnivMajor;
 	private String userUnivGrad;
-	private Date userUnivEnterDate;
-	private Date userUnivGradDate;
-	private int userUnivScore;
-	private int userUnivTotalScore;
-	private Date profileRegDate;
+	private String userUnivEnterDate;
+	private String userUnivGradDate;
+	private String userUnivScore;
+	private String userUnivTotalScore;
+	private String profileRegDate;
 	private boolean profileHidden;
 	private boolean profileApplicationHidden;
 	
@@ -53,34 +53,34 @@ public class ProfileEduSpec {
 	public void setUserUnivGrad(String userUnivGrad) {
 		this.userUnivGrad = userUnivGrad;
 	}
-	public Date getUserUnivEnterDate() {
+	public String getUserUnivEnterDate() {
 		return userUnivEnterDate;
 	}
-	public void setUserUnivEnterDate(Date userUnivEnterDate) {
+	public void setUserUnivEnterDate(String userUnivEnterDate) {
 		this.userUnivEnterDate = userUnivEnterDate;
 	}
-	public Date getUserUnivGradDate() {
+	public String getUserUnivGradDate() {
 		return userUnivGradDate;
 	}
-	public void setUserUnivGradDate(Date userUnivGradDate) {
+	public void setUserUnivGradDate(String userUnivGradDate) {
 		this.userUnivGradDate = userUnivGradDate;
 	}
-	public int getUserUnivScore() {
+	public String getUserUnivScore() {
 		return userUnivScore;
 	}
-	public void setUserUnivScore(int userUnivScore) {
+	public void setUserUnivScore(String userUnivScore) {
 		this.userUnivScore = userUnivScore;
 	}
-	public int getUserUnivTotalScore() {
+	public String getUserUnivTotalScore() {
 		return userUnivTotalScore;
 	}
-	public void setUserUnivTotalScore(int userUnivTotalScore) {
+	public void setUserUnivTotalScore(String userUnivTotalScore) {
 		this.userUnivTotalScore = userUnivTotalScore;
 	}
-	public Date getProfileRegDate() {
+	public String getProfileRegDate() {
 		return profileRegDate;
 	}
-	public void setProfileRegDate(Date profileRegDate) {
+	public void setProfileRegDate(String profileRegDate) {
 		this.profileRegDate = profileRegDate;
 	}
 	public boolean isProfileHidden() {

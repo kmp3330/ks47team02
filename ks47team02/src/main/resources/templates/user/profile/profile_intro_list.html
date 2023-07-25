@@ -14,6 +14,22 @@
 
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script> -->
+	<script>
+		
+		$('.danger-border').click(function (e) {
+			e.preventDefault();
+			
+			let isDelete = confirm('정말로 삭제하시겠습니까?');
+				
+			if(isDelete) {
+				const userIntroCode = this.dataset.userIntroCode;
+				location.replace(`/profile/profileIntroDelete?userIntroCode=${userIntroCode}`);
+			}
+		});
+		
+		
+	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -73,10 +89,10 @@
 											<td th:text="${l.userIntro}"></td>
 											<td th:text="${l.profileHidden}"></td>
 											<td th:text="${l.profileApplicationHidden}"></td>
-											<td><a th:href="@{#}" class="genric-btn success-border circle"> <i
+											<td><a th:href="@{/profile/profileIntroModify(userIntroCode=${l.userIntroCode})}" class="genric-btn success-border circle"> <i
 														class="fas">수정</i>
 												</a></td>
-											<td><a th:href="@{#}" class="genric-btn danger-border circle"> <i
+											<td><a th:href="@{#}" id="profileIntroDeleteBtn" th:data-user-intro-code="${l.userIntroCode}" class="genric-btn danger-border circle"> <i
 														class="fas">삭제</i>
 												</a></td>
 										</tr>

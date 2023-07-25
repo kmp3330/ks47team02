@@ -78,5 +78,33 @@
 		WHERE
 			user_certificate_code = #{certificateCode};
 	</select>
+	
+	<update id="profileCertificateModify" parameterType="ProfileCertificate">
+		/* 자격증 수정 */
+		UPDATE profile_certificate
+		<set>
+			<if test="certificateName != null and certificateName != ''">
+				user_certificate_name = #{certificateName},
+			</if>
+			<if test="certificatePublication != null and certificatePublication != ''">
+				user_certificate_publication = #{certificatePublication},
+			</if>
+			<if test="certificateDate != null and certificateDate != ''">
+				user_certificate_date = #{certificateDate},
+			</if>
+			profile_hidden = #{profileHidden},
+			profile_application_hidden = #{profileApplicationHidden},
+		</set>
+		WHERE
+			user_certificate_code = #{certificateCode};
+	</update>
+	
+	<delete id="profileCertificateDelete" parameterType="String">
+		DELETE
+		FROM
+			profile_certificate
+		WHERE
+			user_certificate_code = #{certificateCode}
+	</delete>
 
 </mapper>

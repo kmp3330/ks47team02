@@ -31,12 +31,6 @@
 			if (isSubmit) $('#addCertificateForm').submit();		
 		});
 		
-		$('#certificateResetbtn').click(function (e) {
-			e.preventDefault();
-			
-			$('#addCertificateForm input[type="text"],input[type="date"]').val('');
-		});
-		
 	</script>
 </th:block>
 
@@ -72,10 +66,10 @@
 							<div class="card-header border-0">
 								<h3 class="mb-0 title_color text-left">자격증 등록</h3>
 								<div class="card-tools">
-									<a id="certificateInsertbtn" 
+									<a th:href="@{#}" id="certificateInsertbtn" 
 										class="genric-btn info-border circle"> <i
 										class="fas">등록 완료</i>
-									</a> <a id="certificateResetbtn" class="genric-btn danger-border circle">
+									</a> <a th:href="@{/profile/profileCertificateList}" id="certificateResetbtn" class="genric-btn danger-border circle">
 										<i class="fas">취소</i>
 									</a>
 								</div>

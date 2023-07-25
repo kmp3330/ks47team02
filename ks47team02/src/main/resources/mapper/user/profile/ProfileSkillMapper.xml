@@ -31,6 +31,8 @@
 		    ps.profile_application_hidden
 		FROM
 		    profile_skill as ps
+		WHERE
+			user_id = #{sessionId};
 	</select>
 	
 	<insert id="profileSkillInsert" parameterType="ProfileSkill">
@@ -71,5 +73,47 @@
 		            #{profileHidden},
 		            #{profileApplicationHidden});
 	</insert>
+	
+	<update id="profileSkillModify" parameterType="ProfileSkill">
+		/*보유기술 수정*/
+		UPDATE profile_skill
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="userSkill !=null and userSkill !=''">
+				user_skill = #{userSkill},
+			</if>
+			<if test="profileHidden !=null and profileHidden !=''">
+				profile_hidden = #{profileHidden},
+			</if>
+			<if test="profileApplicationHidden !=null and profileApplicationHidden !=''">
+				profile_application_hidden = #{profileApplicationHidden},
+			</if>
+		</trim>
+		WHERE
+			user_skill_code = #{userSkillCode}
+	</update>
+	
+	<select id="getProfileSkillInfoByCode" parameterType="String" resultMap = "profileSkillResultMap">
+		/*보유기술 상세조회 */
+		select
+		    ps.user_skill_code,
+		    ps.user_id,
+		    ps.user_skill,
+		    ps.user_skill_rank,
+		    ps.user_experience,
+		    ps.user_reg_date,
+		    ps.profile_hidden,
+		    ps.profile_application_hidden
+		from
+		    profile_skill as ps
+		where
+		    ps.user_skill_code = #{userSkillCode};
+	</select>
+	<delete id="profileSkillDelete" parameterType="String">
+		DELETE
+		FROM
+			profile_skill
+		WHERE
+			user_skill_code = #{userSkillCode}
+	</delete>
 	
 </mapper>

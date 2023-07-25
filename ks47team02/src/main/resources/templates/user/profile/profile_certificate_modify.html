@@ -9,7 +9,7 @@
 		$('#certificateInsertbtn').click(function (e) {
 			e.preventDefault();
 			
-			// $('#addCertificateForm').submit();
+			$('#addCertificateForm').submit();
 		});
 		
 		
@@ -47,19 +47,22 @@
 					<div class="single-job mb-4 justify-content-between text-center">
 						<div class="card">
 							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">자격증 등록</h3>
+								<h3 class="mb-0 title_color text-left">자격증 수정</h3>
 								<div class="card-tools">
-									<a id="certificateInsertbtn" 
-										class="genric-btn info-border circle"> <i
-										class="fas">수정완료</i>
-									</a> <a id="certificateResetbtn" class="genric-btn danger-border circle">
-										<i class="fas">입력취소</i>
+									<a th:href="@{#}" id="certificateInsertbtn"
+										class="genric-btn info-border circle"> <i class="fas">수정완료</i>
+									</a> <a th:href="@{/profile/profileCertificateList}"
+										id="certificateResetbtn"
+										class="genric-btn danger-border circle"> <i class="fas">취소</i>
 									</a>
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">
-								<form id="addCertificateForm" th:action="@{/profile/profileCertificateModify}" class="d-md-flex justify-content-between">
-									<table class="table table-valign-middle" th:object="${certificateInfo}">
+								<form id="addCertificateForm"
+									th:action="@{/profile/profileCertificateModify}" method="post"
+									class="d-md-flex justify-content-between">
+									<table class="table table-valign-middle"
+										th:object="${certificateInfo}">
 										<thead>
 											<tr>
 												<th>자격증명</th>
@@ -71,13 +74,21 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td><input class="genric-btn" type="text" th:value="*{certificateName}"></td>
-												<td><input class="genric-btn" type="text" th:value="*{certificatePublication}"></td>
-												<td><input class="genric-btn" type="date" th:value="*{certificateDate}"></td>
+												<td><input class="genric-btn" type="hidden"
+													name="certificateCode" th:value="*{certificateCode}">
+													<input class="genric-btn" type="text"
+													name="certificateName" th:value="*{certificateName}">
+												</td>
+												<td><input class="genric-btn" type="text"
+													name="certificatePublication"
+													th:value="*{certificatePublication}"></td>
+												<td><input class="genric-btn" type="date"
+													name="certificateDate" th:value="*{certificateDate}"></td>
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch1" th:checked="*{profileHidden}">
+															<input type="checkbox" id="confirm-switch1"
+																name="profileHidden" th:checked="*{profileHidden}">
 															<label for="confirm-switch1"></label>
 														</div>
 													</div>
@@ -85,8 +96,10 @@
 												<td>
 													<div class="d-flex justify-content-center">
 														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2" th:checked="*{profileApplicationHidden}">
-															<label for="confirm-switch2"></label>
+															<input type="checkbox" id="confirm-switch2"
+																name="profileApplicationHidden"
+																th:checked="*{profileApplicationHidden}"> <label
+																for="confirm-switch2"></label>
 														</div>
 													</div>
 												</td>

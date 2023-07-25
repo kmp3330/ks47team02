@@ -5,6 +5,22 @@
 
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script> -->
+	<script>
+		
+		$('.danger-border').click(function (e) {
+			e.preventDefault();
+			
+			let isDelete = confirm('정말로 삭제하시겠습니까?');
+				
+			if(isDelete) {
+				const certificateCode = this.dataset.certificateCode;
+				location.replace(`/profile/profileCertificateDelete?certificateCode=${certificateCode}`);
+			}
+		});
+		
+		
+	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -39,8 +55,8 @@
 							<div class="card-header border-0">
 								<h3 class="mb-0 title_color text-left">보유 자격증</h3>
 								<div class="card-tools">
-									<a th:href="@{/profile/profileCertificateInsert}" class="genric-btn info-border circle"> <i
-										class="fas">등록</i>
+									<a th:href="@{/profile/profileCertificateInsert}"
+										class="genric-btn info-border circle"> <i class="fas">등록</i>
 									</a>
 								</div>
 							</div>
@@ -65,10 +81,11 @@
 											<td th:text="${l.certificateDate}"></td>
 											<td th:text="${l.profileHidden}"></td>
 											<td th:text="${l.profileApplicationHidden}"></td>
-											<td><a th:href="@{/profile/profileCertificateModify(certificateCode=${l.certificateCode})}"
+											<td><a
+												th:href="@{/profile/profileCertificateModify(certificateCode=${l.certificateCode})}"
 												class="genric-btn success-border circle"> <i class="fas">수정</i>
 											</a></td>
-											<td><a th:href="@{#}"
+											<td><a th:href="@{#}" id="certificateDeleteBtn" th:data-certificate-code="${l.certificateCode}"
 												class="genric-btn danger-border circle"> <i class="fas">삭제</i>
 											</a></td>
 										</tr>

@@ -10,14 +10,15 @@ import ks47team02.user.recommend.dto.RecommendSupport;
 public interface RecommendSupportMapper {
 	
 	/*
-	 *  기업지원 top5 순위
-	 */
-	public List <RecommendSupport> getRecommendSupportRank();
-	
-	/*
 	 *  기업 지원 코드 조회
 	 */
 	public List <RecommendSupport> getRecommendSupportCode();
+	
+	/*
+	 *  기업 지원 top5 순위
+	 */
+	public List <RecommendSupport> getRecommendSupportRank();
+	
 	
 	/*
 	 *  기업 지원 순 목록 조회

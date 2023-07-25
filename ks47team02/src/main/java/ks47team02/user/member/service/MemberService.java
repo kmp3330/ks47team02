@@ -3,6 +3,8 @@ package ks47team02.user.member.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import ks47team02.user.member.dto.Company;
+import ks47team02.user.member.mapper.CompanyMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	
 	private final UserMapper userMapper;
-	
+	private final CompanyMapper companyMapper;
+
 	/**
 	 * 로그인 체크
 	 * @param userId
@@ -26,13 +29,13 @@ public class MemberService {
 	 * @return
 	 */
 	public Map<String, Object> loginCheck(String userId, String userPw) {
-		
+		//Map쓰는 이유: 여러 데이터 타입을 담을 수 있어서 쓴다
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		
+
 		boolean isValid = false;
 		User userInfo = userMapper.loginCheck(userId);
 		log.info("userInfo : {}", userInfo);
-		
+
 		if(userInfo != null) {
 			String checkPw = userInfo.getUserPw();
 			if(checkPw.equals(userPw)) {
@@ -41,10 +44,21 @@ public class MemberService {
 			}
 		}
 		resultMap.put("isValid", isValid);
-		
+
 		log.info("resultMap : {}", resultMap);
-		
+
 		return resultMap;
 	}
 
+	public void addUser(User user){
+		userMapper.addUser(user);
+	}
+
+	public void addCompany(Company company){
+		companyMapper.addCompany(company);
+	}
+
+	public boolean checkId(String userId) {
+		return userMapper.checkId(userId);
+	}
 }
