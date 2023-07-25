@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks47team02.admin.profile.service.ProfileService;
+import ks47team02.admin.profile.service.AdminProfileService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AdminProfileController {
 	
-	private final ProfileService profileService;
+	private final AdminProfileService adminProfileService;
 	
 	/**
 	 * 전체 프로필 화면
