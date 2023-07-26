@@ -22,8 +22,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return false;
 		} 
 		/*
-			 * else { String requestUri = request.getRequestURI(); String sessionLevel =
-			 * (String) session.getAttribute("SLEVEL");
+			 * else { 
+			 * String requestUri = request.getRequestURI(); 
+			 * String sessionLevel = (String) session.getAttribute("SLEVEL");
 			 * 
 			 * if(sessionLevel.equals("일반회원")) {
 			 * 
