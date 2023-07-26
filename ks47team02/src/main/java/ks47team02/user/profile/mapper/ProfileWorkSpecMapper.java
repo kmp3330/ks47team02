@@ -17,5 +17,5 @@ public interface ProfileWorkSpecMapper {
 	//보유기술 등록
 	public int profileWorkSpecInsert(ProfileWorkSpec profileWorkSpec);
 	//회원별 경력 목록
-	public List<ProfileWorkSpec> getProfileWorkSpecList();
+	public List<ProfileWorkSpec> getProfileWorkSpecList(String sessionId);
 }

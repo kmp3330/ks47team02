@@ -4,7 +4,18 @@
 	layout:decorate="~{user/layout/default}">
 
 <th:block layout:fragment="customJs">
-
+	<script>
+		$('.danger-border').click(function (e) {
+			e.preventDefault();
+			
+			let isDelete = confirm('정말로 삭제하시겠습니까?');
+			
+			if(isDelete) {
+				const portfolioCode = this.dataset.portfolioCode;
+				location.replace(`/profile/profilePortfolioDelete?profilePortfolioCode=${portfolioCode}`);
+			}
+		});
+	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -60,6 +71,8 @@
 											<th>전문/일반 구분</th>
 											<th>공개여부</th>
 											<th>입사지원 시 공개여부</th>
+											<th>수정</th>
+											<th>삭제</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -77,6 +90,14 @@
 											<td th:text="${l.userProjectGen}"></td>
 											<td th:text="${l.profileHidden}"></td>
 											<td th:text="${l.profileApplicationHidden}"></td>
+											<td><a
+												th:href="@{/profile/profilePortfolioModify(profilePortfolioCode=${l.userPortfolioCode})}"
+												class="genric-btn success-border circle"> <i class="fas">수정</i>
+											</a></td>
+											<td><a th:href="@{#}"
+												th:data-portfolio-code="${l.userPortfolioCode}"
+												class="genric-btn danger-border circle"> <i class="fas">삭제</i>
+											</a></td>
 										</tr>
 										<tr th:if="${#lists.isEmpty(portfolioList)}">
 											<td colspan="12">포트폴리오가 없습니다.</td>

@@ -2,12 +2,144 @@
 <html xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{user/layout/default}">
+		
+<head>
+	<style>
+		.profileIntro img{
+			width:80px;
+		}
+		.profileSkill img{
+			width:90px;
+		}
+		.profileWorkSpec img{
+			width:80px;
+		}
+		.profileEduSpec img{
+			width:80px;
+		}
+		.profileCertificate img{
+			width:80px;
+		}
+		.profileAward img{
+			width:80px;
+		}
+		.profilePortfolio img{
+			width:80px;
+		}
+    .single-category {
+      padding: 27px 65px;
+      margin-top: 50px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      -webkit-transition: .3s;
+      -moz-transition: .3s;
+      -o-transition: .3s;
+      transition: .3s;
+      width: 250px;
+      height: 250px;
+    }
+	</style>
+</head>
 
-
-<div id="leftcolumn" layout:fragment="asideFragment">
-
-</div>
+<th:block layout:fragment="customJs">
+	<script>
+		$('.profileIntro').click(function (e) {
+			e.preventDefault();
+			location.href = '/profile/profileIntroList';
+		})
+	</script>
+	<script>
+		$('.profileSkill').click(function (e) {
+			e.preventDefault();
+			
+			location.href = '/profile/profileSkillList';
+		});
+	</script>
+	<script>
+		$('.profileWorkSpec').click(function (e) {
+			e.preventDefault();
+			
+			location.href = '/profile/profileWorkSpecList';
+		});
+	</script>
+	<script>
+		$('.profileEduSpec').click(function (e) {
+			e.preventDefault();
+			
+			location.href = '/profile/profileEduSpecList';
+		});
+	</script>
+	<script>
+		$('.profileCertificate').click(function (e) {
+			e.preventDefault();
+			
+			location.href = '/profile/profileCertificateList';
+		});
+	</script>
+	<script>
+		$('.profileAward').click(function (e) {
+			e.preventDefault();
+			
+			location.href = '/profile/profileAwardList';
+		});
+	</script>
+	<script>
+		$('.profilePortfolio').click(function (e) {
+			e.preventDefault();
+			
+			location.href = '/profile/profilePortfolioList';
+		});
+	</script>
+		
+</th:block>
 
 <th:block layout:fragment="customContents">
-	
+	<div class="container" style="margin-top: 50px; margin-bottom: 100px;">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <button class="single-category text-center mb-4 profileIntro">
+						<!-- <a th:href="@{/profile/profileIntroList}"></a> -->
+                        <img th:src="@{/user/assets/images/intro.jpg.png}" alt="category">
+                       	<h4>자기소개</h4>
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <button class="single-category text-center mb-4 profileSkill">
+                        <img th:src="@{/user/assets/images/Skill.png}" alt="category">
+                        <h4>보유기술</h4>
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <button class="single-category text-center mb-4 profileWorkSpec">
+                        <img th:src="@{/user/assets/images/WorkSpec.png}" alt="category">
+                        <h4>일경력</h4>
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <button class="single-category text-center mb-4 profileEduSpec">
+                        <img th:src="@{/user/assets/images/eduSpec.png}" alt="category">
+                        <h4>학력</h4>
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <button class="single-category text-center mb-4 mb-lg-0 profileCertificate">
+                        <img th:src="@{/user/assets/images/certificate.png}" alt="category">
+                        <h4>자격증</h4>
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <button class="single-category text-center mb-4 mb-lg-0 profileAward">
+                        <img th:src="@{/user/assets/images/award.png}" alt="category">
+                        <h4>수상이력</h4>
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <button class="single-category text-center mb-4 mb-md-0 profilePortfolio">
+                        <img th:src="@{/user/assets/images/portfolio.png}" alt="category">
+                        <h4>포트폴리오</h4>
+                    </button>
+                </div>
+                
+            </div>
+        </div>
 </th:block>

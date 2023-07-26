@@ -1,4 +1,4 @@
-package ks47team02.admin.controller;
+package ks47team02.admin.MainController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +11,7 @@ public class CommonController {
 
 	@GetMapping({"","/"})
 	public String index(Model model) {
-		model.addAttribute("title", "메인화면");
-		model.addAttribute("contents", "spring boot mybatis");
+		model.addAttribute("title", "관리자 페이지");
 		return "admin/index";
 	}
 }

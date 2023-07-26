@@ -60,7 +60,7 @@
     .contract .box {width: 100px; height: 40px;  padding: 8px; margin: 0 3px;}
     .nice-select {
       -webkit-tap-highlight-color: transparent;
-      background-color: #00000014;
+      background-color: #00000007;
       width: -webkit-fill-available;
     }
     .margin-bot {
@@ -68,6 +68,15 @@
     }
     .icheck-primary {
       font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .custom-select{
+      padding-bottom: 2.25rem;
+      font-size: 16px;
+    }
+    .nice-select span.current {
+      font-size: 16px;
+      display: inline-block;
+      line-height: 56px;
     }
   </style>
 </head>
@@ -80,9 +89,9 @@
       <div class="card-body">
         <p class="login-box-msg">Register a new membership</p>
         
-        <form id="addUserForm" th:action="@{/addNormalMember}" method="post">
+        <form id="addCompanyForm" th:action="@{/addCompanyMember}" method="post">
           <div class="input-group mb-3">
-            <input type="id" id="cpId" name="cpId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
+            <input type="text" id="cpId" name="cpId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
             <div class="input-group-append">
               <button class="genric-btn primary-border small" id="checkCpId">아이디중복체크</button>
               <div class="input-group-text">
@@ -92,11 +101,11 @@
           </div>
           <br>
           <div class="input-group mb-3">
-            <input type="id" id="cpRegNumber" name="cpRegNumber" class="form-control" placeholder="사업자등록번호를 입력해주세요.">
+            <input type="text" id="cpRegNumber" name="cpRegNumber" class="form-control" placeholder="사업자등록번호를 입력해주세요.">
             <div class="input-group-append">
               <button class="genric-btn primary-border small" id="checkCpReg">중복가입체크</button>
               <div class="input-group-text">
-                <span class="fas fa-user"></span>
+                <span class="fas fa-address-card"></span>
               </div>
             </div>
           </div>
@@ -119,7 +128,7 @@
           </div>
           <br><br>
           <div class="input-group mb-3">
-            <input type="text" id="cpName" name="cpName" class="form-control pwEq" style="text-transform: none" placeholder="기업명을 입력해주세요.">
+            <input type="text" id="cpName" name="cpName" class="form-control" style="text-transform: none" placeholder="기업명을 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -128,24 +137,56 @@
           </div>
           <br><br>
           <div class="input-group mb-3">
-            <input type="email" id="userEmail" name="userEmail" class="form-control" placeholder="이메일을 입력해주세요.">
+            <input type="email" id="cpEmail" name="cpEmail" class="form-control" placeholder="이메일을 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
-          </div><br>
+          </div><br><br>
+          <div class="input-group mb-3">
+            <select class="nice-select" id="cpCate" name="cpCate">
+                <option value="" selected disabled>기업의 규모를 선택해주세요.</option>
+                <option value="대기업">대기업</option>
+                <option value="중견기업">중견기업</option>
+                <option value="중소기업">중소기업</option>
+                <option value="공기업">공기업</option>
+              </select>
+          </div>
+          <br>
+          <div class="input-group mb-3">
+            <select class="nice-select" id="areaName" name="areaName">
+                <option value="" selected disabled>소재지를 선택해주세요.</option>
+                <option value="서울">서울</option>
+                <option value="부산">부산</option>
+                <option value="대구">대구</option>
+                <option value="인천">인천</option>
+                <option value="광주">광주</option>
+                <option value="울산">울산</option>
+                <option value="세종">세종</option>
+                <option value="경기">경기</option>
+                <option value="강원">강원</option>
+                <option value="충북">충북</option>
+                <option value="충남">충남</option>
+                <option value="전북">전북</option>
+                <option value="전남">전남</option>
+                <option value="경북">경북</option>
+                <option value="경남">경남</option>
+                <option value="제주">제주</option>
+              </select>
+          </div>
+          <br>
           <div class="input-group mb-3">
             <input type="address" id="cpAddr" name="cpAddr" class="form-control" placeholder="기업 주소를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
+                <span class="fas fa-home"></span>
               </div>
             </div>
           </div>
           <br>
           <div class="input-group mb-3">
-            <input type="phone" id="userPhone" name="userPhone" class="form-control" placeholder="번호를 입력해주세요.">
+            <input type="tel" id="cpPhone" name="cpPhone" class="form-control" placeholder="기업 전화 번호를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-phone"></span>
@@ -153,32 +194,7 @@
             </div>
           </div>
           <br>
-          <div class="switch-wrap d-flex justify-content-between margin-bot">
-            <h5>경력 여부를 선택해주세요</h5>
-            <div class="confirm-switch">
-              <input type="checkbox" id="careerCheck" name="careerCheck" checked="">
-              <label for="careerCheck"></label>
-            </div>
-          </div>
-          <div class="switch-wrap d-flex margin-bot" style="display: flex; justify-content: space-between;">
-            <div>
-              <h5 class="margin-bottom">성별을 선택해주세요.</h5>
-            </div>
-            <div style="display: flex; justify-content: flex-end;">
-              남&nbsp;&nbsp;<input type="radio" id="userGender1" name="userGender" value="남" checked>
-              <label for="userGender1"><span></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
-              
-              여&nbsp;&nbsp;<input type="radio" id="userGender2" name="userGender" value="여">
-              <label for="userGender2"><span></span></label><br>
-            </div>
-          </div>
-          <div class="switch-wrap d-flex justify-content-between margin-bot">
-            <h5>프리랜서 여부를 선택해주세요.</h5>
-            <div class="confirm-switch">
-              <input type="checkbox" id="freelancerCheck" name="freelancerCheck" checked="">
-              <label for="freelancerCheck"></label>
-            </div>
-          </div>
+          <br>
           <div class="row">
             <div class="col-12">
               <div class="icheck-primary">
@@ -193,19 +209,8 @@
             <!-- /.col -->
           </div>
           <br><br>
-          <button type="submit" id="addUserBtn" class="btn btn-primary btn-block" value="회원가입">회원가입</button>
+          <button type="submit" id="addCompanyBtn" class="btn btn-primary btn-block" value="회원가입">회원가입</button>
         </form>
-        
-        <div class="social-auth-links text-center">
-          <a href="#" class="btn btn-block btn-danger" id="cantUse1">
-            <i class="fab fa-google-plus mr-2"></i>
-            Sign up using Google+
-          </a>
-          <a href="#" class="btn btn-block btn-primary" id="cantUse2">
-            <i class="fab fa-facebook mr-2"></i>
-            Sign up using Facebook
-          </a>
-        </div>
         <a th:href="@{/login}" class="text-center">이미 가입된 아이디가 있습니다.</a>
       </div>
       <!-- /.form-box -->
@@ -236,14 +241,14 @@
         return valid;
       }
       
-      $('#addUserForm').submit(function (e){
+     /* $('#addCompanyForm').submit(function (e){
         if(!validateForm()){
           e.preventDefault();
         }
-      });
+      });*/
       
-      function isIdValid(){
-        return $('#userId').val().length >= 5 && isIdChecked;
+      /*function isIdValid(){
+        return $('#cpId').val().length >= 5 && isIdChecked;
       }
       
       $('#checkId').click(function (e){
@@ -288,11 +293,11 @@
             title: '아이디 중복체크를 해주세요.'
           })
         }
-      })
+      })*/
       
-      $('#addUserForm').submit(function (e){
-        let pw1 = $('#userPw').val();
-        let pw2 = $('#pwEq').val();
+      $('#addCompanyForm').submit(function (e){
+        let pw1 = $('#cpPw').val();
+        let pw2 = $('#cpPwEq').val();
         if(pw1 !== pw2){
           e.preventDefault();
           Swal.fire({
@@ -303,7 +308,7 @@
       });
       
       
-      $('#addUserBtn').click(function (){
+      /*$('#addUserBtn').click(function (){
         const validateEle = $('#addUserBtn input').not('#userId');
         let isSubmit = false;
         validateEle.each((idx, item) => {
@@ -311,21 +316,7 @@
           return isSubmit;
         })
         if(isSubmit) $('#addUserForm').submit();
-      });
-      $('#cantUse1').click(function (e){
-        e.preventDefault();
-        Swal.fire({
-          icon: 'error',
-          title: 'SNS 로그인 기능은 추후 지원 예정입니다.'
-        })
-      });
-      $('#cantUse2').click(function (e){
-        e.preventDefault();
-        Swal.fire({
-          icon: 'error',
-          title: 'SNS 로그인 기능은 추후 지원 예정입니다.'
-        })
-      });
+      });*/
       $('#readTerms').click(function (e){
         e.preventDefault();
         Swal.fire({
@@ -363,7 +354,7 @@
           }
         })
       })
-      
+      /*
       
       $('#addUserBtn').click(function (e){
         e.preventDefault();  // prevent the form from being submitted
@@ -392,7 +383,7 @@
             title: '모든 항목을 채워주세요.'
           })
         }
-      });
+      });*/
     });
   </script>
 </th:block>

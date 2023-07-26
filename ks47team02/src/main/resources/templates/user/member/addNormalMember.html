@@ -82,7 +82,7 @@
         
         <form id="addUserForm" th:action="@{/addNormalMember}" method="post">
           <div class="input-group mb-3">
-            <input type="id" id="userId" name="userId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
+            <input type="text" id="userId" name="userId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
             <div class="input-group-append">
               <button class="genric-btn primary-border small" id="checkId">아이디중복체크</button>
               <div class="input-group-text">
@@ -109,7 +109,7 @@
           </div>
           <br><br>
           <div class="input-group mb-3">
-            <input type="text" id="userName" name="userName" class="form-control pwEq" style="text-transform: none" placeholder="이름을 입력해주세요.">
+            <input type="text" id="userName" name="userName" class="form-control" style="text-transform: none" placeholder="이름을 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>

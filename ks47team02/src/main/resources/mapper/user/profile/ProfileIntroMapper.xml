@@ -26,6 +26,8 @@
 		    pi.profile_application_hidden
 		FROM
 		    profile_intro as pi
+		WHERE
+			user_id = #{sessionId};
 	</select>
 	
 	<insert id="profileIntroInsert" parameterType="ProfileIntro">

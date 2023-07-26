@@ -1,6 +1,5 @@
 package ks47team02.user.member.mapper;
 
-import ks47team02.admin.dto.Member;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks47team02.user.member.dto.User;
