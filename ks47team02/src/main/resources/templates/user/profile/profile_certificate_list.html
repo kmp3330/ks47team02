@@ -8,7 +8,7 @@
 	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script> -->
 	<script>
 		
-		$('.danger-border').click(function (e) {
+		$('.job-btn2').click(function (e) {
 			e.preventDefault();
 			
 			let isDelete = confirm('정말로 삭제하시겠습니까?');
@@ -25,7 +25,7 @@
 
 <th:block layout:fragment="customContents">
 	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
+		<div class="container col-lg-10">
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="sidebar">
@@ -49,54 +49,34 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9">
-					<div class="single-job mb-4 justify-content-between text-center">
-						<div class="card">
-							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">보유 자격증</h3>
-								<div class="card-tools">
-									<a th:href="@{/profile/profileCertificateInsert}"
-										class="genric-btn info-border circle"> <i class="fas">등록</i>
-									</a>
-								</div>
-							</div>
-							<div class="card-body table-responsive p-0">
-								<table class="table table-striped table-valign-middle">
-									<thead>
-										<tr>
-											<th>자격증명</th>
-											<th>기관명</th>
-											<th>취득 일시</th>
-											<th>공개 여부</th>
-											<th>입사지원시 공개여부</th>
-											<th>수정</th>
-											<th>삭제</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:unless="${#lists.isEmpty(certificateList)}"
-											th:each="l : ${certificateList}">
-											<td th:text="${l.certificateName}"></td>
-											<td th:text="${l.certificatePublication}"></td>
-											<td th:text="${l.certificateDate}"></td>
-											<td th:text="${l.profileHidden}"></td>
-											<td th:text="${l.profileApplicationHidden}"></td>
-											<td><a
-												th:href="@{/profile/profileCertificateModify(certificateCode=${l.certificateCode})}"
-												class="genric-btn success-border circle"> <i class="fas">수정</i>
-											</a></td>
-											<td><a th:href="@{#}" id="certificateDeleteBtn" th:data-certificate-code="${l.certificateCode}"
-												class="genric-btn danger-border circle"> <i class="fas">삭제</i>
-											</a></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
+				<div class="col-lg-7">
+                    <div class="main-content">
+                        <div class="single-content1" th:unless="${#lists.isEmpty(certificateList)}"
+                           	 th:each="l : ${certificateList}">
+                            <div class="single-job mb-4 d-lg-flex justify-content-between">
+                                <div class="job-text">
+                                    <h4 th:text="${l.certificateName}"></h4>
+                                    <ul class="mt-4">
+                                        <li class="mb-3"><h5 th:text="|[기관명] : ${l.certificatePublication}|"></h5></li>
+                                        <li class="mb-3"><h5 th:text="|[취득일시] : ${l.certificateDate}|"></h5></li>
+                                        <li class="mb-3"><h5 th:text="|[정보등록일시] : ${l.profileRegDate}|"></h5></li>
+                                        <li class="mb-3"><h5 th:text="|[공개여부] : ${l.profileHidden}|"></h5></li>
+                                        <li class="mb-3"><h5 th:text="|[입사지원시 공개여부] : ${l.profileApplicationHidden}|"></h5></li>
+                                    </ul>
+                                </div>
+                                <div class="job-btn align-self-center">
+		                            <a th:href="@{/profile/profileCertificateModify(certificateCode=${l.certificateCode})}"
+		                               class="third-btn job-btn4">수정</a>
+		                            <a th:href="@{#}" id="certificateDeleteBtn" th:data-certificate-code="${l.certificateCode}"
+		                               class="third-btn job-btn2">삭제</a>
+		                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</section>
+	
 </th:block>
 </html>

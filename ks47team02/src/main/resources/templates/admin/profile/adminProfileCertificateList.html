@@ -2,10 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{admin/layout/default}">
-	
+
 <head>
-	<link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid.min.css}">
-	<link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid-theme.min.css}">
+<link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid.min.css}">
+<link rel="stylesheet"
+	th:href="@{/admin/plugins/jsgrid/jsgrid-theme.min.css}">
 </head>
 
 <th:block layout:fragment="customJs">
@@ -21,7 +22,7 @@
 
 <th:block layout:fragment="customContents">
 	<div class="content-wrapper" style="min-height: 912px;">
-	
+
 		<!-- 콘텐츠 헤더 -->
 		<div class="content-header">
 			<div class="container-fluid">
@@ -32,7 +33,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- 메인 콘텐츠 -->
 		<section class="content">
 			<div class="card">
@@ -43,111 +44,82 @@
 				<div class="card-body">
 					<div id="jsGrid1" class="jsgrid"
 						style="position: relative; height: 100%; width: 100%;">
-						<div class="jsgrid-grid-header jsgrid-header-scrollbar">
+						<div class="jsgrid-grid-body" style="height: 450px;">
 							<table class="jsgrid-table">
-								<tr class="jsgrid-header-row">
-									<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 80px;">회원아이디</th>
-									<th
-										class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">자격증명</th>
-									<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">기관명</th>
-									<th
-										class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">취득일시</th>
-									<th
-										class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 70px;">체크</th>
-								</tr>
-								<tr class="jsgrid-filter-row" style="display: none;">
-									<td class="jsgrid-cell" style="width: 150px;"><input
-										type="text"></td>
-									<td class="jsgrid-cell jsgrid-align-right" style="width: 50px;"><input
-										type="number"></td>
-									<td class="jsgrid-cell" style="width: 200px;"><input
-										type="text"></td>
-									<td class="jsgrid-cell jsgrid-align-center"
-										style="width: 100px;"><select><option value="0"></option>
-											<option value="1">United States</option>
-											<option value="2">Canada</option>
-											<option value="3">United Kingdom</option>
-											<option value="4">France</option>
-											<option value="5">Brazil</option>
-											<option value="6">China</option>
-											<option value="7">Russia</option></select></td>
-									<td class="jsgrid-cell jsgrid-align-center"
-										style="width: 100px;"><input type="checkbox" readonly=""></td>
-									<td class="jsgrid-cell jsgrid-align-center"
-										style="width: 100px;"><input type="checkbox" readonly=""></td>
-								</tr>
-								<tr class="jsgrid-insert-row" style="display: none;">
-									<td class="jsgrid-cell" style="width: 150px;"><input
-										type="text"></td>
-									<td class="jsgrid-cell jsgrid-align-right" style="width: 50px;"><input
-										type="number"></td>
-									<td class="jsgrid-cell" style="width: 200px;"><input
-										type="text"></td>
-									<td class="jsgrid-cell jsgrid-align-center"
-										style="width: 100px;"><select><option value="0"></option>
-											<option value="1">United States</option>
-											<option value="2">Canada</option>
-											<option value="3">United Kingdom</option>
-											<option value="4">France</option>
-											<option value="5">Brazil</option>
-											<option value="6">China</option>
-											<option value="7">Russia</option></select></td>
-									<td class="jsgrid-cell jsgrid-align-center"
-										style="width: 100px;"><input type="checkbox"></td>
-									<td class="jsgrid-cell jsgrid-align-center"
-										style="width: 100px;"><input type="checkbox"></td>
-								</tr>
-							</table>
-						</div>
-						<div class="jsgrid-grid-body" style="height: 816.8px;">
-							<table class="jsgrid-table">
-								<tbody>
-									<tr class="jsgrid-row">
-										<td class="jsgrid-cell" style="width: 150px;">Arthur
-											Olsen</td>
-										<td class="jsgrid-cell jsgrid-align-right"
-											style="width: 50px;">74</td>
-										<td class="jsgrid-cell" style="width: 200px;">887-5080
-											Eget St.</td>
-										<td class="jsgrid-cell jsgrid-align-center"
-											style="width: 100px;">Brazil</td>
-										<td class="jsgrid-cell jsgrid-align-center"
-											style="width: 100px;"><input type="checkbox" disabled=""></td>
+								<thead>
+									<tr class="jsgrid-header-row">
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 40px;"><input type="checkbox"></th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 70px;">회원아이디</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">자격증명</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">등록일시</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 40px;">삭제</th>
 									</tr>
-									<tr class="jsgrid-alt-row">
-										<td class="jsgrid-cell" style="width: 150px;">Brody Potts</td>
-										<td class="jsgrid-cell jsgrid-align-right"
-											style="width: 50px;">59</td>
-										<td class="jsgrid-cell" style="width: 200px;">Ap
-											#577-7690 Sem Road</td>
-										<td class="jsgrid-cell jsgrid-align-center"
-											style="width: 100px;">Canada</td>
-										<td class="jsgrid-cell jsgrid-align-center"
-											style="width: 100px;"><input type="checkbox" disabled=""></td>
+								</thead>
+								<tbody>
+									<th:block th:unless="${#lists.isEmpty(profileCertificateList)}"
+											  th:each="l : ${profileCertificateList}">
+										<tr class="jsgrid-row">
+											<td class="jsgrid-cell jsgrid-align-center">
+												<input type="checkbox">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userId}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.certificateName}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.profileRegDate}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center">
+												<input type="button" value="삭제" style="border-radius: 3px; padding:1px; font-size:12px; border:1px solid;">
+											</td>
+										</tr>
+									</th:block>
+									<tr th:if="${#lists.isEmpty(profileCertificateList)}">
+										<td colspan="5">등록된 회원의 자격증 정보를 조회할 수 없습니다.</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<div class="jsgrid-pager-container">
 							<div class="jsgrid-pager">
-								Pages: <span class="jsgrid-pager-nav-button"><a
-									href="javascript:void(0);">First</a></span> <span
-									class="jsgrid-pager-nav-button"><a
-									href="javascript:void(0);">Prev</a></span> <span
-									class="jsgrid-pager-page"><a href="javascript:void(0);">1</a></span><span
-									class="jsgrid-pager-page"><a href="javascript:void(0);">2</a></span><span
-									class="jsgrid-pager-page"><a href="javascript:void(0);">3</a></span><span
-									class="jsgrid-pager-page jsgrid-pager-current-page">4</span><span
-									class="jsgrid-pager-page"><a href="javascript:void(0);">5</a></span>
-								<span class="jsgrid-pager-nav-button"><a
-									href="javascript:void(0);">Next</a></span> <span
-									class="jsgrid-pager-nav-button"><a
-									href="javascript:void(0);">Last</a></span> &nbsp;&nbsp; 4 of 5
+								Pages: 
+								<span class="jsgrid-pager-nav-button">
+									<a th:href="@{/admin/profile/adminProfileCertificateList}">First</a>
+								</span>
+								<span class="jsgrid-pager-nav-button">
+									<a th:if="${currentPage > 1}" 
+									   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${currentPage-1})}">Prev</a>
+									<label th:unless="${currentPage > 1}">Prev</label>
+								</span> 
+								<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+									<span class="jsgrid-pager-page">
+											<a th:if="${currentPage != num}"
+											   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${num})}"
+											   th:text="${num}"></a>
+											<label th:if="${currentPage == num}"
+												   th:text="${num}"></label>
+									</span>
+								</th:block>
+								<span class="jsgrid-pager-nav-button">
+									<a th:if="${currentPage < lastPage}"
+									   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${currentPage+1})}">Next</a>
+									<label th:unless="${currentPage < lastPage}">Next</label>
+								</span>
+								<span class="jsgrid-pager-nav-button">
+									<a th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${lastPage})}">Last</a>
+								</span>
 							</div>
 						</div>
 						<div class="jsgrid-load-shader"

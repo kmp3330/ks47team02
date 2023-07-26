@@ -14,6 +14,10 @@
 			property="certificatePublication" />
 		<result column="user_certificate_date"
 			property="certificateDate" />
+		<result column="profile_reg_date"
+			property="profileRegDate" />
+		<result column="user_certificate_date"
+			property="certificateDate" />
 		<result column="profile_hidden" property="profileHidden" />
 		<result column="profile_application_hidden"
 			property="profileApplicationHidden" />
@@ -27,6 +31,7 @@
 				user_certificate_name,
 				user_certificate_publication,
 				user_certificate_date,
+				profile_reg_date,
 				profile_hidden,
 				profile_application_hidden
 			FROM
