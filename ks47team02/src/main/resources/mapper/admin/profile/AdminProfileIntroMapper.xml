@@ -24,5 +24,17 @@
 		    pi.profile_application_hidden
 		FROM
 		    profile_intro as pi
+		ORDER BY pi.user_intro_code
+		<if test="startIndex != null and stratIndex > -1">
+			LIMIT #{startIndex}, #{rowPerPage};
+		</if>
+	</select>
+	
+	<select id="getIntroCnt">
+		/* 자격증 전체 행 갯수 */
+		SELECT
+			COUNT(*)
+		FROM
+			profile_intro;
 	</select>
 </mapper>
