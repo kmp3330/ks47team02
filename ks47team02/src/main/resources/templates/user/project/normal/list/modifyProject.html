@@ -63,9 +63,9 @@
 													</tr>
 													<tr>
 														<td>
-															<label for="joinCate">참여분야 선택</label>
+															<label for="joinCateCode">참여분야 선택</label>
 														</td>
-														<td>
+														<td class="justify-content-center d-flex">
 															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
 															<select name="joinCateCode" id="joinCateCode">
 																<th:block th:unless="${#lists.isEmpty(joinCateList)}"
@@ -77,9 +77,9 @@
 													</tr>
 													<tr>
 														<td>
-															<label for="workCate">작업분류 선택</label>
+															<label for="workCateCode">작업분류 선택</label>
 														</td>
-														<td>
+														<td class="justify-content-center d-flex">
 															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
 															<select name="workCateCode" id="workCateCode">
 																<th:block th:unless="${#lists.isEmpty(workCateList)}"
@@ -93,7 +93,7 @@
 														<td> 
 															<label for="subjectCate">주제분류 선택</label>
 														</td>
-														<td>
+														<td class="justify-content-center d-flex">
 															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
 															<select name="subjectCateCode" id="subjectCateCode">
 																<th:block th:unless="${#lists.isEmpty(subjectCateList)}"

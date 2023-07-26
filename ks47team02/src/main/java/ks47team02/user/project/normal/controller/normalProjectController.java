@@ -241,6 +241,20 @@ public class normalProjectController {
 	/* 삭제영역 끝*/
 	
 	/*get영역*/
+
+	/**
+	 * 일반과제 상세 페이지 이동
+	 * @param normalProjectCode 일반과제코드
+	 * @return 일반과제 상세 화면
+	 * */
+	@GetMapping("/projectDetail")
+	public String getProjectDetail(@RequestParam(value = "normalProjectCode") String projectCode,Model model){
+		List<NormalProjects> normalProject = normalProjectService.getNormalProjectByCode(projectCode);
+		model.addAttribute("title", "일반과제 상세 페이지 이동");
+		model.addAttribute("normalProjectList", normalProject);
+
+		return "user/project/normal/list/projectDetail";
+	}
 	
 	/**
 	 * 일반과제 전체 리스트 가져오는 폼

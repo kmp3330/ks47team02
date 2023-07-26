@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+<head>
+  <style>
+    .project-detail{
+      width: 850px;
+      height: 24px;
+      display: flex;
+    }
+    .condition-title{
+      width: 160px;
+      height: 24px;
+    }
+
+    .table-container {
+      display: flex;
+    }
+
+    thead, tbody {
+      flex: 1;
+    }
+
+    thead {
+      border: 1px solid black;
+    }
+
+    tbody {
+      border: 1px solid red;
+    }
+
+  </style>
+</head>
+
+<th:block layout:fragment="customContents">
+  <section class="jobs-area section-padding">
+    <div class="container col-lg-12">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="sidebar">
+            <div class="single-item mb-4">
+              <h4 class="mb-4">일반과제 전체 목록</h4>
+              <a th:href="@{/normalProject/getAcceptList}"
+                 class="sidebar-btn d-flex justify-content-between mb-3"> <span>신청자 목록</span>
+              </a>
+              <a th:href="@{/profile/profileSkillList}"
+                 class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
+              </a>
+              <a th:href="@{/profile/profileWorkSpecList}"
+                 class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
+              </a>
+              <a th:href="@{/profile/profileEduSpecList}"
+                    class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
+              </a>
+              <a th:href="@{/profile/profileCertificateList}"
+                    class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
+              </a>
+              <a th:href="@{/profile/profileAwardList}"
+                    class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
+              </a>
+              <a th:href="@{/profile/profilePortfolioList}"
+                    class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 post-list blog-post-list">
+          <div class="single-post">
+            <h1>일반과제 상세페이지</h1>
+            <div class="content-wrap">
+              <!-- 설명들 시작 -->
+               <th:block th:each="l : ${normalProjectList}">
+                 <div class="job-btn align-self-center justify-content-end d-flex">
+                   <a th:href="@{/normalProject/modifyProject(normalProjectCode=${l.normalProjectCode})}" class="third-btn">수정</a>
+                   <a th:href="@{/normalProject/removeProject(normalProjectCode=${l.normalProjectCode})}" class="third-btn">삭제</a>
+                   <a th:href="@{/normalProject/addApplicantAccept(normalProjectCode=${l.normalProjectCode})}" class="third-btn">신청</a>
+                 </div>
+                <div class="project-detail">
+                  <div class="condition-title">
+                    <p class="condition-label body-2 text500">일반과제명</p>
+                  </div>
+                  <p class="condition-data body-2 text900" th:text="${l.normalProjectName}"></p>
+                </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">참여분류</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.joinCateName}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">작업분류</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.workCateName}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">주제분류</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.subjectCateName}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">작업분류</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.requiredSkill}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">최대인원</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.projectMaxPeopleNum}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">진행상태</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.runName}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">작성일자</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.projectAdvertiseStartDate}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">마감일자</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.projectAdvertiseFinishDate}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">일반과제 시작일자</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.projectStartUpDate}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">일반과제 완료일자</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.projectFinishDate}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">프로젝트 일수</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.projectDay}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">프로젝드 일당 점수</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.projectDayScore}"></p>
+                 </div>
+                 <div class="project-detail">
+                   <div class="condition-title">
+                     <p class="condition-label body-2 text500">프로젝트 완료 점수</p>
+                   </div>
+                   <p class="condition-data body-2 text900" th:text="${l.projectFinishScore}"></p>
+                 </div>
+                 <h1>프로젝트 상세설명</h1>
+                 <p th:text="${l.normalProjectDetail}"></p>
+               </th:block>
+
+
+              <!-- 설명들 끝 -->
+
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
+   </div>
+  </section>
+
+</th:block>
+</html>
+
