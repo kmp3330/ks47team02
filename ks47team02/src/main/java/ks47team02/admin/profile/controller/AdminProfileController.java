@@ -1,11 +1,13 @@
 package ks47team02.admin.profile.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.admin.profile.service.AdminProfileService;
 import lombok.AllArgsConstructor;
@@ -54,10 +56,23 @@ public class AdminProfileController {
 		return "";
 	}
 	
-	@GetMapping("/profileCertificateList")
-	public String profileCertificateList(Model model) {
+	@GetMapping("/adminProfileCertificateList")
+	@SuppressWarnings("unchecked")
+	public String profileCertificateList(Model model,
+										 @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
+		
+		Map<String, Object> resultMap = adminProfileService.getCertificateList(currentPage);
+		int lastPage = (int) resultMap.get("lastPage");
+		List<Map<String, Object>> profileCertificateList = (List<Map<String, Object>>) resultMap.get("profileCertificateList");
+		int startPageNum = (int) resultMap.get("startPageNum");
+		int endPageNum = (int) resultMap.get("endPageNum");
 		
 		model.addAttribute("title", "자격증 관리");
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("profileCertificateList", profileCertificateList);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("endPageNum", endPageNum);
 		
 		return "admin/profile/adminProfileCertificateList";
 	}
