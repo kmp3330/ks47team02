@@ -47,12 +47,12 @@
 									</div>
 								</div>
 								<div class="card-body table-responsive p-0">
-									<form th:action="@{/normalProject/modifyProject}" id="modifyProjectForm" name="modifyProjectForm" method="post">
+									<th:block th:each="teamProject :${normalProjectList}">
+									<form th:action="@{/normalProject/modifyProject(normalProjectCode=${teamProject.normalProjectCode})}" id="modifyProjectForm" name="modifyProjectForm" method="post">
 										<table class="table table-striped table-valign-middle">
 											<thead>
 											</thead>
 											<tbody>
-												<th:block th:each="teamProject :${normalProjectList}">
 													<tr>
 														<td>
 															<label for="normalProjectName">프로젝트 이름</label>
@@ -193,10 +193,10 @@
 															<button type="reset" id="resetBtn">지우기</button>
 														</td>
 													</tr>
-												</th:block>
 											</tbody>
 										</table>
 									</form>
+									</th:block>
 								</div>
 							</div>
 						</div>

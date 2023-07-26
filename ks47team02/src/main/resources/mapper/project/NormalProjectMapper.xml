@@ -43,7 +43,8 @@
 	</resultMap>
 
 	<update id="modifyNormalProject" parameterType="NormalProjects">
-	UPDATE 	normal_project
+
+	UPDATE normal_project
 		SET
 		normal_project_name = #{normalProjectName},
 		join_cate_code = #{joinCateCode},
@@ -60,9 +61,9 @@
 		project_finish_date = #{projectFinishDate},
 		project_day = #{projectDay},
 		project_finish_score = #{projectFinishScore}
-
 	WHERE
-		normal_project_code = ${normalProjectCode};
+		normal_project_code = #{normalProjectCode};
+
 	</update>
 	
 	<insert id="addNormalProject" parameterType="NormalProjects">

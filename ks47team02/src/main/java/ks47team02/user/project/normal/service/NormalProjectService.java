@@ -34,6 +34,7 @@ public class NormalProjectService {
 	 *
 	 * */
 	public void modifyNormalProject(NormalProjects normalProjects){
+		log.info("normalProjects : {}", normalProjects);
 		normalProjectMapper.modifyNormalProject(normalProjects);
 	}
 	
