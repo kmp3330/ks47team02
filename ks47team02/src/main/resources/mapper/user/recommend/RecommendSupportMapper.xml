@@ -56,5 +56,7 @@
 			cs.company_support_code
 		FROM
 			company_support AS cs
+		ORDER BY 
+			cs.company_support_code ASC;
  	</select>
 </mapper>

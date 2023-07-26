@@ -3,26 +3,25 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks47team02.user.recommend.mapper.RecommendEmploymentMapper">
- <resultMap type="RecommendEmployment" id="RecommendEmploymentResultMap">
- 	<id 	column="company_employment_code" property="companyEmploymentCode"/>
- 	<result column="company_support_code"	 property="companySupportCode"/>
- 	<result column="user_id"				 property="userId"/>
- 	<result column="announcement_code"		 property="announcementCode"/>
- 	<result column="join_cate_code"			 property="joinCateCode"/>
- 	<result column="join_cate_name"			 property="joinCateName"/>
- 	<result column="area_code"				 property="areaCode"/>
- 	<result column="area_cate"				 property="areaCate"/>
- 	<result column="job_opening"			 property="jobOpening"/>
- 	<result column="required_skills"		 property="requiredSkills"/>
- 	<result column="career"				 	 property="career"/>
- 	<result column="wage"				 	 property="wage"/>
- 	<result column="start_date"				 property="startDate"/>
- 	<result column="due_date"				 property="dueDate"/>
- 	<result column="job_normal_run_code"	 property="jobNormalRunCode"/>
- 	<result column="job_normal_run"			 property="jobNormalRun"/>
- </resultMap>
-
- 
+	 <resultMap type="RecommendEmployment" id="RecommendEmploymentResultMap">
+	 	<id 	column="company_employment_code" property="companyEmploymentCode"/>
+	 	<result column="company_support_code"	 property="companySupportCode"/>
+	 	<result column="user_id"				 property="userId"/>
+	 	<result column="announcement_code"		 property="announcementCode"/>
+	 	<result column="join_cate_code"			 property="joinCateCode"/>
+	 	<result column="join_cate_name"			 property="joinCateName"/>
+	 	<result column="area_code"				 property="areaCode"/>
+	 	<result column="area_cate"				 property="areaCate"/>
+	 	<result column="job_opening"			 property="jobOpening"/>
+	 	<result column="required_skills"		 property="requiredSkills"/>
+	 	<result column="career"				 	 property="career"/>
+	 	<result column="wage"				 	 property="wage"/>
+	 	<result column="start_date"				 property="startDate"/>
+	 	<result column="due_date"				 property="dueDate"/>
+	 	<result column="job_normal_run_code"	 property="jobNormalRunCode"/>
+	 	<result column="job_normal_run"			 property="jobNormalRun"/>
+	 </resultMap>
+	  
  
  <select id="getRecommendEmploymentByCode" parameterType="String" resultMap="RecommendEmploymentResultMap">
  	/*  코드 별 상세 조회 */
@@ -47,6 +46,8 @@
 		company_employment
 	WHERE
 		company_employment_code = #{companyEmploymentCode}
+	ORDER BY 
+		company_support_code ASC;
  </select>
   
  <select id="getRecommendEmployment" resultMap="RecommendEmploymentResultMap">
@@ -107,9 +108,9 @@
 	job_normal_run)
 VALUE	
 	(#{companyEmploymentCode},
-	'company_support_code001',
-	'id001',
-	'announcement_code001',
+	#{companySupportCode},
+	#{userId},
+	#{announcementCode},
 	'join_cate_code001',
 	#{joinCateName},
 	'area_code001',

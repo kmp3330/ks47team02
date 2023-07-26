@@ -9,6 +9,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ks47team02.user.announcement.dto.Announcement;
+import ks47team02.user.member.dto.User;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.dto.RecommendScrap;
 import ks47team02.user.recommend.dto.RecommendSupport;
@@ -33,6 +35,24 @@ public class RecommendService {
 		this.recommendSupportMapper = recommendSupportMapper; 
 		this.recommendScrapMapper = recommendScrapMapper;
 	}
+	
+	/*
+	 *  공고 목록
+	 */
+	public List <Announcement> getAnnouncementCodeRecommend(){
+		List<Announcement> recommendAnnouncemetCodeInfo = recommendEmploymentMapper.getAnnouncementCodeRecommend();
+		return recommendAnnouncemetCodeInfo;
+	}
+	
+	
+	/*
+	 *  회원 아이디 목록
+	 */
+	public List <User> getUserIdRecommend(){
+		List<User> recommendUserIdInfo = recommendEmploymentMapper.getUserIdRecommend();
+		return recommendUserIdInfo;
+	}
+	
 	
 	/*
 	 *  스크랩 순 목록

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ks47team02.user.announcement.dto.Announcement;
+import ks47team02.user.member.dto.User;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.dto.RecommendScrap;
 import ks47team02.user.recommend.dto.RecommendSupport;
@@ -62,8 +64,6 @@ public class RecommendController {
 		
 		return "user/recommend/recommend_main";
 	}
-	
-	
 	
 	
 	/*
@@ -182,12 +182,17 @@ public class RecommendController {
 		
 		List <RecommendEmployment> RecommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
 		List<RecommendSupport>	recommendSupportCodeInfo =recommendService.getRecommendSupportCode();
+		List <User> recommendUserIdInfo = recommendService.getUserIdRecommend();
+		List <Announcement> recommendAnnouncemetCodeInfo = recommendService.getAnnouncementCodeRecommend();
 		
 		model.addAttribute("title", "채용 단계 순 목록 등록");
 		model.addAttribute("titleText", "채용 단계 순 목록 등록");
 		model.addAttribute("contents", "채용 단계 순 목록 등록 화면입니다.");
 		model.addAttribute("RecommendEmploymentInfo", RecommendEmploymentInfo);
 		model.addAttribute("recommendSupportCodeInfo", recommendSupportCodeInfo);
+		model.addAttribute("recommendUserIdInfo", recommendUserIdInfo);
+		model.addAttribute("recommendAnnouncemetCodeInfo", recommendAnnouncemetCodeInfo);
+		
 		return "user/recommend/recommend_employment_insert";
 	}
 	
