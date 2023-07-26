@@ -4,9 +4,83 @@
 		layout:decorate="~{user/layout/default}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<style>
+  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+    table-layout: auto;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+  }
 
-</body>
+</style>
+</head>
+<th:block layout:fragment="customJs">
+	<script>
+		$('.depositDeleteBtn').click(function (e) {
+		    e.preventDefault();
+			let isDelete = confirm('정말로 삭제하시겠습니까?');
+			if(isDelete) {
+		        const proProjectCode = this.dataset.proProjectCode;
+		        location.href=`/project/pro/depositListDelete?proProjectCode=${proProjectCode}`;
+		        //location.replace(/project/pro/depositDelete?proProjectCode=${proProjectCode});
+		    }
+		});
+	</script>
+</th:block>
+		<th:block layout:fragment="customContents">
+			<a th:href="@{/project/pro/depositListInsert}">등록하기</a>
+			<table>
+				<thead>
+					<tr>
+						<th hidden>성과금예치목록 코드</th>
+						<th hidden>전문 과제 코드</th>
+						<th hidden>관리자 아이디</th>
+						<th>입금한 기업 아이디</th>
+						<th>송금인</th>
+						<th>은행명</th>
+						<th>계좌번호</th>
+						<th>프로젝트 성과금(만원)</th>
+						<th>수수료율</th>
+						<th>총 입금액(만원)</th>	
+						<th>송금일시</th>
+						<th>
+							<a th:href="@{#}"></a>
+						</th>
+						<th>
+							<a th:href="@{#}"></a>
+						</th>
+						<th>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(depositList)}">
+						<td colspan="7">등록된 전문과제가 없습니다.</td>
+					</tr>
+					<tr th:unless="${#lists.isEmpty(depositList)}" th:each="d : ${depositList}">
+						<td th:text="${d.depositListCode}" hidden></td>
+						<td th:text="${d.proProjectCode}" hidden></td>
+						<td th:text="${d.adminId}" hidden></td>
+						<td th:text="${d.cpId}"></td>
+						<td th:text="${d.sender}"></td>
+						<td th:text="${d.bank}"></td>
+						<td th:text="${d.bankAccount}"></td>
+						<td th:text="${d.projectPayment}"></td>
+						<td th:text="${d.totalCommission}"></td>
+						<td th:text="${d.totalPayment}"></td>
+						<td th:text="${d.senderDate}"></td>
+						<td>
+							<a th:href="@{/project/pro/depositListModify(proProjectCode=${d.proProjectCode})}">수정하기</a>
+						</td>
+						<td>
+							<a class="depositDeleteBtn" th:href="@{#}" th:data-pro-project-code="${d.proProjectCode}">삭제</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
 </html>
