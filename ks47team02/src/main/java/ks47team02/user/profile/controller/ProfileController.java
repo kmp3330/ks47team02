@@ -387,6 +387,8 @@ public class ProfileController {
 	public String profileCertificateInsert(Model model) {
 		
 		model.addAttribute("title", "자격증 등록화면");
+		model.addAttribute("titleText", "자격증 등록");
+		model.addAttribute("contents", "나의 자격증 정보를 등록하는 페이지입니다.");
 		
 		return "user/profile/profile_certificate_insert";
 	}
@@ -422,6 +424,8 @@ public class ProfileController {
 		log.info("certificateInfo : {}", certificateInfo);
 		
 		model.addAttribute("title", "자격증 수정 화면");
+		model.addAttribute("titleText", "자격증 수정");
+		model.addAttribute("contents", "나의 자격증 정보를 수정하는 페이지입니다.");
 		model.addAttribute("certificateInfo", certificateInfo);
 		
 		return "user/profile/profile_certificate_modify";

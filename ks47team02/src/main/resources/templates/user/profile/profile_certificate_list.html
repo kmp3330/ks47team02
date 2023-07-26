@@ -50,6 +50,13 @@
 					</div>
 				</div>
 				<div class="col-lg-7">
+					<div class="mb-2">
+						<div class="card-tools">
+							<a th:href="@{/profile/profileCertificateInsert}"
+							   class="genric-btn info-border circle"> <i class="fas">등록</i>
+							</a>
+						</div>
+					</div>
                     <div class="main-content">
                         <div class="single-content1" th:unless="${#lists.isEmpty(certificateList)}"
                            	 th:each="l : ${certificateList}">
@@ -57,11 +64,25 @@
                                 <div class="job-text">
                                     <h4 th:text="${l.certificateName}"></h4>
                                     <ul class="mt-4">
-                                        <li class="mb-3"><h5 th:text="|[기관명] : ${l.certificatePublication}|"></h5></li>
-                                        <li class="mb-3"><h5 th:text="|[취득일시] : ${l.certificateDate}|"></h5></li>
-                                        <li class="mb-3"><h5 th:text="|[정보등록일시] : ${l.profileRegDate}|"></h5></li>
-                                        <li class="mb-3"><h5 th:text="|[공개여부] : ${l.profileHidden}|"></h5></li>
-                                        <li class="mb-3"><h5 th:text="|[입사지원시 공개여부] : ${l.profileApplicationHidden}|"></h5></li>
+                                        <li class="mb-3"><h6 th:text="|[기관명] : ${l.certificatePublication}|"></h6></li>
+                                        <li class="mb-3"><h6 th:text="|[취득일시] : ${l.certificateDate}|"></h6></li>
+                                        <li class="mb-3"><h6 th:text="|[정보등록일시] : ${l.profileRegDate}|"></h6></li>
+                                        <li class="mb-3">
+                                        	<th:block th:if="${l.profileHidden == true}">
+                                        		<h6 th:text="|[공개여부] : O|"></h6>
+                                        	</th:block>
+                                        	<th:block th:unless="${l.profileHidden == true}">
+                                        		<h6 th:text="|[공개여부] : X|"></h6>
+                                        	</th:block>
+                                       	</li>
+                                        <li class="mb-3">
+                                        	<th:block th:if="${l.profileApplicationHidden == true}">
+                                        		<h6 th:text="|[입사지원시 공개여부] : O|"></h6>
+                                        	</th:block>
+                                        	<th:block th:unless="${l.profileApplicationHidden == true}">
+                                        		<h6 th:text="|[입사지원시 공개여부] : X|"></h6>
+                                        	</th:block>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="job-btn align-self-center">

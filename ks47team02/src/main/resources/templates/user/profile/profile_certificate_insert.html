@@ -35,32 +35,64 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="sidebar">
-						<div class="single-item mb-4">
-							<h4 class="mb-4">프로필</h4>
-							<a th:href="@{/profile/profileIntroList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
-							</a> <a th:href="@{/profile/profileSkillList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
-							</a> <a th:href="@{/profile/profileWorkSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
-							</a> <a th:href="@{/profile/profileEduSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
-							</a> <a th:href="@{/profile/profileCertificateList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
-							</a> <a th:href="@{/profile/profileAwardList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
-							</a> <a th:href="@{/profile/profilePortfolioList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
+	<section class="contact-form section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
+					<div class="single-job mb-4 justify-content-between text-center">
+						<div class="card single-job">
+							<form id="addCertificateForm"
+								  th:action="@{/profile/profileCertificateInsert}" method="post" 
+								  class="d-md-flex justify-content-center">
+
+								<div class="left">
+									<p class="text-left" style="font-size:large; font-weight:900;">자격증명</p>
+									<input type="text"
+										   placeholder="자격증명" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '자격증명'"
+										   name="certificateName"> 
+									<p class="text-left" style="font-size:large; font-weight:900;">기관명</p>
+									<input type="text"
+										   placeholder="기관명" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '기관명'"
+										   name="certificatePublication">
+								    <p class="text-left" style="font-size:large; font-weight:900;">취득일시</p>
+									<input type="date"
+										   placeholder="취득일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '취득일시'"
+										   name="certificateDate">
+									<input type="hidden" name="profileRegDate">
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch1"
+												name="profileHidden" checked>
+											<label for="confirm-switch1" style="margin: 2px 0"></label>
+										</div>
+									</div>
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">입사지원시 공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch2"
+												name="profileApplicationHidden" checked> 
+											<label for="confirm-switch2" style="margin: 2px 0"></label>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="card-tools">
+							<a th:href="@{#}" id="certificateInsertbtn" 
+								class="genric-btn info-border circle"> <i
+								class="fas">등록 완료</i>
+							</a> <a th:href="@{/profile/profileCertificateList}" id="certificateResetbtn" class="genric-btn danger-border circle">
+								<i class="fas">취소</i>
 							</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9">
+				
+				<!-- <div class="col-lg-9">
 					<div class="single-job mb-4 justify-content-between text-center">
 						<div class="card">
 							<div class="card-header border-0">
@@ -118,7 +150,8 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
+				
 			</div>
 		</div>
 	</section>

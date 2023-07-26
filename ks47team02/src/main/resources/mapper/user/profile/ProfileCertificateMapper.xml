@@ -62,9 +62,9 @@
 		/* 자격증 등록 */
 			INSERT INTO profile_certificate
 				(user_certificate_code, user_id, user_certificate_name, user_certificate_publication,
-				user_certificate_date, profile_hidden, profile_application_hidden)
+				user_certificate_date, profile_reg_date, profile_hidden, profile_application_hidden)
 			VALUES (#{certificateCode}, #{userId}, #{certificateName},
-				#{certificatePublication}, #{certificateDate}, ${profileHidden},
+				#{certificatePublication}, #{certificateDate}, NOW(), ${profileHidden},
 				${profileApplicationHidden})
 	</insert>
 	
@@ -76,6 +76,7 @@
 			user_certificate_name,
 			user_certificate_publication,
 			user_certificate_date,
+			profile_reg_date,
 			profile_hidden,
 			profile_application_hidden
 		FROM
@@ -97,6 +98,7 @@
 			<if test="certificateDate != null and certificateDate != ''">
 				user_certificate_date = #{certificateDate},
 			</if>
+			profile_reg_date = #{profileRegDate},
 			profile_hidden = #{profileHidden},
 			profile_application_hidden = #{profileApplicationHidden},
 		</set>
