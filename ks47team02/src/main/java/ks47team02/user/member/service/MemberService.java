@@ -50,6 +50,27 @@ public class MemberService {
 		return resultMap;
 	}
 
+	public Map<String, Object> cpLoginCheck(String cpId, String cpPw){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+
+		boolean isValid = false;
+		Company companyInfo = companyMapper.cpLoginCheck(cpId);
+		log.info("companyInfo : {}", companyInfo);
+
+		if(companyInfo != null){
+			String checkCpPw = companyInfo.getCpPw();
+			if(checkCpPw.equals(cpPw)){
+				isValid = true;
+				resultMap.put("companyInfo", companyInfo);
+			}
+		}
+		resultMap.put("isValid", isValid);
+
+		log.info("resultMap : {}", resultMap);
+
+		return resultMap;
+	}
+
 	public void addUser(User user){
 		userMapper.addUser(user);
 	}
@@ -60,5 +81,13 @@ public class MemberService {
 
 	public boolean checkId(String userId) {
 		return userMapper.checkId(userId);
+	}
+
+	public boolean checkCpId(String cpId) {
+		return companyMapper.checkCpId(cpId);
+	}
+
+	public boolean checkRegNum(String cpRegNumber) {
+		return companyMapper.checkRegNum(cpRegNumber);
 	}
 }

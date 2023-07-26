@@ -78,6 +78,11 @@
       display: inline-block;
       line-height: 56px;
     }
+    
+    input[type='text']:focus, [type='email']:focus, textarea:focus {
+      outline: none;
+      padding: 0 0 0.875em 0;
+    }
   </style>
 </head>
 <th:block layout:fragment="customContents">
@@ -103,7 +108,7 @@
           <div class="input-group mb-3">
             <input type="text" id="cpRegNumber" name="cpRegNumber" class="form-control" placeholder="사업자등록번호를 입력해주세요.">
             <div class="input-group-append">
-              <button class="genric-btn primary-border small" id="checkCpReg">중복가입체크</button>
+              <button class="genric-btn primary-border small" id="checkRegNum">사업자등록번호조회</button>
               <div class="input-group-text">
                 <span class="fas fa-address-card"></span>
               </div>
@@ -222,7 +227,8 @@
   <script>
     $(document).ready(function (){
       
-      let isIdChecked = false;
+      let isCpIdChecked = false;
+      let isRegNumChecked = false;
       
       function validateForm(){
         // 모든 입력 필드가 채워졌는지 확인
@@ -241,42 +247,41 @@
         return valid;
       }
       
-     /* $('#addCompanyForm').submit(function (e){
+      $('#addCompanyForm').submit(function (e){
         if(!validateForm()){
           e.preventDefault();
         }
-      });*/
+      });
       
-      /*function isIdValid(){
-        return $('#cpId').val().length >= 5 && isIdChecked;
+      function isRegNumValid(){
+        return $('#cpRegNumber').val().length = 12 && isRegNumChecked;
       }
-      
-      $('#checkId').click(function (e){
+      $('#checkRegNum').click(function (e){
         e.preventDefault();
-        var userId = $('#userId').val();
-        if(userId.length<5){
-          Swal.fire({
+        var cpRegNumber = $('#cpRegNumber').val();
+        if(cpRegNumber.length != 12){
+          swal.fire({
             icon: 'error',
-            title: '아이디는 최소 5글자 이상이어야 합니다.'
+            title: '사업자등록번호는 (-) 포함 12글자로 이루어져 있습니다.'
           });
         } else {
           $.ajax({
-            url: '/checkId',
+            url: '/checkRegNum',
             type: 'POST',
-            data: {userId: userId},
-            success: function (response) {
-              if (response == true) {
+            data: {cpRegNumber: cpRegNumber},
+            success: function (response){
+              if(response == true){
                 Swal.fire({
                   icon: 'error',
-                  title: '이미 존재하는 아이디입니다.'
+                  title: '이미 등록된 사업자등록번호입니다.'
                 });
-                isIdChecked = false;
+                isRegNumChecked = false;
               } else {
                 Swal.fire({
                   icon: 'success',
-                  title: '사용 가능한 아이디입니다.'
-                })
-                isIdChecked = true;
+                  title: '등록이 가능한 사업자등록번호입니다.'
+                });
+                isRegNumChecked = true;
               }
             },
             error: function (jqXHR, textStatus, errorThrown) {   // error handling
@@ -285,15 +290,63 @@
           });
         }
       });
-      $('#addUserForm').submit(function (e){
-        if(!isIdValid()){
+      
+      function isCpIdValid(){
+        return $('#cpId').val().length >= 5 && isCpIdChecked;
+      }
+      $('#checkCpId').click(function (e){
+        e.preventDefault();
+        var cpId = $('#cpId').val();
+        if(cpId.length<5){
+          Swal.fire({
+            icon: 'error',
+            title: '아이디는 최소 5글자 이상이어야 합니다.'
+          });
+        } else {
+          $.ajax({
+            url: '/checkCpId',
+            type: 'POST',
+            data: {cpId: cpId},
+            success: function (response) {
+              if (response == true) {
+                Swal.fire({
+                  icon: 'error',
+                  title: '이미 존재하는 아이디입니다.'
+                });
+                isCpIdChecked = false;
+              } else {
+                Swal.fire({
+                  icon: 'success',
+                  title: '사용 가능한 아이디입니다.'
+                })
+                isCpIdChecked = true;
+              }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {   // error handling
+              console.log(textStatus, errorThrown);
+            }
+          });
+        }
+      });
+      
+      $('#addCompanyForm').submit(function (e){
+        if(!isCpIdValid()){
           e.preventDefault();
           Swal.fire({
             icon: 'error',
             title: '아이디 중복체크를 해주세요.'
           })
         }
-      })*/
+      });
+      $('#addCompanyForm').submit(function (e){
+        if(!isRegNumValid()){
+          e.preventDefault();
+          Swal.fire({
+            icon: 'error',
+            title: '사업자등록번호를 조회 해주세요.'
+          })
+        }
+      });
       
       $('#addCompanyForm').submit(function (e){
         let pw1 = $('#cpPw').val();
@@ -308,15 +361,15 @@
       });
       
       
-      /*$('#addUserBtn').click(function (){
-        const validateEle = $('#addUserBtn input').not('#userId');
+      $('#addCompanyBtn').click(function (){
+        const validateEle = $('#addCompanyBtn input').not('#cpId');
         let isSubmit = false;
         validateEle.each((idx, item) => {
           isSubmit = validCheck(item);
           return isSubmit;
         })
-        if(isSubmit) $('#addUserForm').submit();
-      });*/
+        if(isSubmit) $('#addCompanyForm').submit();
+      });
       $('#readTerms').click(function (e){
         e.preventDefault();
         Swal.fire({
@@ -354,21 +407,20 @@
           }
         })
       })
-      /*
       
-      $('#addUserBtn').click(function (e){
+      $('#addCompanyBtn').click(function (e){
         e.preventDefault();  // prevent the form from being submitted
         let isValid = true;
         
         // check each input field to see if it's empty
-        $('#addUserForm input').each(function() {
+        $('#addCompanyForm input').each(function() {
           if ($.trim($(this).val()) === '') {
             isValid = false;
           }
         });
         
         // check each select field to see if it's empty
-        $('#addUserForm select').each(function() {
+        $('#addCompanyForm select').each(function() {
           if ($.trim($(this).val()) === '') {
             isValid = false;
           }
@@ -376,14 +428,14 @@
         
         if (isValid) {
           // if the form is valid, submit it
-          $('#addUserForm').submit();
+          $('#addCompanyForm').submit();
         } else {
           Swal.fire({
             icon: 'error',
             title: '모든 항목을 채워주세요.'
           })
         }
-      });*/
+      });
     });
   </script>
 </th:block>
