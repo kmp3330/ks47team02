@@ -17,7 +17,7 @@ public class NormalProjects {
 	private String normalProjectDetail;
 	private int projectMaxPeopleNum;
 	private String normalRunCode;
-	private String progressStatusCategoryName;
+	private String runName;
 	private String projectAdvertiseStartDate;
 	private String projectAdvertiseFinishDate;
 	private String projectStartUpDate;
