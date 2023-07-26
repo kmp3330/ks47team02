@@ -11,6 +11,7 @@
 		<result column="user_award_publication" property="userAwardPublication"/>
 		<result column="user_award_date" property="userAwardDate"/>
 		<result column="award_details" property="awardDetails"/>
+		<result column="profile_reg_date" property="profileRegDate"/>
 		<result column="profile_hidden" property="profileHidden"/>
 		<result column="profile_application_hidden" property="profileApplicationHidden"/>
 	</resultMap>
@@ -24,6 +25,7 @@
 			user_award_publication,
 			user_award_date,
 			award_details,
+			profile_reg_date,
 			profile_hidden,
 			profile_application_hidden
 		FROM
@@ -58,6 +60,7 @@
 			 user_award_publication,
 			 user_award_date,
 			 award_details,
+			 profile_reg_date,
 			 profile_hidden,
 			 profile_application_hidden)
 		VALUES (
@@ -66,7 +69,8 @@
 			#{userAwardName}, 
 			#{userAwardPublication}, 
 			#{userAwardDate}, 
-			#{awardDetails}, 
+			#{awardDetails},
+			NOW(),
 			#{profileHidden}, 
 			#{profileApplicationHidden})
 	</insert>
@@ -80,6 +84,7 @@
 			user_award_publication,
 			user_award_date,
 			award_details,
+			profile_reg_date,
 			profile_hidden,
 			profile_application_hidden
 		FROM
@@ -103,6 +108,7 @@
 			<if test="awardDetails != null and awardDetails != ''">
 				award_details = #{awardDetails},
 			</if>
+			profile_reg_date = #{profileRegDate},
 			profile_hidden = #{profileHidden},
 			profile_application_hidden = #{profileApplicationHidden},
 		</set>
