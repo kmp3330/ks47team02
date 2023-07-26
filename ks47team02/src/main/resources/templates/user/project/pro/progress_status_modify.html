@@ -103,8 +103,8 @@
     	
     		
     		
-    		$('#progressStautsModifyBtn').click(function(){
-    			const validateEle = $('#proProjectModifyForm input');
+    		$('#progressStatusModifyBtn').click(function(){
+    			const validateEle = $('#progressStatusModifyForm input');
     								
     			let isSubmit = false;
     			validateEle.each((idx, item) => {
@@ -112,7 +112,7 @@
     				return isSubmit
     			})
     			if(isSubmit) {
-    				$('#progressStautsModifyForm').submit();
+    				$('#progressStatusModifyForm').submit();
     			}
     		});
     		
@@ -135,7 +135,7 @@
     </th:block>
 
 	<th:block layout:fragment="customContents">
-		<form id="progressStautsModifyForm" th:action="@{/project/pro/progressStautsModify}" method="post">
+		<form id="progressStatusModifyForm" th:action="@{/project/pro/progressStatusModify}" method="post">
   			<table th:object="${progressStatusInfo}">
   			<thead></thead>
 				<tbody>
@@ -159,8 +159,7 @@
 							<label for="progressRate">진행률</label>
 						</td>
 						<td>
-							<input type="text" id="progressRate" name="progressRate" th:value="*{progressRate}"
-								   readonly="readonly"/>
+							<input type="text" id="progressRate" name="progressRate" th:value="*{progressRate}"/>
 						</td>
 					</tr>
 					<tr>
@@ -168,8 +167,7 @@
 							<label for="statusName">진행상태</label>
 						</td>
 						<td>
-							<input type="text" id="statusName" name="statusName" th:value="*{statusName}"
-								   readonly="readonly"/>
+							<input type="text" id="statusName" name="statusName" th:value="*{statusName}"/>
 						</td>
 					</tr>
 					<tr>
@@ -181,10 +179,9 @@
 								   readonly="readonly"/>
 						</td>
 					</tr>
-					
 					<tr>
 						<td colspan="3">
-							<button type="submit" id="progressStautsModifyBtn">작성완료</button>
+							<button type="submit" id="progressStatusModifyBtn">작성완료</button>
 							<a th:href="@{/project/pro/progressStautsList}">뒤로가기</a>
 						</td>
 					</tr>	

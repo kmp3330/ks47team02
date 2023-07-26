@@ -238,7 +238,6 @@ public class ProProjectController {
 					Model model) {
 		// 전문과제 진행상태 상세조회
 		ProgressStatus progressStatusInfo = ProProjectService.getProgressStatusInfoByProProjectCode(proProjectCode);
-		
 		//log.info("db에 저장된 정보 - Service : {}", progressStatusInfo);
 		
 		model.addAttribute("progressStatusInfo", progressStatusInfo);
@@ -246,10 +245,14 @@ public class ProProjectController {
 		model.addAttribute("contents", "전문과제 진행상태 수정 페이지 입니다.");
 		
 		return "/user/project/pro/progress_status_modify";
-		
 	}
-	
-	
+	// 전문 과제 진행상태 수정 후 처리 230725 
+	@PostMapping("/progressStatusModify")
+	public String progressStatusModify(ProgressStatus progressStatus) {
+		ProProjectService.progressStatusModify(progressStatus);
+		log.info("progressStatus : {}", progressStatus);
+		return "redirect:/project/pro/progressStatusList";
+	}
 	
 	
 	

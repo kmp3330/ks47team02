@@ -526,7 +526,33 @@
 		WHERE
 			pro_project_code = #{proProjectCode};
 	</select>
-	
+	<!-- 전문과제 진행상태 수정 -->
+	<update id="progressStatusModify" parameterType="ProgressStatus">
+			/* 전문과제 진행상태 수정 */
+		    UPDATE progress_status
+			<trim prefix="SET" suffixOverrides=",">
+				<if test="progressStatusCode != null and progressStatusCode != '' ">
+					progress_status_code = #{progressStatusCode},
+				</if>
+				<if test="proProjectCode != null and proProjectCode != '' ">
+					pro_project_code = #{proProjectCode},
+				</if>
+				<if test="projectDetails != null and projectDetails != '' ">
+					project_details = #{projectDetails},
+				</if>
+				<if test="progressRate != null and progressRate != '' ">
+					progress_rate = #{progressRate},
+				</if>
+				<if test="statusName != null and statusName != '' ">
+					status_name = #{statusName},
+				</if>
+				<if test="writeDate != null and writeDate != '' ">
+					write_date = #{writeDate},
+				</if>
+			</trim>
+				WHERE
+					pro_project_code = #{proProjectCode}
+	</update>
 	
 	
 	

@@ -61,7 +61,8 @@ public interface ProProjectMapper {
 	public List<ProgressStatus> getProgressStatusList();
 		// 전문과제 진행상태 상세 조회
 	public ProgressStatus getProgressStatusInfoByProProjectCode(String proProjectCode);
-	
+		// 전문과제 진행상태 수정
+	public int progressStatusModify(ProgressStatus progressStatus);
 	
 	
 	

@@ -115,6 +115,12 @@ public class ProProjectService {
 		//log.info("db에 저장된 정보 - Service : {}", progressStatusInfo);
 		return progressStatusInfo;
 	}
+	// 전문과제 진행상태 수정
+	public int progressStatusModify(ProgressStatus progressStatus) {
+		int result = proProjectMapper.progressStatusModify(progressStatus);
+		log.info("result : {}", result);
+		return result;
+	}
 	
 	
 	
