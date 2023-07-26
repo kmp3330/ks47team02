@@ -26,7 +26,6 @@ public class MemberController {
 
 	// 의존성 주입
 	private final MemberService memberService;
-	private final UserMapper userMapper;
 
 	/**
 	 * 로그인 화면
@@ -63,7 +62,6 @@ public class MemberController {
 			session.setAttribute("SLEVEL", userInfo.getLevelName());
 			session.setAttribute("SNAME", userInfo.getUserName());
 
-
 			return "redirect:/";
 		}
 
@@ -87,9 +85,9 @@ public class MemberController {
 
 		if (isValid) {
 			Company companyInfo = (Company) validMap.get("companyInfo");
-			session.setAttribute("SID", companyInfo.getCpId());
-			session.setAttribute("SLEVEL", companyInfo.getLevelName());
-			session.setAttribute("SNAME", companyInfo.getCpName());
+			session.setAttribute("CPID", companyInfo.getCpId());
+			session.setAttribute("CPLEVEL", companyInfo.getLevelName());
+			session.setAttribute("CPNAME", companyInfo.getCpName());
 
 			return "redirect:/";
 		}

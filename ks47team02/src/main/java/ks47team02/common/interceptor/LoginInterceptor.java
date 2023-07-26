@@ -9,30 +9,31 @@ import jakarta.servlet.http.HttpSession;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+
 		HttpSession session = request.getSession();
 		String sessionId = (String) session.getAttribute("SID");
-		
-		if(sessionId == null) {
+		String sessionCpId = (String) session.getAttribute("CPID");
+
+		if(sessionId == null && sessionCpId == null) {
 			response.sendRedirect("/login");
 			return false;
-		} 
-		/*
-			 * else { 
-			 * String requestUri = request.getRequestURI(); 
-			 * String sessionLevel = (String) session.getAttribute("SLEVEL");
-			 * 
-			 * if(sessionLevel.equals("일반회원")) {
-			 * 
-			 * } }
-			 */
-		
-		
+		}
 		return true;
 	}
-	
+	/*
+	 * else {
+	 * String requestUri = request.getRequestURI();
+	 * String sessionLevel = (String) session.getAttribute("SLEVEL");
+	 *
+	 * if(sessionLevel.equals("일반회원")) {
+	 *
+	 * } }
+	 */
+
+
 }
+	
