@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.admin.profile.service.AdminProfileService;
+import ks47team02.user.profile.dto.ProfileEduSpec;
+import ks47team02.user.profile.dto.ProfileIntro;
+import ks47team02.user.profile.dto.ProfileSkill;
+import ks47team02.user.profile.dto.ProfileWorkSpec;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -24,40 +28,58 @@ public class AdminProfileController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/profileIntroList")
-	public String profileIntroList(Model model) {
+	@GetMapping("/adminProfileIntroList")
+	@SuppressWarnings("unchecked") // unchecked로 되어있으면 데이터타입을 체크 안한다는 뜻
+	public String profileIntroList(Model model,
+										 @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		
-		model.addAttribute("title", "자기소개 관리");
+		Map<String, Object> resultMap = adminProfileService.getProfileIntroList(currentPage);
+		int lastPage = (int) resultMap.get("lastPage");
+		List<Map<String, Object>> profileIntroList = (List<Map<String, Object>>) resultMap.get("profileIntroList");
+		int startPageNum = (int) resultMap.get("startPageNum");
+		int endPageNum = (int) resultMap.get("endPageNum");
 		
-		return "";
+		model.addAttribute("title", "자격증 관리");
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("profileIntroList", profileIntroList);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("endPageNum", endPageNum);
+		
+		return "admin/profile/adminProfileIntroList";
 	}
 	
 	@GetMapping("/profileSkillList")
 	public String profileSkillList(Model model) {
+		List <ProfileSkill> profileSkillList = adminProfileService.getProfileSkillList();
 		
 		model.addAttribute("title", "보유 기술 관리");
+		model.addAttribute("profileSkillList", profileSkillList);
 		
-		return "";
+		return "admin/profile/adminProfileSkillList";
 	}
 	
 	@GetMapping("/profileWorkSpecList")
 	public String profileWorkSpecList(Model model) {
+		List<ProfileWorkSpec> profileWorkSpecList = adminProfileService.getProfileWorkSpecList();
 		
 		model.addAttribute("title", "경력 관리");
-		
-		return "";
+		model.addAttribute("profileWorkSpecList", profileWorkSpecList);
+		return "admin/profile/adminProfileWorkSpecList";
 	}
 	
 	@GetMapping("/profileEduSpecList")
 	public String profileEduSpecList(Model model) {
+		List<ProfileEduSpec> profileEduSpecList = adminProfileService.getProfileEduSpecList();
 		
 		model.addAttribute("title", "학력 관리");
+		model.addAttribute("profileEduSpecList", profileEduSpecList);
 		
-		return "";
+		return "admin/profile/adminProfileEduSpecList";
 	}
 	
 	@GetMapping("/adminProfileCertificateList")
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") // unchecked로 되어있으면 데이터타입을 체크 안한다는 뜻
 	public String profileCertificateList(Model model,
 										 @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		
@@ -76,6 +98,7 @@ public class AdminProfileController {
 		
 		return "admin/profile/adminProfileCertificateList";
 	}
+	
 	
 	@GetMapping("/profileAwardList")
 	public String profileAwardList(Model model) {

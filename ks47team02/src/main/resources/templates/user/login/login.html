@@ -1,116 +1,137 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{user/layout/default}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
 <head>
-
+  <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
+  <style>
+    h6.mb-0.pb-2 {
+      position: relative;
+      z-index: 9999;
+    }
+    #signupBtn {
+      background-color: #0f222ab3;
+    }
+  </style>
 </head>
 <th:block layout:fragment="customJs">
-	<!-- 자바스크립트 작성 공간 -->
-	<script>
-		let msg = '[[${msg}]]';
-		if(msg != 'null' && msg != '') {
-			console.log(msg);
-			alert(msg);
-		}
-		
-		const validCheck = ele => {
-			let data = $(ele).val();
-			let eleMsg = $(ele).attr('placeholder');
-			
-			if(typeof data == 'undefined' || data == null || data == '') {
-				alert(`${eleMsg} 필수 입력 항목입니다.`);
-				$(ele).focus();
-				return false;
-			}
-			return true;
-		}
-		
-		$('#loginBtn').click(function (e) {
-			e.preventDefault();
-			
-			const validateEle = $('#loginForm input');
-			let isSubmit = false;
-			
-			validateEle.each( (idx, item) => {
-				isSubmit = validCheck(item);
-				return isSubmit;
-			});
-			if(isSubmit) $('#loginForm').submit();
-		});
-		
-		$('#resetBtn').click(function (e) {
-			e.preventDefault();
-			
-			$('#loginForm input').val('');
-		});
-		
-	</script>
-	
+  <!-- 자바스크립트 작성 공간 -->
+  <script>
+    $(document).ready(function() {
+      $('#reg-log').change(function() {
+        if(this.checked) {
+          $('.card-front').hide();
+          $('.card-back').show();
+        } else {
+          $('.card-back').hide();
+          $('.card-front').show();
+        }
+      });
+      
+      
+      let msg = '[[${msg}]]';
+      if(msg != 'null' && msg != '') {
+        console.log(msg);
+        alert(msg);
+      }
+      
+      const validCheck = ele => {
+        let data = $(ele).val();
+        let eleMsg = $(ele).attr('placeholder');
+        
+        if(typeof data == 'undefined' || data == null || data == '') {
+          alert(`${eleMsg} 필수 입력 항목입니다.`);
+          $(ele).focus();
+          return false;
+        }
+        return true;
+      }
+      
+      $('#loginBtn').click(function (e) {
+        e.preventDefault();
+        
+        const validateEle = $('#loginForm input');
+        let isSubmit = false;
+        
+        validateEle.each( (idx, item) => {
+          isSubmit = validCheck(item);
+          return isSubmit;
+        });
+        if(isSubmit) $('#loginForm').submit();
+      });
+      
+      $('#cpLoginBtn').click(function (e){
+        e.preventDefault();
+        
+        const validateEle = $('#cpLoginForm input');
+        let isSubmit = false;
+        
+        validateEle.each( (idx, item) => {
+          isSubmit = validCheck(item);
+          return isSubmit;
+        });
+        if(isSubmit) $('#cpLoginForm').submit();
+      });
+    });
+  </script>
+
 </th:block>
 
 <th:block layout:fragment="customContents">
- <!-- <div class="col-lg-8 card card-outline card-primary">
-    <div class="title-text justify-content-center">
-    <h1 class="title login">로그인</h1>
-  </div>
-  <div class="form-container">
-    <div class="form-inner">
-      <form action="#" class="login">
-            <pre>
-            </pre>
-        <div class="field">
-          <input type="text" placeholder="Email Address" required>
+  <div class="section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-7 text-center align-self-center py-5">
+          <div class="section pb-5 pt-5 pt-sm-2 text-center">
+            <div class="card-header" style="margin-bottom: 200px">
+              <h6 class="mb-0 pb-2"><span>일반회원</span><span>기업회원</span></h6>
+              <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+              <label for="reg-log"></label>
+            </div>
+            <form id="loginForm" th:action="@{/login}" method="post">
+              <div class="card-front">
+                <div class="center-wrap">
+                  <div class="section text-center">
+                    <h4 class="mb-4 pb-3">일반회원 로그인</h4>
+                    <div class="form-group">
+                      <input type="text" name="userId" class="form-style" value="id001" id="userId" autocomplete="off">
+                      <i class="input-icon uil fas fa-user"></i>
+                    </div>
+                    <div class="form-group mt-2">
+                      <input type="password" name="userPw" class="form-style" value="pw001" id="userPw" autocomplete="off">
+                      <i class="input-icon uil fas fa-lock"></i>
+                    </div>
+                    <button type="submit" class="btn mt-4" id="loginBtn">log in</button>
+                    <button type="submit" class="btn mt-4" id="signupBtn">sign up</button>
+                    <h5 class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></h5>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <form id="cpLoginForm" th:action="@{/cpLogin}" method="post">
+              <div class="card-back">
+                <div class="center-wrap">
+                  <div class="section text-center">
+                    <h4 class="mb-4 pb-3">기업회원 로그인</h4>
+                    <div class="form-group">
+                      <input type="text" name="cpId" class="form-style" id="cpId" value="cp001" autocomplete="off">
+                      <i class="input-icon uil fas fa-user"></i>
+                    </div>
+                    <div class="form-group mt-2">
+                      <input type="password" name="cpPw" class="form-style" id="cpPw" value="cppw001" autocomplete="off">
+                      <i class="input-icon uil fas fa-lock"></i>
+                    </div>
+                    <button type="submit" class="btn mt-4" id="cpLoginBtn">log in</button>
+                    <button type="submit" class="btn mt-4" id="cpSignupBtn">sign up</button>
+                    <h5 class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></h5>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="field">
-          <input type="password" placeholder="Password" required>
-        </div>
-        <div class="pass-link"><a href="#">Forgot password?</a></div>
-        <div class="field btn">
-          <div class="btn-layer"></div>
-          <input type="submit" value="Login">
-        </div>
-      </form>
-      </form>
+      </div>
     </div>
   </div>
-  </div>
-  </div>
-  -->
-
-	<section class="jobs-area section-padding">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-5">
-					<div class="card card-info">
-						<div class="card-header">
-							<h3 class="card-title">로그인</h3>
-						</div>
-						<form id="loginForm" class="form-horizontal" th:action="@{/login}" method="post">
-							<div class="card-body">
-								<div class="form-group row">
-									<div class="col-sm-12">
-										<input type="text" class="form-control" id="userId" name="userId"
-											value="id001">
-									</div>
-								</div>
-								<div class="form-group row">
-									<div class="col-sm-12">
-										<input type="password" class="form-control" id="userPw" name="userPw"
-											value="pw001">
-									</div>
-								</div>
-							</div>
-							<div class="card-footer">
-								<button type="submit" id="loginBtn" class="btn btn-info">로그인</button>
-								<button type="reset" id="resetBtn" class="btn btn-default float-right">취소</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
 </th:block>
 </html>
