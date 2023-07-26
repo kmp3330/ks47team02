@@ -14,7 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
 import ks47team02.user.project.pro.dto.ApplicantAccount;
+import ks47team02.user.project.pro.dto.DepositList;
 import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.project.pro.dto.NotPaidList;
 import ks47team02.user.project.pro.dto.ProProject;
 import ks47team02.user.project.pro.dto.ProProjectApplicant;
 import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
@@ -180,7 +182,7 @@ public class ProProjectController {
 		
 		return "redirect:/project/pro/proProjectApplicantList?proProjectCode=" + proProjectCode + "";
 	}
-//---------------------------------전문과제 개인별 맡은 기능 목록 조회, 등록, 수정, 삭제--------------------------------------------------------------------------------------------------------------
+//---------------------------------전문과제 개인별 맡은 기능 목록 조회,수정 -------------------------------------------------------------------------------------------------------------
 	// 전문과제 개인별 맡은 기능 목록 조회
 	@GetMapping("/proProjectPersonalFunctionList")
 	public String getProProjectPersonalFunctionList(@RequestParam(value="proProjectCode") String proProjectCode, Model model) {
@@ -220,7 +222,7 @@ public class ProProjectController {
 		
 	return "redirect:/project/pro/proProjectPersonalFunctionList";	
 	}
-//---------------------------------전문과제 --------------------------------------------------------------------------------------------------------------
+//---------------------------------전문과제 진행상태 목록 조회, 수정--------------------------------------------------------------------------------------------------------------
 	// 전문 과제 진행 상태 목록 조회
 	@GetMapping("/progressStatusList")
 	public String getProgressStatusList(Model model) {
@@ -253,62 +255,73 @@ public class ProProjectController {
 		log.info("progressStatus : {}", progressStatus);
 		return "redirect:/project/pro/progressStatusList";
 	}
+	//---------------------------------전문과제 성과금 목록 조회, 작성, 수정, 삭제 --------------------------------------------------------------------------------------------------------------
+	// 성과금 예치 완료 목록	230726 1100
+	@GetMapping("/depositList")
+	public String proProjectDepositList(Model model) {
+		
+		List<DepositList> depositList = ProProjectService.getDepositList();
+		
+		model.addAttribute("depositList", depositList);
+		model.addAttribute("title", "성과금 예치 목록");
+		model.addAttribute("contents", "성과금 예치 목록 페이지 입니다.");
+		return "user/project/pro/deposit_list";
+	}
+	// 성과금 예치 완료 작성 전 처리 230726 1230
+	@GetMapping("/depositListInsert")
+	public String DepositListInsert(Model model) {
+		
+		List<DepositList> depositList = ProProjectService.getDepositList();
+		List<NotPaidList> notPaidList = ProProjectService.getNotPaidList();
+		model.addAttribute("notPaidList", notPaidList);
+		model.addAttribute("depositList", depositList);
+		model.addAttribute("title", "성과금 예치 완료 작성");
+		model.addAttribute("contents", "성과금 예치 완료 작성 페이지 입니다.");
+		return "user/project/pro/deposit_list_insert";
+	}
+	// 성과금 예치 완료 작성 후 처리 230726 1513
+	@PostMapping("/depositListInsert")
+	public String DepositListInsert(DepositList depositList) {
+		ProProjectService.DepositInsert(depositList);
+		return"redirect:/project/pro/depositList";
+	}
+	// 성과굼 예치 목록 수정 전 처리 230726 1600
+	@GetMapping("/depositListModify")
+	public String DepositListModify(@RequestParam(value="proProjectCode") String proProjectCode,
+									Model model) {
+		// 성과금 예치 목록 상세조회
+		DepositList depositListInfo = ProProjectService.getDepositListInfoByProjectCode(proProjectCode);
+		
+		//log.info("db에 저장된 정보 - depositListInfo : {}", depositListInfo);
+		model.addAttribute("depositListInfo", depositListInfo);
+		model.addAttribute("title", "성과금 예치 목록 수정");
+		model.addAttribute("contents", "성과금 예치 목록 수정 페이지 입니다.");
+		
+		return "/user/project/pro/deposit_list_modify";
+	}
+	// 성과금 예치 목록 수정 후 처리 230726 1630
+	@PostMapping("/depositListModify")
+	public String depositListModify(DepositList depositList) {
+			ProProjectService.depositListModify(depositList);
+			log.info("db에 저장된 정보 - depositListInfo : {}", depositList);
+		return "redirect:/project/pro/depositList";
+	}
+	// 성과금 예치 목록 삭제 처리 230726 1716
+	@GetMapping("/depositListDelete")
+	public String depositListDelete (@RequestParam(value="proProjectCode") String proProjectCode,
+									Model model) {
+		ProProjectService.depositListDelete(proProjectCode);
+		
+		model.addAttribute("title", "성과금 예치 목록 삭제");
+		model.addAttribute("contents", "성과금 예치 목록 삭제 페이지 입니다.");
+	
+		
+		return "redirect:/project/pro/depositList?proProjectCode=" + proProjectCode + "";
+	}
+	
+
 	
 	
-	
-	
-	
-	
-	
-//	// 전문과제 구인글 삭제 후 처리
-//	@PostMapping("/proProjectDelete")
-//	public String proProjectDelete(@RequestParam(value="proProjectCode") String proProjectCode){
-//		
-//		ProProjectService.getProjectInfoByCode(proProjectCode);
-////		String cpId = proProjectInfo.getCpId();
-////		// 회원 여부 검증
-////		Map<String, Object> isValidMap = ProProjectService.isValidCp(cpId, cpPw);
-////		boolean isValid = (boolean) isValidMap.get("isValid");
-////		
-////		if(isValid) {
-////			ProProjectService.proProjectDelete(proProjectInfo);
-////			return "redirect:/goods/goodsList";
-////		}
-////		reAttr.addAttribute("proProjectCode", proProjectCode);
-////		reAttr.addAttribute("msg", "회원 정보 불일치");
-////		
-//		return "redirect:/goods/removeGoods";
-//		
-//	}
-//	// 전문과제에 신청한 회원 목록 (작업중)
-//	@GetMapping("/proProjectApplicantList")
-//	public String proProjectApplicantList(Model model) {
-//		
-//		List<ProProject> proProjectApplicantList = ProProjectService.getProProjectApplicantList();
-//		model.addAttribute("title", "메인화면");
-//		model.addAttribute("contents", "전문과제 신청자 목록 페이지 입니다.");
-//		model.addAttribute("proProjectApplicantList", proProjectApplicantList);
-//		return "user/project/pro/pro_project_applicant_list";
-//	}
-//	
-//	
-//	
-//	// 전문 과제 진행 상태 목록
-//	@GetMapping("/proProjectPersonalFunctionList")
-//	public String proProjectPersonalFunctionList(Model model) {
-//		
-//		model.addAttribute("title", "전문과제 - 개인별 맡은 기능 목록");
-//		model.addAttribute("contents", "전문과제 개인별 맡은 기능 목록 페이지 입니다.");
-//		return "user/project/pro/pro_project_personal_function_list";
-//	}
-//	// 성과금 예치 목록
-//	@GetMapping("/proProjectDepositList")
-//	public String proProjectDepositList(Model model) {
-//		
-//		model.addAttribute("title", "메인화면");
-//		model.addAttribute("contents", "성과금 예치 목록 페이지 입니다.");
-//		return "user/project/pro/deposit_list";
-//	}
 //	// 성과금 송금 완료 목록
 //	@GetMapping("/proProjectSendMoneyCompleteList")
 //	public String proProjectSendMoneyCompleteList(Model model) {  
@@ -325,21 +338,5 @@ public class ProProjectController {
 //		model.addAttribute("contents", "신청자별 계좌 정보 목록 페이지 입니다."); 
 //		return "user/project/pro/applicant_account_list";
 //	}
-////	// 신청자 진행 상황 분류 목록
-////	@GetMapping("/pro")
-////	public String normalApplyerRunList(Model model) {
-////		
-////		model.addAttribute("title", "신청자 진행 상황 분류 목록 페이지");
-////		model.addAttribute("contents", "신청자 진행 상황 분류 목록 페이지 입니다.");
-////		return "user/project/pro/normalApplyerRunList";
-////	}
-////	 전문과제 개인별 맡은 기능 목록
-////	@GetMapping("/pro")
-////	public String proProjectProgressStatusList(Model model)  {
-////		
-////		model.addAttribute("title", "전문과제 진행상태 목록");
-////		model.addAttribute("contents", "전문 과제 진행 상태 목록 페이지 입니다.");
-////		return "user/project/pro/proProjectProgressStatusList";
-////	}
-//  
+
 }

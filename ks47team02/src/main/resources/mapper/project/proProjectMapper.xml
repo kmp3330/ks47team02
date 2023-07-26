@@ -33,7 +33,7 @@
 		<result column="application_date" property="applicationDate"/>
 	</resultMap>
 	<!-- 성과금 예치 목록 조회 -->
-	<resultMap type="ProProject" id="depositResultMap">
+	<resultMap type="DepositList" id="depositResultMap">
 		<id column="deposit_list_code" property="depositListCode"/>
 		<result column="pro_project_code" property="proProjectCode"/>
 		<result column="admin_id" property="adminId"/>
@@ -442,7 +442,6 @@
     	/* 전문과제 신청자별 맡은 기능 수정 */
 		    UPDATE pro_project_personal_function
 			<trim prefix="SET" suffixOverrides=",">
-				
 				<if test="skill != null and skill != '' ">
 					skill = #{skill},
 				</if>
@@ -553,8 +552,126 @@
 				WHERE
 					pro_project_code = #{proProjectCode}
 	</update>
-	
-	
+<!-- 전문과제 진행상태 관련 끝 -->
+<!-- 전문과제 예치목록 관련 시작 -->
+	<!-- 성과금 예치 목록 조회 -->
+	<select id="getDepositList" parameterType="map" resultMap="depositResultMap">
+		/* 성과금 예치 목록 조회 */
+		SELECT
+			deposit_list_code,
+			pro_project_code,
+			admin_id,
+			cp_id,
+			sender,
+			bank,
+			bank_account,
+			project_payment,
+			total_commission,
+			total_payment,
+			sender_date
+		FROM
+			deposit_list;
+	</select>
+	<!-- 성과금 예치 완료 작성 -->
+	<insert id="depositListInsert" parameterType="DepositList">
+		/* 성과금 예치 완료 작성 */
+		INSERT into deposit_list
+			(deposit_list_code, pro_project_code, admin_id, cp_id, sender, bank, bank_account, project_payment, total_commission, total_payment, sender_date)
+		SELECT
+			CONCAT('deposit_list_code',LPAD(CAST(SUBSTRING(MAX(deposit_list_code),18)+1 as UNSIGNED),3,'0')),
+			(SELECT
+				pp.pro_project_code
+			FROM
+				pro_project AS pp
+			WHERE
+				pp.normal_run_code = 'normal_run_code05'and pp.pro_project_code = #{proProjectCode}),
+			'master4',
+			(SELECT
+				pp.cp_id
+			FROM
+				pro_project AS pp
+			WHERE
+				pp.normal_run_code = 'normal_run_code05' AND pp.pro_project_code = #{proProjectCode}),
+			#{sender},
+			#{bank},
+			#{bankAccount},
+			#{projectPayment},
+			13,
+			#{totalPayment},
+			CURDATE()
+		FROM
+			deposit_list
+		WHERE
+			deposit_list_code LIKE 'deposit_list_code%';
+	</insert>
+	<!-- 성과금 미입금 프로젝트 조회 -->
+	<select id="getNotPaidList" parameterType="map" resultMap="proProjectResultMap">
+		/* 성과금 미입금 프로젝트 조회 */
+		SELECT
+			pp.pro_project_code,
+			pp.title,
+			pp.cp_id
+		FROM
+			pro_project AS pp
+		WHERE
+			pp.normal_run_code = 'normal_run_code05'
+	</select>
+	<!-- 예치금 목록 상세 조회 -->
+	<select id="getDepositListInfoByProjectCode" parameterType="map" resultMap="depositResultMap">
+		/* 예치금 목록 상세 조회 */
+		SELECT
+			deposit_list_code,
+			pro_project_code,
+			admin_id,
+			cp_id,
+			sender,
+			bank,
+			bank_account,
+			project_payment,
+			total_commission,
+			total_payment,
+			sender_date
+		FROM
+			deposit_list AS dl
+		WHERE
+			dl.pro_project_code = #{proProjectCode};
+	</select>
+	<!-- 성과금 예치 목록 수정 -->
+	<update id="depositListModify" parameterType="map">
+		/* 성과금 예치 목록 수정 */
+		UPDATE deposit_list
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="sender != null and sender != '' ">
+				sender = #{sender},
+			</if>
+			<if test="bank != null and bank != '' ">
+				bank = #{bank},
+			</if>
+			<if test="bankAccount != null and bankAccount != '' ">
+				bank_account = #{bankAccount},
+			</if>
+			<if test="projectPayment != null and projectPayment != '' ">
+				project_payment = #{projectPayment},
+			</if>
+			<if test="totalPayment != null and totalPayment != '' ">
+				total_payment = #{totalPayment},
+			</if>
+			<if test="senderDate != null and senderDate != '' ">
+				sender_date = CURDATE(),
+			</if>
+		</trim>
+		WHERE
+			pro_project_code = #{proProjectCode};
+	</update>
+	<!-- 성과금 예치 목록 삭제 -->
+	<delete id="depositListDelete" parameterType="DepositList" >
+		/* 성과금 예치 목록 삭제 */
+		DELETE
+		FROM
+			deposit_list AS dl
+		WHERE
+			dl.pro_project_code = #{proProjectCode};
+	</delete>
 	
 	
 	

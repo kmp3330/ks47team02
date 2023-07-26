@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+
+	<head>
+    	<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
+    	<style>
+    		input{
+    			width: 98%;
+    			height: 23px;
+    		}
+    		td:nth-child(3n+1):not(:last-child){
+    			color: white;
+    			font-weight: 700;
+    			background-color: cornflowerblue;
+    		}
+    		select{
+    			width: 99%;
+    			text-align: center;
+    			height: 23px;
+    		}
+    		#depositListModifytBtn, #resetBtn {
+    			width: 49%;
+    			height: 25px;
+    		}
+    	</style>
+    </head>
+    
+    <th:block layout:fragment="customJs">
+    	<script th:src="@{/js/jquery-3.7.0.js}"></script>
+    	<script>
+    		/*
+    		const $idCheckBtn = document.querySelector('#idCheck');
+    		$idCheckBtn.addEventListener('click', e => {
+    			alert('test');
+    		});
+    		
+    		$('#idCheck').click(function(){
+    			const $memberId = $('#memberId');
+    			let memberId = $memberId.val();
+    			// 유효성검사
+    			if(typeof memberId == 'undefined' || memberId == null || memberId == '' ){
+    				alert('아이디를 입력해주세요');
+    				$memberId.focus();
+    				return false;
+    			}
+    		
+    			
+    			// ajax 호출
+    			const request = $.ajax({
+					url: '/member/idCheck',
+					method: 'POST',
+					data: { 'memberId' : memberId },
+					dataType: 'text'
+   				});
+   				 
+   				request.done(function( response ) {
+   					if(response == 'true'){
+   						alert('이미 등록된 아이디입니다.');
+   						$memberId.val('');
+   	    				$memberId.focus();
+   	    				return false;
+   					}else{
+   						$('#addMemberForm input').prop('disabled', false);
+   						$('#addMemberForm select').prop('disabled', false);
+   						$('#addMemberForm button').prop('disabled', false);
+   					}
+					//console.log(typeof response);
+   				});
+   				 
+   				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+   				});		
+    		});
+    		
+    		
+    		//회원 아이디 변경 시 이벤트 처리
+    		$('#memberId').change(function(){
+    			$('#addMemberForm input').not('#memberId').val('');
+    			$('#addMemberForm input').not('#memberId').prop('disabled', true);
+    			$('#addMemberForm select').prop('disabled', true);
+    			$('#addMemberForm button').not('#idCheck').prop('disabled', true);
+    			
+    		});
+    		
+    		*/
+    		
+   		// 리셋버튼
+    		$('#resetBtn').click(function(e){
+    			//태그가 가지고 있는 기본 이벤트 동작 방지
+    			e.preventDefault();
+    			$('#depositListModifyForm input').val('');
+    			
+    		})   
+    	
+    		
+    		//회원가입버튼시 이벤트
+    		
+    		$('#depositListModifytBtn').click(function(){
+    			const validateEle = $('#depositListModifyForm select,input');
+    								
+    			let isSubmit = false;
+    			validateEle.each((idx, item) => {
+    				isSubmit = validCheck(item);
+    				return isSubmit
+    			})
+    			if(isSubmit) {
+    				$('#depositListModifyForm').submit();
+    			}
+    		});
+    		
+    		// 유효성 검사 함수
+/*     		const validCheck = element => {
+    			let data = $(element).val();
+    			let eleId = $(element).attr('id');
+    			let text = $(element).text();
+    			if(typeof data == 'undefined' || data == null || data == '' ){
+    				let cate = $(`label[for="${eleId}"]`).text();
+    				alert(`${cate} 은/는 필수 입력항목입니다.`);
+    				$(element).focus();
+    				return false;    
+    			}
+    			return true;
+    		} */
+    	 
+    	
+    	</script>
+    </th:block>
+
+	<th:block layout:fragment="customContents">
+		<form id="depositListModifyForm" th:action="@{/project/pro/depositListModify}" method="post">
+			<table th:object="${depositListInfo}">
+				<tbody>			
+					<tr>
+						<td>
+							<label for="depositListCode" hidden>성과금예치목록 코드</label>
+						</td>
+						<td>
+							<input type="text" id="depositListCode" name="depositListCode" th:value="*{depositListCode}" hidden/>
+							<input type="text" id="proProjectCode" name="proProjectCode" th:value="*{proProjectCode}" hidden/>
+							<input type="text" id="adminId" name="adminId" th:value="*{adminId}" hidden/>
+							<input type="text" id="cpId" name="cpId" th:value="*{cpId}" hidden/>
+						</td>
+					</tr>
+					<tr>
+					</tr>
+					<tr>
+						<td>
+							<label for="sender">송금인</label>
+						</td>
+						<td>
+							<input type="text" id="sender" name="sender" th:value="*{sender}"
+								   placeholder="입금자명을 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="bank">은행명</label>
+						</td>
+						<td>
+							<input type="text" id="bank" name="bank" th:value="*{bank}"
+								   placeholder="은행명를 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="bankAccount">계좌번호</label>
+						</td>
+						<td>
+							<input type="text" id="bankAccount" name="bankAccount" th:value="*{bankAccount}"
+								   placeholder=" 계좌번호를 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="projectPayment"> 프로젝트 성과금(만원)</label>
+						</td>
+						<td>
+							<input type="text" id="projectPayment" name="projectPayment" th:value="*{projectPayment}"
+								   placeholder="프로젝트 성과금을 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="totalPayment">총 입금액(만원)</label>
+						</td>
+						<td>
+							<input type="text" id="totalPayment" name="totalPayment" th:value="*{totalPayment}"
+								placeholder="총 입금액(만원)" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="senderDate">송금일시</label>
+						</td>
+						<td>
+							<input type="text" id="senderDate" name="senderDate" th:value="*{senderDate}"
+											placeholder="입금된 일시를 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<button type="submit" id="depositListModifytBtn">작성완료</button>
+							<a th:href="@{/project/pro/depositList}">뒤로가기</a>
+							<button type="button" id="resetBtn">초기화</button>
+						</td>
+					</tr>	
+				</tbody> 
+			</table>
+		</form>
+	</th:block>
+</html>
