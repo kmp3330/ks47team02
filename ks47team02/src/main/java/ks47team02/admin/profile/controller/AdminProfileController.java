@@ -28,12 +28,23 @@ public class AdminProfileController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/profileIntroList")
-	public String profileIntroList(Model model) {
+	@GetMapping("/adminProfileIntroList")
+	@SuppressWarnings("unchecked") // unchecked로 되어있으면 데이터타입을 체크 안한다는 뜻
+	public String profileIntroList(Model model,
+										 @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		
-		List<ProfileIntro> profileIntroList = adminProfileService.getProfileIntroList();
-		model.addAttribute("title", "자기소개 관리");
+		Map<String, Object> resultMap = adminProfileService.getProfileIntroList(currentPage);
+		int lastPage = (int) resultMap.get("lastPage");
+		List<Map<String, Object>> profileIntroList = (List<Map<String, Object>>) resultMap.get("profileIntroList");
+		int startPageNum = (int) resultMap.get("startPageNum");
+		int endPageNum = (int) resultMap.get("endPageNum");
+		
+		model.addAttribute("title", "자격증 관리");
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("profileIntroList", profileIntroList);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("endPageNum", endPageNum);
 		
 		return "admin/profile/adminProfileIntroList";
 	}
@@ -68,7 +79,7 @@ public class AdminProfileController {
 	}
 	
 	@GetMapping("/adminProfileCertificateList")
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") // unchecked로 되어있으면 데이터타입을 체크 안한다는 뜻
 	public String profileCertificateList(Model model,
 										 @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		
@@ -87,6 +98,7 @@ public class AdminProfileController {
 		
 		return "admin/profile/adminProfileCertificateList";
 	}
+	
 	
 	@GetMapping("/profileAwardList")
 	public String profileAwardList(Model model) {
