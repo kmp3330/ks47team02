@@ -30,8 +30,13 @@ public class NormalProjectService {
 		this.normalProjectMapper = normalProjectMapper;
 	}
 
+	public void addApplicantAccept(String normalProjectCode){
+		normalProjectMapper.addApplicantAccept(normalProjectCode);
+	}
+
 	/**
-	 *
+	 * @param normalProjects 일반과제 dto
+	 *일반과제 수정폼
 	 * */
 	public void modifyNormalProject(NormalProjects normalProjects){
 		log.info("normalProjects : {}", normalProjects);
@@ -74,8 +79,8 @@ public class NormalProjectService {
 		log.info("insert 후 norproject : {}", norproject);
 	}
 	
-	public List<NormalProjects> getNormalProjectByCode(String normalProjectCode) {
-		List<NormalProjects> normalProjects = normalProjectMapper.getNormalPrjectByCode(normalProjectCode);
+	public NormalProjects getNormalProjectByCode(String normalProjectCode) {
+		NormalProjects normalProjects = normalProjectMapper.getNormalPrjectByCode(normalProjectCode);
 		log.info("normalProjectsByCode : {}", normalProjects);
 		
 		

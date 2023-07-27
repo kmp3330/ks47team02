@@ -70,98 +70,98 @@
             <h1>일반과제 상세페이지</h1>
             <div class="content-wrap">
               <!-- 설명들 시작 -->
-               <th:block th:each="l : ${normalProjectList}">
+               <th:block th:object="${normalProject}">
                  <div class="job-btn align-self-center justify-content-end d-flex">
-                   <a th:href="@{/normalProject/modifyProject(normalProjectCode=${l.normalProjectCode})}" class="third-btn">수정</a>
-                   <a th:href="@{/normalProject/removeProject(normalProjectCode=${l.normalProjectCode})}" class="third-btn">삭제</a>
-                   <a th:href="@{/normalProject/addApplicantAccept(normalProjectCode=${l.normalProjectCode})}" class="third-btn">신청</a>
+                   <a th:href="@{/normalProject/modifyProject(normalProjectCode=*{normalProjectCode})}" class="third-btn">수정</a>
+                   <a th:href="@{/normalProject/removeProject(normalProjectCode=*{normalProjectCode})}" class="third-btn">삭제</a>
+                   <a th:href="@{/normalProject/addApplicantAccept(normalProjectCode=*{normalProjectCode})}" class="third-btn">신청</a>
                  </div>
                 <div class="project-detail">
                   <div class="condition-title">
                     <p class="condition-label body-2 text500">일반과제명</p>
                   </div>
-                  <p class="condition-data body-2 text900" th:text="${l.normalProjectName}"></p>
+                  <p class="condition-data body-2 text900" th:text="*{normalProjectName}"></p>
                 </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">참여분류</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.joinCateName}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{joinCateName}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">작업분류</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.workCateName}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{workCateName}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">주제분류</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.subjectCateName}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{subjectCateName}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">작업분류</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.requiredSkill}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{requiredSkill}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">최대인원</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.projectMaxPeopleNum}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{projectMaxPeopleNum}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">진행상태</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.runName}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{runName}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">작성일자</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.projectAdvertiseStartDate}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{projectAdvertiseStartDate}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">마감일자</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.projectAdvertiseFinishDate}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{projectAdvertiseFinishDate}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">일반과제 시작일자</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.projectStartUpDate}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{projectStartUpDate}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">일반과제 완료일자</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.projectFinishDate}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{projectFinishDate}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">프로젝트 일수</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.projectDay}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{projectDay}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">프로젝드 일당 점수</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.projectDayScore}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{projectDayScore}"></p>
                  </div>
                  <div class="project-detail">
                    <div class="condition-title">
                      <p class="condition-label body-2 text500">프로젝트 완료 점수</p>
                    </div>
-                   <p class="condition-data body-2 text900" th:text="${l.projectFinishScore}"></p>
+                   <p class="condition-data body-2 text900" th:text="*{projectFinishScore}"></p>
                  </div>
                  <h1>프로젝트 상세설명</h1>
-                 <p th:text="${l.normalProjectDetail}"></p>
+                 <p th:text="*{normalProjectDetail}"></p>
                </th:block>
 
 

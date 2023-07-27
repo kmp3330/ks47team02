@@ -12,6 +12,14 @@ import ks47team02.user.project.pro.dto.WorkCate;
 @Mapper
 public interface NormalProjectMapper {
 
+
+	/**
+	 * @param normalProjectCode 일반과제 코드
+	 * 일반과제 신청
+	 *
+	 * */
+	public int addApplicantAccept(String normalProjectCode);
+
 	public int modifyNormalProject(NormalProjects normalProjects);
 	public List<NormalProjects> getNormalProjectList();
 	
@@ -29,7 +37,7 @@ public interface NormalProjectMapper {
 	 * @return NormalProjects 일반과제 정보
 	 * 
 	 * */
-	public List<NormalProjects> getNormalPrjectByCode(String normalProjectCode); 
+	public NormalProjects getNormalPrjectByCode(String normalProjectCode);
 	
 
 	

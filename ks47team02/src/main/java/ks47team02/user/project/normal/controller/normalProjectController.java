@@ -34,6 +34,23 @@ public class normalProjectController {
 	
 	
 		/*등록 영역*/
+
+	/**
+	 * 일반과제 신청
+	 * @param normalProjectCode 일반과제 코드
+	 * @param model 모델
+	 *
+	 * */
+	@GetMapping("/addApplicantAccept")
+	public String addApplicantAccept(@RequestParam(value = "normalProjectCode") String normalProjectCode,
+									 Model model){
+		String returnjuso = "redirect:/normalProject/projectDetail?normalProjectCode=" + normalProjectCode;
+		normalProjectService.addApplicantAccept(normalProjectCode);
+
+
+		return returnjuso;
+
+	}
 	
 	
 	@GetMapping("/addPersonalFunction")
@@ -92,31 +109,9 @@ public class normalProjectController {
 		return "redirect:/normalProject/projectList";
 	}
 	
-	@GetMapping("/addApplicantAccept")
-	public String addApplicantAccept(@RequestParam(value="normalProjectCode") String normalProjectCode, Model model) {
-		model.addAttribute("title", "일반과제 신청");
-		model.addAttribute("normalProjectCode" ,normalProjectCode);
-		
-		
-		
-		return "user/project/normal/applyApplicant/addApplicantAccept";
-	}
+
 	
-	@PostMapping("/addApplicantAccept")
 
-	public String addApplicantAccept(Model model) {
-		model.addAttribute("title", "일반과제 신청");
-
-
-
-		
-
-		return "redirect:/normalProject/getAcceptList";
-
-		
-
-
-	}
 	
 	@GetMapping("/addAcceptApprove")
 	public String addAcceptApprove(Model model) {
@@ -149,10 +144,9 @@ public class normalProjectController {
 	@GetMapping("/modifyProject")
 	public String modifyProject(@RequestParam(value="normalProjectCode") String normalProjectCode
 			,Model model) {
-		
-		/*월요일날 물어볼것 : 이거 각 LIST를 한번씩 가져오기 좀 번거로운데 한꺼번에 가져오게 할 수 있는 방법을 물어보기*/
+
 		//일반과제 리스트
-		List<NormalProjects> normalProject = normalProjectService.getNormalProjectByCode(normalProjectCode);
+		NormalProjects normalProject = normalProjectService.getNormalProjectByCode(normalProjectCode);
 		//참여분야 리스트
 		List<JoinCate> joinCateList = normalProjectService.getJoinCateList();
 		//작업분류 리스트
@@ -163,7 +157,7 @@ public class normalProjectController {
 		model.addAttribute("joinCateList", joinCateList);
 		model.addAttribute("workCateList", workCateList);
 		log.info("normalProjectController = {}", normalProject);
-		model.addAttribute("normalProjectList" ,normalProject);
+		model.addAttribute("normalProject" ,normalProject);
 		model.addAttribute("subjectCateList" ,subjectCateList);
 		model.addAttribute("title", "일반과제 수정 페이지");
 		
@@ -249,9 +243,9 @@ public class normalProjectController {
 	 * */
 	@GetMapping("/projectDetail")
 	public String getProjectDetail(@RequestParam(value = "normalProjectCode") String projectCode,Model model){
-		List<NormalProjects> normalProject = normalProjectService.getNormalProjectByCode(projectCode);
+		NormalProjects normalProject = normalProjectService.getNormalProjectByCode(projectCode);
 		model.addAttribute("title", "일반과제 상세 페이지 이동");
-		model.addAttribute("normalProjectList", normalProject);
+		model.addAttribute("normalProject", normalProject);
 
 		return "user/project/normal/list/projectDetail";
 	}
@@ -264,8 +258,7 @@ public class normalProjectController {
 	 * */
 	@GetMapping("/projectList")
 	public String getProjectList(Model model) {
-		
-		log.info("normalProjectList = {}", "안녕");
+
 		List<NormalProjects> normalProjectList =  normalProjectService.getNormalProjects();
 		model.addAttribute("normalProjectList", normalProjectList);
 		model.addAttribute("title", "일반과제 목록");
