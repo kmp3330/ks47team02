@@ -38,5 +38,15 @@
 			pws.profile_application_hidden
 		FROM
 			profile_work_spec as pws
+		ORDER BY
+			pws.profile_reg_date DESC;
+	</select>
+	
+	<select id="getWorkSpecCnt">
+		/* 자격증 전체 행 갯수 */
+		SELECT
+			COUNT(*)
+		FROM
+			profile_work_spec;
 	</select>
 </mapper>
