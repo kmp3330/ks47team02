@@ -68,10 +68,10 @@ public class AnnouncementService {
 		if(searchValue != null) {
 			switch (searchKey) {
 				case "joinCateName" -> {
-					searchKey = "joinCateName";
+					searchKey = "join_cate_name";
 				}
 				case "areaCate" -> {
-					searchKey = "areaCate";
+					searchKey = "area_cate";
 				}
 			}
 			paramMap = new HashMap<String, Object>();

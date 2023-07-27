@@ -58,7 +58,7 @@ public class AnnouncementController {
 		
 		announcementService.announcementInsert(announcement);
 		
-		log.info("공고등록시 입력정보: {}", announcement);
+		//log.info("공고등록시 입력정보: {}", announcement);
 		
 		return "redirect:/announcement/announcementList";
 	}

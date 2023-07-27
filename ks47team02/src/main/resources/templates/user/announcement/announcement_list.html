@@ -30,35 +30,25 @@
 						<div class="single-item mb-4">
 							<h4 class="mb-4">구인구직</h4>
 							<a th:href="@{/announcement/announcementList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>참여분야별 검색</span></a> 
-							<a th:href="@{/announcement/announcementList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>지역별 검색</span></a>
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>구인구직 검색</span></a> 
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-10">
-					<div class="single-job mb-4 justify-content-between text-center">
+					<div class="single-job mb-4 justify-content-between">
 						<div class="card">
 							<div class="card-header border-0">
-								<form action="#" class="d-md-flex justify-content-between text-center">
-		                            <select style="display: none;">
-		                                <option value="1">참여분야별 검색</option>
-		                                <option value="2">지역별 검색</option>
+								<form th:action="@{/announcement/announcementList}" method="get">
+		                            <select name="searchKey">
+		                                <option value="joinCateName">참여분야별 검색</option>
+		                                <option value="areaCate">지역별 검색</option>
 		                            </select>
-		                            <div class="nice-select" tabindex="0">
-		                            	<span class="current">참여분야별 검색</span>
-				                            <ul class="list">
-					                            <li data-value="1" class="option selected focus">참여분야별 검색</li>
-					                            <li data-value="2" class="option">지역별 검색</li>
-				                            </ul>
-			                        </div>
-		                            <input type="text" placeholder="검색어 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '검색어 입력'" required="">
+		                            <input type="text" name="searchValue" placeholder="검색어 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '검색어 입력'" required="">
 		                            <button type="submit" class="template-btn">검색</button>
-		                        </form>
-		                        <br>
+		                        </form><br>
 								<div class="card-tools">
-									<a th:href="@{/announcement/announcementInsert}" class="genric-btn info-border circle"> <i
-										class="fas">등록</i>
+									<a th:href="@{/announcement/announcementInsert}" class="genric-btn info-border circle">
+									<i class="fas">등록</i>
 									</a>
 								</div>
 							</div>
