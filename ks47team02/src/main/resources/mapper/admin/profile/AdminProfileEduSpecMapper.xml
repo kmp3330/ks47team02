@@ -39,5 +39,14 @@
 		    pes.profile_application_hidden
 		FROM
 		    profile_edu_spec as pes
+		ORDER BY
+			pes.profile_reg_date DESC;
+	</select>
+	<select id="getEduSpecCnt">
+		/* 자격증 전체 행 갯수 */
+		SELECT
+			COUNT(*)
+		FROM
+			profile_edu_spec;
 	</select>
 </mapper>
