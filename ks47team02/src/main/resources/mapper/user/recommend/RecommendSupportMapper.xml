@@ -22,9 +22,12 @@
  	<select id="getRecommendSupport" resultMap="RecommendSupportResultMap">
 
  		SELECT
+ 			cs.company_support_code,
 			cs.user_id,
+			cs.announcement_code,
 			cs.cp_id,
 			cs.cp_name,
+			cs.area_code,
 			cs.area_cate,
 			cs.job_opening,
 			cs.required_skills,

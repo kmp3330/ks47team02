@@ -165,12 +165,24 @@ public class RecommendController {
 	}
 	
 	/*
-	 *  ajax로 데이터 요청을 위한 컨트롤러
+	 *  ajax로 Support 데이터 요청을 위한 컨트롤러
+	 */
+	@GetMapping("/recommendAjaxSupport")
+	  @ResponseBody 
+	  public List<RecommendSupport> getRecommendSupport() {
+		List<RecommendSupport> recommendSupportInfo = recommendService.getRecommendSupportInfo();
+	    return recommendSupportInfo;
+	  }
+	
+	
+	/*
+	 *  ajax로 Employment 데이터 요청을 위한 컨트롤러
 	 */
 	  @GetMapping("/recommendAjaxEmployment")
 	  @ResponseBody 
 	  public List<RecommendEmployment> getRecommendEmployment() {
 	    List<RecommendEmployment> recommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
+	    
 	    return recommendEmploymentInfo;
 	  }
 	
@@ -184,6 +196,7 @@ public class RecommendController {
 		List<RecommendSupport>	recommendSupportCodeInfo =recommendService.getRecommendSupportCode();
 		List <User> recommendUserIdInfo = recommendService.getUserIdRecommend();
 		List <Announcement> recommendAnnouncemetCodeInfo = recommendService.getAnnouncementCodeRecommend();
+		List<RecommendSupport> recommendSupportInfo = recommendService.getRecommendSupportInfo();
 		
 		model.addAttribute("title", "채용 단계 순 목록 등록");
 		model.addAttribute("titleText", "채용 단계 순 목록 등록");
@@ -192,7 +205,7 @@ public class RecommendController {
 		model.addAttribute("recommendSupportCodeInfo", recommendSupportCodeInfo);
 		model.addAttribute("recommendUserIdInfo", recommendUserIdInfo);
 		model.addAttribute("recommendAnnouncemetCodeInfo", recommendAnnouncemetCodeInfo);
-		
+		model.addAttribute("recommendSupportInfo", recommendSupportInfo);
 		return "user/recommend/recommend_employment_insert";
 	}
 	
