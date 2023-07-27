@@ -69,18 +69,29 @@ public class AdminProfileController {
 		return "admin/profile/adminProfileSkillList";
 	}
 	
-	@GetMapping("/adminprofileWorkSpecList")
-	public String profileWorkSpecList(Model model) {
-		List<ProfileWorkSpec> profileWorkSpecList = adminProfileService.getProfileWorkSpecList();
+	@GetMapping("/adminProfileWorkSpecList")
+	@SuppressWarnings("unchecked") //unchecked로 되어있으면 데이터타입을 체크 안한다는 뜻
+	public String profileWorkSpecList(Model model, @RequestParam(value="currentPage", required=false, defaultValue="1")int currentPage) {
+		
+		Map<String, Object> resultMap = adminProfileService.getProfileWorkSpecList(currentPage);
+		List<Map<String, Object>> profileWorkSpecList = (List<Map<String, Object>>) resultMap.get("profileWorkSpecList");
+		int lastPage = (int) resultMap.get("lastPage");
+		int startPageNum = (int) resultMap.get("startPageNum");
+		int endPageNum = (int) resultMap.get("lastPage");
 		
 		model.addAttribute("title", "경력 관리");
 		model.addAttribute("profileWorkSpecList", profileWorkSpecList);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("endPageNum", endPageNum);
+		
 		return "admin/profile/adminProfileWorkSpecList";
 	}
 	
-	@GetMapping("/adminprofileEduSpecList")
-	public String profileEduSpecList(Model model) {
-		List<ProfileEduSpec> profileEduSpecList = adminProfileService.getProfileEduSpecList();
+	@GetMapping("/adminProfileEduSpecList")
+	public String profileEduSpecList(Model model, @RequestParam(value="currentPage", required=false, defaultValue="1")int currentPage) {
+		Map<String,Object> resultMap = adminProfileService.getProfileEduSpecList(currentPage);
+		List<Map<String, Object>> profileEduSpecList = (List<Map<String, Object>>) resultMap.get("profileEduSpecList");
 		
 		model.addAttribute("title", "학력 관리");
 		model.addAttribute("profileEduSpecList", profileEduSpecList);
