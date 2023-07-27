@@ -11,11 +11,10 @@ public class Company {
 	private String levelName;
 	private String cpRegNumber;
 	private String cpCateCode;
+	private String cpCate;
 	private String cpName;
 	private String areaCode;
 	private String areaName;
-	private String ceoName;
-	private String ceoGender;
 	private String cpAddr;
 	private String cpEmail;
 	private String cpPhone;

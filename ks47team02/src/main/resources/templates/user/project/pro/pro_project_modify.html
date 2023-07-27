@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+
+	<head>
+    	<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
+    	<style>
+    		input{
+    			width: 98%;
+    			height: 23px;
+    		}
+    		td:nth-child(3n+1):not(:last-child){
+    			color: white;
+    			font-weight: 700;
+    			background-color: cornflowerblue;
+    		}
+    		select{
+    			width: 99%;
+    			text-align: center;
+    			height: 23px;
+    		}
+    		#idCheck{
+    			width: 99%; 
+    			height: 25px;
+    		}
+    		#proProjectModifyBtn, #resetBtn {
+    			width: 49%;
+    			height: 25px;
+    		}
+    		#proProjectCode{
+    			display : none;
+    		}
+    	</style>
+    </head>
+    
+    <th:block layout:fragment="customJs">
+    	<script th:src="@{/js/jquery-3.7.0.js}"></script>
+    	<script>
+    		/*
+    		const $idCheckBtn = document.querySelector('#idCheck');
+    		$idCheckBtn.addEventListener('click', e => {
+    			alert('test');
+    		});
+    		
+    		$('#idCheck').click(function(){
+    			const $memberId = $('#memberId');
+    			let memberId = $memberId.val();
+    			// 유효성검사
+    			if(typeof memberId == 'undefined' || memberId == null || memberId == '' ){
+    				alert('아이디를 입력해주세요');
+    				$memberId.focus();
+    				return false;
+    			}
+    		
+    			
+    			// ajax 호출
+    			const request = $.ajax({
+					url: '/member/idCheck',
+					method: 'POST',
+					data: { 'memberId' : memberId },
+					dataType: 'text'
+   				});
+   				 
+   				request.done(function( response ) {
+   					if(response == 'true'){
+   						alert('이미 등록된 아이디입니다.');
+   						$memberId.val('');
+   	    				$memberId.focus();
+   	    				return false;
+   					}else{
+   						$('#addMemberForm input').prop('disabled', false);
+   						$('#addMemberForm select').prop('disabled', false);
+   						$('#addMemberForm button').prop('disabled', false);
+   					}
+					//console.log(typeof response);
+   				});
+   				 
+   				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+   				});		
+    		});
+    		
+    		
+    		//회원 아이디 변경 시 이벤트 처리
+    		$('#memberId').change(function(){
+    			$('#addMemberForm input').not('#memberId').val('');
+    			$('#addMemberForm input').not('#memberId').prop('disabled', true);
+    			$('#addMemberForm select').prop('disabled', true);
+    			$('#addMemberForm button').not('#idCheck').prop('disabled', true);
+    			
+    		});
+    		
+    		*/
+    		
+    		// 리셋버튼
+    		$('#resetBtn').click(function(e){
+    			//태그가 가지고 있는 기본 이벤트 동작 방지
+    			e.preventDefault();
+    			$('#proProjectModifyForm input').val('');
+    			
+    		})   
+    	
+    		
+    		
+    		$('#proProjectModifyBtn').click(function(){
+    			const validateEle = $('#proProjectModifyForm input');
+    								
+    			let isSubmit = false;
+    			validateEle.each((idx, item) => {
+    				isSubmit = validCheck(item);
+    				return isSubmit
+    			})
+    			if(isSubmit) {
+    				$('#proProjectModifyForm').submit();
+    			}
+    		});
+    		
+    		// 유효성 검사 함수
+    		const validCheck = element => {
+    			let data = $(element).val();
+    			let eleId = $(element).attr('id');
+    			let text = $(element).text();
+    			if(typeof data == 'undefined' || data == null || data == '' ){
+    				let cate = $(`label[for="${eleId}"]`).text();
+    				alert(`${cate} 은/는 필수 입력항목입니다.`);
+    				$(element).focus();
+    				return false;    
+    			}
+    			return true;
+    		}
+    	
+    	
+    	</script>
+    </th:block>
+
+	<th:block layout:fragment="customContents">
+		<form id="proProjectModifyForm" th:action="@{/project/pro/proProjectModify}" method="post">
+  			<table th:object="${proProjectInfo}">
+  			<thead>※제목, 각 분야들은 수정할 수 없습니다.※</thead>
+				<tbody>
+					<tr>
+						<th:block>
+							<input type="text" id="proProjectCode" name="proProjectCode" th:value="*{proProjectCode}" hidden />
+						</th:block>
+						<td>
+							<label for="title">제목</label>
+						</td>
+						<td>
+							<input type="text" id="title" name="title" th:value="*{title}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						    <label for="JoinCate">참여분야</label>
+						</td>
+						<td>
+						    <select id="JoinCate" name="joinCateCode"disabled>
+						    <th:block th:unless="${#lists.isEmpty(joinCate)}"
+									  th:each="j : ${joinCate}">
+								 <option th:value="*{joinCateCode}"  th:selected="${j.joinCateCode} == *{joinCateName}">:::::::[[${j.joinCateName}]]:::::::</option>
+						    </select>
+
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="WorkCate">작업분야</label>
+						</td>
+						<td>
+						    <select id="WorkCate" name="workCateCode"disabled>
+						    <th:block th:unless="${#lists.isEmpty(workCate)}"
+									  th:each="w : ${workCate}">
+								 <option th:value="*{workCateCode}"  th:selected="${w.workCateCode} == *{workCateName}">:::::::[[${w.workCateName}]]:::::::</option>
+						    </select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="SubjectCate">주제분야</label>
+						</td>
+						<td>
+						    <select id="SubjectCate" name="subjectCateCode"disabled>
+						    <th:block th:unless="${#lists.isEmpty(subjectCate)}"
+									  th:each="s : ${subjectCate}">
+								 <option th:value="*{subjectCate}"  th:selected="${s.subjectCateCode} == ${subjectCateName}">:::::::[[${s.subjectCateName}]]:::::::</option>
+						    </select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="skill">필수 기술</label>
+						</td>
+						<td>
+							<input type="text" id="skill" name="skill" th:value="*{skill}"
+								   placeholder="필수 기술을 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="details">상세정보</label>
+						</td>
+						<td>
+							<input type="text" id="details" name="details" th:value="*{details}" 
+								   placeholder="상세 정보를 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="maxTotal">최대인원</label>
+						</td>
+						<td>
+							<input type="text" id="maxTotal" name="maxTotal" th:value="*{maxTotal}"
+								   placeholder="프로젝트 최대인원을 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="projectPrice"> 프로젝트 예상 금액</label>
+						</td>
+						<td>
+							<input type="text" id="proProjectPrice" name="proProjectPrice" th:value="*{proProjectPrice}" 
+								   placeholder="프로젝트 예상 금액을 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="dueDate">구인 마감 일자</label>
+						</td>
+						<td>
+							<input type="text" id="dueDate" name="dueDate" th:value="*{dueDate}"
+								   placeholder="구인 마감 일자를 입력하세요" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<button type="submit" id="proProjectModifyBtn">작성완료</button>
+							<a th:href="@{/project/pro/proProjectList}">뒤로가기</a>
+						</td>
+					</tr>	
+				</tbody> 
+			</table>
+		</form>
+	</th:block>
+</html>

@@ -3,7 +3,6 @@ package ks47team02.user.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import ks47team02.admin.dto.Member;
 import ks47team02.user.member.dto.Company;
 import ks47team02.user.member.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +23,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Slf4j
 public class MemberController {
-	
+
 	// 의존성 주입
 	private final MemberService memberService;
-	private final UserMapper userMapper;
 
 	/**
 	 * 로그인 화면
@@ -36,41 +34,69 @@ public class MemberController {
 	@GetMapping("/login")
 	public String login(Model model,
 						@RequestParam(value = "msg", required = false) String msg) {
-		
+
 		model.addAttribute("title", "로그인 화면");
 		if(msg != null) model.addAttribute("msg", msg);
-		
+
 		return "user/login/login";
 	}
-	
+
 	/**
 	 * 로그인 처리
 	 * @return
 	 */
-	@PostMapping("/login") 
+	@PostMapping("/login")
 	public String login(@RequestParam(value = "userId") String userId,
 						@RequestParam(value = "userPw") String userPw,
 						HttpServletRequest request,
 						HttpServletResponse response,
 						HttpSession session,
-						RedirectAttributes reAttr) {
-		
+						RedirectAttributes reAttr) { //redirect를 될때 데이터를 전달 (모델이랑 같은 역할)
+
 		Map<String, Object> validMap = memberService.loginCheck(userId, userPw);
-		boolean isValid = (boolean) validMap.get("isValid");
-		
+		boolean isValid = (boolean) validMap.get("isValid"); //get: MAP에 담아져있는 데이터를 가져옴 
+
 		if(isValid) {
 			User userInfo = (User) validMap.get("userInfo");
 			session.setAttribute("SID", userInfo.getUserId());
 			session.setAttribute("SLEVEL", userInfo.getLevelName());
 			session.setAttribute("SNAME", userInfo.getUserName());
-			
-			
+
 			return "redirect:/";
 		}
-		
+
 		reAttr.addAttribute("msg", "일치하는 회원의 정보가 없습니다.");
 		return "redirect:/login";
 	}
+
+	/**
+	 * 기업회원 로그인 처리
+	 * @return
+	 */
+	@PostMapping("/cpLogin")
+	public String cpLogin(@RequestParam(value = "cpId") String cpId,
+						  @RequestParam(value = "cpPw") String cpPw,
+						  HttpServletRequest request,
+						  HttpServletResponse response,
+						  HttpSession session,
+						  RedirectAttributes reAttr) {
+		Map<String, Object> validMap = memberService.cpLoginCheck(cpId, cpPw);
+		boolean isValid = (boolean) validMap.get("isValid");
+
+		if (isValid) {
+			Company companyInfo = (Company) validMap.get("companyInfo");
+			session.setAttribute("CPID", companyInfo.getCpId());
+			session.setAttribute("CPLEVEL", companyInfo.getLevelName());
+			session.setAttribute("CPNAME", companyInfo.getCpName());
+
+			return "redirect:/";
+		}
+
+		reAttr.addAttribute("msg", "일치하는 회원의 정보가 없습니다.");
+		return "redirect:/login";
+	}
+
+
 	
 	/**
 	 * 로그아웃 처리
@@ -91,6 +117,20 @@ public class MemberController {
 		boolean result = memberService.checkId(userId);
 		return result;
 	}
+	@PostMapping("/checkCpId")
+	@ResponseBody
+	public boolean checkCpId(@RequestParam(value = "cpId") String cpId){
+		boolean result = memberService.checkCpId(cpId);
+		return result;
+	}
+
+	@PostMapping("/checkRegNum")
+	@ResponseBody
+	public boolean checkRegNum(@RequestParam(value = "cpRegNumber") String cpRegNumber){
+		boolean result = memberService.checkRegNum(cpRegNumber);
+		return result;
+	}
+
 	@PostMapping("/addNormalMember")
 	public String addUser(User user){
 		memberService.addUser(user);
@@ -98,7 +138,7 @@ public class MemberController {
 	}
 
 	@GetMapping("/addMember")
-	public String addMember(Member member, HttpSession session, Model model){
+	public String addMember(User user, HttpSession session, Model model){
 		model.addAttribute("titleText", "회원가입");
 		model.addAttribute("contents", "가입하려는 회원의 유형을 선택해주세요");
 
@@ -111,7 +151,13 @@ public class MemberController {
 		return "user/member/addNormalMember";
 	}
 
-	@GetMapping("/addCompanyUser")
+	@PostMapping("/addCompanyMember")
+	public String addCompany(Company company){
+		memberService.addCompany(company);
+		return "redirect:/";
+	}
+
+	@GetMapping("/addCompanyMember")
 	public String addCompany(Company company, HttpSession session, Model model){
 		model.addAttribute("titleText", "기업 회원 가입");
 		return "user/member/addCompanyMember";

@@ -41,6 +41,8 @@
 		    pes.profile_application_hidden
 		FROM
 		    profile_edu_spec as pes
+		WHERE
+			user_id = #{sessionId};
 	</select>
 	
 	<insert id="profileEduSpecInsert" parameterType="ProfileEduSpec">

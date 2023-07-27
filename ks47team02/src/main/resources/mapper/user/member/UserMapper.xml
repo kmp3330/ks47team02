@@ -45,7 +45,7 @@
 		freelancer_check, user_addr, user_email, user_phone, user_join_date, grade_fee_code,
 		user_grade, total_score, report_score)
 		VALUES
-		(#{userId}, #{userPw}, #{userPw}, 'level_code002', '일반회원', #{userGender}, #{careerCheck},
+		(#{userId}, #{userPw}, #{userName}, 'level_code002', '일반회원', #{userGender}, #{careerCheck},
 		#{freelancerCheck}, #{userAddr}, #{userEmail}, #{userPhone}, CURDATE(), 'grade_fee_code001',
 		'브론즈', 0, 0);
 	</insert>
@@ -56,6 +56,6 @@
 		FROM
 		user_info AS u
 		WHERE
-		u.user_id = #{userId};
+		u.user_id = #{userId}
 	</select>
 </mapper>

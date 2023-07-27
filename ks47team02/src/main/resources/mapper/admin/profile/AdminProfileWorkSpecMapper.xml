@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.admin.profile.mapper.AdminProfileWorkSpecMapper">
+<resultMap type="ProfileWorkSpec" id="profileWorkSpecResultMap">
+		<!-- id태그는 조회시 테이블의 PK(기본키) -->
+		<id column="user_work_spec_code" property="userWorkSpecCode" />
+		<!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키를 의 -->
+		<result column="user_id" property="userId" />
+		<result column="user_company" property="userCompany" />
+		<result column="user_skill" property="userSkill" />
+		<result column="user_enter_date" property="userEnterDate" />
+		<result column="user_leave_date" property="userLeaveDate" />
+		<result column="user_department" property="userDepartment" />
+		<result column="user_rank" property="userRank" />
+		<result column="user_work" property="userWork" />
+		<result column="user_reg_date" property="userRegDate" />
+		<result column="profile_hidden" property="profileHidden" />
+		<result column="profile_application_hidden"
+			property="profileApplicationHidden" />
+	</resultMap>
+
+	<select id="getProfileWorkSpecList" resultMap="profileWorkSpecResultMap">
+		/*회원별 경력 조회 */
+		SELECT
+			pws.user_work_spec_code,
+			pws.user_id,
+			pws.user_company,
+			pws.user_skill,
+			pws.user_enter_date,
+			pws.user_leave_date,
+			pws.user_department,
+			pws.user_rank,
+			pws.user_work,
+			pws.profile_reg_date,
+			pws.profile_hidden,
+			pws.profile_application_hidden
+		FROM
+			profile_work_spec as pws
+	</select>
+</mapper>

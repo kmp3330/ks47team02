@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ks47team02.user.profile.dto.ProfileCertificate;
 import ks47team02.user.profile.dto.ProfileIntro;
 
 @Mapper
@@ -22,6 +23,6 @@ public interface ProfileIntroMapper {
 	
 	
 	// 자기소개 목록 조회 
-	public List<ProfileIntro> getProfileIntroList();
+	public List<ProfileIntro> getProfileIntroList(String sessionId);
 
 }

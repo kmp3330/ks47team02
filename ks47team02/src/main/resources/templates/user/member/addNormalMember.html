@@ -69,6 +69,11 @@
     .icheck-primary {
       font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
+    
+    input[type='text']:focus, [type='email']:focus, textarea:focus {
+      outline: none;
+      padding: 0 0 0.875em 0;
+    }
   </style>
 </head>
 <th:block layout:fragment="customContents">
@@ -82,7 +87,7 @@
         
         <form id="addUserForm" th:action="@{/addNormalMember}" method="post">
           <div class="input-group mb-3">
-            <input type="id" id="userId" name="userId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
+            <input type="text" id="userId" name="userId" class="form-control" placeholder="회원의 아이디를 입력해주세요.">
             <div class="input-group-append">
               <button class="genric-btn primary-border small" id="checkId">아이디중복체크</button>
               <div class="input-group-text">
@@ -100,7 +105,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control pwEq" placeholder="비밀번호를 다시 입력해주세요.">
+            <input type="password" class="form-control" id="pwEq" placeholder="비밀번호를 다시 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -109,7 +114,7 @@
           </div>
           <br><br>
           <div class="input-group mb-3">
-            <input type="text" id="userName" name="userName" class="form-control pwEq" style="text-transform: none" placeholder="이름을 입력해주세요.">
+            <input type="text" id="userName" name="userName" class="form-control" style="text-transform: none" placeholder="이름을 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -155,7 +160,7 @@
               <h5 class="margin-bottom">성별을 선택해주세요.</h5>
             </div>
             <div style="display: flex; justify-content: flex-end;">
-              남&nbsp;&nbsp;<input type="radio" id="userGender1" name="userGender" value="남">
+              남&nbsp;&nbsp;<input type="radio" id="userGender1" name="userGender" value="남" checked>
               <label for="userGender1"><span></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
               
               여&nbsp;&nbsp;<input type="radio" id="userGender2" name="userGender" value="여">
@@ -172,7 +177,7 @@
           <div class="row">
             <div class="col-12">
               <div class="icheck-primary">
-                <input type="checkbox" id="Terms" name="terms" value="terms">
+                <input type="checkbox" id="terms" name="terms" value="terms">
                 <label for="Terms">
                   약관에 따라, 실명 인증된 아이디로 가입, 이벤트・혜택 정보 수신(선택) 동의를 포함합니다.
                 </label>
@@ -183,7 +188,7 @@
             <!-- /.col -->
           </div>
           <br><br>
-          <button type="submit" id="addUserBtn" class="btn btn-primary btn-block">Register</button>
+          <button type="submit" id="addUserBtn" class="btn btn-primary btn-block" value="회원가입">회원가입</button>
         </form>
         
         <div class="social-auth-links text-center">
@@ -207,35 +212,83 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
   <script>
     $(document).ready(function (){
+      
+      let isIdChecked = false;
+      
+      function validateForm(){
+        // 모든 입력 필드가 채워졌는지 확인
+        const allInputs = $(':input:not(:checkbox)');
+        let valid = true;
+        
+        // 약관 동의 체크박스 확인
+        if ($('#terms').is(":not(:checked)")) {
+          valid = false;
+          Swal.fire({
+            icon: 'error',
+            title: '약관에 동의해주세요'
+          });
+        }
+        
+        return valid;
+      }
+      
+      $('#addUserForm').submit(function (e){
+        if(!validateForm()){
+          e.preventDefault();
+        }
+      });
+      
+      function isIdValid(){
+        return $('#userId').val().length >= 5 && isIdChecked;
+      }
+      
       $('#checkId').click(function (e){
         e.preventDefault();
         var userId = $('#userId').val();
-        $.ajax({
-          url: '/checkId',
-          type: 'POST',
-          data: {userId: userId},
-          success: function (response){
-            if(response == true){
-              Swal.fire({
-                icon: 'error',
-                title: '이미 존재하는 아이디입니다.'
-              })
-            } else {
-              Swal.fire({
-                icon: 'success',
-                title: '사용 가능한 아이디입니다.'
-              })
+        if(userId.length<5){
+          Swal.fire({
+            icon: 'error',
+            title: '아이디는 최소 5글자 이상이어야 합니다.'
+          });
+        } else {
+          $.ajax({
+            url: '/checkId',
+            type: 'POST',
+            data: {userId: userId},
+            success: function (response) {
+              if (response == true) {
+                Swal.fire({
+                  icon: 'error',
+                  title: '이미 존재하는 아이디입니다.'
+                });
+                isIdChecked = false;
+              } else {
+                Swal.fire({
+                  icon: 'success',
+                  title: '사용 가능한 아이디입니다.'
+                })
+                isIdChecked = true;
+              }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {   // error handling
+              console.log(textStatus, errorThrown);
             }
-          },
-          error: function(jqXHR, textStatus, errorThrown) {   // error handling
-            console.log(textStatus, errorThrown);
-          }
-        });
+          });
+        }
       });
+      $('#addUserForm').submit(function (e){
+        if(!isIdValid()){
+          e.preventDefault();
+          Swal.fire({
+            icon: 'error',
+            title: '아이디 중복체크를 해주세요.'
+          })
+        }
+      })
       
       $('#addUserForm').submit(function (e){
         let pw1 = $('#userPw').val();
-        let pw2 = $('.pwEq:eq(1)').val();
+        let pw2 = $('#pwEq').val();
         if(pw1 !== pw2){
           e.preventDefault();
           Swal.fire({
@@ -244,6 +297,7 @@
           })
         }
       });
+      
       
       $('#addUserBtn').click(function (){
         const validateEle = $('#addUserBtn input').not('#userId');
@@ -254,16 +308,6 @@
         })
         if(isSubmit) $('#addUserForm').submit();
       });
-      // 회원 가입 버튼 시 이벤트
-     /* $('#addMemberBtn').click(function(){
-        const validateEle = $('#addMemberForm input').not('#memberId');
-        let isSubmit = false;
-        validateEle.each((idx, item) => {
-          isSubmit = validCheck(item);
-          return isSubmit;
-        })
-        if(isSubmit) $('#addMemberForm').submit();
-      });*/
       $('#cantUse1').click(function (e){
         e.preventDefault();
         Swal.fire({
@@ -315,6 +359,36 @@
           }
         })
       })
+      
+      
+      $('#addUserBtn').click(function (e){
+        e.preventDefault();  // prevent the form from being submitted
+        let isValid = true;
+        
+        // check each input field to see if it's empty
+        $('#addUserForm input').each(function() {
+          if ($.trim($(this).val()) === '') {
+            isValid = false;
+          }
+        });
+        
+        // check each select field to see if it's empty
+        $('#addUserForm select').each(function() {
+          if ($.trim($(this).val()) === '') {
+            isValid = false;
+          }
+        });
+        
+        if (isValid) {
+          // if the form is valid, submit it
+          $('#addUserForm').submit();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: '모든 항목을 채워주세요.'
+          })
+        }
+      });
     });
   </script>
 </th:block>

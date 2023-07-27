@@ -38,12 +38,19 @@ public class WebConfig implements WebMvcConfigurer{
 				.addPathPatterns("/**")
 				.excludePathPatterns("/")
 				.excludePathPatterns("/login")
+				.excludePathPatterns("/cpLogin")
 				.excludePathPatterns("/logout")
 				.excludePathPatterns("/addMember")
 				.excludePathPatterns("/addNormalMember")
 				.excludePathPatterns("/addCompanyMember")
 				.excludePathPatterns("/checkId")
+				.excludePathPatterns("#checkId")
+				.excludePathPatterns("/checkCpId")
+				.excludePathPatterns("#checkCpId")
+				.excludePathPatterns("/checkRegNum")
+				.excludePathPatterns("#checkRegNum")
 				.excludePathPatterns("#readTerms")
+				.excludePathPatterns("/admin/**")
 				.excludePathPatterns(excludePathList);
 		
 		WebMvcConfigurer.super.addInterceptors(registry);
