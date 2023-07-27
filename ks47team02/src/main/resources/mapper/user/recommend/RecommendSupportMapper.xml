@@ -38,7 +38,6 @@
 			company_support AS cs
  	</select>
  	
- 
  	
  	<select id="getRecommendSupportRank" resultMap="RecommendSupportResultMap">
  		SELECT 

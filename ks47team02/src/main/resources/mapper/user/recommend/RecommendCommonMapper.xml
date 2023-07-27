@@ -46,16 +46,65 @@
 		<result column="hiring_status"  	 property="hiringStatus"/>
 	</resultMap>
 	
-<select id="getAnnouncementCodeRecommend"			parameterType="String" resultMap="announcementResultMap">
+	 <resultMap type="Company" id="CompanyResultMap">
+		<id column="cp_id" property="cpId"></id>
+		<result column="cp_pw" property="cpPw"></result>
+		<result column="cp_name" property="cpName"></result>
+		<result column="level_code" property="levelCode"></result>
+		<result column="level_name" property="levelName"></result>
+		<result column="cp_reg_number" property="cpRegNumber"></result>
+		<result column="cp_cate_code" property="cpCateCode"></result>
+		<result column="cp_cate" property="cpCate"></result>
+		<result column="area_code" property="areaCode"></result>
+		<result column="area_name" property="areaName"></result>
+		<result column="cp_addr" property="cpAddr"></result>
+		<result column="cp_email" property="cpEmail"></result>
+		<result column="cp_phone" property="cpPhone"></result>
+		<result column="cp_join_date" property="cpJoinDate"></result>
+	</resultMap>
+	
+	<resultMap type="JoinCate" id="joinCateResultMap">
+		<id column="join_cate_code" property="joinCateCode"/>
+		<result column="join_cate_name" property="joinCateName"/>
+	</resultMap>
+	
+	<resultMap type="AreaCate" id="AreaCateResultMap">
+		<id column="area_code" property="areaCode"></id>
+		<result column="area_cate" property="areaCate"></result>
+	</resultMap>
+ <select id="getJoinCateRecommend" parameterType="String" resultMap="joinCateResultMap">
+ 	SELECT
+		join_cate_code,
+		join_cate_name
+	FROM
+		join_cate 
+ </select>
+	
+ <select id="getAreaRecommend" parameterType="String" resultMap="AreaCateResultMap">
+ 	SELECT
+		ac.area_code,
+		ac.area_cate
+	FROM
+		area_cate AS ac
+ </select>	
+	
+ <select id="getCpIdRecommend"	parameterType="String" resultMap="CompanyResultMap" >
+ 	SELECT
+		ci.cp_name
+	FROM
+		cp_info AS ci
+ </select>		
+	
+ <select id="getAnnouncementCodeRecommend"			parameterType="String" resultMap="announcementResultMap">
 	/* 공고 코드 조회*/
 	SELECT
 		announcement_code,
 		cp_name
 	FROM
 		announcement 
-</select>
+ </select>
  
- <select id="getUserIdRecommend"		   parameterType="String" resultMap="userResultMap">
+ <select id="getUserIdRecommend"	 parameterType="String" resultMap="userResultMap">
  	/* 회원 아이디 조회*/
  	SELECT
 		ui.user_id

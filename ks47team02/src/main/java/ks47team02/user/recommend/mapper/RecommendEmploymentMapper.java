@@ -6,11 +6,29 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks47team02.user.announcement.dto.Announcement;
+import ks47team02.user.member.dto.Company;
 import ks47team02.user.member.dto.User;
+import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.recommend.dto.AreaCate;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 
 @Mapper
 public interface RecommendEmploymentMapper {
+	
+	/*
+	 * 분야 조회
+	 */
+	public List <JoinCate> getJoinCateRecommend();
+	/*
+	 * 지역 조회
+	 */
+	public List <AreaCate> getAreaRecommend();
+	
+	/*
+	 * 회사 이름 조회
+	 */
+	public List<Company> getCpIdRecommend();
+	
 	
 	/*
 	 * 공고 조회

@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ks47team02.user.announcement.dto.Announcement;
+import ks47team02.user.member.dto.Company;
 import ks47team02.user.member.dto.User;
+import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.recommend.dto.AreaCate;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.dto.RecommendScrap;
 import ks47team02.user.recommend.dto.RecommendSupport;
@@ -37,6 +40,31 @@ public class RecommendService {
 	}
 	
 	/*
+	 * 분야
+	 */
+	public List <JoinCate> getJoinCateRecommend(){
+		List <JoinCate> recommendJoinInfo = recommendEmploymentMapper.getJoinCateRecommend();
+		return recommendJoinInfo;
+	}
+	/*
+	 * 지역 
+	 */
+	public List <AreaCate> getAreaRecommend(){
+		List <AreaCate> recommendAreaInfo = recommendEmploymentMapper.getAreaRecommend();
+		return recommendAreaInfo;
+	}
+	
+	
+	/*
+	 *  회사 아이디
+	 */
+	public List <Company> getCpIdRecommend(){
+		List <Company> recommendCpIdInfo = recommendEmploymentMapper.getCpIdRecommend();
+		return recommendCpIdInfo;
+	}
+	
+	
+	/*
 	 *  공고 목록
 	 */
 	public List <Announcement> getAnnouncementCodeRecommend(){
@@ -61,6 +89,8 @@ public class RecommendService {
 		List <RecommendScrap> recommendScrapInfo = recommendScrapMapper.getRecommendScrap();
 		return recommendScrapInfo;
 	}
+	
+	
 	
 	/*
 	 *  기업 지원 순 목록 

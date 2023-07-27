@@ -142,6 +142,66 @@
 	        fetchData(selectedUserId);
 		});
 	    */
+	    function areaData(selectedAreaCate){
+	    	$.ajax({
+	    		url:"/recommend/recommendAjaxArea",
+	    		type:"GET",
+	    		success: function (areaInfo){
+	    			console.log(areaInfo)
+	    			let matchingData = areaInfo.filter(info => info.areaCate == selectedAreaCate);
+					console.log(matchingData[0]);
+	            
+	                if (matchingData[0]) {
+	                    let areaCodeInput = document.getElementById("areaCode");
+	                    console.log(areaCodeInput);
+	                    areaCodeInput.value = matchingData[0].areaCode;
+	                    console.log(areaCodeInput.value);
+	                } else {
+	                    
+	                    let areaCodeInput = document.getElementById("areaCode");
+	                    areaCodeInput.value = "";
+	                }
+	            },
+	            error: function (error) {
+	                console.log("에러", error);
+	    		}
+	    	});
+	    }
+	    $(document).on('click','#areaCate+.nice-select .option', function (e) {
+			let selectedAreaCate = $(this).attr('data-value');
+			areaData(selectedAreaCate);
+		});
+	    
+	    function JoinCateData(selectedjoinCateName){
+	    	$.ajax({
+	    		url:"/recommend/recommendAjaxJoinCate",
+	    		type:"GET",
+	    		success: function (JoinCateInfo){
+	    			console.log(JoinCateInfo)
+	    			let matchingData = JoinCateInfo.filter(info => info.joinCateName == selectedjoinCateName);
+					console.log(matchingData[0]);
+	            
+	                if (matchingData[0]) {
+	                    let JoinCateCodeInput = document.getElementById("joinCateCode");
+	                    console.log(JoinCateCodeInput);
+	                    JoinCateCodeInput.value = matchingData[0].joinCateCode;
+	                    console.log(JoinCateCodeInput.value);
+	                } else {
+	                    
+	                    let JoinCateCodeInput = document.getElementById("joinCateCode");
+	                    JoinCateCodeInput.value = "";
+	                }
+	            },
+	            error: function (error) {
+	                console.log("에러", error);
+	    		}
+	    	});
+	    }
+	    $(document).on('click','#joinCateName+.nice-select .option', function (e) {
+			let selectedjoinCateName = $(this).attr('data-value');
+			JoinCateData(selectedjoinCateName);
+		});
+	    
 </script>
 			
 
@@ -233,8 +293,8 @@
 													
 													<td><select class="genric-btn" id="announcementCode"	name="announcementCode">
 														<option value="">===회사이름을 선택해주세요===</option>
-														<th:block th:unless="${#lists.isEmpty(recommendAnnouncemetCodeInfo)}"
-																  th:each="l : ${recommendAnnouncemetCodeInfo}">
+														<th:block th:unless="${#lists.isEmpty(recommendCpIdInfo)}"
+																  th:each="l : ${recommendCpIdInfo}">
 															<option th:value="${l.cpName}">[[${l.cpName}]]</option>
 														</th:block>
 														</select>
@@ -244,27 +304,40 @@
 														id="joinCateCode" name="joinCateCode" placeholder="참여 분야 코드"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '참여 분야 코드'" required=""></td>
-
-													<td><input class="genric-btn" type="text"
-														id="joinCateName" name="joinCateName" placeholder="참여 분야"
-														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '참여 분야'" required=""></td>
 													
+													<td>
+														<select class="genric-btn" id="joinCateName"	name="joinCateName">
+															<option value="">====분야를 선택해주세요====</option>
+															<th:block th:unless="${#lists.isEmpty(recommendJoinCateInfo)}"
+																	  th:each="l : ${recommendJoinCateInfo}">
+																<option th:value="${l.joinCateName}">[[${l.joinCateName}]]</option>
+															</th:block>
+														</select>
+													</td>											
+																		
 													<td><input class="genric-btn" type="text"
 														id="areaCode" name="areaCode" placeholder="지역 코드"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '지역 코드'" required=""></td>
-
-													<td><input class="genric-btn" type="text"
-														id="areaCate" name="areaCate" placeholder="지역"
-														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '지역'" required=""></td>
 													
-													<td><input class="genric-btn" type="text"
-														id="jobOpening" name="jobOpening"	placeholder="채용직"
-														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '채용직'" required=""></td>
+													<td>
+														<select class="genric-btn" id="areaCate"	name="areaCate">
+															<option value="">====지역을 선택해주세요====</option>
+															<th:block th:unless="${#lists.isEmpty(recommendAreaInfo)}"
+																	  th:each="l : ${recommendAreaInfo}">
+																<option th:value="${l.areaCate}">[[${l.areaCate}]]</option>
+															</th:block>
+														</select>
+													</td>
 													
+													
+													<td><select class="genric-btn" id="jobOpening"	name="jobOpening">
+														<option value="">===채용직을 선택해주세요===</option>
+														<option value="">정규직</option>
+														<option value="">계약직</option>
+														</select>
+													</td>
+																									
 													<td><input class="genric-btn" type="text"
 														id="requiredSkills" name="requiredSkills" placeholder="요구 기술"
 														onfocus="this.placeholder = ''"
