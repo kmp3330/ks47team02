@@ -34,8 +34,8 @@ public class AdminProfileController {
 										 @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		
 		Map<String, Object> resultMap = adminProfileService.getProfileIntroList(currentPage);
-		int lastPage = (int) resultMap.get("lastPage");
 		List<Map<String, Object>> profileIntroList = (List<Map<String, Object>>) resultMap.get("profileIntroList");
+		int lastPage = (int) resultMap.get("lastPage");
 		int startPageNum = (int) resultMap.get("startPageNum");
 		int endPageNum = (int) resultMap.get("endPageNum");
 		
@@ -49,17 +49,27 @@ public class AdminProfileController {
 		return "admin/profile/adminProfileIntroList";
 	}
 	
-	@GetMapping("/profileSkillList")
-	public String profileSkillList(Model model) {
-		List <ProfileSkill> profileSkillList = adminProfileService.getProfileSkillList();
+	@GetMapping("/adminProfileSkillList")
+	@SuppressWarnings("unchecked") // unchecked로 되어있으면 데이터타입을 체크 안한다는 뜻
+	public String profileSkillList(Model model, @RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage) {
+		
+		Map<String, Object> resultMap = adminProfileService.getProfileSkillList(currentPage);
+		List<Map<String, Object>> profileSkillList = (List<Map<String, Object>>) resultMap.get("profileSkillList");
+		int lastPage = (int) resultMap.get("lastPage");
+		int startPageNum = (int) resultMap.get("startPageNum");
+		int endPageNum = (int) resultMap.get("endPageNum");
 		
 		model.addAttribute("title", "보유 기술 관리");
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("profileSkillList", profileSkillList);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("endPageNum", endPageNum);
 		
 		return "admin/profile/adminProfileSkillList";
 	}
 	
-	@GetMapping("/profileWorkSpecList")
+	@GetMapping("/adminprofileWorkSpecList")
 	public String profileWorkSpecList(Model model) {
 		List<ProfileWorkSpec> profileWorkSpecList = adminProfileService.getProfileWorkSpecList();
 		
@@ -68,7 +78,7 @@ public class AdminProfileController {
 		return "admin/profile/adminProfileWorkSpecList";
 	}
 	
-	@GetMapping("/profileEduSpecList")
+	@GetMapping("/adminprofileEduSpecList")
 	public String profileEduSpecList(Model model) {
 		List<ProfileEduSpec> profileEduSpecList = adminProfileService.getProfileEduSpecList();
 		

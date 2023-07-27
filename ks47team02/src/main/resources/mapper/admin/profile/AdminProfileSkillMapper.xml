@@ -29,5 +29,17 @@
 		    ps.profile_application_hidden
 		FROM
 		    profile_skill as ps
+		ORDER BY ps.user_reg_date DESC
+		<if test="startIndex != null and stratIndex > -1">
+			LIMIT #{startIndex}, #{rowPerPage};
+		</if>
+	</select>
+	
+	<select id="getSkillCnt">
+		/* 자격증 전체 행 갯수 */
+		SELECT
+			COUNT(*)
+		FROM
+			profile_skill;
 	</select>
 </mapper>
