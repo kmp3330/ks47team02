@@ -22,7 +22,7 @@
 		
 		$('#portfolioInsertBtn').click(function () {
 		
-			let inputEles = $('#addPortfolioForm input[type="text"],input[type="date"],select');
+			let inputEles = $('#addPortfolioForm input[type="text"],input[type="date"],input[type="number"],select');
 			let isSubmit = false;
 			inputEles.each( (idx, item) => {
 				isSubmit = vaildCheck(item);
@@ -35,68 +35,136 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="sidebar">
-						<div class="single-item mb-4">
-							<h4 class="mb-4">프로필</h4>
-							<a th:href="@{/profile/profileIntroList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
-							</a> <a th:href="@{/profile/profileSkillList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
-							</a> <a th:href="@{/profile/profileWorkSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
-							</a> <a th:href="@{/profile/profileEduSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
-							</a> <a th:href="@{/profile/profileCertificateList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
-							</a> <a th:href="@{/profile/profileAwardList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
+	<section class="contact-form section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
+					<div class="single-job mb-4 justify-content-between text-center">
+						<div class="single-element-widget d-flex">
+							<h6 class="title_color" style="margin:10px; font-size:large; font-weight:900;">참여한 프로젝트 목록</h6>
+							<a href="#" class="genric-btn primary-border radius">조회</a>
+						</div>
+						
+						<div class="card single-job">
+							<form id="addPortfolioForm"
+								  th:action="@{/profile/profilePortfolioInsert}" method="post"
+								  class="d-md-flex justify-content-center">
+
+								<div class="left">
+									<p class="text-left" style="font-size:large; font-weight:900;">프로젝트 제목</p>
+									<input type="text"
+										   placeholder="프로젝트 제목" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '프로젝트 제목'"
+										   name="userProjectName"> 
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">참여분야</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;" name="joinCateCode"
+												placeholder="작업분류">
+												<option value="">==참여 분야==</option>
+												<th:block th:unless="${#lists.isEmpty(joinCateList)}"
+														  th:each="l : ${joinCateList}">
+													<option th:value="${l.joinCateCode}">[[${l.joinCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+									
+								    <p class="text-left" style="font-size:large; font-weight:900;">작업분류</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;" name="workCateCode"
+												placeholder="작업분류">
+												<option value="">==작업 분류==</option>
+												<th:block th:unless="${#lists.isEmpty(workCateList)}"
+													th:each="l : ${workCateList}">
+													<option th:value="${l.workCateCode}">[[${l.workCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+									
+								    <p class="text-left" style="font-size:large; font-weight:900;">주제분류</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;"
+												name="subjectCateCode" placeholder="주제분류">
+												<option value="">==주제 분류==</option>
+												<th:block th:unless="${#lists.isEmpty(subjectCateList)}"
+													th:each="l : ${subjectCateList}">
+													<option th:value="${l.subjectCateCode}">[[${l.subjectCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+									
+								    <p class="text-left" style="font-size:large; font-weight:900;">맡은기능</p>
+									<input type="text"
+										   placeholder="맡은기능" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '맡은기능'"
+										   name="userRequiredSkill">
+									
+								    <p class="text-left" style="font-size:large; font-weight:900;">내용</p>
+									<input type="text"
+										   placeholder="내용" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '내용'"
+										   name="userDetails">
+										   
+								    <p class="text-left" style="font-size:large; font-weight:900;">기능 시작 일시</p>
+									<input type="date"
+										   placeholder="기능 시작 일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '기능 시작 일시'"
+										   name="userProjectStartDate">
+										   
+								    <p class="text-left" style="font-size:large; font-weight:900;">기능 완료 일시</p>
+									<input type="date"
+										   placeholder="기능 완료 일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '기능 완료 일시'"
+										   name="userProjectEndDate">
+										   
+								    <p class="text-left" style="font-size:large; font-weight:900;">작업일수</p>
+									<input type="number"
+										   placeholder="작업일수" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '작업일수'"
+										   name="userProjectDays">
+										   
+								    <p class="text-left" style="font-size:large; font-weight:900;">프로젝트 구분</p>
+									<input type="text"
+										   placeholder="프로젝트 구분" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '프로젝트 구분'"
+										   name="userProjectGen">
+									
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch1"
+												name="profileHidden" checked>
+											<label for="confirm-switch1" style="margin: 2px 0"></label>
+										</div>
+									</div>
+									
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">입사지원시 공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch2"
+												name="profileApplicationHidden" checked> 
+											<label for="confirm-switch2" style="margin: 2px 0"></label>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="card-tools">
+							<a th:href="@{#}" id="portfolioInsertBtn"
+								class="genric-btn info-border circle"> <i
+								class="fas">등록 완료</i>
 							</a> <a th:href="@{/profile/profilePortfolioList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
+									id="portfolioResetBtn" class="genric-btn danger-border circle">
+								<i class="fas">취소</i>
 							</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9">
-					<div class="single-job mb-4 justify-content-between text-center">
-						<div class="card">
-							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">포트폴리오 등록</h3>
-								<div class="card-tools">
-									<a th:href="@{#}" id="portfolioInsertBtn"
-										class="genric-btn info-border circle"> <i class="fas">등록
-											완료</i>
-									</a> <a th:href="@{/profile/profilePortfolioList}"
-										id="portfolioResetBtn" class="genric-btn danger-border circle">
-										<i class="fas">취소</i>
-									</a>
-								</div>
-							</div>
-							<div class="card-body table-responsive p-0">
-								<form id="addPortfolioForm"
-									th:action="@{/profile/profilePortfolioInsert}" method="post"
-									class="d-md-flex justify-content-between">
-									<table class="table table-valign-middle">
-										<thead>
-											<tr>
-												<th>참여한 프로젝트</th>
-												<th>프로젝트 제목</th>
-												<th>참여 분야 이름</th>
-												<th>작업 분류 이름</th>
-												<th>주제 분류 이름</th>
-												<th>맡은 기능</th>
-												<th>내용</th>
-												<th>기능 시작 일시</th>
-												<th>기능 완료 일시</th>
-												<th>작업 일수</th>
-												<th>전문/일반 구분</th>
-												<th>공개여부</th>
-												<th>입사지원 시 공개여부</th>
-											</tr>
-										</thead>
+			</div>
+		</div>
+	</section>
+
+	<!--/* 
 										<tbody>
 											<tr>
 												<td><select style="display: none;">
@@ -180,7 +248,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> */-->
 
 </th:block>
 </html>

@@ -1,5 +1,7 @@
 package ks47team02.user.project.pro.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -25,4 +27,7 @@ public class ProProjectPersonalFunction {
 	private String completeDate;
 	private String registerationDate;
 	private String period;
+	
+	// 1:N 관계
+	private List<ProProject> proProjectInfo;
 }

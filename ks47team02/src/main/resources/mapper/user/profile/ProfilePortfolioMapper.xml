@@ -24,6 +24,57 @@
 		<result column="profile_application_hidden" property="profileApplicationHidden"></result>
 	</resultMap>
 	
+	<resultMap id="proProjectResultMap" type="ProProjectPersonalFunction">
+		<id column="pro_project_personal_function_code" property="proProjectPersonalFunctionCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="skill" property="skill"/>
+		<result column="project_day" property="projectDay"/>
+		<result column="day_score" property="dayScore"/>
+		<result column="project_complete_score" property="projectCompleteScore"/>
+		<result column="individual_work_day" property="individualWorkDay"/>
+		<result column="individual_complete_possible_score" property="individualCompletePossibleScore"/>
+		<result column="individual_complete_score" property="individualCompleteScore"/>
+		<result column="work_day_price" property="workDayPrice"/>
+		<result column="grade_commision" property="gradeCommision"/>
+		<result column="user_commision" property="userCommision"/>
+		<result column="project_price" property="projectPrice"/>
+		<result column="progress_rate" property="progressRate"/>
+		<result column="run_name" property="runName"/>
+		<result column="start_date" property="startDate"/>
+		<result column="complete_date" property="completeDate"/>
+		<result column="registeration_date" property="registerationDate"/>
+		<result column="period" property="period"/>
+		
+		<collection property="proProjectInfo" javaType="ProProject">
+			<id column="pro_project_code" property="proProjectCode"/>
+			<result column="cp_id" property="cpId"/>
+			<result column="cp_name" property="cpName"/>		
+			<result column="title" property="title"/>
+			<result column="join_cate_code" property="joinCateCode"/>
+			<result column="join_cate_name" property="joinCateName"/>
+			<result column="work_cate_code" property="workCateCode"/>
+			<result column="work_cate_name" property="workCateName"/>
+			<result column="subject_cate_code" property="subjectCateCode"/>
+			<result column="subject_cate_name" property="subjectCateName"/>
+			<result column="skill" property="skill"/>
+			<result column="details" property="details"/>
+			<result column="max_total" property="maxTotal"/>
+			<result column="normal_run_code" property="normalRunCode"/>
+			<result column="run_name" property="runName"/>
+			<result column="project_price" property="proProjectPrice"/>
+			<result column="cp_commission" property="cpCommisson"/>
+			<result column="write_date" property="proProjectWriteDate"/>
+			<result column="due_date" property="dueDate"/>
+			<result column="due_complete_date" property="dueCompleteDate"/>
+			<result column="project_start_date" property="proProjectStartDate"/>
+			<result column="project_complete_date" property="proProjectCompleteDate"/>
+			<result column="project_days" property="proProjectDays"/>
+			<result column="applicant_user_id" property="applicantUserId"/>
+			<result column="application_date" property="applicationDate"/>
+		</collection>
+	</resultMap>
+	
 	<select id="getProfilePortfolioList" resultMap="portfolioResultMap" parameterType="String">
 		/* 포트폴리오 조회 */
 		SELECT 
@@ -231,9 +282,9 @@
 			<if test="userProjectGen != null and userProjectGen != ''">
 				user_project_gen = #{userProjectGen},
 			</if>
-		</set>
 			profile_hidden = #{profileHidden},
 			profile_application_hidden = #{profileApplicationHidden}
+		</set>
 		WHERE
 			user_portfolio_code = #{userPortfolioCode}
 	</update>
@@ -246,5 +297,10 @@
 		WHERE
 			user_portfolio_code = #{profilePortfolioCode}
 	</delete>
+	
+	<select id="getProProjectList" resultMap="proProjectResultMap" parameterType="String">
+		/* 참여한 전문과제 프로젝트 목록 */
+	
+	</select>
 	
 </mapper>

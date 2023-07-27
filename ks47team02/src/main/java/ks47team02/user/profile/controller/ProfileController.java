@@ -386,7 +386,9 @@ public class ProfileController {
 	@GetMapping("/profileCertificateInsert")
 	public String profileCertificateInsert(Model model) {
 		
-		model.addAttribute("title", "자격증 등록화면");
+		model.addAttribute("title", "자격증 등록");
+		model.addAttribute("titleText", "자격증 등록");
+		model.addAttribute("contents", "나의 자격증 정보를 등록하는 페이지입니다.");
 		
 		return "user/profile/profile_certificate_insert";
 	}
@@ -421,7 +423,9 @@ public class ProfileController {
 		ProfileCertificate certificateInfo = profileService.certificateByCode(certificateCode);
 		log.info("certificateInfo : {}", certificateInfo);
 		
-		model.addAttribute("title", "자격증 수정 화면");
+		model.addAttribute("title", "자격증 수정");
+		model.addAttribute("titleText", "자격증 수정");
+		model.addAttribute("contents", "나의 자격증 정보를 수정하는 페이지입니다.");
 		model.addAttribute("certificateInfo", certificateInfo);
 		
 		return "user/profile/profile_certificate_modify";
@@ -486,7 +490,9 @@ public class ProfileController {
 	@GetMapping("/profileAwardInsert")
 	public String profileAwardInsert(Model model) {
 		
-		model.addAttribute("title", "수상이력 등록 화면");
+		model.addAttribute("title", "수상이력 등록");
+		model.addAttribute("titleText", "수상이력 등록");
+		model.addAttribute("contents", "나의 수상이력 정보를 등록 할 수 있는 페이지입니다.");
 		
 		return "user/profile/profile_award_insert";
 	}
@@ -520,7 +526,9 @@ public class ProfileController {
 		
 		ProfileAward profileAwardInfo = profileService.profileAwardByCode(userAwardCode);
 		
-		model.addAttribute("title", "수상이력 수정화면");
+		model.addAttribute("title", "수상이력 수정");
+		model.addAttribute("titleText", "수상이력 수정");
+		model.addAttribute("contents", "나의 수상이력 정보를 수정 할 수 있는 페이지입니다.");
 		model.addAttribute("profileAwardInfo", profileAwardInfo);
 		
 		return "user/profile/profile_award_modify";
@@ -583,7 +591,9 @@ public class ProfileController {
 		List<WorkCate> workCateList = profileService.getWorkCateList();
 		List<SubjectCate> subjectCateList = profileService.getSubjectCateList();
 		
-		model.addAttribute("title", "포트폴리오 등록 화면");
+		model.addAttribute("title", "포트폴리오 등록");
+		model.addAttribute("titleText", "포트폴리오 등록");
+		model.addAttribute("contents", "나의 포트폴리오를 등록 할 수 있는 페이지입니다.");
 		model.addAttribute("joinCateList", joinCateList);
 		model.addAttribute("workCateList", workCateList);
 		model.addAttribute("subjectCateList", subjectCateList);
@@ -639,6 +649,8 @@ public class ProfileController {
 		List<SubjectCate> subjectCateList = profileService.getSubjectCateList();
 		
 		model.addAttribute("title", "포트폴리오 수정");
+		model.addAttribute("titleText", "포트폴리오 수정");
+		model.addAttribute("contents", "나의 포트폴리오를 수정 할 수 있는 페이지입니다.");
 		model.addAttribute("profilePortfolioInfo", profilePortfolioInfo);
 		model.addAttribute("joinCateList", joinCateList);
 		model.addAttribute("workCateList", workCateList);
