@@ -76,8 +76,8 @@
 			reject_approval_message,
 			reject_date)
 		SELECT
-			CONCAT('normal_project_apply',LPAD(CAST(SUBSTRING(MAX(normal_project_apply_code),21)+1 as UNSIGNED),2,'0')),
-			'#{normalProjectCode}',
+			CONCAT('normal_project_apply',LPAD(CAST(SUBSTRING(MAX(normal_project_apply_code),21)+1 as UNSIGNED),3,'0')),
+			#{normalProjectCode},
 			'id002',
 			CURDATE(),
 			'normal_applyer_run01',
