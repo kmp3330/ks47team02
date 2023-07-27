@@ -74,9 +74,13 @@ public class AnnouncementController {
 	}
 	
 	@GetMapping("/announcementList")
-	public String getAnnouncementList(Model model) {
+	public String getAnnouncementList(Model model,
+									  @RequestParam(value="searchKey", required = false, defaultValue = "") String searchKey,
+									  @RequestParam(value="searchValue", required = false) String searchValue) {
 		
-		List<Announcement> announcementList = announcementService.getAnnouncementList();
+		log.info("searchKey : {}", searchKey);
+		log.info("searchValue : {}", searchValue);
+		List<Announcement> announcementList = announcementService.getAnnouncementList(searchKey,searchValue);
 		model.addAttribute("title", "구인구직");
 		model.addAttribute("titleText", "구인구직공고");
 		model.addAttribute("contents", "구인구직공고목록 페이지입니다.");

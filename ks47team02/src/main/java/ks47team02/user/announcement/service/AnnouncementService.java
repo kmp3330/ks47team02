@@ -1,5 +1,6 @@
 package ks47team02.user.announcement.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,8 +62,22 @@ public class AnnouncementService {
 	 * 구인구직공고 목록조회
 	 * @return
 	 */
-	public List<Announcement> getAnnouncementList() {
+	public List<Announcement> getAnnouncementList(String searchKey, String searchValue) {
 		Map<String, Object> paramMap = null;
+		
+		if(searchValue != null) {
+			switch (searchKey) {
+				case "joinCateName" -> {
+					searchKey = "joinCateName";
+				}
+				case "areaCate" -> {
+					searchKey = "areaCate";
+				}
+			}
+			paramMap = new HashMap<String, Object>();
+			paramMap.put("searchKey", searchKey);
+			paramMap.put("searchValue", searchValue);
+		}
 		
 		List<Announcement> announcementList = announcementMapper.getAnnouncementList(paramMap);
 		
