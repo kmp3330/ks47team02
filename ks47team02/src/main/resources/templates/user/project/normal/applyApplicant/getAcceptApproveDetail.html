@@ -56,26 +56,38 @@
                 <div class="job-btn align-self-center justify-content-end d-flex">
                   <a th:href="@{#}" class="third-btn">수정</a>
                 </div>
+
                 <div class="project-detail">
                   <div class="condition-title">
                     <p class="condition-label body-2 text500">일반과제명</p>
                   </div>
                   <p class="condition-data body-2 text900" th:text="*{normalProjectName}"></p>
                 </div>
+
                 <div class="project-detail">
                   <div class="condition-title">
                     <p class="condition-label body-2 text500">신청자아이디</p>
                   </div>
                   <p class="condition-data body-2 text900" th:text="*{userId}"></p>
                 </div>
-
                 <div class="project-detail">
                   <div class="condition-title">
                     <p class="condition-label body-2 text500">신청날짜</p>
                   </div>
                   <p class="condition-data body-2 text900" th:text="*{normalProjectApplicationDate}"></p>
                 </div>
-
+                <div class="project-detail">
+                  <div class="condition-title">
+                    <p class="condition-label body-2 text500">신청자 진행상황</p>
+                  </div>
+                  <p class="condition-data body-2 text900" th:text="*{projectProgress}"></p>
+                </div>
+                <div class="project-detail">
+                  <div class="condition-title">
+                    <p class="condition-label body-2 text500">승인자 id</p>
+                  </div>
+                  <p class="condition-data body-2 text900" th:text="*{approveUserId}"></p>
+                </div>
               </th:block>
               <!-- 설명들 끝 -->
             </div>
