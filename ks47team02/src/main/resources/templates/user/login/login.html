@@ -135,7 +135,7 @@
       margin: 0;
       padding: 0;
     }
-    .form-style {
+    .form-style1 {
       padding: 13px 20px;
       padding-left: 55px;
       margin-bottom: 20px;
@@ -154,8 +154,8 @@
       transition: all 200ms linear;
       box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
     }
-    .form-style:focus,
-    .form-style:active {
+    .form-style1:focus,
+    .form-style1:active {
       border: none;
       outline: none;
       box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
@@ -272,7 +272,6 @@
       display: block;
     }
     
-    
     h6.mb-0.pb-2 {
       position: relative;
       z-index: 1;
@@ -283,6 +282,7 @@
     #cpLoginBtn {
       background-color: #0f222ab3;
     }
+    
   </style>
 </head>
 <th:block layout:fragment="customJs">
@@ -367,11 +367,11 @@
                   <div class="section text-center">
                     <h4 class="mb-4 pb-3">일반회원 로그인</h4>
                     <div class="form-group">
-                      <input type="text" name="userId" class="form-style" value="id001" id="userId" autocomplete="off">
+                      <input type="text" name="userId" class="form-style1" value="id001" id="userId" autocomplete="off">
                       <i class="input-icon uil fas fa-user"></i>
                     </div>
                     <div class="form-group mt-2">
-                      <input type="password" name="userPw" class="form-style" value="pw001" id="userPw" autocomplete="off">
+                      <input type="password" name="userPw" class="form-style1" value="pw001" id="userPw" autocomplete="off">
                       <i class="input-icon uil fas fa-lock"></i>
                     </div>
                     <button type="submit" class="btn mt-4" id="loginBtn">log in</button>
@@ -387,11 +387,11 @@
                   <div class="section text-center">
                     <h4 class="mb-4 pb-3">기업회원 로그인</h4>
                     <div class="form-group">
-                      <input type="text" name="cpId" class="form-style" id="cpId" value="cp001" autocomplete="off">
+                      <input type="text" name="cpId" class="form-style1" id="cpId" value="cp001" autocomplete="off">
                       <i class="input-icon uil fas fa-user"></i>
                     </div>
                     <div class="form-group mt-2">
-                      <input type="password" name="cpPw" class="form-style" id="cpPw" value="cppw001" autocomplete="off">
+                      <input type="password" name="cpPw" class="form-style1" id="cpPw" value="cppw001" autocomplete="off">
                       <i class="input-icon uil fas fa-lock"></i>
                     </div>
                     <button type="submit" class="btn mt-4" id="cpLoginBtn">log in</button>
