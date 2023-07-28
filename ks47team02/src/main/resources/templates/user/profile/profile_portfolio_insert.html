@@ -78,6 +78,17 @@
 	    });
 		$('#subjectCateCode').change();
 		
+		// 창 닫는 함수
+		const closeModal = function () {
+	        $('#exampleModalCenter').modal('hide');
+	    }
+	    
+	    $('#selectBtn').click(function () {
+	        closeModal();
+	    });
+		
+		
+		
 	</script>
 </th:block>
 
@@ -233,7 +244,7 @@
 							<option value="pro">전문과제</option>
 					</select>
 				</div>
-				<div class="modal-body" id="projectListContainer">
+				<div class="modal-body">
 					<table class="table">
 						<thead class="thead-light">
 							<tr>
