@@ -3,6 +3,7 @@ package ks47team02.user.project.normal.service;
 
 import java.util.List;
 
+import ks47team02.user.project.normal.dto.normalProjectApplyApplicant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,23 @@ public class NormalProjectService {
 
 	public void addApplicantAccept(String normalProjectCode){
 		normalProjectMapper.addApplicantAccept(normalProjectCode);
+	}
+
+	public normalProjectApplyApplicant getNormalProjectApplyApplicantById(String userId){
+		normalProjectApplyApplicant ApplyApplicantInfo = normalProjectMapper.getNormalProjectApplyApplicantById(userId);
+		return ApplyApplicantInfo;
+
+	}
+
+	/**
+	 * 일반과제 신청자 목록 조회
+	 * @return 일반과제 목록
+	 * */
+	public List<normalProjectApplyApplicant> getNormalProjectApplyApplicantList(){
+		List<normalProjectApplyApplicant> normalProjectApplyApplicantList = normalProjectMapper.getNormalProjectApplyApplicantList();
+
+		return normalProjectApplyApplicantList;
+
 	}
 
 	/**

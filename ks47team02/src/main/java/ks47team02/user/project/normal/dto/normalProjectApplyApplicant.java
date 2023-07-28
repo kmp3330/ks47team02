@@ -4,16 +4,18 @@ import lombok.Data;
 
 @Data
 public class normalProjectApplyApplicant {
-    private String normal_project_apply_code;
-    private String normal_project_code;
-    private String user_id;
-    private String normal_project_application_date;
-    private String normal_applyer_run_code;
-    private String project_progress;
-    private String approve_user_id;
-    private String reject_approval_code;
-    private String reject_approval_name;
-    private String reject_approval_message;
-    private String reject_date;
+    private String normalProjectApplyCode;
+    private String normalProjectCode;
+    private String normalProjectName;
+    private String userId;
+    private String normalProjectApplicationDate;
+    private String normalApplyerRunCode;
+    private String projectProgress;
+    private String approveUserId;
+    private String rejectApprovalCode;
+    private String rejectApprovalName;
+    private String rejectApprovalMessage;
+    private String rejectDate;
+
 
 }

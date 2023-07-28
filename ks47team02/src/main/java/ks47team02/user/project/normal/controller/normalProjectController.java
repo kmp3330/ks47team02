@@ -2,6 +2,7 @@ package ks47team02.user.project.normal.controller;
 
 import java.util.List;
 
+import ks47team02.user.project.normal.dto.normalProjectApplyApplicant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -116,7 +117,6 @@ public class normalProjectController {
 	@GetMapping("/addAcceptApprove")
 	public String addAcceptApprove(Model model) {
 		model.addAttribute("title", "일반과제 신청자 승인");
-		
 		return "user/project/normal/applyApplicant/addAcceptApprove";
 	}
 	
@@ -237,8 +237,23 @@ public class normalProjectController {
 	/*get영역*/
 
 	/**
+	 * 일반과제 신청자 상세보기
+	 * @param userId 신청자 아이디
+	 * @return nor
+	 *
+	 * */
+	@GetMapping("/getAcceptApproveDetail")
+	public String getProjectAcceptDetail(@RequestParam(value = "userId") String userId,
+										 Model model){
+		normalProjectApplyApplicant applyApplicantInfo = normalProjectService.getNormalProjectApplyApplicantById(userId);
+		log.info("applyApplicantInfo : {}", applyApplicantInfo);
+		model.addAttribute("applyApplicantInfo", applyApplicantInfo);
+		return "user/project/normal/applyApplicant/getAcceptApproveDetail";
+	}
+
+	/**
 	 * 일반과제 상세 페이지 이동
-	 * @param normalProjectCode 일반과제코드
+	 * @param projectCode 일반과제코드
 	 * @return 일반과제 상세 화면
 	 * */
 	@GetMapping("/projectDetail")
@@ -289,11 +304,16 @@ public class normalProjectController {
 	
 
 	
-	@GetMapping("/getAcceptList")
+	@GetMapping("/getApplicantAcceptList")
 	public String getAcceptList(Model model) {
+		// 신청자 목록 조회
+		List<normalProjectApplyApplicant> normalProjectApplyApplicantList = normalProjectService.getNormalProjectApplyApplicantList();
+
+
+		model.addAttribute("normalProjectApplyApplicantList", normalProjectApplyApplicantList);
 		model.addAttribute("title", "일반과제 신청자 목록");
 		
-		return "user/project/normal/applyApplicant/getAcceptList";
+		return "user/project/normal/applyApplicant/getApplicantAcceptList";
 	}
 	
 	/*get영역 끝*/

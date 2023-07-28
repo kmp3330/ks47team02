@@ -2,6 +2,7 @@ package ks47team02.user.project.normal.mapper;
 
 import java.util.List;
 
+import ks47team02.user.project.normal.dto.normalProjectApplyApplicant;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
@@ -14,13 +15,38 @@ public interface NormalProjectMapper {
 
 
 	/**
+	 * 일반과제 신청자 상세조회
+	 * @param userId 신청자 아이디
+	 * @return normalProjectApplyApplicant 신청자 상세정보
+	 * */
+	public normalProjectApplyApplicant getNormalProjectApplyApplicantById(String userId);
+
+	/**
 	 * @param normalProjectCode 일반과제 코드
 	 * 일반과제 신청
 	 *
 	 * */
 	public int addApplicantAccept(String normalProjectCode);
 
+
+	/**
+	 * 일반과제 신청자 목록 조회
+	 * @return 일반과제 목록
+	 * */
+	public List<normalProjectApplyApplicant> getNormalProjectApplyApplicantList();
+
+
+	/**
+	 * 일반과제 게시글 수정
+	 * @param normalProjects 일반과제 form
+	 *
+	 * */
 	public int modifyNormalProject(NormalProjects normalProjects);
+
+	/**
+	 * 일반과제 전체목록 조회
+	 * @return  NormalProjects
+	 * */
 	public List<NormalProjects> getNormalProjectList();
 	
 	public List<JoinCate> getjoinCateList();
