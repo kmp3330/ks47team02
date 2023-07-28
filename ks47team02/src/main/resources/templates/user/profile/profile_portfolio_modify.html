@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+	<script>
+		$('#portfoliomodifyBtn').click(function (e) {
+			e.preventDefault();
+			
+			$('#modifyPortfolioForm').submit();
+		});
+		
+		
+		
+	</script>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<section class="contact-form section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
+					<div class="single-job mb-4 justify-content-between text-center">
+						<div class="card single-job">
+							<form id="modifyPortfolioForm"
+								  th:action="@{/profile/profilePortfolioModify}" method="post"
+								  class="d-md-flex justify-content-center">
+
+								<div class="left" th:object="${profilePortfolioInfo}">
+									<input class="genric-btn" type="hidden"
+										   name="userPortfolioCode" th:value="*{userPortfolioCode}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">프로젝트 제목</p>
+									<input type="text"
+										   placeholder="프로젝트 제목" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '프로젝트 제목'"
+										   name="userProjectName" th:value="*{userProjectName}"> 
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">참여분야</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;" name="joinCateCode"
+												placeholder="참여분야">
+												<option th:value="*{joinCateCode}">[[*{joinCateName}]]</option>
+												<th:block th:unless="${#lists.isEmpty(joinCateList)}"
+													th:each="l : ${joinCateList}">
+													<option th:value="${l.joinCateCode}">[[${l.joinCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+									
+									<p class="text-left" style="font-size:large; font-weight:900;">작업분류</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;" name="workCateCode"
+												placeholder="작업분류" th:selected="*{workCateCode}">
+												<option th:value="*{workCateCode}">[[*{workCateName}]]</option>
+												<th:block th:unless="${#lists.isEmpty(workCateList)}"
+													th:each="l : ${workCateList}">
+													<option th:value="${l.workCateCode}">[[${l.workCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+									
+									<p class="text-left" style="font-size:large; font-weight:900;">주제분류</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;"
+												name="subjectCateCode" placeholder="주제분류"
+												th:selected="*{subjectCateCode}">
+												<option th:value="*{subjectCateCode}">[[*{subjectCateName}]]</option>
+												<th:block th:unless="${#lists.isEmpty(subjectCateList)}"
+													th:each="l : ${subjectCateList}">
+													<option th:value="${l.subjectCateCode}">[[${l.subjectCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">맡은기능</p>
+									<input type="text"
+										   placeholder="맡은기능" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '맡은기능'"
+										   name="userRequiredSkill" th:value="*{userRequiredSkill}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">내용</p>
+									<input type="text"
+										   placeholder="내용" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '내용'"
+										   name="userDetails" th:value="*{userDetails}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">기능 시작 일시</p>
+									<input type="date"
+										   placeholder="기능 시작 일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '기능 시작 일시'"
+										   name="userProjectStartDate" th:value="*{userProjectStartDate}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">기능 완료 일시</p>
+									<input type="date"
+										   placeholder="기능 완료 일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '기능 완료 일시'"
+										   name="userProjectEndDate" th:value="*{userProjectEndDate}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">작업일수</p>
+									<input type="number"
+										   placeholder="작업일수" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '작업일수'"
+										   name="userProjectDays" th:value="*{userProjectDays}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">프로젝트 구분</p>
+									<input type="text"
+										   placeholder="프로젝트 구분" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '프로젝트 구분'" readonly
+										   name="userProjectGen" th:value="*{userProjectGen}">
+										   
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch1"
+												name="profileHidden" th:checked="*{profileHidden}">
+											<label for="confirm-switch1"></label>
+										</div>
+									</div>
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">입사지원시 공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch2"
+												name="profileApplicationHidden"
+												th:checked="*{profileApplicationHidden}"> <label
+												for="confirm-switch2"></label>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="card-tools">
+							<a th:href="@{#}" id="portfoliomodifyBtn"
+							   class="genric-btn info-border circle"> <i class="fas">수정완료</i>
+							</a> <a th:href="@{/profile/profilePortfolioList}"
+								id="portfolioResetBtn" class="genric-btn danger-border circle">
+								<i class="fas">취소</i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</th:block>
+</html>

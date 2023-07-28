@@ -10,6 +10,7 @@ public class ProfileCertificate {
 	private String certificateName;
 	private String certificatePublication;
 	private String certificateDate;
+	private String profileRegDate;
 	private boolean profileHidden;
 	private boolean profileApplicationHidden;
 

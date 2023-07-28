@@ -1,6 +1,7 @@
 package ks47team02.user.profile.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 import ks47team02.user.profile.dto.ProfileAward;
@@ -18,6 +20,10 @@ import ks47team02.user.profile.dto.ProfilePortfolio;
 import ks47team02.user.profile.dto.ProfileSkill;
 import ks47team02.user.profile.dto.ProfileWorkSpec;
 import ks47team02.user.profile.service.ProfileService;
+import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
+import ks47team02.user.project.pro.dto.SubjectCate;
+import ks47team02.user.project.pro.dto.WorkCate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,9 +43,9 @@ public class ProfileController {
 	@GetMapping("/")
 	public String profileList(Model model) {
 		
-		model.addAttribute("title", "전체 프로필");
-		model.addAttribute("titleText", "전체 프로필");
-		model.addAttribute("contents", "전체 프로필을 볼 수 있는 페이지입니다.");
+		model.addAttribute("title", "구직 프로필");
+		model.addAttribute("titleText", "구직 프로필");
+		model.addAttribute("contents", "구직 프로필을 볼 수 있는 페이지입니다.");
 		
 		return "user/profile/profileList";
 	}
@@ -93,9 +99,12 @@ public class ProfileController {
 	}
 	
 	@GetMapping("/profileIntroInsert")
-	public String profileIntroInsert(Model model) {
+	public String profileIntroInsert(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
 
-		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList();
+		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList(sessionId);
+		
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -109,11 +118,12 @@ public class ProfileController {
 	 */
 	@GetMapping("/profileIntroList")
 	public String profileIntroList(Model model, HttpSession session) {
+
+		 String sessionId = (String)session.getAttribute("SID");
 		
-		 String sessionID = (String)session.getAttribute("SID");
+		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList(sessionId);
 		
-		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList();
-		model.addAttribute("title", "메인화면");
+		model.addAttribute("title", "자기소개");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
 		model.addAttribute("profileIntroList", profileIntroList);
@@ -170,9 +180,12 @@ public class ProfileController {
 		return "redirect:/profile/profileSkillList";
 	}
 	@GetMapping("/profileSkillInsert")
-	public String profilSkillInsert(Model model) {
+	public String profilSkillInsert(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
 
-		List<ProfileSkill> profileSkillList = profileService.getProfileSkillList();
+		List<ProfileIntro> profileSkillList = profileService.getProfileIntroList(sessionId);
+
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -185,8 +198,12 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profileSkillList")
-	public String profileSkillList(Model model) {
-		List<ProfileSkill> profileSkillList = profileService.getProfileSkillList();
+	public String profileSkillList(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		
+		List<ProfileSkill> profileSkillList = profileService.getProfileSkillList(sessionId);
+		
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -235,9 +252,11 @@ public class ProfileController {
 		return "redirect:/profile/profileWorkSpecList";
 	}
 	@GetMapping("/profileWorkSpecInsert")
-	public String profilWorkSpecInsert(Model model) {
-
-		List<ProfileWorkSpec> profileWorkSpecList = profileService.getProfileWorkSpecList();
+	public String profilWorkSpecInsert(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		
+		List<ProfileWorkSpec> profileWorkSpecList = profileService.getProfileWorkSpecList(sessionId);
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -251,8 +270,12 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profileWorkSpecList")
-	public String profileWorkSpecList(Model model) {
-		List<ProfileWorkSpec>profileWorkSpecList = profileService.getProfileWorkSpecList();
+	public String profileWorkSpecList(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		
+		List<ProfileWorkSpec>profileWorkSpecList = profileService.getProfileWorkSpecList(sessionId);
+		
 		model.addAttribute("title", "경력");
 		model.addAttribute("titleText", "경력 관리");
 		model.addAttribute("contents", "경력을 관리할 수 있는 페이지입니다.");
@@ -306,9 +329,11 @@ public class ProfileController {
 		return "redirect:/profile/profileEduSpecList";
 	}
 	@GetMapping("/profileEduSpecInsert")
-	public String profileEduSpecInsert(Model model) {
+	public String profileEduSpecInsert(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
 
-		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList();
+		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList(sessionId);
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
@@ -322,8 +347,11 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profileEduSpecList")
-	public String profileEduSpecList(Model model) {
-		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList();
+	public String profileEduSpecList(Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		
+		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList(sessionId);
 		model.addAttribute("title", "학력");
 		model.addAttribute("titleText", "학력 관리");
 		model.addAttribute("contents", "학력을 관리할 수 있는 페이지입니다.");
@@ -337,7 +365,7 @@ public class ProfileController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/profileCertificateList")
+	@GetMapping("/profileCertificateList") //session: 해당 session 에 담겨져있는 값을 가져와서 String sessionid에 담아
 	public String profileCertificateList(Model model, HttpSession session) {
 		
 		String sessionId = (String) session.getAttribute("SID");
@@ -361,7 +389,9 @@ public class ProfileController {
 	@GetMapping("/profileCertificateInsert")
 	public String profileCertificateInsert(Model model) {
 		
-		model.addAttribute("title", "자격증 등록화면");
+		model.addAttribute("title", "자격증 등록");
+		model.addAttribute("titleText", "자격증 등록");
+		model.addAttribute("contents", "나의 자격증 정보를 등록하는 페이지입니다.");
 		
 		return "user/profile/profile_certificate_insert";
 	}
@@ -396,7 +426,9 @@ public class ProfileController {
 		ProfileCertificate certificateInfo = profileService.certificateByCode(certificateCode);
 		log.info("certificateInfo : {}", certificateInfo);
 		
-		model.addAttribute("title", "자격증 수정 화면");
+		model.addAttribute("title", "자격증 수정");
+		model.addAttribute("titleText", "자격증 수정");
+		model.addAttribute("contents", "나의 자격증 정보를 수정하는 페이지입니다.");
 		model.addAttribute("certificateInfo", certificateInfo);
 		
 		return "user/profile/profile_certificate_modify";
@@ -461,7 +493,9 @@ public class ProfileController {
 	@GetMapping("/profileAwardInsert")
 	public String profileAwardInsert(Model model) {
 		
-		model.addAttribute("title", "수상이력 등록 화면");
+		model.addAttribute("title", "수상이력 등록");
+		model.addAttribute("titleText", "수상이력 등록");
+		model.addAttribute("contents", "나의 수상이력 정보를 등록 할 수 있는 페이지입니다.");
 		
 		return "user/profile/profile_award_insert";
 	}
@@ -495,7 +529,9 @@ public class ProfileController {
 		
 		ProfileAward profileAwardInfo = profileService.profileAwardByCode(userAwardCode);
 		
-		model.addAttribute("title", "수상이력 수정화면");
+		model.addAttribute("title", "수상이력 수정");
+		model.addAttribute("titleText", "수상이력 수정");
+		model.addAttribute("contents", "나의 수상이력 정보를 수정 할 수 있는 페이지입니다.");
 		model.addAttribute("profileAwardInfo", profileAwardInfo);
 		
 		return "user/profile/profile_award_modify";
@@ -552,11 +588,129 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profilePortfolioInsert")
-	public String profilePortfolioInsert(Model model) {
+	public String profilePortfolioInsert(Model model,
+										 HttpSession session) {
 		
-		model.addAttribute("title", "포트폴리오 등록 화면");
+		String sessionId = (String) session.getAttribute("SID");
+		
+		List<JoinCate> joinCateList = profileService.getJoinCateList();
+		List<WorkCate> workCateList = profileService.getWorkCateList();
+		List<SubjectCate> subjectCateList = profileService.getSubjectCateList();
+		
+		model.addAttribute("title", "포트폴리오 등록");
+		model.addAttribute("titleText", "포트폴리오 등록");
+		model.addAttribute("contents", "나의 포트폴리오를 등록 할 수 있는 페이지입니다.");
+		model.addAttribute("joinCateList", joinCateList);
+		model.addAttribute("workCateList", workCateList);
+		model.addAttribute("subjectCateList", subjectCateList);
 		
 		return "user/profile/profile_portfolio_insert";
 	}
 	
+	/**
+	 * 포트폴리오 등록 처리
+	 * @param profilePortfolio
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/profilePortfolioInsert")
+	public String profilePortfolioInsert(ProfilePortfolio profilePortfolio,
+										 HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
+		profilePortfolio.setUserId(sessionId);
+		
+		String joinCateCode = profilePortfolio.getJoinCateCode();
+		String workCateCode = profilePortfolio.getWorkCateCode();
+		String subjectCateCode = profilePortfolio.getSubjectCateCode();
+		
+		JoinCate joinCateInfo = profileService.getJoinCateByCode(joinCateCode);
+		WorkCate workCateInfo = profileService.getWorkCateByCode(workCateCode);
+		SubjectCate subjectCateInfo = profileService.getSubjectCateByCode(subjectCateCode);
+		
+		profilePortfolio.setJoinCateName(joinCateInfo.getJoinCateName());
+		profilePortfolio.setWorkCateName(workCateInfo.getWorkCateName());
+		profilePortfolio.setSubjectCateName(subjectCateInfo.getSubjectCateName());
+		log.info("profilePortfolio : {}", profilePortfolio);
+		
+		profileService.addProfilePortfolio(profilePortfolio);
+		
+		return "redirect:/profile/profilePortfolioList";
+	}
+	
+	/**
+	 * 포트폴리오 수정
+	 * @param model
+	 * @param profilePortfolioCode
+	 * @return
+	 */
+	@GetMapping("/profilePortfolioModify")
+	public String profilePortfolioModify(Model model,
+										 @RequestParam(value="profilePortfolioCode") String profilePortfolioCode) {
+		
+		ProfilePortfolio profilePortfolioInfo = profileService.profilePortfolioByCode(profilePortfolioCode);
+		
+		List<JoinCate> joinCateList = profileService.getJoinCateList();
+		List<WorkCate> workCateList = profileService.getWorkCateList();
+		List<SubjectCate> subjectCateList = profileService.getSubjectCateList();
+		
+		model.addAttribute("title", "포트폴리오 수정");
+		model.addAttribute("titleText", "포트폴리오 수정");
+		model.addAttribute("contents", "나의 포트폴리오를 수정 할 수 있는 페이지입니다.");
+		model.addAttribute("profilePortfolioInfo", profilePortfolioInfo);
+		model.addAttribute("joinCateList", joinCateList);
+		model.addAttribute("workCateList", workCateList);
+		model.addAttribute("subjectCateList", subjectCateList);
+		
+		return "user/profile/profile_portfolio_modify";
+	}
+	/**
+	 * 포트폴리오 수정처리
+	 * @param profilePortfolio
+	 * @return
+	 */
+	@PostMapping("/profilePortfolioModify")
+	public String profilePortfolioModify(ProfilePortfolio profilePortfolio) {
+		
+		String joinCateCode = profilePortfolio.getJoinCateCode();
+		String workCateCode = profilePortfolio.getWorkCateCode();
+		String subjectCateCode = profilePortfolio.getSubjectCateCode();
+		
+		JoinCate joinCateInfo = profileService.getJoinCateByCode(joinCateCode);
+		WorkCate workCateInfo = profileService.getWorkCateByCode(workCateCode);
+		SubjectCate subjectCateInfo = profileService.getSubjectCateByCode(subjectCateCode);
+		
+		profilePortfolio.setJoinCateName(joinCateInfo.getJoinCateName());
+		profilePortfolio.setWorkCateName(workCateInfo.getWorkCateName());
+		profilePortfolio.setSubjectCateName(subjectCateInfo.getSubjectCateName());
+		log.info("profilePortfolio : {}", profilePortfolio);
+		
+		profileService.profilePortfolioModify(profilePortfolio);
+		
+		return "redirect:/profile/profilePortfolioList";
+	}
+	
+	/**
+	 * 포트폴리오 삭제
+	 * @param profilePortfolioCode
+	 * @return
+	 */
+	@GetMapping("/profilePortfolioDelete")
+	public String profilePortfolioDelete(@RequestParam(value="profilePortfolioCode") String profilePortfolioCode) {
+		
+		profileService.profilePortfolioDelete(profilePortfolioCode);
+		
+		return "redirect:/profile/profilePortfolioList";
+	}
+	
+	@PostMapping("/pro")
+	@ResponseBody
+	public List<Map<String, Object>> pro(HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
+		
+		List<Map<String, Object>> result = profileService.getProProjectList(sessionId);
+		
+		return result;
+	}
 }

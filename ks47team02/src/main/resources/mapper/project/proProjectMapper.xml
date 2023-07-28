@@ -3,68 +3,149 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks47team02.user.project.pro.mapper.ProProjectMapper">
+<!-- resultMap -->
+	<!-- 전문과제 목록 조회 -->
 	<resultMap type="ProProject" id="proProjectResultMap">	
 		<id column="pro_project_code" property="proProjectCode"/>
+		<result column="cp_id" property="cpId"/>
 		<result column="cp_name" property="cpName"/>		
-		<result column="title" property="proProjectTitle"/>
+		<result column="title" property="title"/>
 		<result column="join_cate_code" property="joinCateCode"/>
 		<result column="join_cate_name" property="joinCateName"/>
 		<result column="work_cate_code" property="workCateCode"/>
 		<result column="work_cate_name" property="workCateName"/>
 		<result column="subject_cate_code" property="subjectCateCode"/>
 		<result column="subject_cate_name" property="subjectCateName"/>
-		<result column="details" property="proProjectDetails"/>
-		<result column="max_total" property="proProjectMaxtotal"/>
-		<result column="run_name" property="proProjectRunName"/>
+		<result column="skill" property="skill"/>
+		<result column="details" property="details"/>
+		<result column="max_total" property="maxTotal"/>
+		<result column="normal_run_code" property="normalRunCode"/>
+		<result column="run_name" property="runName"/>
 		<result column="project_price" property="proProjectPrice"/>
 		<result column="cp_commission" property="cpCommisson"/>
 		<result column="write_date" property="proProjectWriteDate"/>
-		<result column="due_date" property="proProjectDueDate"/>
-		<result column="complete_date" property="proProjectCompleteDate"/>
+		<result column="due_date" property="dueDate"/>
+		<result column="due_complete_date" property="dueCompleteDate"/>
 		<result column="project_start_date" property="proProjectStartDate"/>
 		<result column="project_complete_date" property="proProjectCompleteDate"/>
 		<result column="project_days" property="proProjectDays"/>
 		<result column="applicant_user_id" property="applicantUserId"/>
 		<result column="application_date" property="applicationDate"/>
-		<result column="run_name" property="runName"/>
 	</resultMap>
-	
+	<!-- 성과금 예치 목록 조회 -->
+	<resultMap type="DepositList" id="depositResultMap">
+		<id column="deposit_list_code" property="depositListCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="admin_id" property="adminId"/>
+		<result column="cp_id" property="cpId"/>
+		<result column="sender" property="sender"/>
+		<result column="bank" property="bank"/>
+		<result column="bank_account" property="bankAccount"/>
+		<result column="project_payment" property="projectPayment"/>
+		<result column="total_commission" property="totalCommission"/>
+		<result column="total_payment" property="totalPayment"/>
+		<result column="sender_date" property="senderDate"/>
+	</resultMap>
+	<!-- 진행상태 목록 조회 -->
+	<resultMap type="ProgressStatus" id="progressStatusResultMap">
+		<id column="progress_status_code" property="progressStatusCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="project_details" property="projectDetails"/>
+		<result column="progress_rate" property="progressRate"/>
+		<result column="status_name" property="statusName"/>
+		<result column="write_date" property="writeDate"/>
+	</resultMap>
+	<!-- 전문과제별 신청자 목록 조회 -->
+	<resultMap type="ProProject" id="proProjectApplicantResultMap">
+		<id column="pro_project_applicant_code" property="proProjectApplicantCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="applicant_user_id" property="applicantUserId"/>
+		<result column="applicant_account_code" property="applicantAccountCode"/>
+		<result column="bank" property="bank"/>
+		<result column="bank_account" property="bankAccount"/>
+		<result column="wish_price" property="wishPrice"/>
+		<result column="application_date" property="applicationDate"/>
+		<result column="normal_applyer_run_code" property="normalApplyerRunCode"/>
+		<result column="run_name" property="runName"/>
+		<result column="reject_apprval_code" property="rejectApprvalCode"/>
+		<result column="reject_apprval_name" property="rejectApprvalName"/>
+		<result column="reject_apprval_msg" property="rejectApprvalMsg"/>
+		<result column="rejecta_apprval_date" property="rejectApprvalDate"/>
+		<result column="cp_id" property="cpId"/>
+	</resultMap>
+	<!-- 전문과제별 맡은기능 조회 -->
+	<resultMap type="ProProjectPersonalFunction" id="proProjectPersonalFunctionResultMap">
+		<id column="pro_project_personal_function_code" property="proProjectPersonalFunctionCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="skill" property="skill"/>
+		<result column="project_day" property="projectDay"/>
+		<result column="day_score" property="dayScore"/>
+		<result column="project_complete_score" property="projectCompleteScore"/>
+		<result column="individual_work_day" property="individualWorkDay"/>
+		<result column="individual_complete_possible_score" property="individualCompletePossibleScore"/>
+		<result column="individual_complete_score" property="individualCompleteScore"/>
+		<result column="work_day_price" property="workDayPrice"/>
+		<result column="grade_commision" property="gradeCommision"/>
+		<result column="user_commision" property="userCommision"/>
+		<result column="project_price" property="projectPrice"/>
+		<result column="progress_rate" property="progressRate"/>
+		<result column="run_name" property="runName"/>
+		<result column="start_date" property="startDate"/>
+		<result column="complete_date" property="completeDate"/>
+		<result column="registeration_date" property="registerationDate"/>
+		<result column="period" property="period"/>
+	</resultMap>
+	<!-- 성과금 송금완료 목록 조회 -->
+	<resultMap type="SendMoneyComplete" id="sendMoneyCompleteResultMap">
+		<id column="send_money_complete_code" property="sendMoneyCompleteCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="admin_id" property="adminId"/>
+		<result column="pro_project_personal_function_code" property="proProjectPersonalFunctionCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="project_payment" property="projectPayment"/>
+		<result column="send_date" property="sendDate"/>
+	</resultMap>
+	<!-- 참여분야 목록 조회 -->
 	<resultMap type="ProProject" id="joinCateResultMap">
 		<id column="join_cate_code" property="joinCateCode"/>
 		<result column="join_cate_name" property="joinCateName"/>
 	</resultMap>
-		
+	<!-- 작업분류 목록조회 -->
 	<resultMap type="ProProject" id="workCateResultMap">
 		<id column="work_cate_code" property="workCateCode"/>
 		<result column="work_cate_name" property="workCateName"/>
 	</resultMap>
-	
+	<!-- 주제분류 목록 조회 -->
 	<resultMap type="ProProject" id="subjectCateResultMap">
 		<id column="subject_cate_code" property="subjectCateCode"/>
 		<result column="subject_cate_name" property="subjectCateName"/>
 	</resultMap>
-		
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 신청자별 계좌정보 -->
+	<resultMap type="ApplicantAccount" id="applicantAccountResultMap">
+		<id column="applicant_account_code" property="applicantAccountCode"/>
+		<result column="applicant_account_user_id" property="applicantAccountUserId"/>
+		<result column="bank" property="bank"/>
+		<result column="bank_account" property="bankAccount"/>
+		<result column="account_holder" property="accountHolder"/>
+	</resultMap>
+<!-- /resultMap -->
+<!-- 전문과제 관련 시작 -->
 	<!-- 전문 과제 전체 목록 조회 -->
 	<select id="getProProjectList" parameterType="map" resultMap="proProjectResultMap">
-	
 					/* 전문 과제 전체 목록 조회 */
-						SELECT
+					SELECT
+							pro_project_code,
+							ci.cp_id,
 							cp_name,
 							title,
-							join_cate_code,
-							join_cate_name,
-							work_cate_code,
-							work_cate_name,
-							subject_cate_code,
-							subject_cate_name,
+							jc.join_cate_code,
+							jc.join_cate_name,
+							wc.work_cate_code,
+							wc.work_cate_name,
+							sc.subject_cate_code,
+							sc.subject_cate_name,
+							skill,
 							details,
 							max_total,
 							run_name,
@@ -76,12 +157,606 @@
 							project_complete_date,
 							project_days
 						FROM
-							pro_project AS pp
-							INNER join
 							cp_info AS ci
+							INNER join
+							pro_project AS pp
 							on
-							pp.cp_id = ci.cp_id;
+							pp.cp_id = ci.cp_id
+							INNER JOIN
+							join_cate AS jc
+							on
+							pp.join_cate_code = jc.join_cate_code
+							INNER JOIN
+							work_cate AS wc
+							on
+							pp.work_cate_code = wc.work_cate_code
+							INNER join
+							subject_cate AS sc
+							on
+							pp.subject_cate_code = sc.subject_cate_code;
 	</select>
+	<!-- 전문 과제 작성 -->
+	<insert id="proProjectInsert" parameterType="ProProject">
+				/* 전문과제 insert문 */
+				INSERT INTO pro_project
+					(`pro_project_code`, `cp_id`, `title`, `join_cate_code`,
+					`join_cate_name`, `work_cate_code`,`work_cate_name`,
+					`subject_cate_code`,`subject_cate_name`,`skill`,`details`,
+					`max_total`,`normal_run_code`,`run_name`,`project_price`,
+					`cp_commission`,`write_date`,`due_date`,`due_complete_date`,
+					`project_start_date`,`project_complete_date`,`project_days`)
+				SELECT
+					CONCAT('pro_project',LPAD(CAST(SUBSTRING(MAX(pro_project_code),12)+1 as UNSIGNED),3,'0')),
+					'cp001',
+					#{title},
+					#{joinCateCode},
+					(SELECT join_cate_name FROM join_cate WHERE join_cate_code = #{joinCateCode}),
+					#{workCateCode},
+					(SELECT work_cate_name FROM work_cate WHERE work_cate_code = #{workCateCode}),
+					#{subjectCateCode},
+					(SELECT subject_cate_name FROM subject_cate WHERE subject_cate_code = #{subjectCateCode}),
+					#{skill},
+					#{details},
+					#{maxTotal},
+					'normal_run_code01',
+					'모집중',
+					#{proProjectPrice},
+					#{cpCommisson},
+					CURDATE(),
+					#{dueDate},
+					null,
+					null,
+					NULL,
+					#{proProjectDays}
+				FROM pro_project
+				WHERE pro_project_code LIKE 'pro_project%';
+	 </insert>
+	<!-- 전문 과제 상세 조회-->
+    <select id="getProjectInfoByCode" parameterType="String" resultMap="proProjectResultMap">
+    	/* 전문 과제 상세 조회 */
+    	SELECT
+			pro_project_code,
+			cp_id,
+			title,
+			join_cate_code,
+			join_cate_name, 
+			work_cate_code,
+			work_cate_name,
+			subject_cate_code,
+			subject_cate_name,
+			skill,
+			details,
+			max_total,
+			normal_run_code,
+			run_name,
+			project_price,
+			cp_commission,
+			write_date,
+			due_date,
+			due_complete_date,
+			project_start_date,
+			project_complete_date,
+			project_days
+		FROM
+			pro_project
+		WHERE
+			pro_project_code = #{proProjectCode}
+    </select>
+    <!-- 전문 과제 수정 -->
+    <update id="proProjectModify" parameterType="ProProject">
+    	/* 전문 과제 수정 */
+		    UPDATE pro_project
+			<trim prefix="SET" suffixOverrides=",">
+				<if test="skill != null and skill != '' ">
+					skill = #{skill},
+				</if>
+				<if test="details != null and details != '' ">
+					details = #{details},
+				</if>
+				<if test="maxTotal != null and maxTotal != '' ">
+					max_total = #{maxTotal},
+				</if>
+				<if test="proProjectPrice != null and proProjectPrice != '' ">
+					project_price = #{proProjectPrice},
+				</if>
+				<if test="dueDate != null and dueDate != '' ">
+					due_date = #{dueDate}
+				</if>
+			</trim>
+				WHERE
+					pro_project_code = #{proProjectCode};
+    </update>
+	<!-- 성과금 예치 목록 삭제 -->
+	<delete id="depositDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 성과금 예치 삭제 */
+		DELETE
+		FROM
+			deposit_list AS dl
+		WHERE
+			dl.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 기업이 올린 전문과제 진행 상태 삭제 -->
+	<delete id="progressStatusDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 진행상태 삭제 */
+		DELETE
+		FROM
+			progress_status AS ps
+		WHERE
+			ps.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 해당 전문과제 신청자 목록 삭제 -->
+	<delete id="proProjectApplicantDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 신청자 목록 삭제 */
+		DELETE
+		FROM
+			pro_project_applicant AS ppa
+		WHERE
+			ppa.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 해당 전문과제 별 개인별 맡은 기능 삭제 -->
+	<delete id="proProjectPersonalFunctionDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 별 개인별 맡은 기능 삭제 */
+		DELETE
+		FROM
+			pro_project_personal_function AS pppf
+		WHERE
+			pppf.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 해당 전문과제 성과금 송금 완료 삭제 -->
+	<delete id="sendMoneyCompleteDeleteByProProjectCode" parameterType="String">
+		/* 해당 전문과제 성과금 송금 완료 삭제 */
+		DELETE
+		FROM
+			send_money_complete AS smc
+		WHERE
+			smc.pro_project_code = #{proProjectCode};
+	</delete>
+	<!-- 해당 전문과제 삭제 -->
+	<delete id="proProjectDelete" parameterType="String">
+		/* 해당 전문과제 삭제 */
+		DELETE
+		FROM
+			pro_project AS pp
+		WHERE
+			pp.pro_project_code = #{proProjectCode};
+	</delete>
+<!-- 전문과제 관련 끝 -->
+<!-- 전문과제별 신청자 관련 시작 -->
+	<!-- 전문과제별 신청자 목록 조회 -->
+	<select id="getProProjectApplicantList" parameterType="map" resultType="ProProjectApplicant">
+	 	/* 전문과제별 신청자 목록 조회 */
+	 	SELECT
+			pro_project_applicant_code as proProjectApplicantCode,
+			pro_project_code as proProjectCode,
+			applicant_user_id as applicantUserId,
+			applicant_account_code as applicantAccount,
+			bank as bank,
+			bank_account as bankAccount,
+			wish_price as wishPricce,
+			application_date as applicantDate,
+			normal_applyer_run_code as normalApplyRunCode,
+			run_name as runName,
+			reject_approval_code as rejectApprvalCode,
+			reject_approval_name as rejectApprvalName,
+			reject_approval_msg as rejectApprvalMsg,
+			reject_approval_date as rejectApprvalDate,
+			cp_id as cpId
+		FROM
+			pro_project_applicant AS ppa
+		WHERE
+			pro_project_code = #{proProjectCode};
+	 </select>
+	<!-- 전문과제 신청서 작성 -->
+	<insert id="proProjectApplicantInsert" parameterType="ProProjectApplicant">
+					/* 전문과제 신청서 insert */
+				INSERT INTO pro_project_applicant 
+					(pro_project_applicant_code, pro_project_code, applicant_user_id, applicant_account_code, bank, bank_account, wish_price, application_date, normal_applyer_run_code, run_name, reject_approval_code, reject_approval_name, reject_approval_msg, reject_approval_date, cp_id)
+				SELECT
+					CONCAT('pro_project_applicant',LPAD(CAST(SUBSTRING(MAX(pro_project_applicant_code),22)+1 as UNSIGNED),2,'0')),
+					#{proProjectCode},
+					(SELECT applicant_account_user_id FROM applicant_account WHERE applicant_account_user_id = #{applicantUserId}),
+					(SELECT applicant_account_code FROM applicant_account WHERE applicant_account_user_id = #{applicantUserId}),
+					(SELECT bank FROM applicant_account WHERE applicant_account_user_id = #{applicantUserId}),
+					(SELECT bank_account FROM applicant_account WHERE applicant_account_user_id = #{applicantUserId}),
+					#{wishPrice},
+					NOW(),
+					'normal_applyer_run01',
+					'승인대기',
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					NULL
+				FROM pro_project_applicant
+				WHERE pro_project_applicant_code LIKE 'pro_project_applicant%';
+	</insert>
+	<!-- 전문과제 신청 취소 -->
+	<delete id="proProjectApplicantDeleteByUserId" parameterType="ProProjectApplicant">
+				/* 전문과제 신청 취소 */
+					DELETE
+					FROM
+						pro_project_applicant AS ppa
+					WHERE
+						ppa.pro_project_code=#{proProjectCode} and ppa.applicant_user_id = #{sessionId};
+	</delete>
+<!-- 전문과제별 신청자 관련 끝 -->
+<!-- 전문과제 신청자별 맡은 기능 관련 시작 -->
+	<!-- 전문과제 신청자별 맡은 기능 목록 조회 -->
+	<select id="getProProjectPersonalFunctionList" parameterType="map" resultMap="proProjectPersonalFunctionResultMap">
+		/* 전문과제 신청자별 맡은 기능 조회 */
+		SELECT
+			pro_project_personal_function_code,
+			pro_project_code,
+			user_id,
+			skill,
+			project_day,
+			day_score,
+			project_complete_score,
+			individual_work_day,
+			individual_complete_possible_score,
+			work_day_price,
+			grade_commision,
+			user_commision,
+			project_price,
+			progress_rate,
+			run_name,
+			start_date,
+			complete_date,
+			registeration_date,
+			period
+		FROM
+			pro_project_personal_function AS pppf
+		WHERE
+			pppf.pro_project_code = #{proProjectCode};
+	</select>
+	<!-- 전문과제 신청자별 맡은 기능 상세 조회 -->
+	<select id="getProProjectPersonalFunctionInfoByUserID" parameterType="map" resultMap="proProjectPersonalFunctionResultMap">
+		/* 전문과제 신청자별 맡은 기능 상세 조회 */
+				SELECT
+					pro_project_personal_function_code,
+					pro_project_code,
+					user_id,
+					skill,
+					project_day,
+					day_score,
+					project_complete_score,
+					individual_work_day,
+					individual_complete_possible_score,
+					work_day_price,
+					grade_commision,
+					user_commision,
+					project_price,
+					progress_rate,
+					run_name,
+					start_date,
+					complete_date,
+					registeration_date,
+					period
+				FROM
+					pro_project_personal_function AS pppf
+				WHERE
+					pppf.pro_project_code = #{proProjectCode} and pppf.user_id = #{sessionId};
+	</select>
+	<!-- 전문과제 신청자별 맡은 기능 수정 -->
+	<update id="proProjectPersonalFunctionModify" parameterType="ProProjectPersonalFunction">
+    	/* 전문과제 신청자별 맡은 기능 수정 */
+		    UPDATE pro_project_personal_function
+			<trim prefix="SET" suffixOverrides=",">
+				<if test="skill != null and skill != '' ">
+					skill = #{skill},
+				</if>
+				<if test="projectDay != null and projectDay != '' ">
+					project_day = #{projectDay},
+				</if>
+				<if test="dayScore != null and dayScore != '' ">
+					day_score = #{dayScore},
+				</if>
+				<if test="projectCompleteScore != null and projectCompleteScore != '' ">
+					project_complete_score = #{projectCompleteScore},
+				</if>
+				<if test="individualWorkDay != null and individualWorkDay != '' ">
+					individual_work_day = #{individualWorkDay},
+				</if>
+				<if test="individualCompletePossibleScore != null and individualCompletePossibleScore != '' ">
+					individual_complete_possible_score = #{individualCompletePossibleScore},
+				</if>
+				<if test="workDayPrice != null and workDayPrice != '' ">
+					work_day_price = #{workDayPrice},
+				</if>
+				<if test="gradeCommision != null and gradeCommision != '' ">
+					grade_commision = #{gradeCommision},
+				</if>
+				<if test="userCommision != null and userCommision != '' ">
+					user_commision = #{userCommision},
+				</if>
+				<if test="projectPrice != null and projectPrice != '' ">
+					project_price = #{projectPrice},
+				</if>
+				<if test="progressRate != null and progressRate != '' ">
+					progress_rate = #{progressRate},
+				</if>
+				<if test="runName != null and runName != '' ">
+					run_name = #{runName},
+				</if>
+				<if test="startDate != null and startDate != '' ">
+					start_date = #{startDate},
+				</if>
+				<if test="completeDate != null and completeDate != '' ">
+					complete_date = #{completeDate},
+				</if>
+				<if test="registerationDate != null and registerationDate != '' ">
+					registeration_date = #{registerationDate},
+				</if>
+				<if test="period != null and period != '' ">
+					period = #{period},
+				</if>
+			</trim>
+				WHERE
+					pro_project_code = #{proProjectCode} and user_id = #{userId}
+	
+	</update>
+<!-- 전문과제 신청자별 맡은 기능 관련 끝 -->
+<!-- 전문과제 진행상태 관련 시작 -->
+	<!-- 전문과제 진행상태 목록 조회 -->
+	<select id="getProgressStatusList" parameterType="map" resultMap="progressStatusResultMap">
+		/* 전문과제 진행상태 전체 목록 조회 */
+		SELECT
+			progress_status_code,
+			pro_project_code,
+			project_details,
+			progress_rate,
+			status_name,
+			write_date
+		FROM
+			progress_status AS ps;
+	</select>	
+	<!-- 전문과제 진행상태 상세 조회 -->
+	<select id="getProgressStatusInfoByProProjectCode" parameterType="map" resultMap="progressStatusResultMap">
+		/* 전문과제 진행상태 상세 조회 */
+		SELECT
+			progress_status_code,
+			pro_project_code,
+			project_details,
+			progress_rate,
+			status_name,
+			write_date
+		FROM
+			progress_status AS ps
+		WHERE
+			pro_project_code = #{proProjectCode};
+	</select>
+	<!-- 전문과제 진행상태 수정 -->
+	<update id="progressStatusModify" parameterType="ProgressStatus">
+			/* 전문과제 진행상태 수정 */
+		    UPDATE progress_status
+			<trim prefix="SET" suffixOverrides=",">
+				<if test="progressStatusCode != null and progressStatusCode != '' ">
+					progress_status_code = #{progressStatusCode},
+				</if>
+				<if test="proProjectCode != null and proProjectCode != '' ">
+					pro_project_code = #{proProjectCode},
+				</if>
+				<if test="projectDetails != null and projectDetails != '' ">
+					project_details = #{projectDetails},
+				</if>
+				<if test="progressRate != null and progressRate != '' ">
+					progress_rate = #{progressRate},
+				</if>
+				<if test="statusName != null and statusName != '' ">
+					status_name = #{statusName},
+				</if>
+				<if test="writeDate != null and writeDate != '' ">
+					write_date = #{writeDate},
+				</if>
+			</trim>
+				WHERE
+					pro_project_code = #{proProjectCode}
+	</update>
+<!-- 전문과제 진행상태 관련 끝 -->
+<!-- 전문과제 성과금 예치 목록 관련 시작 -->
+	<!-- 성과금 예치 목록 조회 -->
+	<select id="getDepositList" parameterType="map" resultMap="depositResultMap">
+		/* 성과금 예치 목록 조회 */
+		SELECT
+			deposit_list_code,
+			pro_project_code,
+			admin_id,
+			cp_id,
+			sender,
+			bank,
+			bank_account,
+			project_payment,
+			total_commission,
+			total_payment,
+			sender_date
+		FROM
+			deposit_list;
+	</select>
+	<!-- 성과금 예치 완료 작성 -->
+	<insert id="depositListInsert" parameterType="DepositList">
+		/* 성과금 예치 완료 작성 */
+		INSERT into deposit_list
+			(deposit_list_code, pro_project_code, admin_id, cp_id, sender, bank, bank_account, project_payment, total_commission, total_payment, sender_date)
+		SELECT
+			CONCAT('deposit_list_code',LPAD(CAST(SUBSTRING(MAX(deposit_list_code),18)+1 as UNSIGNED),3,'0')),
+			(SELECT
+				pp.pro_project_code
+			FROM
+				pro_project AS pp
+			WHERE
+				pp.normal_run_code = 'normal_run_code05'and pp.pro_project_code = #{proProjectCode}),
+			'master4',
+			(SELECT
+				pp.cp_id
+			FROM
+				pro_project AS pp
+			WHERE
+				pp.normal_run_code = 'normal_run_code05' AND pp.pro_project_code = #{proProjectCode}),
+			#{sender},
+			#{bank},
+			#{bankAccount},
+			#{projectPayment},
+			13,
+			#{totalPayment},
+			CURDATE()
+		FROM
+			deposit_list
+		WHERE
+			deposit_list_code LIKE 'deposit_list_code%';
+	</insert>
+	<!-- 성과금 미입금 프로젝트 조회 -->
+	<select id="getNotPaidList" parameterType="map" resultMap="proProjectResultMap">
+		/* 성과금 미입금 프로젝트 조회 */
+		SELECT
+			pp.pro_project_code,
+			pp.title,
+			pp.cp_id
+		FROM
+			pro_project AS pp
+		WHERE
+			pp.normal_run_code = 'normal_run_code05'
+	</select>
+	<!-- 예치금 목록 상세 조회 -->
+	<select id="getDepositListInfoByProjectCode" parameterType="map" resultMap="depositResultMap">
+		/* 예치금 목록 상세 조회 */
+		SELECT
+			deposit_list_code,
+			pro_project_code,
+			admin_id,
+			cp_id,
+			sender,
+			bank,
+			bank_account,
+			project_payment,
+			total_commission,
+			total_payment,
+			sender_date
+		FROM
+			deposit_list AS dl
+		WHERE
+			dl.pro_project_code = #{proProjectCode};
+	</select>
+	<!-- 성과금 예치 목록 수정 -->
+	<update id="depositListModify" parameterType="map">
+		/* 성과금 예치 목록 수정 */
+		UPDATE deposit_list
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="sender != null and sender != '' ">
+				sender = #{sender},
+			</if>
+			<if test="bank != null and bank != '' ">
+				bank = #{bank},
+			</if>
+			<if test="bankAccount != null and bankAccount != '' ">
+				bank_account = #{bankAccount},
+			</if>
+			<if test="projectPayment != null and projectPayment != '' ">
+				project_payment = #{projectPayment},
+			</if>
+			<if test="totalPayment != null and totalPayment != '' ">
+				total_payment = #{totalPayment},
+			</if>
+			<if test="senderDate != null and senderDate != '' ">
+				sender_date = CURDATE(),
+			</if>
+		</trim>
+		WHERE
+			pro_project_code = #{proProjectCode};
+	</update>
+	<!-- 성과금 예치 목록 삭제 -->
+	<delete id="depositListDelete" parameterType="DepositList" >
+		/* 성과금 예치 목록 삭제 */
+		DELETE
+		FROM
+			deposit_list AS dl
+		WHERE
+			dl.pro_project_code = #{proProjectCode};
+	</delete>
+<!-- 전문과제 성과금 예치 목록 관련 끝 -->
+<!-- 전문과제 성과금 송금 완료 목록 관련 시작 -->
+	<!-- 성과금 송금 완료 목록 조회 -->
+	<select id="getSendMoneyCompleteList" parameterType="map" resultMap="sendMoneyCompleteResultMap">
+		/* 성과금 송금 완료 목록 조회 */
+		SELECT
+			send_money_complete_code,
+			pro_project_code,
+			admin_id,
+			pro_project_personal_function_code,
+			user_id,
+			project_payment,
+			send_date
+		FROM
+			send_money_complete;
+	</select>
+	<!-- 성과금 송금 완료 - 예금주 정보 목록 -->
+	<select id="getAccountHolderInfoList" parameterType="map" resultMap="proProjectPersonalFunctionResultMap">
+		/* 송금할 대상 검색 */
+		SELECT
+			pro_project_code,
+			user_id,
+			project_price,
+			run_name
+		FROM
+			pro_project_personal_function
+		WHERE
+			run_name = '완료'
+	</select>
+	<!-- 성과금 송금 완료 작성 - 개인별 맡은 기능 목록 조회 -->
+	<select id="getProProjectPersonalFunctionList2" parameterType="map" resultMap="proProjectPersonalFunctionResultMap">
+		/* 전문과제 신청자별 맡은 기능 전체 조회 */
+		SELECT
+			pro_project_personal_function_code,
+			pro_project_code,
+			user_id,
+			work_day_price,
+			project_price,
+			progress_rate
+		FROM
+			pro_project_personal_function AS pppf
+	</select>
+	<!-- 성과금 송금 완료 작성 -->
+	<insert id="sendMoneyCompleteInsert" parameterType="SendMoneyComplete">
+		/* 성과금 송금 완료 작성 */
+		INSERT into send_money_complete
+			(send_money_complete_code, pro_project_code, admin_id, pro_project_personal_function_code, user_id, project_payment, send_date)
+		SELECT
+			CONCAT('send_money_complete_code',LPAD(CAST(SUBSTRING(MAX(send_money_complete_code),25)+1 as UNSIGNED),3,'0')),
+			'pro_project001',
+			'master4',
+			(SELECT
+				pro_project_personal_function_code
+			FROM
+				pro_project_personal_function
+			WHERE
+				pro_project_code = #{proProjectCode}),
+			#{userId},
+			#{projectPayment},
+			CURDATE()
+		FROM
+			send_money_complete
+		WHERE
+			send_money_complete_code LIKE 'send_money_complete_code%';
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- 참여분야 리스트 조회 -->
 	<select id="getJoinCateList" parameterType="map" resultMap="joinCateResultMap">
 		/* 참야분야 리스트 조회 */
@@ -89,7 +764,6 @@
 			*
 		FROM
 			join_cate;
-	
 	</select>
 	<!-- 작업분야 리스트 조회 -->
 	<select id="getWorkCateList" parameterType="map" resultMap="workCateResultMap">
@@ -108,52 +782,15 @@
 		FROM
 			subject_cate;
 	
-	
 	</select>
-	<!-- 전문과제 작성 -->
-	<insert id="proProjectInsert" parameterType="ProProject">
-	 				/* 전문과제 구인글 작성 */
-						 INSERT INTO `pro_project`
-					        (`pro_project_code`,`cp_id`, `title`, `join_cate_code`, `join_cate_name`, `work_cate_code`,`work_cate_name`,`subject_cate_code`,`subject_cate_name`,`skill`,`details`,`max_total`,`normal_run_code`,`run_name`,`project_price`,`cp_commission`,`write_date`,`due_date`,`due_complete_date`,`project_start_date`,`project_complete_date`,`project_days`)
-						VALUES
-					        ('pro_project010','cp009','제목9','join_cate_code001','기획','work_cate_code010','프레임워크','subject_cate_code009','대학','블라블라','블라블라','5','normal_run_code01','모집중','4000','400',CURDATE(),'2023-07-30',null,null,NULL,null);
-	  
-	 </insert>
-	 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<!-- 전문과제별 신청자 목록 -->
-	<select id="getProProjectApplicantList" parameterType="map" resultMap="proProjectResultMap">
-		
-				/* 전문과제별 신청자 목록 */
-					SELECT
-						ppa.applicant_user_id,
-						ppa.application_date,
-						ppa.run_name
-					FROM
-						pro_project_applicant AS ppa
-					WHERE
-						ppa.pro_project_code = #{proProjectCode};
+	<!-- 회원별 계좌정보 조회 -->
+	<select id="getApplicantAccountList" parameterType="map" resultMap="applicantAccountResultMap">
+		/* 회원별 계좌정보 */
+		SELECT
+			*
+		FROM
+			applicant_account AS aa
+		WHERE
+			aa.applicant_account_user_id = #{userId};
 	</select>
-	
-	
-	
-	
 </mapper>

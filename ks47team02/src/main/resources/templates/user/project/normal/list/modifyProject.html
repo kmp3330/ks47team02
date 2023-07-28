@@ -1,7 +1,209 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	<th:block>
-		<h1 th:text="${title}"></h1>
-		<span>안녕</span>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+      
+      <th:block layout:fragment="customJs">
+		  <script>
+			  
+			  let $dateCalculateBtn = $('#dateCalculate');
+			  
+			  
+			  $dateCalculateBtn.click(function(){
+				  /* 입력 시작, 끝내는 날짜*/
+				  const $startDate = $('#projectStartUpDate').val();
+				  const $finishDate = $('#projectFinishDate').val();
+				  /* 프로젝트 총 진행날짜 계산 */
+				  const sDate = new Date($startDate);
+				  const fDate = new Date($finishDate);
+				  /*DATE끼리 빼고, 프로젝트 진행일 결과*/
+				  const result = Math.abs(sDate-fDate) /(1000 * 60 * 60 * 24);
+				  /*결과값 input에 넣기*/
+				  $('projectDay').val(result); 
+				  
+				  /*개인별 얻는 점수계산후 input에 넣기*/
+				  $('#projectFinishScore').val(result*10);
+			  });
+		  </script>
+		  
+	  </th:block>
+      
+	<th:block layout:fragment="customContents">
+		<section class="jobs-area section-padding">
+			<div class="container col-lg-12">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="sidebar">
+							<div class="single-item mb-4">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-9">
+						<div class="single-job mb-4 justify-content-between text-center">
+							<div class="card">
+								<div class="card-header border-0">
+									<h3 class="mb-0 title_color text-left">일반과제</h3>
+									<div class="card-tools">
+									</div>
+								</div>
+								<div class="card-body table-responsive p-0">
+									<form th:action="@{/normalProject/modifyProject}" id="modifyProjectForm" name="modifyProjectForm" method="post">
+										<table class="table table-striped table-valign-middle">
+											<thead>
+											</thead>
+											<tbody>
+												<th:block th:each="teamProject :${normalProjectList}">
+													<tr>
+														<td>
+															<label for="normalProjectName">프로젝트 이름</label>
+														</td>
+														<td>
+															<input type="text" th:value="${teamProject.normalProjectName}" id="normalProjectName" name="normalProjectName">
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<label for="joinCate">참여분야 선택</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<select name="joinCateCode" id="joinCateCode">
+																<th:block th:unless="${#lists.isEmpty(joinCateList)}"
+																th:each="l : ${joinCateList}">
+																	<option th:value="${l.joinCateCode}">[[${l.joinCateName}]]</option>
+																</th:block>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<label for="workCate">작업분류 선택</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<select name="workCateCode" id="workCateCode">
+																<th:block th:unless="${#lists.isEmpty(workCateList)}"
+																th:each="l : ${workCateList}">
+																	<option th:value="${l.workCateCode}">[[${l.workCateName}]]</option>
+																</th:block>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td> 
+															<label for="subjectCate">주제분류 선택</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<select name="subjectCateCode" id="subjectCateCode">
+																<th:block th:unless="${#lists.isEmpty(subjectCateList)}"
+																		  th:each="l : ${subjectCateList}">
+																	<option th:value="${l.subjectCateCode}">[[${l.subjectCateName}]]</option>
+																</th:block>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td> 
+															<label>요구기술 기입</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<input type="text" th:value="${teamProject.requiredSkill}" id="requiredSkill" name="requiredSkill">
+														</td>
+													</tr>
+													<tr>
+														<td> 
+															<label>프로젝트 내용 기입</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<input type="text" id="normalProjectDetail" th:value="${teamProject.normalProjectDetail}" name="normalProjectDetail">
+														</td>
+													</tr>
+													<tr>
+														<td> 
+															<label>프로젝트 최대인원</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<input type="number" th:value="${teamProject.projectMaxPeopleNum}" id="projectMaxPeopleNum" name="projectMaxPeopleNum">
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<label>신청마감일시</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<input type="date" th:value="${teamProject.projectAdvertiseFinishDate}" id="projectAdvertiseFinishDate" name="projectAdvertiseFinishDate">
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<label for="projectStartUpDate">프로젝트 시작 일시</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<input type="date" id="projectStartUpDate" th:value="${teamProject.projectStartUpDate}" name="projectStartUpDate">
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<label for="projectFinishDate">프로젝트 종료 일시</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<input type="date" id="projectFinishDate" name="projectFinishDate" th:value="${teamProject.projectFinishDate}">
+															<button type="button" id="dateCalculate">날짜 계산</button>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<label for="projectFinishDate">프로젝트 일수</label>
+														</td>
+														<td>
+															<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+															<input type="number" id="projectDay" th:value="${teamProject.projectDay}" name="projectDay">
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<label>일일점수</label>
+														</td>
+														<td>
+															<h2 id="dayScore">10</h2>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<label>개인별 밭는 점수</label>
+														</td>
+														<td>
+															<input id="projectFinishScore" th:value="${teamProject.projectFinishScore}" name="projectFinishScore" placeholder="0" disabled></input>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<label for="addProjectBtn">버튼</label>
+														
+														</td>
+														<td>
+															<button type="submit" id="addProjectBtn">프로젝트 작성 완료</button>
+															<button type="reset" id="resetBtn">지우기</button>
+														</td>
+													</tr>
+												</th:block>
+											</tbody>
+										</table>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
 	</th:block>
-</html>
+</html>		

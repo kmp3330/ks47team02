@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.user.recommend.mapper.RecommendEmploymentMapper">
+	 
+	  
+	 <resultMap type="User" 					id="userResultMap">
+		<id column="user_id" 					property="userId"></id>
+		<result column="user_pw" 				property="userPw"></result>
+		<result column="user_name" 				property="userName"></result>
+		<result column="level_code" 			property="levelCode"></result>
+		<result column="level_name" 			property="levelName"></result>
+		<result column="user_gender" 			property="userGender"></result>
+		<result column="career_check" 			property="careerCheck"></result>
+		<result column="freelancer_check" 		property="freelancerCheck"></result>
+		<result column="user_addr" 				property="userAddr"></result>
+		<result column="user_eamil" 			property="userEmail"></result>
+		<result column="user_phone" 			property="userPhone"></result>
+		<result column="user_join_date" 		property="userJoinDate"></result>
+		<result column="grade_fee_code" 		property="gradeFeeCode"></result>
+		<result column="user_grade" 			property="userGrade"></result>
+		<result column="total_score" 			property="totalScore"></result>
+		<result column="report_score" 			property="reportScore"></result>
+	</resultMap> 
+	
+	<resultMap type="Announcement"   	 id="announcementResultMap">
+		<!-- id태그는 조회시 테이블의 PK(기본키) -->
+		<id 	column="announcement_code"   property="announcementCode"/>
+		<!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키 -->
+		<result column="cp_id" 		  	 	 property="cpId"/>
+		<result column="cp_name" 		  	 property="cpName"/>
+		<result column="cp_cate_code"  	 	 property="cpCateCode"/>
+		<result column="join_cate_code"  	 property="joinCateCode"/>
+		<result column="join_cate_name"  	 property="joinCateName"/>
+		<result column="area_code" 			 property="areaCode"/>
+		<result column="area_cate" 			 property="areaCate"/>
+		<result column="job_opening" 		 property="jobOpening"/>
+		<result column="required_skills"	 property="requiredSkills"/>
+		<result column="career"				 property="career"/>
+		<result column="recruitment"		 property="recruitment"/>
+		<result column="wage" 				 property="wage"/>
+		<result column="start_date" 		 property="startDate"/>
+		<result column="due_date" 			 property="dueDate"/>
+		<result column="hiring_status_code"  property="hiringStatusCode"/>
+		<result column="hiring_status"  	 property="hiringStatus"/>
+	</resultMap>
+	
+	 <resultMap type="Company" id="CompanyResultMap">
+		<id column="cp_id" property="cpId"></id>
+		<result column="cp_pw" property="cpPw"></result>
+		<result column="cp_name" property="cpName"></result>
+		<result column="level_code" property="levelCode"></result>
+		<result column="level_name" property="levelName"></result>
+		<result column="cp_reg_number" property="cpRegNumber"></result>
+		<result column="cp_cate_code" property="cpCateCode"></result>
+		<result column="cp_cate" property="cpCate"></result>
+		<result column="area_code" property="areaCode"></result>
+		<result column="area_name" property="areaName"></result>
+		<result column="cp_addr" property="cpAddr"></result>
+		<result column="cp_email" property="cpEmail"></result>
+		<result column="cp_phone" property="cpPhone"></result>
+		<result column="cp_join_date" property="cpJoinDate"></result>
+	</resultMap>
+	
+	<resultMap type="JoinCate" id="joinCateResultMap">
+		<id column="join_cate_code" property="joinCateCode"/>
+		<result column="join_cate_name" property="joinCateName"/>
+	</resultMap>
+	
+	<resultMap type="AreaCate" id="AreaCateResultMap">
+		<id column="area_code" property="areaCode"></id>
+		<result column="area_cate" property="areaCate"></result>
+	</resultMap>
+ <select id="getJoinCateRecommend" parameterType="String" resultMap="joinCateResultMap">
+ 	SELECT
+		join_cate_code,
+		join_cate_name
+	FROM
+		join_cate 
+ </select>
+	
+ <select id="getAreaRecommend" parameterType="String" resultMap="AreaCateResultMap">
+ 	SELECT
+		ac.area_code,
+		ac.area_cate
+	FROM
+		area_cate AS ac
+ </select>	
+	
+ <select id="getCpIdRecommend"	parameterType="String" resultMap="CompanyResultMap" >
+ 	SELECT
+		ci.cp_name
+	FROM
+		cp_info AS ci
+ </select>		
+	
+ <select id="getAnnouncementCodeRecommend"			parameterType="String" resultMap="announcementResultMap">
+	/* 공고 코드 조회*/
+	SELECT
+		announcement_code,
+		cp_name
+	FROM
+		announcement 
+ </select>
+ 
+ <select id="getUserIdRecommend"	 parameterType="String" resultMap="userResultMap">
+ 	/* 회원 아이디 조회*/
+ 	SELECT
+		ui.user_id
+	FROM	
+		user_info AS ui
+	ORDER BY
+		ui.user_id ASC; 	
+ </select>
+ </mapper>

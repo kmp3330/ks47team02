@@ -5,40 +5,67 @@
 <head>
 <meta charset="UTF-8">
 <style>
-	table {
-		border : 1px solid black;
-		width: 1000px;
-		table-layout: fixed;
-		text-align: center;
-	}
+  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+    table-layout: auto;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+  }
 
 
 </style>
 	</head>
+		<th:block layout:fragment="customJs">
+			<script>
+				$('.proProjectApplicantDeleteBtn').click(function (e) {
+				    e.preventDefault();
+					let isDelete = confirm('정말로 삭제하시겠습니까?');
+					if(isDelete) {
+				        const proProjectCode = this.dataset.proProjectCode;
+				        location.href=`/project/pro/proProjectApplicantDelete?proProjectCode=${proProjectCode}`;
+				        //location.replace(/project/pro/proProjectDelete?proProjectCode=${proProjectCode});
+				    }
+				});
+			</script>
+		</th:block>
 		<th:block layout:fragment="customContents">
+			
 			<table>
 				<thead>
 					<tr>
 						<th>신청한 아이디</th>
 						<th>신청날짜</th>
 						<th>진행상태</th>
+				 		<th>
+					 		<a th:href="@{/project/pro/proProjectList}">뒤로가기</a>
+						</th>
+						<th>
+					 		<a th:href="@{/project/pro/proProjectApplicantInsert(proProjectCode=${proProjectCode})}">전문과제 참여 신청하기</a>
+					 	</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:if="${#lists.isEmpty(proProjectApplcantList)}">
-						<td colspan="7">아직 신청자가 없습니다.</td>
+					<tr th:if="${#lists.isEmpty(proProjectApplicantList)}">
+						<td colspan="7">신청자가 없습니다.</td>
 					</tr>
-					<tr th:unless="${#lists.isEmpty(proProjectApplcantList)}"
-						th:each="p : ${proProjectApplcantList}">
+					<tr th:unless="${#lists.isEmpty(proProjectApplicantList)}"
+						th:each="p : ${proProjectApplicantList}">
+						<td th:text="${p.proProjectCode}" hidden></td>
 						<td th:text="${p.applicantUserId}"></td>
 						<td th:text="${p.applicationDate}"></td>
 						<td th:text="${p.runName}"></td>
-
 						<td>
-							<a th:href="@{#}">신청자 승인</a>
+							<a th:href="@{#}" hidden>신청자 승인</a>
 						</td>
 						<td>
-							<a th:href="@{#}">신청자 거절</a>
+							<a th:href="@{#}" hidden>신청자 거절</a>
+						</td>
+						<td>
+							<a class="proProjectApplicantDeleteBtn" th:href="@{#}" th:data-pro-project-code="${p.proProjectCode}">신청취소</a>
 						</td>
 					</tr>
 				</tbody>

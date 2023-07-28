@@ -18,6 +18,6 @@ public interface ProfileSkillMapper {
 	//보유기술 등록
 	public int profileSkillInsert(ProfileSkill profileSkill);
 	//회원 보유기술 목록
-	public List<ProfileSkill> getProfileSkillList();
+	public List<ProfileSkill> getProfileSkillList(String sessionId);
 }
 

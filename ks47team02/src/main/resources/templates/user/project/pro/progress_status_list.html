@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{user/layout/default}">
+<head>
+<meta charset="UTF-8">
+<style>
+   table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+    table-layout: auto;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+  }
+</style>
+</head>
+</th:block>
+		<th:block layout:fragment="customContents">
+			<table>
+				<thead>
+					<tr>
+						<th hidden>진행 상태 코드</th>
+						<th hidden>전문 과제 전체 목록 코드</th>
+						<th>프로젝트 상세설명</th>
+						<th>진행률</th>
+						<th>진행상태</th>
+						<th>작성날짜</th>
+						<th>
+							<a th:href="@{#}"></a>
+						</th>
+						<th>
+							<a th:href="@{#}"></a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(progressStatusList)}">
+						<td colspan="7">등록된 전문과제가 없습니다.</td>
+					</tr>
+					<tr th:unless="${#lists.isEmpty(progressStatusList)}"
+						th:each="p : ${progressStatusList}">
+						<td th:text="${p.progressStatusCode}" hidden></td>
+						<td th:text="${p.proProjectCode}" hidden></td>
+						<td th:text="${p.projectDetails}"></td>
+						<td th:text="${p.progressRate}"></td>
+						<td th:text="${p.statusName}"></td>
+						<td th:text="${p.writeDate}"></td>
+						<td> 
+							<a th:href="@{/project/pro/progressStatusModify(proProjectCode=${p.proProjectCode})}">수정</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+</html>

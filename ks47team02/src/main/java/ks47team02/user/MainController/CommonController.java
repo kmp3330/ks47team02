@@ -1,4 +1,4 @@
-package ks47team02.user.controller;
+package ks47team02.user.MainController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

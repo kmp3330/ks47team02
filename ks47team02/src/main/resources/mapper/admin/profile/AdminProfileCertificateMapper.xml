@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.admin.profile.mapper.AdminProfileCertificateMapper">
+
+	<select id="getCertificateList" parameterType="map" resultType="map">
+		/* 자격증 전체 조회 */
+		SELECT
+			pc.user_id AS userId,
+			pc.user_certificate_name AS certificateName,
+			pc.profile_reg_date AS profileRegDate
+		FROM
+			profile_certificate AS pc
+		ORDER BY pc.profile_reg_date DESC
+		<if test="startIndex != null and stratIndex > -1">
+			LIMIT #{startIndex}, #{rowPerPage};
+		</if>
+	</select>
+	
+	<select id="getCertificateCnt">
+		/* 자격증 전체 행 갯수 */
+		SELECT
+			COUNT(*)
+		FROM
+			profile_certificate;
+	</select>
+
+</mapper>

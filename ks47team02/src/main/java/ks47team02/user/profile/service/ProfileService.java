@@ -1,6 +1,8 @@
 package ks47team02.user.profile.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +21,17 @@ import ks47team02.user.profile.mapper.ProfileIntroMapper;
 import ks47team02.user.profile.mapper.ProfilePortfolioMapper;
 import ks47team02.user.profile.mapper.ProfileSkillMapper;
 import ks47team02.user.profile.mapper.ProfileWorkSpecMapper;
+import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
+import ks47team02.user.project.pro.dto.SubjectCate;
+import ks47team02.user.project.pro.dto.WorkCate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
-@AllArgsConstructor
 @Slf4j
+@AllArgsConstructor
 public class ProfileService {
 	
 	private final ProfileCertificateMapper profileCertificateMapper;
@@ -67,9 +73,9 @@ public class ProfileService {
 	
 	/*자기소개 목록 조회 */
 
-	public List<ProfileIntro> getProfileIntroList() {
+	public List<ProfileIntro> getProfileIntroList(String sessionId) {
 		
-		List<ProfileIntro> profileIntroList = profileIntroMapper.getProfileIntroList();
+		List<ProfileIntro> profileIntroList = profileIntroMapper.getProfileIntroList(sessionId);
 		
 		log.info("profileIntroList : {}", profileIntroList);
 		
@@ -102,9 +108,9 @@ public class ProfileService {
 	}
 	
 	/*회원별 기술 목록 조회 */
-	public List<ProfileSkill> getProfileSkillList() {
+	public List<ProfileSkill> getProfileSkillList(String sessionId) {
 			
-		List<ProfileSkill> profileSkillList = profileSkillMapper.getProfileSkillList();
+		List<ProfileSkill> profileSkillList = profileSkillMapper.getProfileSkillList(sessionId);
 		
 		log.info("profileSkillList : {}", profileSkillList);
 		
@@ -136,9 +142,9 @@ public class ProfileService {
 	}
 	
 	/*회원별 일경력 목록 조회 */
-	public List<ProfileWorkSpec> getProfileWorkSpecList() {
+	public List<ProfileWorkSpec> getProfileWorkSpecList(String sessionId) {
 		
-		List<ProfileWorkSpec>profileWorkSpecList = profileWorkSpecMapper.getProfileWorkSpecList();
+		List<ProfileWorkSpec>profileWorkSpecList = profileWorkSpecMapper.getProfileWorkSpecList(sessionId);
 		
 		log.info("profileWorkSpecList : {}", profileWorkSpecList);
 		
@@ -171,9 +177,9 @@ public class ProfileService {
 		profileEduSpecMapper.profileEduSpecInsert(profileEduSpec);
 	}
 	/*회원별 학력 목록 조회 */
-	public List<ProfileEduSpec> getProfileEduSpecList(){
+	public List<ProfileEduSpec> getProfileEduSpecList(String sessionId){
 		
-		List<ProfileEduSpec> profileEduSpecList = profileEduSpecMapper.getProfileEduSpecList();
+		List<ProfileEduSpec> profileEduSpecList = profileEduSpecMapper.getProfileEduSpecList(sessionId);
 		
 		log.info("profileEduSpeclList : {}", profileEduSpecList);
 		
@@ -291,5 +297,126 @@ public class ProfileService {
 		List<ProfilePortfolio> portfolioList = profilePortfolioMapper.getProfilePortfolioList(sessionId);
 		
 		return portfolioList;
+	}
+
+	/**
+	 * 참여분야 조회
+	 * @return
+	 */
+	public List<JoinCate> getJoinCateList() {
+		List<JoinCate> joinCateList = profilePortfolioMapper.getJoinCateList();
+		return joinCateList;
+	}
+	/**
+	 * 참여코드별 참여분야 조회
+	 * @param joinCateCode
+	 * @return
+	 */
+	public JoinCate getJoinCateByCode(String joinCateCode) {
+		JoinCate joinCateInfo = profilePortfolioMapper.getJoinCateByCode(joinCateCode);
+		log.info("joinCateInfo : {}", joinCateInfo);
+		return joinCateInfo;
+	}
+	
+	/**
+	 * 작업분류 조회
+	 * @return
+	 */
+	public List<WorkCate> getWorkCateList() {
+		List<WorkCate> workCateList = profilePortfolioMapper.getWorkCateList();
+		return workCateList;
+	}
+	/**
+	 * 작업코드별 작업분류 조회
+	 * @param workCateCode
+	 * @return
+	 */
+	public WorkCate getWorkCateByCode(String workCateCode) {
+		WorkCate workCateInfo = profilePortfolioMapper.getWorkCateByCode(workCateCode);
+		log.info("workCateInfo : {}", workCateInfo);
+		return workCateInfo;
+	}
+	
+	/**
+	 * 주제분류 조회
+	 * @return
+	 */
+	public List<SubjectCate> getSubjectCateList() {
+		List<SubjectCate> subjectCateList = profilePortfolioMapper.getSubjectCateList();
+		return subjectCateList;
+	}
+	/**
+	 * 주제코드별 주제분류 조회
+	 * @param subjectCateCode
+	 * @return
+	 */
+	public SubjectCate getSubjectCateByCode(String subjectCateCode) {
+		SubjectCate subjectCateInfo = profilePortfolioMapper.getSubjectCateByCode(subjectCateCode);
+		log.info("subjectCateInfo : {}", subjectCateInfo);
+		return subjectCateInfo;
+	}
+	
+	/**
+	 * 포트폴리오 코드별 분류 코드,이름 조회
+	 * @param portfolioCode
+	 * @return
+	 */
+	public ProfilePortfolio getProfilePortfolioByCode(String portfolioCode) {
+		
+		ProfilePortfolio profilePortfolioInfo = profilePortfolioMapper.getProfilePortfolioByCode(portfolioCode);
+		log.info("profilePortfolioInfo", profilePortfolioInfo);
+		
+		return profilePortfolioInfo;
+	}
+	
+	/**
+	 * 포트폴리오 등록
+	 * @param profilePortfolio
+	 */
+	public void addProfilePortfolio(ProfilePortfolio profilePortfolio) {
+		profilePortfolioMapper.addProfilePortfolio(profilePortfolio);
+		log.info("profilePortfolio : {}", profilePortfolio);
+	}
+	
+	/**
+	 * 포트폴리오 코드별 조회
+	 * @param profilePortfolioByCode
+	 * @return
+	 */
+	public ProfilePortfolio profilePortfolioByCode(String profilePortfolioByCode) {
+		
+		ProfilePortfolio profilePortfolioInfo = profilePortfolioMapper.profilePortfolioByCode(profilePortfolioByCode);
+		log.info("profilePortfolioInfo : {}", profilePortfolioInfo);
+		
+		return profilePortfolioInfo;
+	}
+	
+	/**
+	 * 포트폴리오 수정
+	 * @param profilePortfolio
+	 */
+	public void profilePortfolioModify(ProfilePortfolio profilePortfolio) {
+		profilePortfolioMapper.profilePortfolioModify(profilePortfolio);
+	}
+	
+	/**
+	 * 포트폴리오 삭제
+	 * @param profilePortfolioCode
+	 */
+	public void profilePortfolioDelete(String profilePortfolioCode) {
+		profilePortfolioMapper.profilePortfolioDelete(profilePortfolioCode);
+	}
+	
+	/**
+	 * 참여한 전문과제 프로젝트 목록
+	 * @param sessionId
+	 * @return
+	 */
+	public List<Map<String, Object>> getProProjectList(String sessionId) {
+		
+		List<Map<String, Object>> proProjectList = profilePortfolioMapper.getProProjectList(sessionId);
+		log.info("proProjectList : {}", proProjectList);
+		
+		return proProjectList;
 	}
 }

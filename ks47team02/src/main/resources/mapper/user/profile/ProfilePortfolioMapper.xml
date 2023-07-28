@@ -24,6 +24,57 @@
 		<result column="profile_application_hidden" property="profileApplicationHidden"></result>
 	</resultMap>
 	
+	<resultMap id="proProjectResultMap" type="ProProjectPersonalFunction">
+		<id column="pro_project_personal_function_code" property="proProjectPersonalFunctionCode"/>
+		<result column="pro_project_code" property="proProjectCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="skill" property="skill"/>
+		<result column="project_day" property="projectDay"/>
+		<result column="day_score" property="dayScore"/>
+		<result column="project_complete_score" property="projectCompleteScore"/>
+		<result column="individual_work_day" property="individualWorkDay"/>
+		<result column="individual_complete_possible_score" property="individualCompletePossibleScore"/>
+		<result column="individual_complete_score" property="individualCompleteScore"/>
+		<result column="work_day_price" property="workDayPrice"/>
+		<result column="grade_commision" property="gradeCommision"/>
+		<result column="user_commision" property="userCommision"/>
+		<result column="project_price" property="projectPrice"/>
+		<result column="progress_rate" property="progressRate"/>
+		<result column="run_name" property="runName"/>
+		<result column="start_date" property="startDate"/>
+		<result column="complete_date" property="completeDate"/>
+		<result column="registeration_date" property="registerationDate"/>
+		<result column="period" property="period"/>
+		
+		<collection property="proProjectInfo" ofType="ProProject">
+			<id column="pro_project_code" property="proProjectCode"/>
+			<result column="cp_id" property="cpId"/>
+			<result column="cp_name" property="cpName"/>		
+			<result column="title" property="title"/>
+			<result column="join_cate_code" property="joinCateCode"/>
+			<result column="join_cate_name" property="joinCateName"/>
+			<result column="work_cate_code" property="workCateCode"/>
+			<result column="work_cate_name" property="workCateName"/>
+			<result column="subject_cate_code" property="subjectCateCode"/>
+			<result column="subject_cate_name" property="subjectCateName"/>
+			<result column="skill" property="skill"/>
+			<result column="details" property="details"/>
+			<result column="max_total" property="maxTotal"/>
+			<result column="normal_run_code" property="normalRunCode"/>
+			<result column="run_name" property="runName"/>
+			<result column="project_price" property="proProjectPrice"/>
+			<result column="cp_commission" property="cpCommisson"/>
+			<result column="write_date" property="proProjectWriteDate"/>
+			<result column="due_date" property="dueDate"/>
+			<result column="due_complete_date" property="dueCompleteDate"/>
+			<result column="project_start_date" property="proProjectStartDate"/>
+			<result column="project_complete_date" property="proProjectCompleteDate"/>
+			<result column="project_days" property="proProjectDays"/>
+			<result column="applicant_user_id" property="applicantUserId"/>
+			<result column="application_date" property="applicationDate"/>
+		</collection>
+	</resultMap>
+	
 	<select id="getProfilePortfolioList" resultMap="portfolioResultMap" parameterType="String">
 		/* 포트폴리오 조회 */
 		SELECT 
@@ -48,6 +99,248 @@
 			profile_portfolio
 		WHERE
 			user_id = #{sessionId}
+	</select>
+	
+	<select id="getJoinCateList" resultType="JoinCate">
+		/* 참여분야 조회 */
+		SELECT
+			join_cate_code AS joinCateCode,
+			join_cate_name AS joinCateName
+		FROM
+			join_cate
+	</select>
+	
+	<select id="getWorkCateList" resultType="WorkCate">
+		/* 작업분류 조회 */
+		SELECT
+			work_cate_code AS workCateCode,
+			work_cate_name AS workCateName
+		FROM
+			work_cate
+	</select>
+	
+	<select id="getSubjectCateList" resultType="SubjectCate">
+		/* 주제분류 조회 */
+		SELECT
+			subject_cate_code AS subjectCateCode,
+			subject_cate_name AS subjectCateName
+		FROM
+			subject_cate
+	</select>
+	
+	<select id="getJoinCateByCode" parameterType="String" resultType="JoinCate">
+		/* 참여코드별 참여분야 조회 */
+		SELECT
+			join_cate_code AS joinCateCode,
+			join_cate_name AS joinCateName
+		FROM
+			join_cate
+		WHERE
+			join_cate_code = #{joinCateCode}
+	</select>
+	
+	<select id="getWorkCateByCode" parameterType="String" resultType="WorkCate">
+		/* 작업코드별 작업분야 조회 */
+		SELECT
+			work_cate_code AS workCateCode,
+			work_cate_name AS workCateName
+		FROM
+			work_cate
+		WHERE
+			work_cate_code = #{workCateCode}
+	</select>
+
+	<select id="getSubjectCateByCode" parameterType="String" resultType="SubjectCate">
+		/* 주제코드별 주제분류 조회 */
+		SELECT
+			subject_cate_code AS subjectCateCode,
+			subject_cate_name AS subjectCateName
+		FROM
+			subject_cate
+		WHERE
+			subject_cate_code = #{subjectCateCode}
+	</select>
+	
+	<select id="getProfilePortfolioByCode" parameterType="String" resultMap="portfolioResultMap">
+		/* 포트폴리오 코드별 분류 코드,이름 조회 */
+		SELECT
+			pp.join_cate_code,
+			jc.join_cate_name,
+			pp.work_cate_code,
+			wc.work_cate_name,
+			pp.subject_cate_code,
+			sc.subject_cate_name
+		FROM
+			profile_portfolio AS pp
+			INNER JOIN
+			join_cate AS jc
+			on
+			pp.join_cate_code = jc.join_cate_code
+			INNER JOIN
+			work_cate AS wc
+			ON
+			pp.work_cate_code = wc.work_cate_code
+			INNER JOIN
+			subject_cate AS sc
+			ON
+			pp.subject_cate_code = sc.subject_cate_code
+		WHERE
+			pp.user_portfolio_code = #{userPortfolioCode}
+	</select>
+	
+	<insert id="addProfilePortfolio" parameterType="ProfilePortfolio">
+		<selectKey resultType="String" keyColumn="newPortfolioCode" keyProperty="userPortfolioCode" order="BEFORE">
+			<![CDATA[
+			/* 자동증가코드 */
+			SELECT
+				CASE
+					WHEN COUNT(*) = 0
+						THEN 'user_portfolio_code001'
+					WHEN CAST(SUBSTRING_INDEX(user_portfolio_code, 'code', -1) AS UNSIGNED) < 999
+						THEN CONCAT('user_portfolio_code', LPAD(MAX(CAST(SUBSTRING_INDEX(user_portfolio_code, 'code', -1) AS UNSIGNED))+1, 3, '0'))
+					ELSE
+						CONCAT('user_portfolio_code', MAX(CAST(SUBSTRING_INDEX(user_portfolio_code, 'code', -1) AS UNSIGNED))+1)
+					END
+						AS newPortfolioCode
+			FROM
+				profile_portfolio;
+			]]>
+		</selectKey>
+		/* 포트폴리오 등록 */
+		INSERT INTO profile_portfolio
+			(
+			user_portfolio_code,
+			user_id, 
+			user_project_name, 
+			join_cate_code, 
+			join_cate_name, 
+			work_cate_code, 
+			work_cate_name, 
+			subject_cate_code, 
+			subject_cate_name, 
+			user_required_skill, 
+			user_details, 
+			user_project_start_date, 
+			user_project_end_date, 
+			user_project_days, 
+			user_project_gen, 
+			profile_hidden, 
+			profile_application_hidden
+			)
+		VALUES (#{userPortfolioCode}, #{userId}, #{userProjectName}, #{joinCateCode}, #{joinCateName}, #{workCateCode}, #{workCateName}, #{subjectCateCode}, #{subjectCateName}, #{userRequiredSkill}, #{userDetails}, #{userProjectStartDate}, #{userProjectEndDate}, #{userProjectDays}, #{userProjectGen}, #{profileHidden}, #{profileApplicationHidden})
+	</insert>
+	
+	<select id="profilePortfolioByCode" parameterType="String" resultMap="portfolioResultMap">
+		/* 포트폴리오 코드별 조회 */
+		SELECT
+			*
+		FROM
+			profile_portfolio AS pp
+		WHERE
+			pp.user_portfolio_code = #{profilePortfolioCode}
+	</select>
+	
+	<update id="profilePortfolioModify" parameterType="ProfilePortfolio">
+		UPDATE profile_portfolio
+		<set>
+			<if test="userProjectName != null and userProjectName != ''">
+				user_project_name = #{userProjectName},
+			</if>
+			<if test="joinCateCode != null and joinCateCode != ''">
+				join_cate_code = #{joinCateCode},
+			</if>
+			<if test="joinCateName != null and joinCateName != ''">
+				join_cate_name = #{joinCateName},
+			</if>
+			<if test="workCateCode != null and workCateCode != ''">
+				work_cate_code = #{workCateCode},
+			</if>
+			<if test="workCateName != null and workCateName != ''">
+				work_cate_name = #{workCateName},
+			</if>
+			<if test="subjectCateCode != null and subjectCateCode != ''">
+				subject_cate_code = #{subjectCateCode},
+			</if>
+			<if test="subjectCateName != null and subjectCateName != ''">
+				subject_cate_name = #{subjectCateName},
+			</if>
+			<if test="userRequiredSkill != null and userRequiredSkill != ''">
+				user_required_skill = #{userRequiredSkill},
+			</if>
+			<if test="userDetails != null and userDetails != ''">
+				user_details = #{userDetails},
+			</if>
+			<if test="userProjectStartDate != null and userProjectStartDate != ''">
+				user_project_start_date = #{userProjectStartDate},
+			</if>
+			<if test="userProjectEndDate != null and userProjectEndDate != ''">
+				user_project_end_date = #{userProjectEndDate},
+			</if>
+			<if test="userProjectDays != null and userProjectDays != ''">
+				user_project_days = #{userProjectDays},
+			</if>
+			<if test="userProjectGen != null and userProjectGen != ''">
+				user_project_gen = #{userProjectGen},
+			</if>
+			profile_hidden = #{profileHidden},
+			profile_application_hidden = #{profileApplicationHidden}
+		</set>
+		WHERE
+			user_portfolio_code = #{userPortfolioCode}
+	</update>
+	
+	<delete id="profilePortfolioDelete" parameterType="String">
+		/* 포트폴리오 삭제 */
+		DELETE
+		FROM
+			profile_portfolio
+		WHERE
+			user_portfolio_code = #{profilePortfolioCode}
+	</delete>
+	
+	<select id="getProProjectList" resultType="map" parameterType="String">
+		/* 참여한 프로젝트 목록 */
+		SELECT
+			np.normal_project_code  AS projectCd,
+			np.normal_project_name	AS projectName,
+			np.join_cate_name			AS joinCateName,
+			np.work_cate_name			AS workCateName,
+			np.subject_cate_name		AS subjectCateName,
+			nf.assigned_function		AS assignedFunction,
+			nf.project_day				AS projectDay,
+			nf.per_person_days		AS prePersonDays,
+			nf.function_start_date	AS functionStartDate,
+			nf.function_finish_time AS functionFinishTime,
+			'normal' 						AS cateProject
+		FROM
+			normal_project AS np
+			INNER JOIN 
+			normal_project_personal_function AS nf
+			ON 
+			np.normal_project_code = nf.normal_project_code
+		WHERE 
+			np.user_id = #{sessionId}
+		UNION 
+		SELECT
+			pp.pro_project_code			AS projectCd,
+			pp.title							AS projectName,
+			pp.join_cate_name				AS joinCateName,
+			pp.work_cate_name				AS workCateName,
+			pp.subject_cate_name			AS subjectCateName,
+			pppf.skill						AS assignedFunction,
+			pppf.project_day				AS projectDay,
+			pppf.individual_work_day	AS prePersonDays,
+			pppf.start_date				AS functionStartDate,
+			pppf.complete_date			AS functionFinishTime,
+			'pro' 							AS cateProject
+		FROM
+			pro_project AS pp
+			INNER JOIN
+			pro_project_personal_function AS pppf
+			ON
+			pp.pro_project_code = pppf.pro_project_code
+		WHERE
+			pppf.user_id = #{sessionId}
 	</select>
 	
 </mapper>

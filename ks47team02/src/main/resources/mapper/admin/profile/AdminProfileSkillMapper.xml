@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.admin.profile.mapper.AdminProfileSkillMapper">
+<resultMap type="ProfileSkill" id="profileSkillResultMap">
+		<!--  id태그는 조회시 테이블의 PK(기본키)  -->
+		<id	column="user_skill_code" property="userSkillCode" />
+		<!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키를 의 -->
+		<result	column="user_id" property="userId" />
+		<result	column="user_skill" property="userSkill" />
+		<result	column="user_skill_rank" property="userSkillRank" />
+		<result	column="user_experience" property="userExperience" />
+		<result	column="user_reg_date" property="userRegDate" />
+		<result	column="profile_hidden" property="profileHidden" />
+		<result	column="profile_application_hidden" property="profileApplicationHidden" />
+	</resultMap>
+	
+	<select id="getProfileSkillList" resultMap="profileSkillResultMap">
+		/*자기소개 보유기술  조회 */
+		SELECT
+		    ps.user_skill_code,
+		    ps.user_id,
+		    ps.user_skill,
+		    ps.user_skill_rank,
+		    ps.user_experience,
+		    ps.user_reg_date,
+		    ps.profile_hidden,
+		    ps.profile_application_hidden
+		FROM
+		    profile_skill as ps
+		ORDER BY ps.user_reg_date DESC
+		<if test="startIndex != null and stratIndex > -1">
+			LIMIT #{startIndex}, #{rowPerPage};
+		</if>
+	</select>
+	
+	<select id="getSkillCnt">
+		/* 자격증 전체 행 갯수 */
+		SELECT
+			COUNT(*)
+		FROM
+			profile_skill;
+	</select>
+</mapper>

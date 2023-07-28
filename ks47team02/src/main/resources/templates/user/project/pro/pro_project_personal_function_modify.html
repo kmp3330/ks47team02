@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+
+	<head>
+    	<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
+    	<style>
+    		input{
+    			width: 98%;
+    			height: 23px;
+    		}
+    		td:nth-child(3n+1):not(:last-child){
+    			color: white;
+    			font-weight: 700;
+    			background-color: cornflowerblue;
+    		}
+    		select{
+    			width: 99%;
+    			text-align: center;
+    			height: 23px;
+    		}
+    		#idCheck{
+    			width: 99%; 
+    			height: 25px;
+    		}
+    		#proProjectModifyBtn, #resetBtn {
+    			width: 49%;
+    			height: 25px;
+    		}
+    		#proProjectCode{
+    			display : none;
+    		}
+    	</style>
+    </head>
+    
+    <th:block layout:fragment="customJs">
+    	<script th:src="@{/js/jquery-3.7.0.js}"></script>
+    	<script>
+    		/*
+    		const $idCheckBtn = document.querySelector('#idCheck');
+    		$idCheckBtn.addEventListener('click', e => {
+    			alert('test');
+    		});
+    		
+    		$('#idCheck').click(function(){
+    			const $memberId = $('#memberId');
+    			let memberId = $memberId.val();
+    			// 유효성검사
+    			if(typeof memberId == 'undefined' || memberId == null || memberId == '' ){
+    				alert('아이디를 입력해주세요');
+    				$memberId.focus();
+    				return false;
+    			}
+    		
+    			
+    			// ajax 호출
+    			const request = $.ajax({
+					url: '/member/idCheck',
+					method: 'POST',
+					data: { 'memberId' : memberId },
+					dataType: 'text'
+   				});
+   				 
+   				request.done(function( response ) {
+   					if(response == 'true'){
+   						alert('이미 등록된 아이디입니다.');
+   						$memberId.val('');
+   	    				$memberId.focus();
+   	    				return false;
+   					}else{
+   						$('#addMemberForm input').prop('disabled', false);
+   						$('#addMemberForm select').prop('disabled', false);
+   						$('#addMemberForm button').prop('disabled', false);
+   					}
+					//console.log(typeof response);
+   				});
+   				 
+   				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+   				});		
+    		});
+    		
+    		
+    		//회원 아이디 변경 시 이벤트 처리
+    		$('#memberId').change(function(){
+    			$('#addMemberForm input').not('#memberId').val('');
+    			$('#addMemberForm input').not('#memberId').prop('disabled', true);
+    			$('#addMemberForm select').prop('disabled', true);
+    			$('#addMemberForm button').not('#idCheck').prop('disabled', true);
+    			
+    		});
+    		
+    		*/
+    		
+    		// 리셋버튼
+    		/* $('#resetBtn').click(function(e){
+    			//태그가 가지고 있는 기본 이벤트 동작 방지
+    			e.preventDefault();
+    			$('#proProjectPersonalFunctionModifyForm input').val('');
+    			
+    		})    */
+    	
+    		
+    		
+    		$('#proProjectPersonalFunctionModifyBtn').click(function(){
+    			const validateEle = $('#proProjectModifyForm input');
+    								
+    			let isSubmit = false;
+    			validateEle.each((idx, item) => {
+    				isSubmit = validCheck(item);
+    				return isSubmit
+    			})
+    			if(isSubmit) {
+    				$('#proProjectPersonalFunctionModifyForm').submit();
+    			}
+    		});
+    		
+    		// 유효성 검사 함수
+    		const validCheck = element => {
+    			let data = $(element).val();
+    			let eleId = $(element).attr('id');
+    			let text = $(element).text();
+    			if(typeof data == 'undefined' || data == null || data == '' ){
+    				let cate = $(`label[for="${eleId}"]`).text();
+    				alert(`${cate} 은/는 필수 입력항목입니다.`);
+    				$(element).focus();
+    				return false;    
+    			}
+    			return true;
+    		}
+    	
+    	
+    	</script>
+    </th:block>
+
+	<th:block layout:fragment="customContents">
+		<form id="proProjectPersonalFunctionModifyForm" th:action="@{/project/pro/proProjectPersonalFunctionModify}" method="post">
+  			<table th:object="${proProjectPersonalFunctionInfo}">
+  			<thead></thead>
+				<tbody>
+					<tr>
+						<th:block>
+							<input type="text" id="proProjectPersonalFunctionCode" name="proProjectPersonalFunctionCode" th:value="*{proProjectPersonalFunctionCode}" hidden />
+						</th:block>
+						<th:block>
+							<input type="text" id="proProjectCode" name="proProjectCode" th:value="*{proProjectCode}" hidden />
+						</th:block>
+						<th:block>
+							<input type="text" id="userId" name="userId" th:value="*{userId}" hidden />
+						</th:block>
+						<td>
+							<label for="skill">기술</label>
+						</td>
+						<td>
+							<input type="text" id="skill" name="skill" th:value="*{skill}"
+								   />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="projectDay">프로젝트 전체 일수</label>
+						</td>
+						<td>
+							<input type="text" id="projectDay" name="projectDay" th:value="*{projectDay}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="dayScore">일별점수</label>
+						</td>
+						<td>
+							<input type="text" id="dayScore" name="dayScore" th:value="*{dayScore}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="projectCompleteScore">프로젝트 완료시 전체 점수</label>
+						</td>
+						<td>
+							<input type="text" id="projectCompleteScore" name="projectCompleteScore" th:value="*{projectCompleteScore}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="individualWorkDay">개인별 작업 일수</label>
+						</td>
+						<td>
+							<input type="text" id="individualWorkDay" name="individualWorkDay" th:value="*{individualWorkDay}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="individualCompletePossibleScore">개인별 완료 후 획득 가능한 총 점수</label>
+						</td>
+						<td>
+							<input type="text" id="individualCompletePossibleScore" name="individualCompletePossibleScore" th:value="*{individualCompletePossibleScore}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="individualCompleteScore">개인별 완료 후 획득한 점수</label>
+						</td>
+						<td>
+							<input type="text" id="individualCompleteScore" name="individualCompleteScore" th:value="*{individualCompleteScore}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="workDayPrice">작업 일수별 예정 총 금액</label>
+						</td>
+						<td>
+							<input type="text" id="workDayPrice" name="workDayPrice" th:value="*{workDayPrice}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="gradeCommision">등급별 수수료율</label>
+						</td>
+						<td>
+							<input type="text" id="gradeCommision" name="gradeCommision" th:value="*{gradeCommision}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="userCommision">개인 수수료</label>
+						</td>
+						<td>
+							<input type="text" id="userCommision" name="userCommision" th:value="*{userCommision}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="projectPrice">전문과제 완료 후 받는 금액</label>
+						</td>
+						<td>
+							<input type="text" id="projectPrice" name="projectPrice" th:value="*{projectPrice}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="progressRate">진행률 (%)</label>
+						</td>
+						<td>
+							<input type="text" id="progressRate" name="progressRate" th:value="*{progressRate}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="runName">진행상태</label>
+						</td>
+						<td>
+							<input type="text" id="runName" name="runName" th:value="*{runName}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="startDate">기능 시작 일시</label>
+						</td>
+						<td>
+							<input type="text" id="startDate" name="startDate" th:value="*{startDate}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="completeDate">포기 및 완료 일시</label>
+						</td>
+						<td>
+							<input type="text" id="completeDate" name="completeDate" th:value="*{completeDate}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="registerationDate">등록 시각</label>
+						</td>
+						<td>
+							<input type="text" id="registerationDate" name="registerationDate" th:value="*{registerationDate}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="period">기간</label>
+						</td>
+						<td>
+							<input type="text" id="period" name="period" th:value="*{period}"
+								   readonly="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<button type="submit" id="proProjectPersonalFunctionModifyBtn">작성완료</button>
+							<a th:href="@{/project/pro/proProjectPersonalFunctionList}">뒤로가기</a>
+						</td>
+					</tr>	
+				</tbody> 
+			</table>
+		</form>
+	</th:block>
+</html>

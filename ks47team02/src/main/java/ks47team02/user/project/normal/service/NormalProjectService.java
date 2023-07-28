@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
 import ks47team02.user.project.pro.dto.SubjectCate;
+import ks47team02.user.project.pro.dto.WorkCate;
 import ks47team02.user.project.normal.mapper.NormalProjectMapper;
 import ks47team02.user.project.pro.dto.JoinCate;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +32,7 @@ public class NormalProjectService {
 	
 	public List<NormalProjects> getNormalProjects(){
 		List<NormalProjects> normalProjectList = normalProjectMapper.getNormalProjectList();
-		
 		log.info("normalProjectList : {}", normalProjectList);
-		
-		
-		
-		
-		
 		return normalProjectList;
 		
 		
@@ -56,6 +51,12 @@ public class NormalProjectService {
 		log.info("subjectCateList : {}", subjectCateList);
 		return subjectCateList;
 	}
+	public List<WorkCate> getWorkCateList(){
+		List<WorkCate> workCateList =  normalProjectMapper.getWorkCateList();
+		log.info("getWorkCateListService : {}", workCateList);
+		return workCateList;
+		
+	}
 	
 	public void addNormalProject(NormalProjects norproject) {
 		// goods객체에 현재 상품코드가 없다
@@ -65,6 +66,13 @@ public class NormalProjectService {
 		log.info("insert 후 norproject : {}", norproject);
 	}
 	
+	public List<NormalProjects> getNormalProjectByCode(String normalProjectCode) {
+		List<NormalProjects> normalProjects = normalProjectMapper.getNormalPrjectByCode(normalProjectCode);
+		log.info("normalProjectsByCode : {}", normalProjects);
+		
+		
+		return normalProjects;
+	}
 	
 	
 

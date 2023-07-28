@@ -6,6 +6,7 @@
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
 	<script>
+	// 구인구직 공고 삭제
 	$('.danger-border').click(function (e) {
             e.preventDefault();
 
@@ -20,17 +21,34 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
+	
 	<section class="jobs-area section-padding">
 		<div class="container col-lg-12">
 			<div class="row">
-				<div class="col-lg-12">
-					<div class="single-job mb-4 justify-content-between text-center">
+				<div class="col-lg-2">
+					<div class="sidebar">
+						<div class="single-item mb-4">
+							<h4 class="mb-4">구인구직</h4>
+							<a th:href="@{/announcement/announcementList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>구인구직 검색</span></a> 
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-10">
+					<div class="single-job mb-4 justify-content-between">
 						<div class="card">
 							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-center">구인구직공고목록</h3>
+								<form th:action="@{/announcement/announcementList}" method="get">
+		                            <select name="searchKey">
+		                                <option value="joinCateName">참여분야별 검색</option>
+		                                <option value="areaCate">지역별 검색</option>
+		                            </select>
+		                            <input type="text" name="searchValue" placeholder="검색어 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '검색어 입력'" required="">
+		                            <button type="submit" class="template-btn">검색</button>
+		                        </form><br>
 								<div class="card-tools">
-									<a th:href="@{/announcement/announcementInsert}" class="genric-btn info-border circle"> <i
-										class="fas">등록</i>
+									<a th:href="@{/announcement/announcementInsert}" class="genric-btn info-border circle">
+									<i class="fas">등록</i>
 									</a>
 								</div>
 							</div>
