@@ -123,7 +123,7 @@ public class ProfileController {
 		
 		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList(sessionId);
 		
-		model.addAttribute("title", "메인화면");
+		model.addAttribute("title", "자기소개");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
 		model.addAttribute("profileIntroList", profileIntroList);

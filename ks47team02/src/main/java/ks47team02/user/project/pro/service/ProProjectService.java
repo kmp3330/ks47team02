@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.PostConstruct;
+import ks47team02.user.project.pro.dto.AccountHolderInfoList;
 import ks47team02.user.project.pro.dto.ApplicantAccount;
 import ks47team02.user.project.pro.dto.DepositList;
 import ks47team02.user.project.pro.dto.JoinCate;
@@ -15,6 +16,7 @@ import ks47team02.user.project.pro.dto.ProProject;
 import ks47team02.user.project.pro.dto.ProProjectApplicant;
 import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
 import ks47team02.user.project.pro.dto.ProgressStatus;
+import ks47team02.user.project.pro.dto.SendMoneyComplete;
 import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
 import ks47team02.user.project.pro.mapper.ProProjectMapper;
@@ -153,9 +155,31 @@ public class ProProjectService {
 	public void depositListDelete(String proProjectCode) {
 		proProjectMapper.depositListDelete(proProjectCode);
 	}
+//----------------------------------전문과제 성과금 송금 관련-----------------------------------------------------------------------------------
+	//	성과금 송금 완료 목록 조회
+	public List<SendMoneyComplete> getSendMoneyCompleteList() {
+		List<SendMoneyComplete> getSendMoneyCompleteList = proProjectMapper.getSendMoneyCompleteList();
+		
+		return getSendMoneyCompleteList;
+	}
+	// 성과금 송금 완료 작성 - 송금대상정보 리스트
+	public List<AccountHolderInfoList> getAccountHolderInfoList() {
+		List<AccountHolderInfoList> accountHolderInfoList = proProjectMapper.getAccountHolderInfoList();
+		log.info("db에 저장된 정보 - accountHolderInfoList : {}", accountHolderInfoList);
+
+		return accountHolderInfoList;
+	}
+	// 성과금 송금 완료 작성 - 개인별 맡은 기능 리스트
+	public List<ProProjectPersonalFunction> proProjectPersonalFunctionList() {
+		List<ProProjectPersonalFunction> proProjectPersonalFunctionList = proProjectMapper.getProProjectPersonalFunctionList2();
+		return proProjectPersonalFunctionList;
+	}
+	// 성과금 송금 완료 작성
+	public void sendMoneyCompleteInsert(SendMoneyComplete sendMoneyComplete) {
+		proProjectMapper.sendMoneyCompleteInsert(sendMoneyComplete);
+	}
 	
-	
-	
+
 	
 	
 	
@@ -192,6 +216,5 @@ public class ProProjectService {
 		log.info("applicantAccountList : {}", applicantAccountList);
 		return applicantAccountList;
 	}
-
 	
 }
