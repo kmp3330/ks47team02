@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+<head>
+  <style>
+    .project-detail{
+      width: 850px;
+      height: 24px;
+      display: flex;
+    }
+    .condition-title{
+      width: 160px;
+      height: 24px;
+    }
+
+    .table-container {
+      display: flex;
+    }
+
+    thead, tbody {
+      flex: 1;
+    }
+
+    thead {
+      border: 1px solid black;
+    }
+
+    tbody {
+      border: 1px solid red;
+    }
+
+  </style>
+</head>
+
+<th:block layout:fragment="customContents">
+  <section class="jobs-area section-padding">
+    <div class="container col-lg-12">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="sidebar">
+            <div class="single-item mb-4">
+              <h4 class="mb-4">일반과제 전체 목록</h4>
+              <a th:href="@{/normalProject/getAcceptList}"
+                 class="sidebar-btn d-flex justify-content-between mb-3"> <span>신청자 목록</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 post-list blog-post-list">
+          <div class="single-post">
+            <h1>일반과제 신청자 상세페이지</h1>
+            <div class="content-wrap">
+              <!-- 설명들 시작 -->
+              <th:block th:object="${applyApplicantInfo}">
+                <div class="job-btn align-self-center justify-content-end d-flex">
+                  <a th:href="@{#}" class="third-btn">수정</a>
+                </div>
+                <div class="project-detail">
+                  <div class="condition-title">
+                    <p class="condition-label body-2 text500">일반과제명</p>
+                  </div>
+                  <p class="condition-data body-2 text900" th:text="*{normalProjectName}"></p>
+                </div>
+                <div class="project-detail">
+                  <div class="condition-title">
+                    <p class="condition-label body-2 text500">신청자아이디</p>
+                  </div>
+                  <p class="condition-data body-2 text900" th:text="*{userId}"></p>
+                </div>
+
+                <div class="project-detail">
+                  <div class="condition-title">
+                    <p class="condition-label body-2 text500">신청날짜</p>
+                  </div>
+                  <p class="condition-data body-2 text900" th:text="*{normalProjectApplicationDate}"></p>
+                </div>
+
+              </th:block>
+              <!-- 설명들 끝 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</th:block>
+</html>
+
