@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{user/layout/default}">
+<head>
+<meta charset="UTF-8">
+<style>
+  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+    table-layout: auto;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+  }
+
+</style>
+</head>
+<th:block layout:fragment="customJs">
+	<script>
+		$('.sendMoneyCompleteDeleteBtn').click(function (e) {
+		    e.preventDefault();
+			let isDelete = confirm('정말로 삭제하시겠습니까?');
+			if(isDelete) {
+		        const proProjectCode = this.dataset.proProjectCode;
+		        location.href=`/project/pro/depositListDelete?proProjectCode=${proProjectCode}`;
+		        //location.replace(/project/pro/depositDelete?proProjectCode=${proProjectCode});
+		    }
+		});
+	</script>
+</th:block>
+		<th:block layout:fragment="customContents">
+			<a th:href="@{/project/pro/sendMoneyCompleteInsert}">등록하기</a>
+			<table>
+				<thead>
+					<tr>
+						<th hidden>성과금송금완료코드</th>
+						<th hidden>전문 과제 코드</th>
+						<th hidden>관리자 아이디</th>
+						<th>전문 과제별 신청자 코드</th>
+						<th>전문과제 참여한 아이디</th>
+						<th>프로젝트 성과금</th>
+						<th>송금일시</th>
+						<th>
+							<a th:href="@{#}"></a>
+						</th>
+						<th>
+							<a th:href="@{#}"></a>
+						</th>
+						<th>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(sendMoneyCompleteList)}">
+						<td colspan="7">등록된 전문과제가 없습니다.</td>
+					</tr>
+					<tr th:unless="${#lists.isEmpty(sendMoneyCompleteList)}" 
+						th:each="s : ${sendMoneyCompleteList}">
+						<td th:text="${s.sendMoneyCompleteCode}" hidden></td>
+						<td th:text="${s.proProjectCode}" hidden></td>
+						<td th:text="${s.adminId}" hidden></td>
+						<td th:text="${s.proProjectPersonalFunctionCode}" hidden></td>
+						<td th:text="${s.userId}"></td>
+						<td th:text="${s.projectPayment}"></td>
+						<td th:text="${s.sendDate}"></td>
+						<td>
+							<a th:href="@{#}">수정하기</a>
+						</td>
+						<td>
+							<a class="sendMoneyCompleteDeleteBtn">삭제</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</th:block>
+</html>

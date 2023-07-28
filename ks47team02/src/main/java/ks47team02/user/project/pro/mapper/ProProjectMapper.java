@@ -3,6 +3,7 @@ package ks47team02.user.project.pro.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
+import ks47team02.user.project.pro.dto.AccountHolderInfoList;
 import ks47team02.user.project.pro.dto.ApplicantAccount;
 import ks47team02.user.project.pro.dto.DepositList;
 import ks47team02.user.project.pro.dto.JoinCate;
@@ -11,6 +12,7 @@ import ks47team02.user.project.pro.dto.ProProject;
 import ks47team02.user.project.pro.dto.ProProjectApplicant;
 import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
 import ks47team02.user.project.pro.dto.ProgressStatus;
+import ks47team02.user.project.pro.dto.SendMoneyComplete;
 import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
 
@@ -78,9 +80,15 @@ public interface ProProjectMapper {
 	public int depositListModify(DepositList depositList);
 		// 성과금 예치 목록 삭제
 	public void depositListDelete(String proProjectCode);
-	
-	
-	
+//------------------------------------전문과제 성과금 송금 완료 관련---------------------------------------------------------------
+		// 성과금 송금 완료 목록 조회
+	public List<SendMoneyComplete> getSendMoneyCompleteList();
+		// 성과금 송금 완료 작성 - 예금주정보목록
+	public List<AccountHolderInfoList> getAccountHolderInfoList();
+		// 성과금 송금 완료 작성 - 개인별 맡은 기능 목록
+	public List<ProProjectPersonalFunction> getProProjectPersonalFunctionList2();
+		// 성과금 송금 완료 작성
+	public void sendMoneyCompleteInsert(SendMoneyComplete sendMoneyComplete);
 	
 	
 	
