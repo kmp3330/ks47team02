@@ -51,7 +51,7 @@ h6 span{
 .checkbox:checked + label,
 .checkbox:not(:checked) + label{
     position: relative;
-    z-index: 9999;
+    z-index: 1;
     display: block;
     text-align: center;
     width: 60px;
@@ -65,7 +65,7 @@ h6 span{
 .checkbox:checked + label:before,
 .checkbox:not(:checked) + label:before{
     position: relative;
-    z-index: 9999;
+    z-index: 1;
     display: block;
     width: 36px;
     height: 36px;
