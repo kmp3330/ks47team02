@@ -9,6 +9,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ks47team02.user.announcement.dto.Announcement;
+import ks47team02.user.member.dto.Company;
+import ks47team02.user.member.dto.User;
+import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.recommend.dto.AreaCate;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.dto.RecommendScrap;
 import ks47team02.user.recommend.dto.RecommendSupport;
@@ -35,12 +40,57 @@ public class RecommendService {
 	}
 	
 	/*
+	 * 분야
+	 */
+	public List <JoinCate> getJoinCateRecommend(){
+		List <JoinCate> recommendJoinInfo = recommendEmploymentMapper.getJoinCateRecommend();
+		return recommendJoinInfo;
+	}
+	/*
+	 * 지역 
+	 */
+	public List <AreaCate> getAreaRecommend(){
+		List <AreaCate> recommendAreaInfo = recommendEmploymentMapper.getAreaRecommend();
+		return recommendAreaInfo;
+	}
+	
+	
+	/*
+	 *  회사 아이디
+	 */
+	public List <Company> getCpIdRecommend(){
+		List <Company> recommendCpIdInfo = recommendEmploymentMapper.getCpIdRecommend();
+		return recommendCpIdInfo;
+	}
+	
+	
+	/*
+	 *  공고 목록
+	 */
+	public List <Announcement> getAnnouncementCodeRecommend(){
+		List<Announcement> recommendAnnouncemetCodeInfo = recommendEmploymentMapper.getAnnouncementCodeRecommend();
+		return recommendAnnouncemetCodeInfo;
+	}
+	
+	
+	/*
+	 *  회원 아이디 목록
+	 */
+	public List <User> getUserIdRecommend(){
+		List<User> recommendUserIdInfo = recommendEmploymentMapper.getUserIdRecommend();
+		return recommendUserIdInfo;
+	}
+	
+	
+	/*
 	 *  스크랩 순 목록
 	 */
 	public List <RecommendScrap> getRecommendScrapInfo(){
 		List <RecommendScrap> recommendScrapInfo = recommendScrapMapper.getRecommendScrap();
 		return recommendScrapInfo;
 	}
+	
+	
 	
 	/*
 	 *  기업 지원 순 목록 
@@ -75,6 +125,14 @@ public class RecommendService {
 		RecommendEmployment recommendEmploymentByCode = recommendEmploymentMapper.getRecommendEmploymentByCode(companyEmploymentCode);
 		return recommendEmploymentByCode;
 	}
+	
+	/*
+	 *  채용 단계 순 목록 삭제 
+	 */
+	public void recommendRemoveEmployment(String companyEmploymentCode) {
+		recommendEmploymentMapper.recommendRemoveEmployment(companyEmploymentCode);
+	}
+	
 	
 	/*
 	 *  채용 단계 순 목록 수정

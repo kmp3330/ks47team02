@@ -13,7 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import ks47team02.user.announcement.dto.Announcement;
+import ks47team02.user.member.dto.Company;
+import ks47team02.user.member.dto.User;
+import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.recommend.dto.AreaCate;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.dto.RecommendScrap;
 import ks47team02.user.recommend.dto.RecommendSupport;
@@ -60,8 +67,6 @@ public class RecommendController {
 		
 		return "user/recommend/recommend_main";
 	}
-	
-	
 	
 	
 	/*
@@ -112,6 +117,20 @@ public class RecommendController {
 	}
 	
 	/*
+	 * 채용 단계 순 기업 추천 서비스 목록 삭제
+	 */
+	
+	@GetMapping("/recommendRemoveEmployment")
+	public String recommendRemoveEmployment(@RequestParam(value="companyEmploymentCode")String companyEmploymentCode) {
+		
+		recommendService.recommendRemoveEmployment(companyEmploymentCode);
+		
+		log.info("채용 단계 삭제시 입력정보: {}", companyEmploymentCode);
+
+		return "redirect:/recommend/recommendEmployment";
+	}
+	
+	/*
 	 *  채용 단계 순 기업 추천 서비스 목록 수정
 	 */
 	
@@ -148,7 +167,47 @@ public class RecommendController {
 		return "redirect:/recommend/recommendEmployment";
 	}
 	
-
+	/*
+	 * ajax로 참여 분야 데이터 요청을 위한 컨트롤러
+	 */
+	@GetMapping("/recommendAjaxJoinCate")
+	  @ResponseBody 
+	  public List<JoinCate> getJoinCateRecommend() {
+		List<JoinCate> recommendJoinCateInfo = recommendService.getJoinCateRecommend();
+	    return recommendJoinCateInfo;
+	  }
+	/*
+	 *  ajax로 Area 데이터 요청을 위한 컨트롤러
+	 */
+	@GetMapping("/recommendAjaxArea")
+	  @ResponseBody 
+	  public List<AreaCate> getAreaRecommend() {
+		List<AreaCate> recommendAreaInfo = recommendService.getAreaRecommend();
+	    return recommendAreaInfo;
+	  }
+	
+	/*
+	 *  ajax로 Support 데이터 요청을 위한 컨트롤러
+	 */
+	@GetMapping("/recommendAjaxSupport")
+	  @ResponseBody 
+	  public List<RecommendSupport> getRecommendSupport() {
+		List<RecommendSupport> recommendSupportInfo = recommendService.getRecommendSupportInfo();
+	    return recommendSupportInfo;
+	  }
+	
+	
+	/*
+	 *  ajax로 Employment 데이터 요청을 위한 컨트롤러
+	 */
+	  @GetMapping("/recommendAjaxEmployment")
+	  @ResponseBody 
+	  public List<RecommendEmployment> getRecommendEmployment() {
+	    List<RecommendEmployment> recommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
+	    
+	    return recommendEmploymentInfo;
+	  }
+	
 	/*
 	 *  채용 단계 순 기업 추천 서비스 목록 등록 (폼)
 	 */
@@ -156,13 +215,25 @@ public class RecommendController {
 	public String recommendInsertEmployment(Model model) {
 		
 		List <RecommendEmployment> RecommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
-		List<RecommendSupport>	recommendSupportCodeInfo =recommendService.getRecommendSupportCode();
+		List <RecommendSupport>	recommendSupportCodeInfo =recommendService.getRecommendSupportCode();
+		List <User> recommendUserIdInfo = recommendService.getUserIdRecommend();
+		List <Announcement> recommendAnnouncemetCodeInfo = recommendService.getAnnouncementCodeRecommend();
+		List <RecommendSupport> recommendSupportInfo = recommendService.getRecommendSupportInfo();
+		List <Company> recommendCpIdInfo = recommendService.getCpIdRecommend();
+		List <AreaCate> recommendAreaInfo = recommendService.getAreaRecommend();
+		List<JoinCate> recommendJoinCateInfo = recommendService.getJoinCateRecommend();
 		
 		model.addAttribute("title", "채용 단계 순 목록 등록");
 		model.addAttribute("titleText", "채용 단계 순 목록 등록");
 		model.addAttribute("contents", "채용 단계 순 목록 등록 화면입니다.");
 		model.addAttribute("RecommendEmploymentInfo", RecommendEmploymentInfo);
 		model.addAttribute("recommendSupportCodeInfo", recommendSupportCodeInfo);
+		model.addAttribute("recommendUserIdInfo", recommendUserIdInfo);
+		model.addAttribute("recommendAnnouncemetCodeInfo", recommendAnnouncemetCodeInfo);
+		model.addAttribute("recommendSupportInfo", recommendSupportInfo);
+		model.addAttribute("recommendCpIdInfo", recommendCpIdInfo);
+		model.addAttribute("recommendAreaInfo", recommendAreaInfo);
+		model.addAttribute("recommendJoinCateInfo", recommendJoinCateInfo);
 		return "user/recommend/recommend_employment_insert";
 	}
 	

@@ -22,9 +22,12 @@
  	<select id="getRecommendSupport" resultMap="RecommendSupportResultMap">
 
  		SELECT
+ 			cs.company_support_code,
 			cs.user_id,
+			cs.announcement_code,
 			cs.cp_id,
 			cs.cp_name,
+			cs.area_code,
 			cs.area_cate,
 			cs.job_opening,
 			cs.required_skills,
@@ -35,7 +38,6 @@
 			company_support AS cs
  	</select>
  	
- 
  	
  	<select id="getRecommendSupportRank" resultMap="RecommendSupportResultMap">
  		SELECT 
@@ -56,5 +58,7 @@
 			cs.company_support_code
 		FROM
 			company_support AS cs
+		ORDER BY 
+			cs.company_support_code ASC;
  	</select>
 </mapper>

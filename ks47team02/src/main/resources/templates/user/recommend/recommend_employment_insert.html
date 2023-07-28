@@ -6,41 +6,205 @@
 <th:block layout:fragment="customJs">
 	<script th:src="@{/js/jquery-3.7.0.js}"></script>
 	<script>
-	
+	  
 		// 유효성검사 함수
 		const validCheck = element => {
-    			let data = $(element).val();
-    			let eleId = $(element).attr('placeholder');
-    			if(typeof data == 'undefined' || data == null || data == '' ){
-    				alert(`${eleId} 필수 입력항목입니다.`);
-    				$(element).focus();
-    				return false;
-    			}
-    			return true;
-    		}
+   			let data = $(element).val();
+   			let eleId = $(element).attr('placeholder');
+   			if(typeof data == 'undefined' || data == null || data == '' ){
+   				alert(`${eleId} 필수 입력항목입니다.`);
+   				$(element).focus();
+   				return false;
+   			}
+   			return true;
+   		}
 
 
-			// 등록버튼 
-			$('#addEmploymentBtn').click(function(){
-				const validateEle = $('#employmentInsertForm input');
-				let isSubmit= false;
+		// 등록버튼 
+		$('#addEmploymentBtn').click(function(){
+			const validateEle = $('#employmentInsertForm input');
+			let isSubmit= false;
+			
+			validateEle.each((idx, item) => {    				
+    			isSubmit = validCheck(item);
+    			return isSubmit;
+   			})
+			if(isSubmit)$('#employmentInsertForm').submit();
+			
+		})
+
+		// 입력 취소 버튼 클릭시 이벤트 처리
+   		$('#resetBtn').click(function(e){
+   			
+   			e.preventDefault();
+   			$('#employmentInsertForm input').val('');
+   		});
+		
+		// 페이지 로딩 시 채용 공고 코드 자동 추가
+		$(document).ready(function () {
+			$.ajax({
+				url: "/recommend/recommendAjaxEmployment",  // url 경로(컨트롤러에서 ajax로 데이터 요청을 위한 컨트롤러 생성)
+				type: "GET",
+				success: function (employmentInfo) {
+					//console.log(employmentInfo);
+					
 				
-				validateEle.each((idx, item) => {    				
-	    			isSubmit = validCheck(item);
-	    			return isSubmit;
-    			})
-				if(isSubmit)$('#employmentInsertForm').submit();
-				
-			})
+					let increaseEmploymentCodeInput = document.getElementById("companyEmploymentCode"); 	//""안에 pk프로퍼티 작성
 
-			 
-			// 입력 취소 버튼 클릭시 이벤트 처리
-    		$('#resetBtn').click(function(e){
-    			
-    			e.preventDefault();
-    			$('#employmentInsertForm input').val('');
-    		});
-		</script>
+					increaseEmploymentCode(employmentInfo);	
+					let newCodeNumber = maxNumber + 1;
+					//console.log(newCodeNumber);
+					let newCodeSuffix = "";
+					if (newCodeNumber >= 1 && newCodeNumber <= 9) {
+						newCodeSuffix = "00" + newCodeNumber;
+					} else if (newCodeNumber >= 10 && newCodeNumber <= 99) {
+						newCodeSuffix = "0" + newCodeNumber;
+					} else {
+						newCodeSuffix = newCodeNumber;
+					}
+					
+					let newRegistrationCode = "company_employment_code_" + newCodeSuffix;	//	""안에 001(순번)앞 컬럼명 작성
+					//console.log(newRegistrationCode);
+					increaseEmploymentCodeInput.value = newRegistrationCode;
+					increaseEmploymentCodeInput.readOnly = true;
+				},
+				error: function (error) {
+					console.log("에러", error);
+				}
+			});
+			
+		});
+					
+		let maxNumber = 0;
+		function increaseEmploymentCode(employmentInfo) {
+
+			let data = employmentInfo.map(info => {
+				let key = Object.keys(info);
+				let firstkey = key[0];
+				return info[firstkey];
+			});
+			//console.log(data);
+
+			data.forEach(function (item) {
+				let code = item;
+				if (code && typeof code === "string") {
+					let codeParts = code.split("de");
+					if (codeParts.length = 2) {
+						let codeNumber = parseInt(codeParts[1]);
+						if (!isNaN(codeNumber) && codeNumber > maxNumber) {
+							maxNumber = codeNumber;
+						}
+						//console.log(codeNumber);
+					}
+						//console.log(codeParts);
+				}						
+						//console.log(code);
+						
+			});	
+			return maxNumber;
+		}
+		function fetchData (selectedUserId){
+			// AJAX로 데이터를 가져와 userId 변경시 Support코드도 변경
+	        $.ajax({
+	            url: "/recommend/recommendAjaxSupport", 
+	            type: "GET",
+	            success: function (supportInfo) {
+	               
+					console.log(supportInfo);
+	                
+	                let matchingData = supportInfo.filter(info => info.userId == selectedUserId);
+					console.log(matchingData[0]);
+	            
+	                if (matchingData[0]) {
+	                    let companySupportCodeInput = document.getElementById("companySupportCode");
+	                    console.log(companySupportCodeInput);
+	                    companySupportCodeInput.value = matchingData[0].companySupportCode;
+	                    console.log(companySupportCodeInput.value);
+	                } else {
+	                    
+	                    let companySupportCodeInput = document.getElementById("companySupportCode");
+	                    companySupportCodeInput.value = "";
+	                }
+	            },
+	            error: function (error) {
+	                console.log("에러", error);
+	            }
+	        });
+		}
+		$(document).on('click','#userId+.nice-select .option', function (e) {
+			let selectedUserId = $(this).attr('data-value');
+			 fetchData(selectedUserId);
+		});
+		/*
+		$('#userId').on('change', function(){
+			let selectedUserId = $(this).val();
+	        console.log('123')
+	        fetchData(selectedUserId);
+		});
+	    */
+	    function areaData(selectedAreaCate){
+	    	$.ajax({
+	    		url:"/recommend/recommendAjaxArea",
+	    		type:"GET",
+	    		success: function (areaInfo){
+	    			console.log(areaInfo)
+	    			let matchingData = areaInfo.filter(info => info.areaCate == selectedAreaCate);
+					console.log(matchingData[0]);
+	            
+	                if (matchingData[0]) {
+	                    let areaCodeInput = document.getElementById("areaCode");
+	                    console.log(areaCodeInput);
+	                    areaCodeInput.value = matchingData[0].areaCode;
+	                    console.log(areaCodeInput.value);
+	                } else {
+	                    
+	                    let areaCodeInput = document.getElementById("areaCode");
+	                    areaCodeInput.value = "";
+	                }
+	            },
+	            error: function (error) {
+	                console.log("에러", error);
+	    		}
+	    	});
+	    }
+	    $(document).on('click','#areaCate+.nice-select .option', function (e) {
+			let selectedAreaCate = $(this).attr('data-value');
+			areaData(selectedAreaCate);
+		});
+	    
+	    function JoinCateData(selectedjoinCateName){
+	    	$.ajax({
+	    		url:"/recommend/recommendAjaxJoinCate",
+	    		type:"GET",
+	    		success: function (JoinCateInfo){
+	    			console.log(JoinCateInfo)
+	    			let matchingData = JoinCateInfo.filter(info => info.joinCateName == selectedjoinCateName);
+					console.log(matchingData[0]);
+	            
+	                if (matchingData[0]) {
+	                    let JoinCateCodeInput = document.getElementById("joinCateCode");
+	                    console.log(JoinCateCodeInput);
+	                    JoinCateCodeInput.value = matchingData[0].joinCateCode;
+	                    console.log(JoinCateCodeInput.value);
+	                } else {
+	                    
+	                    let JoinCateCodeInput = document.getElementById("joinCateCode");
+	                    JoinCateCodeInput.value = "";
+	                }
+	            },
+	            error: function (error) {
+	                console.log("에러", error);
+	    		}
+	    	});
+	    }
+	    $(document).on('click','#joinCateName+.nice-select .option', function (e) {
+			let selectedjoinCateName = $(this).attr('data-value');
+			JoinCateData(selectedjoinCateName);
+		});
+	    
+</script>
+			
+
 </th:block>
 <body>
 	<th:block layout:fragment="customContents">
@@ -89,7 +253,7 @@
 													<th>채용 공고 코드</th>
 													<th>회사 지원 코드</th>
 													<th>회원 아이디</th>
-													<th>공고 코드</th>
+													<th>공고한 회사 이름</th>
 													<th>참여 분야 코드</th>
 													<th>참여 분야</th>
 													<th>지역 코드</th>
@@ -109,53 +273,71 @@
 													<td><input class="genric-btn" type="text"
 														id="companyEmploymentCode" name="companyEmploymentCode" placeholder="채용 공고 코드"
 														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '채용 공고 코드'" required=""></td>
-													<td>
-														<select class="genric-btn"
-														id="companySupportCode" name="companySupportCode"
+														onblur="this.placeholder = '채용 공고 코드'" required="" readonly="readonly"></td>
+											
+													<td><input class="genric-btn" type="text"
+														id="companySupportCode" name="companySupportCode" placeholder="기업 지원 코드"
+														
 														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '회사 지원 일시'" required="">
-														<th:block th:unless="${#lists.isEmpty(recommendSupportCodeInfo)}"
-																  th:each="l : ${recommendSupportCodeInfo}">
-															<option th:value="${l.companySupportCode}">[[${l.companySupportCode}]]</option>
-														</th:block>											
+														onblur="this.placeholder = '기업 지원 코드'" required="" readonly="readonly"></td>
+													
+													<td>
+														<select class="genric-btn" id="userId"	name="userId">
+															<option value="">====아이디를 선택해주세요====</option>
+															<th:block th:unless="${#lists.isEmpty(recommendSupportInfo)}"
+																	  th:each="l : ${recommendSupportInfo}">
+																<option th:value="${l.userId}">[[${l.userId}]]</option>
+															</th:block>
 														</select>
 													</td>
-													<td><input class="genric-btn" type="text" id="userId"
-														name="userId"
-														placeholder="회원 아이디" onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '회원 아이디'" required=""></td>
-
-													<td><input class="genric-btn" type="text"
-														id="announcementCode" name="announcementCode" placeholder="공고 코드"
-														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '공고 코드'" required=""></td>
+													
+													<td><select class="genric-btn" id="announcementCode"	name="announcementCode">
+														<option value="">===회사이름을 선택해주세요===</option>
+														<th:block th:unless="${#lists.isEmpty(recommendCpIdInfo)}"
+																  th:each="l : ${recommendCpIdInfo}">
+															<option th:value="${l.cpName}">[[${l.cpName}]]</option>
+														</th:block>
+														</select>
+													</td>
 
 													<td><input class="genric-btn" type="text"
 														id="joinCateCode" name="joinCateCode" placeholder="참여 분야 코드"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '참여 분야 코드'" required=""></td>
-
-													<td><input class="genric-btn" type="text"
-														id="joinCateName" name="joinCateName" placeholder="참여 분야"
-														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '참여 분야'" required=""></td>
 													
+													<td>
+														<select class="genric-btn" id="joinCateName"	name="joinCateName">
+															<option value="">====분야를 선택해주세요====</option>
+															<th:block th:unless="${#lists.isEmpty(recommendJoinCateInfo)}"
+																	  th:each="l : ${recommendJoinCateInfo}">
+																<option th:value="${l.joinCateName}">[[${l.joinCateName}]]</option>
+															</th:block>
+														</select>
+													</td>											
+																		
 													<td><input class="genric-btn" type="text"
 														id="areaCode" name="areaCode" placeholder="지역 코드"
 														onfocus="this.placeholder = ''"
 														onblur="this.placeholder = '지역 코드'" required=""></td>
-
-													<td><input class="genric-btn" type="text"
-														id="areaCate" name="areaCate" placeholder="지역"
-														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '지역'" required=""></td>
 													
-													<td><input class="genric-btn" type="text"
-														id="jobOpening" name="jobOpening"	placeholder="채용직"
-														onfocus="this.placeholder = ''"
-														onblur="this.placeholder = '채용직'" required=""></td>
+													<td>
+														<select class="genric-btn" id="areaCate"	name="areaCate">
+															<option value="">====지역을 선택해주세요====</option>
+															<th:block th:unless="${#lists.isEmpty(recommendAreaInfo)}"
+																	  th:each="l : ${recommendAreaInfo}">
+																<option th:value="${l.areaCate}">[[${l.areaCate}]]</option>
+															</th:block>
+														</select>
+													</td>
 													
+													
+													<td><select class="genric-btn" id="jobOpening"	name="jobOpening">
+														<option value="">===채용직을 선택해주세요===</option>
+														<option value="">정규직</option>
+														<option value="">계약직</option>
+														</select>
+													</td>
+																									
 													<td><input class="genric-btn" type="text"
 														id="requiredSkills" name="requiredSkills" placeholder="요구 기술"
 														onfocus="this.placeholder = ''"

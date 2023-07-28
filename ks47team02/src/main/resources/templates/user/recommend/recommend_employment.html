@@ -2,10 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{user/layout/default}">
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css"  />
-</head>
+
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+	<script>
+	$('.danger-border').click(function (e) {
+        e.preventDefault();
+
+        let isDelete = confirm('정말로 삭제하시겠습니까?');
+
+        if(isDelete) {
+            const employmentCode = this.dataset.employmentCode;
+            location.replace(`/recommend/recommendRemoveEmployment?companyEmploymentCode=${employmentCode}`);
+        }
+    });
+	</script>
+</th:block>
+
+
 <th:block layout:fragment="customContents">
 	<section class="jobs-area section-padding">
 		<div class="container col-lg-12">
@@ -68,7 +82,7 @@
 											<td><a th:href="@{/recommend/recommendModifyEmployment(companyEmploymentCode=${l.companyEmploymentCode})}"
 												class="genric-btn success-border circle"> <i class="fas">수정</i>
 											</a></td>
-											<td><a th:href="@{#}"
+											<td><a th:href="@{#}" th:data-employment-code="${l.companyEmploymentCode}"
 												class="genric-btn danger-border circle"> <i class="fas">삭제</i>
 											</a></td>
 										</tr>
