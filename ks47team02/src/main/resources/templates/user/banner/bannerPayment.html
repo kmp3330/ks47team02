@@ -29,11 +29,8 @@
   <div class="single-job mb-4 justify-content-between text-center">
     <!-- 상품 정보 영역-->
     <div class="title">상품 정보</div>
-    <p>상단배너 예약금(2주)</p>
-    <p>결제 금액: 15,000원</p>
-    <form id="discount-coupon">
-      <input type="checkbox" id="coupon"/>5,000원 할인받기
-    </form>
+    <h5>측면배너 예약금(2주)</h5>
+    <h5>결제 금액: 1,140,000원</h5>
     <hr>
     
     <!-- 결제 방법 영역-->
@@ -63,7 +60,7 @@
     document.querySelector("#payment-button").addEventListener("click",()=>{
       paymentWidget.requestPayment({
         orderId: 'AD8aZDpbzXs4EQa-UkGJ6',
-        orderName: '상단배너 예약금(2주)',
+        orderName: '측면배너 예약금(2주)',
         successUrl: 'http://192.168.10.24/userPayment/userPaymentSuccess',
         failUrl: 'http://localhost:8080/fail',
         customerEmail: 'customer123@gmail.com',
@@ -77,16 +74,6 @@
       })
     })
     
-    /*할인 쿠폰 적용*/
-    document.querySelector("#coupon").addEventListener("click", applyDiscount)
-    
-    function applyDiscount(e) {
-      if (e.target.checked) {
-        paymentMethods.updateAmount(amount - couponAmount, "쿠폰")
-      } else {
-        paymentMethods.updateAmount(amount)
-      }
-    }
   
   </script>
 </th:block>
