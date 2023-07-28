@@ -1,6 +1,7 @@
 package ks47team02.user.profile.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 import ks47team02.user.profile.dto.ProfileAward;
@@ -19,6 +21,7 @@ import ks47team02.user.profile.dto.ProfileSkill;
 import ks47team02.user.profile.dto.ProfileWorkSpec;
 import ks47team02.user.profile.service.ProfileService;
 import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
 import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
 import lombok.AllArgsConstructor;
@@ -585,7 +588,10 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profilePortfolioInsert")
-	public String profilePortfolioInsert(Model model) {
+	public String profilePortfolioInsert(Model model,
+										 HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
 		
 		List<JoinCate> joinCateList = profileService.getJoinCateList();
 		List<WorkCate> workCateList = profileService.getWorkCateList();
@@ -697,4 +703,14 @@ public class ProfileController {
 		return "redirect:/profile/profilePortfolioList";
 	}
 	
+	@PostMapping("/pro")
+	@ResponseBody
+	public List<Map<String, Object>> pro(HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
+		
+		List<Map<String, Object>> result = profileService.getProProjectList(sessionId);
+		
+		return result;
+	}
 }

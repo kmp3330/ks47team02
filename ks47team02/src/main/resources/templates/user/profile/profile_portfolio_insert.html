@@ -31,6 +31,53 @@
 			if (isSubmit) $('#addPortfolioForm').submit();		
 		});
 		
+		
+		$('#subjectCateCode').change(function () {
+		
+	        const selectedOption = $(this).val();
+	        
+	        $.ajax({
+	            url: '/profile/pro', 
+	            method: 'POST', // or 'GET' depending on your server implementation
+	            dataType: 'json',
+	            success: function (response) {
+	            	
+	            	let projectList = response;
+	            	$('#projectListBody').html('');
+	            	if(selectedOption){
+	            		projectList = projectList.filter(item => item.cateProject == selectedOption);
+	            	}
+	            	if(projectList.length > 0){
+	            		$(projectList).each((idx,item)=>{
+		            		const title = item.projectName;
+		            		const skill = item.assignedFunction;
+		            		const projectDay = item.projectDay;
+		            		const prePersonDays = item.prePersonDays;
+		            		
+		            		const contentsArr = [title,skill,projectDay,prePersonDays];
+		            		
+		            		const tr = $('<tr></tr>');
+		            		const tdRadio = $(`<td><input type="radio" name="optionsRadios" value="${item.projectCd}"></td>`);
+		            		tr.append(tdRadio);
+		            		for( let content of contentsArr){
+		            			const td = $(`<td>${content}</td>`);
+		            			tr.append(td);
+		            		}
+		            		$('#projectListBody').append(tr);	            	
+		            	});
+	            	}else{
+	            		const tr = $('<tr><td colspan="5">등록한 프로젝트가 없습니다.</td></tr>');
+	            		$('#projectListBody').append(tr);	 
+	            	}
+	            },
+	            error: function () {
+	                // Handle error if the AJAX request fails
+	                alert('Failed to fetch project data. Please try again later.');
+	            }
+	        });
+	    });
+		$('#subjectCateCode').change();
+		
 	</script>
 </th:block>
 
@@ -42,7 +89,8 @@
 					<div class="single-job mb-4 justify-content-between text-center">
 						<div class="single-element-widget d-flex">
 							<h6 class="title_color" style="margin:10px; font-size:large; font-weight:900;">참여한 프로젝트 목록</h6>
-							<a href="#" class="genric-btn primary-border radius">조회</a>
+							<button type="button" class="genric-btn primary-border radius" data-toggle="modal"
+									data-target="#exampleModalCenter">조회</button>
 						</div>
 						
 						<div class="card single-job">
@@ -164,91 +212,67 @@
 		</div>
 	</section>
 
-	<!--/* 
-										<tbody>
-											<tr>
-												<td><select style="display: none;">
-														<option value="1">English</option>
-														<option value="1">Spanish</option>
-														<option value="1">Arabic</option>
-												</select></td>
-												<td><input class="genric-btn" type="text"
-													name="userProjectName" placeholder="프로젝트 제목"
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '프로젝트 제목'"></td>
-												<td><select style="display: none;" name="joinCateCode"
-													placeholder="참여분야">
-														<option value="">==참여 분야==</option>
-														<th:block th:unless="${#lists.isEmpty(joinCateList)}"
-															th:each="l : ${joinCateList}">
-															<option th:value="${l.joinCateCode}">[[${l.joinCateName}]]</option>
-														</th:block>
-												</select></td>
-												<td><select style="display: none;" name="workCateCode"
-													placeholder="작업분류">
-														<option value="">==작업 분류==</option>
-														<th:block th:unless="${#lists.isEmpty(workCateList)}"
-															th:each="l : ${workCateList}">
-															<option th:value="${l.workCateCode}">[[${l.workCateName}]]</option>
-														</th:block>
-												</select></td>
-												<td><select style="display: none;"
-													name="subjectCateCode" placeholder="주제분류">
-														<option value="">==주제 분류==</option>
-														<th:block th:unless="${#lists.isEmpty(subjectCateList)}"
-															th:each="l : ${subjectCateList}">
-															<option th:value="${l.subjectCateCode}">[[${l.subjectCateName}]]</option>
-														</th:block>
-												</select></td>
-												<td><input class="genric-btn" type="text"
-													name="userRequiredSkill" placeholder="맡은기능"
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '맡은기능'"></td>
-												<td><input class="genric-btn" type="text"
-													name="userDetails" placeholder="내용"
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '내용'"></td>
-												<td><input class="genric-btn" type="date"
-													placeholder="시작일시" name="userProjectStartDate"></td>
-												<td><input class="genric-btn" type="date"
-													placeholder="완료일시" name="userProjectEndDate"></td>
-												<td><input class="genric-btn" type="number"
-													name="userProjectDays" placeholder="프로젝트 일수"
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '프로젝트 일수'"></td>
-												<td><input class="genric-btn" type="text"
-													name="userProjectGen" placeholder="구분"
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '구분'"></td>
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch1"
-																name="profileHidden" checked> <label
-																for="confirm-switch1"></label>
-														</div>
-													</div>
-												</td>
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2"
-																name="profileApplicationHidden" checked> <label
-																for="confirm-switch2"></label>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-							</div>
-						</div>
-					</div>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">참여 프로젝트 목록</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="d-md-flex col-lg-3">
+					<select style="display: none;" id="subjectCateCode"
+							name="subjectCateCode" placeholder="구분">
+							<option value="">==과제선택==</option>
+							<option value="normal">일반과제</option>
+							<option value="pro">전문과제</option>
+					</select>
+				</div>
+				<div class="modal-body" id="projectListContainer">
+					<table class="table">
+						<thead class="thead-light">
+							<tr>
+								<td>선택</td>
+								<td>프로젝트 제목</td>
+								<td>맡은기능</td>
+								<td>프로젝트 전체 일수</td>
+								<td>맡은 기능 작업 일수</td>
+							</tr>
+						</thead>
+						<tbody id="projectListBody">
+							<!--/* <tr th:unless="${#lists.isEmpty(proProjectList)}"
+								th:each="l : ${proProjectList}">
+								<th:block th:unless="${#lists.isEmpty(l.proProjectInfo)}"
+										  th:each="pl : ${l.proProjectInfo}">
+									<td>
+										<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+									</td>
+									<td th:text="${pl.title}"></td>
+									<td th:text="${l.skill}"></td>
+									<td th:text="${l.projectDay}"></td>
+									<td th:text="${l.individualWorkDay}"></td>
+								</th:block>
+							</tr>
+							<tr th:if="${#lists.isEmpty(proProjectList)}">
+								<td colspan="5" class="text-center">***참여한 프로젝트가 없습니다.***</td>
+							</tr> */-->
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">취소</button>
+					<button id="selectBtn" type="button" class="btn btn-primary">선택</button>
 				</div>
 			</div>
 		</div>
-	</section> */-->
+	</div>
+
 
 </th:block>
 </html>
