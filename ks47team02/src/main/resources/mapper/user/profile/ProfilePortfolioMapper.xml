@@ -46,7 +46,7 @@
 		<result column="registeration_date" property="registerationDate"/>
 		<result column="period" property="period"/>
 		
-		<collection property="proProjectInfo" javaType="ProProject">
+		<collection property="proProjectInfo" ofType="ProProject">
 			<id column="pro_project_code" property="proProjectCode"/>
 			<result column="cp_id" property="cpId"/>
 			<result column="cp_name" property="cpName"/>		
@@ -298,9 +298,49 @@
 			user_portfolio_code = #{profilePortfolioCode}
 	</delete>
 	
-	<select id="getProProjectList" resultMap="proProjectResultMap" parameterType="String">
-		/* 참여한 전문과제 프로젝트 목록 */
-	
+	<select id="getProProjectList" resultType="map" parameterType="String">
+		/* 참여한 프로젝트 목록 */
+		SELECT
+			np.normal_project_code  AS projectCd,
+			np.normal_project_name	AS projectName,
+			np.join_cate_name			AS joinCateName,
+			np.work_cate_name			AS workCateName,
+			np.subject_cate_name		AS subjectCateName,
+			nf.assigned_function		AS assignedFunction,
+			nf.project_day				AS projectDay,
+			nf.per_person_days		AS prePersonDays,
+			nf.function_start_date	AS functionStartDate,
+			nf.function_finish_time AS functionFinishTime,
+			'normal' 						AS cateProject
+		FROM
+			normal_project AS np
+			INNER JOIN 
+			normal_project_personal_function AS nf
+			ON 
+			np.normal_project_code = nf.normal_project_code
+		WHERE 
+			np.user_id = #{sessionId}
+		UNION 
+		SELECT
+			pp.pro_project_code			AS projectCd,
+			pp.title							AS projectName,
+			pp.join_cate_name				AS joinCateName,
+			pp.work_cate_name				AS workCateName,
+			pp.subject_cate_name			AS subjectCateName,
+			pppf.skill						AS assignedFunction,
+			pppf.project_day				AS projectDay,
+			pppf.individual_work_day	AS prePersonDays,
+			pppf.start_date				AS functionStartDate,
+			pppf.complete_date			AS functionFinishTime,
+			'pro' 							AS cateProject
+		FROM
+			pro_project AS pp
+			INNER JOIN
+			pro_project_personal_function AS pppf
+			ON
+			pp.pro_project_code = pppf.pro_project_code
+		WHERE
+			pppf.user_id = #{sessionId}
 	</select>
 	
 </mapper>

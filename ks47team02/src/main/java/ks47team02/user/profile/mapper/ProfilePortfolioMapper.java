@@ -36,7 +36,7 @@ public interface ProfilePortfolioMapper {
 	
 	
 	// 참여한 전문과제 프로젝트 목록
-	public Map<String, Object> getProProjectList(String sessionId);
+	public List<Map<String, Object>> getProProjectList(String sessionId);
 	
 	// 참여한 일반과제 프로젝트 목록
 	

@@ -1,6 +1,8 @@
 package ks47team02.user.profile.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ import ks47team02.user.profile.mapper.ProfilePortfolioMapper;
 import ks47team02.user.profile.mapper.ProfileSkillMapper;
 import ks47team02.user.profile.mapper.ProfileWorkSpecMapper;
 import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
 import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
 import lombok.AllArgsConstructor;
@@ -402,5 +405,18 @@ public class ProfileService {
 	 */
 	public void profilePortfolioDelete(String profilePortfolioCode) {
 		profilePortfolioMapper.profilePortfolioDelete(profilePortfolioCode);
+	}
+	
+	/**
+	 * 참여한 전문과제 프로젝트 목록
+	 * @param sessionId
+	 * @return
+	 */
+	public List<Map<String, Object>> getProProjectList(String sessionId) {
+		
+		List<Map<String, Object>> proProjectList = profilePortfolioMapper.getProProjectList(sessionId);
+		log.info("proProjectList : {}", proProjectList);
+		
+		return proProjectList;
 	}
 }
