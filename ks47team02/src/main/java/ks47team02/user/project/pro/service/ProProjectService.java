@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.PostConstruct;
 import ks47team02.user.project.pro.dto.ApplicantAccount;
+import ks47team02.user.project.pro.dto.DepositList;
 import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.project.pro.dto.NotPaidList;
 import ks47team02.user.project.pro.dto.ProProject;
 import ks47team02.user.project.pro.dto.ProProjectApplicant;
 import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
@@ -115,14 +117,42 @@ public class ProProjectService {
 		//log.info("db에 저장된 정보 - Service : {}", progressStatusInfo);
 		return progressStatusInfo;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+	// 전문과제 진행상태 수정
+	public int progressStatusModify(ProgressStatus progressStatus) {
+		int result = proProjectMapper.progressStatusModify(progressStatus);
+		log.info("result : {}", result);
+		return result;
+	}
+//----------------------------------전문과제 성과금예치 관련-----------------------------------------------------------------------------------
+	// 전문과제 성과금 예치 목록 조회
+	public List<DepositList> getDepositList() {
+		List<DepositList> getDepositList = proProjectMapper.getDepositList();
+		return getDepositList;
+	}
+	// 전문과제 성과금 예치 완료 작성
+	public void DepositInsert(DepositList depositList) {
+		proProjectMapper.depositListInsert(depositList);
+	}
+	// 전문과제 성과금 예치 완료 작성 - 성과금 미입금 프로젝트 조회
+	public List<NotPaidList> getNotPaidList() {
+		List<NotPaidList> notPaidList = proProjectMapper.getNotPaidList();
+		log.info("notPaidList", notPaidList);
+		return notPaidList;
+	}
+	// 성과금 예치 목록 수정 - 성과금 예치 목록 상세조회
+	public DepositList getDepositListInfoByProjectCode(String proProjectCode) {
+		DepositList depositListInfo = proProjectMapper.getDepositListInfoByProjectCode(proProjectCode);
+		return depositListInfo;
+	}
+	// 성과금 예치 목록 수정
+	public int depositListModify(DepositList depositList) {
+		int result = proProjectMapper.depositListModify(depositList);
+		return result;
+	}
+	// 성과금 예치 목록 삭제
+	public void depositListDelete(String proProjectCode) {
+		proProjectMapper.depositListDelete(proProjectCode);
+	}
 	
 	
 	
@@ -144,7 +174,6 @@ public class ProProjectService {
 	// 참여분야 리스트 조회
 	public List<JoinCate> getJoinCateList(){
 		List<JoinCate> JoinCateList = proProjectMapper.getJoinCateList();
-		log.info("JoinCate : {}", JoinCateList);
 		return JoinCateList;
 	}
 	// 작업분야 리스트 조회
@@ -163,24 +192,6 @@ public class ProProjectService {
 		log.info("applicantAccountList : {}", applicantAccountList);
 		return applicantAccountList;
 	}
-//	public Map<String, Object> isValidCp(String cpId, String cpPw) {
-//		Map<String, Object> resultMap = new HashMap<String, Object>();
-//				
-//				boolean isValid = false;
-//				
-//				// 회원 검증 
-//				Company company = CompanyMapper.getMemberInfoById(cpId);
-//				if(company != null) {
-//					String checkPw = company.getCompanyPw();
-//					if(checkPw.equals(companyPw)) {
-//						isValid = true;
-//						resultMap.put("companyInfo", company);
-//					}
-//				}
-//				
-//				resultMap.put("isValid", isValid);
-//				
-//				return resultMap;
-//	}
+
 	
 }

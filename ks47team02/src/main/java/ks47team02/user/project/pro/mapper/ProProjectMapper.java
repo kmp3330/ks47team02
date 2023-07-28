@@ -4,7 +4,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks47team02.user.project.pro.dto.ApplicantAccount;
+import ks47team02.user.project.pro.dto.DepositList;
 import ks47team02.user.project.pro.dto.JoinCate;
+import ks47team02.user.project.pro.dto.NotPaidList;
 import ks47team02.user.project.pro.dto.ProProject;
 import ks47team02.user.project.pro.dto.ProProjectApplicant;
 import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
@@ -61,12 +63,21 @@ public interface ProProjectMapper {
 	public List<ProgressStatus> getProgressStatusList();
 		// 전문과제 진행상태 상세 조회
 	public ProgressStatus getProgressStatusInfoByProProjectCode(String proProjectCode);
-	
-	
-	
-	
-	
-	
+		// 전문과제 진행상태 수정
+	public int progressStatusModify(ProgressStatus progressStatus);
+//------------------------------------전문과제 성과금예치 관련---------------------------------------------------------------
+		// 전문과제 성과금 예치 목록 조회
+	public List<DepositList> getDepositList();
+		// 전문과제 성과금 예치 완료 작성
+	public void depositListInsert(DepositList depositList);
+		// 전문과제 성과금 예치 완료 작성 - 성과금 미입금 프로젝트 조회
+	public List<NotPaidList> getNotPaidList();
+		// 성과금 예치 목록 상세조회
+	public DepositList getDepositListInfoByProjectCode(String proProjectCode);
+		// 성과금 예치 목록 수정
+	public int depositListModify(DepositList depositList);
+		// 성과금 예치 목록 삭제
+	public void depositListDelete(String proProjectCode);
 	
 	
 	

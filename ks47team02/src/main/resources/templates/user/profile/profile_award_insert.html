@@ -35,97 +35,69 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="sidebar">
-						<div class="single-item mb-4">
-							<h4 class="mb-4">프로필</h4>
-							<a th:href="@{/profile/profileIntroList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
-							</a> <a th:href="@{/profile/profileSkillList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
-							</a> <a th:href="@{/profile/profileWorkSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
-							</a> <a th:href="@{/profile/profileEduSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
-							</a> <a th:href="@{/profile/profileCertificateList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
-							</a> <a th:href="@{/profile/profileAwardList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
-							</a> <a th:href="@{/profile/profilePortfolioList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-9">
+	<section class="contact-form section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
 					<div class="single-job mb-4 justify-content-between text-center">
-						<div class="card">
-							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">수상이력 등록</h3>
-								<div class="card-tools">
-									<a th:href="@{#}" id="awardInsertBtn" 
-										class="genric-btn info-border circle"> <i
-										class="fas">등록 완료</i>
-									</a> <a th:href="@{/profile/profileAwardList}" id="awardResetBtn" class="genric-btn danger-border circle">
-										<i class="fas">취소</i>
-									</a>
+						<div class="card single-job">
+							<form id="addAwardForm" th:action="@{/profile/profileAwardInsert}" method="post"
+								  class="d-md-flex justify-content-center">
+
+								<div class="left">
+									<p class="text-left" style="font-size:large; font-weight:900;">수상이름</p>
+									<input type="text"
+										   placeholder="수상이름" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '수상이름'"
+										   name="userAwardName"> 
+									<p class="text-left" style="font-size:large; font-weight:900;">기관명</p>
+									<input type="text"
+										   placeholder="기관명" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '기관명'"
+										   name="userAwardPublication">
+								    <p class="text-left" style="font-size:large; font-weight:900;">수상일시</p>
+									<input type="date"
+										   placeholder="수상일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '수상일시'"
+										   name="userAwardDate">
+									<p class="text-left" style="font-size:large; font-weight:900;">수상내역 및 역할</p>
+									<input type="text"
+										   placeholder="수상내역 및 역할" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '수상내역 및 역할'"
+										   name="awardDetails">
+									<input type="hidden" name="profileRegDate">
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch1"
+												name="profileHidden" checked>
+											<label for="confirm-switch1" style="margin: 2px 0"></label>
+										</div>
+									</div>
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">입사지원시 공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch2"
+												name="profileApplicationHidden" checked> 
+											<label for="confirm-switch2" style="margin: 2px 0"></label>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="card-body table-responsive p-0">
-								<form id="addAwardForm" th:action="@{/profile/profileAwardInsert}" method="post" class="d-md-flex justify-content-between">
-									<table class="table table-valign-middle">
-										<thead>
-											<tr>
-												<th>상훈명</th>
-												<th>기관명</th>
-												<th>수상일시</th>
-												<th>수상내역 및 역할</th>
-												<th>공개 여부</th>
-												<th>입사지원시 공개여부</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><input class="genric-btn" type="text" name="userAwardName"
-													placeholder="상훈명" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '상훈명'"></td>
-												<td><input class="genric-btn" type="text" name="userAwardPublication"
-													placeholder="기관명" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '기관명'"></td>
-												<td><input class="genric-btn" type="date" placeholder="수상일시" name="userAwardDate"></td>
-												<td><input class="genric-btn" type="text" name="awardDetails"
-													placeholder="수상내역 및 역할" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '수상내역 및 역할'"></td>
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch1" name="profileHidden" checked>
-															<label for="confirm-switch1"></label>
-														</div>
-													</div>
-												</td>
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2" name="profileApplicationHidden" checked>
-															<label for="confirm-switch2"></label>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-							</div>
+							</form>
+						</div>
+						<div class="card-tools">
+							<a th:href="@{#}" id="awardInsertBtn" 
+							   class="genric-btn info-border circle"> <i
+							   class="fas">등록 완료</i>
+							</a> <a th:href="@{/profile/profileAwardList}" id="awardResetBtn" class="genric-btn danger-border circle">
+								<i class="fas">취소</i>
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
+	
 </th:block>
 </html>

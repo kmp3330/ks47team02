@@ -24,17 +24,9 @@ public class AnnouncementController {
 	private final AnnouncementService announcementService;
 	
 	@GetMapping("/announcementRemove")
-	public String announcementRemove(@RequestParam(value="announcementCode") String announcementCode,
-									 Model model) {
+	public String announcementRemove(@RequestParam(value="announcementCode") String announcementCode) {
 		
 		announcementService.announcementRemove(announcementCode);
-		
-		log.info("공고삭제시 입력정보: {}", announcementCode);
-		
-		model.addAttribute("title","구인구직공고삭제화면");
-		model.addAttribute("titleText","구인구직공고삭제");
-		model.addAttribute("contents","구인구직공고삭제 페이지입니다.");
-		model.addAttribute("announcementCode", announcementCode);
 		
 		return "redirect:/announcement/announcementList";
 	}
@@ -66,7 +58,7 @@ public class AnnouncementController {
 		
 		announcementService.announcementInsert(announcement);
 		
-		log.info("공고등록시 입력정보: {}", announcement);
+		//log.info("공고등록시 입력정보: {}", announcement);
 		
 		return "redirect:/announcement/announcementList";
 	}
@@ -82,9 +74,13 @@ public class AnnouncementController {
 	}
 	
 	@GetMapping("/announcementList")
-	public String getAnnouncementList(Model model) {
+	public String getAnnouncementList(Model model,
+									  @RequestParam(value="searchKey", required = false, defaultValue = "") String searchKey,
+									  @RequestParam(value="searchValue", required = false) String searchValue) {
 		
-		List<Announcement> announcementList = announcementService.getAnnouncementList();
+		log.info("searchKey : {}", searchKey);
+		log.info("searchValue : {}", searchValue);
+		List<Announcement> announcementList = announcementService.getAnnouncementList(searchKey,searchValue);
 		model.addAttribute("title", "구인구직");
 		model.addAttribute("titleText", "구인구직공고");
 		model.addAttribute("contents", "구인구직공고목록 페이지입니다.");
