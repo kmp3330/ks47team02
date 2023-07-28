@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{user/layout/default}">
 
 <th:block layout:fragment="customJs">
@@ -7,7 +8,7 @@
 	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script> -->
 	<script>
 		
-		$('.danger-border').click(function (e) {
+		$('.job-btn2').click(function (e) {
 			e.preventDefault();
 			
 			let isDelete = confirm('정말로 삭제하시겠습니까?');
@@ -17,14 +18,12 @@
 				location.replace(`/profile/profileEduSpecDelete?userEduSpecCode=${userEduSpecCode}`);
 			}
 		});
-		
-		
 	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
 	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
+		<div class="container col-lg-10">
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="sidebar">
@@ -48,71 +47,63 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9">
-					<div class="single-job mb-4 justify-content-between text-center">
-						<div class="card">
-							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">경력관리</h3>
-								<div class="card-tools">
-									<a th:href="@{/profile/profileEduSpecInsert}" class="genric-btn info-border circle">
-										<i class="fas">등록</i>
-									</a>
-								</div>
-							</div>
-							<div class="card-body table-responsive p-0">
-								<table class="table table-striped table-valign-middle">
-									<thead>
-										<tr>
-											<!-- <th>회원별 학력 코드</th> -->
-											<!-- <th>회원아이디</th> -->
-											<th>학교 구분</th>
-											<th>학교명</th>
-											<th>전공명</th>
-											<th>졸업상태</th>
-											<th>입학일시</th>
-											<th>졸업일시</th>
-											<th>학점</th>
-											<th>총점</th>
-											<th>정보 등록 일시</th>
-											<th>공개 여부</th>
-											<th>입사지원시 공개여부</th>
-											<th>수정</th>
-											<th>삭제</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:unless="${#lists.isEmpty(profileEduSpecList)}"
-											th:each="l : ${profileEduSpecList}">
-											<!-- <td th:text="${l.userEduSpecCode}"></td> -->
-											<!-- <td th:text="${l.userId}"></td> -->
-											<td th:text="${l.userDegree}"></td>
-											<td th:text="${l.userUnivName}"></td>
-											<td th:text="${l.userUnivMajor}"></td>
-											<td th:text="${l.userUnivGrad}"></td>
-											<td th:text="${l.userUnivEnterDate}"></td>
-											<td th:text="${l.userUnivGradDate}"></td>
-											<td th:text="${l.userUnivScore}"></td>
-											<td th:text="${l.userUnivTotalScore}"></td>
-											<td th:text="${l.profileRegDate}"></td>
-											<td th:text="${l.profileHidden}"></td>
-											<td th:text="${l.profileApplicationHidden}"></td>
-											<td><a th:href="@{/profile/profileEduSpecModify(userEduSpecCode=${l.userEduSpecCode})}" class="genric-btn success-border circle"> <i
-														class="fas">수정</i>
-												</a></td>
-											<td><a th:href="@{#}" id="profileEduSpecDelete" th:data-user-edu-spec-code="${l.userEduSpecCode}"   class="genric-btn danger-border circle"> <i
-														class="fas">삭제</i>
-												</a></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+				<div class="col-lg-7">
+					<div class="mb-2">
+						<div class="card-tools">
+							<a th:href="@{/profile/profileEduSpecInsert}"
+							   class="genric-btn info-border circle"> <i class="fas">등록</i>
+							</a>
 						</div>
 					</div>
-				</div>
+                    <div class="main-content">
+                        <div class="single-content1" th:unless="${#lists.isEmpty(profileEduSpecList)}"
+                           	 th:each="l : ${profileEduSpecList}">
+                            <div class="single-job mb-4 d-lg-flex justify-content-between">
+                                <div class="job-text">
+                                    <h4 th:text="${l.userDegree}"></h4>
+                                    <ul class="mt-4">
+                                        <li class="mb-3"><h6 th:text="|[학교명] : ${l.userUnivName}|"></h6></li>
+                                        <li class="mb-3"><h6 th:text="|[전공명] : ${l.userUnivMajor}|"></h6></li>
+                                        <li class="mb-3"><h6 th:text="|[정보등록일시] : ${l.profileRegDate}|"></h6></li>
+                                        <li class="mb-3">
+                                        	<th:block th:if="${l.profileHidden == true}">
+                                        		<h6 th:text="|[공개여부] : O|"></h6>
+                                        	</th:block>
+                                        	<th:block th:unless="${l.profileHidden == true}">
+                                        		<h6 th:text="|[공개여부] : X|"></h6>
+                                        	</th:block>
+                                       	</li>
+                                        <li class="mb-3">
+                                        	<th:block th:if="${l.profileApplicationHidden == true}">
+                                        		<h6 th:text="|[입사지원시 공개여부] : O|"></h6>
+                                        	</th:block>
+                                        	<th:block th:unless="${l.profileApplicationHidden == true}">
+                                        		<h6 th:text="|[입사지원시 공개여부] : X|"></h6>
+                                        	</th:block>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="job-btn align-self-center">
+		                            <a th:href="@{/profile/profileEduSpecModify(userEduSpecCode=${l.userEduSpecCode})}"
+		                               class="third-btn job-btn4">수정</a>
+		                            <a th:href="@{#}" id="profileEduSpecBtn" th:data-user-edu-spec-code="${l.userEduSpecCode}"
+		                               class="third-btn job-btn2">삭제</a>
+		                        </div>
+                            </div>
+                        </div>
+                        <div class="single-content1" th:if="${#lists.isEmpty(profileEduSpecList)}">
+                        	<div class="single-job d-lg-flex justify-content-center">
+                            	<div class="job-text">
+                                <h5 th:text="|***등록된 학력이 없습니다.***|"></h5>
+                             </div>
+						</div>
+          			</div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</section>
-
+	
 </th:block>
-
 </html>
+										

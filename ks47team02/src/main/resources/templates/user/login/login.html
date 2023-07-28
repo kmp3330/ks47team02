@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{user/layout/default}">
+      layout:decorate="~{user/login/layout/default}">
 <head>
   <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
   <style>
     h6.mb-0.pb-2 {
       position: relative;
-      z-index: 9999;
+      z-index: 1;
     }
     #signupBtn {
+      background-color: #0f222ab3;
+    }
+    #cpLoginBtn {
       background-color: #0f222ab3;
     }
   </style>
@@ -18,6 +21,8 @@
   <!-- 자바스크립트 작성 공간 -->
   <script>
     $(document).ready(function() {
+      $('.card-header').css('opacity', '1');
+      
       $('#reg-log').change(function() {
         if(this.checked) {
           $('.card-front').hide();
@@ -102,8 +107,8 @@
                       <i class="input-icon uil fas fa-lock"></i>
                     </div>
                     <button type="submit" class="btn mt-4" id="loginBtn">log in</button>
-                    <button type="submit" class="btn mt-4" id="signupBtn">sign up</button>
-                    <h5 class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></h5>
+                    <a th:href="@{/addNormalMember}" class="btn mt-4" id="signupBtn">sign up</a>
+                    <h5 class="mb-0 mt-4 text-center"><a href="#" class="link">Forgot your password?</a></h5>
                   </div>
                 </div>
               </div>
@@ -122,8 +127,8 @@
                       <i class="input-icon uil fas fa-lock"></i>
                     </div>
                     <button type="submit" class="btn mt-4" id="cpLoginBtn">log in</button>
-                    <button type="submit" class="btn mt-4" id="cpSignupBtn">sign up</button>
-                    <h5 class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></h5>
+                    <a th:href="@{/addCompanyMember}" class="btn mt-4" id="cpSignupBtn">sign up</a>
+                    <h5 class="mb-0 mt-4 text-center"><a href="#" class="link">Forgot your password?</a></h5>
                   </div>
                 </div>
               </div>

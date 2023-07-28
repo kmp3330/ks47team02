@@ -1,6 +1,7 @@
 package ks47team02.user.profile.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -35,10 +36,10 @@ public interface ProfilePortfolioMapper {
 	
 	
 	// 참여한 전문과제 프로젝트 목록
-	
+	public List<Map<String, Object>> getProProjectList(String sessionId);
 	
 	// 참여한 일반과제 프로젝트 목록
-
+	
 	
 	// 포트폴리오 등록
 	public int addProfilePortfolio(ProfilePortfolio profilePortfolio);

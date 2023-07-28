@@ -32,33 +32,6 @@
   <link rel="stylesheet" th:href="@{https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css}">
   <link rel="stylesheet" th:href="@{/admin/dist/css/adminlte.min.css}">
   <style>
-    .center-image {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
-      position: relative;
-    }
-    .right-image {
-      position: fixed;
-      right: 10px;
-      bottom: auto;
-      top: 360px;
-    }
-    .cls-btn {
-      position: absolute;
-      cursor: pointer;
-      color: darkred;  /* 버튼의 색상을 블랙으로 변경 */ /* 버튼에 회색 테두리를 추가 */
-      padding: 0 4px;
-    }
-    .cls-btn2 {
-      position: relative;
-      top: -45px;
-      left: 20px;
-      cursor: pointer;
-      color: darkred;
-      padding: 0 5px;
-    }
   </style>
 </head>
 
@@ -77,19 +50,7 @@
 <!-- 컨텐츠 시작 -->
 <div layout:fragment="customContents"></div>
 <!-- 컨텐츠 끝 -->
-<div class="right-image">
-  <span class="cls-btn" onclick="this.parentElement.style.display='none';">×</span>
-  <a th:href="@{http://www.naver.com}" onclick="event.stopPropagation();">
-    <img th:src="@{/user/assets/images/banner2.jpg}" alt="banner" width="125px">
-  </a>
-</div>
 
-<div class="center-image">
-  <span class="cls-btn2" onclick="this.parentElement.style.display='none';">×</span>
-  <a th:href="@{http://www.daum.net}" onclick="event.stopPropagation();">
-    <img th:src="@{/user/assets/images/zeroPlusBanner.jpg}" alt="banner" height="110px">
-  </a>
-</div>
 <!-- Footer Area Starts -->
 <footer th:replace="~{user/fragments/footer :: footerFragment}"></footer>
 <!-- Footer Area End -->
@@ -103,6 +64,8 @@
 <script th:src="@{/user/assets/js/vendor/jquery.nice-select.min.js}"></script>
 <script th:src="@{/user/assets/js/vendor/ion.rangeSlider.js}"></script>
 <script th:src="@{/user/assets/js/main.js}"></script>
+<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+
 
 <!-- 사용자정의 js 파일 -->
 <th:block layout:fragment="customJs">

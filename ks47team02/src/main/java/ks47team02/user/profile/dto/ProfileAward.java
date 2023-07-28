@@ -11,6 +11,7 @@ public class ProfileAward {
 	private String userAwardPublication;
 	private String userAwardDate;
 	private String awardDetails;
+	private String profileRegDate;
 	private boolean profileHidden;
 	private boolean profileApplicationHidden;
 	

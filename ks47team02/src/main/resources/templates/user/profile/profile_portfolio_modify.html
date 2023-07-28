@@ -6,10 +6,10 @@
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
 	<script>
-		$('#portfolioInsertBtn').click(function (e) {
+		$('#portfoliomodifyBtn').click(function (e) {
 			e.preventDefault();
 			
-			$('#modifyportfolioForm').submit();
+			$('#modifyPortfolioForm').submit();
 		});
 		
 		
@@ -18,136 +18,126 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="sidebar">
-						<div class="single-item mb-4">
-							<h4 class="mb-4">프로필</h4>
-							<a th:href="@{/profile/profileIntroList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
-							</a> <a th:href="@{/profile/profileSkillList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
-							</a> <a th:href="@{/profile/profileWorkSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
-							</a> <a th:href="@{/profile/profileEduSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
-							</a> <a th:href="@{/profile/profileCertificateList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
-							</a> <a th:href="@{/profile/profileAwardList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
-							</a> <a th:href="@{/profile/profilePortfolioList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-9">
+	<section class="contact-form section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
 					<div class="single-job mb-4 justify-content-between text-center">
-						<div class="card">
-							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">포트폴리오 수정</h3>
-								<div class="card-tools">
-									<a th:href="@{#}" id="portfolioInsertBtn"
-										class="genric-btn info-border circle"> <i class="fas">수정완료</i>
-									</a> <a th:href="@{/profile/profilePortfolioList}"
-										id="portfolioResetBtn" class="genric-btn danger-border circle">
-										<i class="fas">취소</i>
-									</a>
+						<div class="card single-job">
+							<form id="modifyPortfolioForm"
+								  th:action="@{/profile/profilePortfolioModify}" method="post"
+								  class="d-md-flex justify-content-center">
+
+								<div class="left" th:object="${profilePortfolioInfo}">
+									<input class="genric-btn" type="hidden"
+										   name="userPortfolioCode" th:value="*{userPortfolioCode}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">프로젝트 제목</p>
+									<input type="text"
+										   placeholder="프로젝트 제목" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '프로젝트 제목'"
+										   name="userProjectName" th:value="*{userProjectName}"> 
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">참여분야</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;" name="joinCateCode"
+												placeholder="참여분야">
+												<option th:value="*{joinCateCode}">[[*{joinCateName}]]</option>
+												<th:block th:unless="${#lists.isEmpty(joinCateList)}"
+													th:each="l : ${joinCateList}">
+													<option th:value="${l.joinCateCode}">[[${l.joinCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+									
+									<p class="text-left" style="font-size:large; font-weight:900;">작업분류</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;" name="workCateCode"
+												placeholder="작업분류" th:selected="*{workCateCode}">
+												<option th:value="*{workCateCode}">[[*{workCateName}]]</option>
+												<th:block th:unless="${#lists.isEmpty(workCateList)}"
+													th:each="l : ${workCateList}">
+													<option th:value="${l.workCateCode}">[[${l.workCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+									
+									<p class="text-left" style="font-size:large; font-weight:900;">주제분류</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;"
+												name="subjectCateCode" placeholder="주제분류"
+												th:selected="*{subjectCateCode}">
+												<option th:value="*{subjectCateCode}">[[*{subjectCateName}]]</option>
+												<th:block th:unless="${#lists.isEmpty(subjectCateList)}"
+													th:each="l : ${subjectCateList}">
+													<option th:value="${l.subjectCateCode}">[[${l.subjectCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">맡은기능</p>
+									<input type="text"
+										   placeholder="맡은기능" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '맡은기능'"
+										   name="userRequiredSkill" th:value="*{userRequiredSkill}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">내용</p>
+									<input type="text"
+										   placeholder="내용" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '내용'"
+										   name="userDetails" th:value="*{userDetails}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">기능 시작 일시</p>
+									<input type="date"
+										   placeholder="기능 시작 일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '기능 시작 일시'"
+										   name="userProjectStartDate" th:value="*{userProjectStartDate}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">기능 완료 일시</p>
+									<input type="date"
+										   placeholder="기능 완료 일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '기능 완료 일시'"
+										   name="userProjectEndDate" th:value="*{userProjectEndDate}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">작업일수</p>
+									<input type="number"
+										   placeholder="작업일수" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '작업일수'"
+										   name="userProjectDays" th:value="*{userProjectDays}">
+										   
+									<p class="text-left" style="font-size:large; font-weight:900;">프로젝트 구분</p>
+									<input type="text"
+										   placeholder="프로젝트 구분" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '프로젝트 구분'" readonly
+										   name="userProjectGen" th:value="*{userProjectGen}">
+										   
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch1"
+												name="profileHidden" th:checked="*{profileHidden}">
+											<label for="confirm-switch1"></label>
+										</div>
+									</div>
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">입사지원시 공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch2"
+												name="profileApplicationHidden"
+												th:checked="*{profileApplicationHidden}"> <label
+												for="confirm-switch2"></label>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="card-body table-responsive p-0">
-								<form id="modifyPortfolioForm"
-									th:action="@{/profile/profilePortfolioModify}" method="post"
-									class="d-md-flex justify-content-between">
-									<table class="table table-valign-middle"
-										th:object="${profilePortfolioInfo}">
-										<thead>
-											<tr>
-												<th>프로젝트 제목</th>
-												<th>참여 분야 이름</th>
-												<th>작업 분류 이름</th>
-												<th>주제 분류 이름</th>
-												<th>맡은 기능</th>
-												<th>내용</th>
-												<th>기능 시작 일시</th>
-												<th>기능 완료 일시</th>
-												<th>작업 일수</th>
-												<th>전문/일반 구분</th>
-												<th>공개여부</th>
-												<th>입사지원 시 공개여부</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><input class="genric-btn" type="hidden"
-													name="userPortfolioCode" th:value="*{userPortfolioCode}">
-													<input class="genric-btn" type="text"
-													name="userProjectName" th:value="*{userProjectName}">
-												</td>
-												<td><select style="display: none;" name="joinCateCode"
-													placeholder="참여분야">
-														<option th:value="*{joinCateCode}">[[*{joinCateName}]]</option>
-														<th:block th:unless="${#lists.isEmpty(joinCateList)}"
-															th:each="l : ${joinCateList}">
-															<option th:value="${l.joinCateCode}">[[${l.joinCateName}]]</option>
-														</th:block>
-												</select></td>
-												<td><select style="display: none;" name="workCateCode"
-													placeholder="작업분류" th:selected="*{workCateCode}">
-														<option th:value="*{workCateCode}">[[*{workCateName}]]</option>
-														<th:block th:unless="${#lists.isEmpty(workCateList)}"
-															th:each="l : ${workCateList}">
-															<option th:value="${l.workCateCode}">[[${l.workCateName}]]</option>
-														</th:block>
-												</select></td>
-												<td><select style="display: none;"
-													name="subjectCateCode" placeholder="주제분류"
-													th:selected="*{subjectCateCode}">
-														<option th:value="*{subjectCateCode}">[[*{subjectCateName}]]</option>
-														<th:block th:unless="${#lists.isEmpty(subjectCateList)}"
-															th:each="l : ${subjectCateList}">
-															<option th:value="${l.subjectCateCode}">[[${l.subjectCateName}]]</option>
-														</th:block>
-												</select></td>
-												<td><input class="genric-btn" type="text"
-													name="userRequiredSkill" th:value="*{userRequiredSkill}"></td>
-												<td><input class="genric-btn" type="text"
-													name="userDetails" th:value="*{userDetails}"></td>
-												<td><input class="genric-btn" type="date"
-													name="userProjectStartDate"
-													th:value="*{userProjectStartDate}"></td>
-												<td><input class="genric-btn" type="date"
-													name="userProjectEndDate" th:value="*{userProjectEndDate}"></td>
-												<td><input class="genric-btn" type="number"
-													name="userProjectDays" th:value="*{userProjectDays}"></td>
-												<td><input class="genric-btn" type="text"
-													name="userProjectGen" th:value="*{userProjectGen}"></td>
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch1"
-																name="profileHidden" th:checked="*{profileHidden}">
-															<label for="confirm-switch1"></label>
-														</div>
-													</div>
-												</td>
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2"
-																name="profileApplicationHidden"
-																th:checked="*{profileApplicationHidden}"> <label
-																for="confirm-switch2"></label>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-							</div>
+							</form>
+						</div>
+						<div class="card-tools">
+							<a th:href="@{#}" id="portfoliomodifyBtn"
+							   class="genric-btn info-border circle"> <i class="fas">수정완료</i>
+							</a> <a th:href="@{/profile/profilePortfolioList}"
+								id="portfolioResetBtn" class="genric-btn danger-border circle">
+								<i class="fas">취소</i>
+							</a>
 						</div>
 					</div>
 				</div>

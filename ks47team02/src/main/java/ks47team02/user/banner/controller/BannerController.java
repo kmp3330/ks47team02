@@ -64,8 +64,4 @@ public class BannerController {
 		model.addAttribute("contents", "배너 결제");
 		return "user/banner/bannerPayment";
 	}
-
-
-
-	
 }

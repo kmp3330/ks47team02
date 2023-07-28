@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
+import ks47team02.user.project.pro.dto.AccountHolderInfoList;
 import ks47team02.user.project.pro.dto.ApplicantAccount;
 import ks47team02.user.project.pro.dto.DepositList;
 import ks47team02.user.project.pro.dto.JoinCate;
@@ -21,6 +22,7 @@ import ks47team02.user.project.pro.dto.ProProject;
 import ks47team02.user.project.pro.dto.ProProjectApplicant;
 import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
 import ks47team02.user.project.pro.dto.ProgressStatus;
+import ks47team02.user.project.pro.dto.SendMoneyComplete;
 import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
 
@@ -255,7 +257,7 @@ public class ProProjectController {
 		log.info("progressStatus : {}", progressStatus);
 		return "redirect:/project/pro/progressStatusList";
 	}
-	//---------------------------------전문과제 성과금 목록 조회, 작성, 수정, 삭제 --------------------------------------------------------------------------------------------------------------
+//---------------------------------전문과제 성과금 목록 조회, 작성, 수정, 삭제 --------------------------------------------------------------------------------------------------------------
 	// 성과금 예치 완료 목록	230726 1100
 	@GetMapping("/depositList")
 	public String proProjectDepositList(Model model) {
@@ -269,10 +271,10 @@ public class ProProjectController {
 	}
 	// 성과금 예치 완료 작성 전 처리 230726 1230
 	@GetMapping("/depositListInsert")
-	public String DepositListInsert(Model model) {
-		
+	public String depositListInsert(Model model) {
 		List<DepositList> depositList = ProProjectService.getDepositList();
 		List<NotPaidList> notPaidList = ProProjectService.getNotPaidList();
+		
 		model.addAttribute("notPaidList", notPaidList);
 		model.addAttribute("depositList", depositList);
 		model.addAttribute("title", "성과금 예치 완료 작성");
@@ -281,13 +283,13 @@ public class ProProjectController {
 	}
 	// 성과금 예치 완료 작성 후 처리 230726 1513
 	@PostMapping("/depositListInsert")
-	public String DepositListInsert(DepositList depositList) {
+	public String depositListInsert(DepositList depositList) {
 		ProProjectService.DepositInsert(depositList);
 		return"redirect:/project/pro/depositList";
 	}
 	// 성과굼 예치 목록 수정 전 처리 230726 1600
 	@GetMapping("/depositListModify")
-	public String DepositListModify(@RequestParam(value="proProjectCode") String proProjectCode,
+	public String depositListModify(@RequestParam(value="proProjectCode") String proProjectCode,
 									Model model) {
 		// 성과금 예치 목록 상세조회
 		DepositList depositListInfo = ProProjectService.getDepositListInfoByProjectCode(proProjectCode);
@@ -318,10 +320,42 @@ public class ProProjectController {
 		
 		return "redirect:/project/pro/depositList?proProjectCode=" + proProjectCode + "";
 	}
-	
+//---------------------------------전문과제 성과금 송금 완료 목록 조회, 작성, 수정, 삭제 --------------------------------------------------------------------------------------------------------------
+	// 성과금 송금 완료 목록 조회 230727 1005
+	@GetMapping("/sendMoneyCompleteList")
+	public String sendMoneyCompleteList(Model model) {
+		List<SendMoneyComplete> sendMoneyCompleteList = ProProjectService.getSendMoneyCompleteList();
+		
+		model.addAttribute("sendMoneyCompleteList", sendMoneyCompleteList);
+		model.addAttribute("title", "성과금 송금 완료 목록");
+		model.addAttribute("contents", "성과금 송금 완료 목록 페이지 입니다.");
+		
+		return "user/project/pro/send_money_complete_list";
+	}
+	// 성과금 송금 완료 작성 전 처리 230727 1200
+	@GetMapping("sendMoneyCompleteInsert")
+	public String sendMoneyCompleteInsert(Model model) {
+		List <SendMoneyComplete> sendMoneyCompleteList = ProProjectService.getSendMoneyCompleteList();
+		List <AccountHolderInfoList> accountHolderInfoList = ProProjectService.getAccountHolderInfoList();
+		List<ProProjectPersonalFunction> proProjectPersonalFunctionList = ProProjectService.proProjectPersonalFunctionList();
+		
+		log.info("db에 저장된 정보 - accountHolderInfoList : {}", accountHolderInfoList);
+		//model.addAttribute("proProjectPersonalFunctionList", proProjectPersonalFunctionList);
+		model.addAttribute("accountHolderInfoList", accountHolderInfoList);
+		model.addAttribute("sendMoneyCompleteList", sendMoneyCompleteList);
+		model.addAttribute("title", "성과금 송금 완료 작성");
+		model.addAttribute("contents", "성과금 송금 완료 작성 페이지 입니다.");
+		return "user/project/pro/send_money_complete_insert";
+	}
+	// 성과금 송금 완료 작성 후 처리
+	@PostMapping("sendMoneyCompleteInsert")
+	public String sendMoneyCompleteInsert(SendMoneyComplete sendMoneyComplete) {
+		ProProjectService.sendMoneyCompleteInsert(sendMoneyComplete);
+		return "redirect:/project/pro/sendMoneyCompleteList";
+	}
 
 	
-	
+	 
 //	// 성과금 송금 완료 목록
 //	@GetMapping("/proProjectSendMoneyCompleteList")
 //	public String proProjectSendMoneyCompleteList(Model model) {  

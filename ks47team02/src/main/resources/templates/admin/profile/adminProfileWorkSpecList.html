@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{admin/layout/default}">
 
 <head>
-	<link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid.min.css}">
-	<link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid-theme.min.css}">
+<link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid.min.css}">
+<link rel="stylesheet"
+	th:href="@{/admin/plugins/jsgrid/jsgrid-theme.min.css}">
 </head>
 
 <th:block layout:fragment="customJs">
@@ -14,7 +16,7 @@
 	<script th:src="@{/admin/plugins/jsgrid/jsgrid.min.js}"></script>
 	<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
 	<script>
-
+	  
 	</script>
 </th:block>
 
@@ -40,75 +42,122 @@
 				</div>
 				<!-- /.card-header -->
 				<div class="card-body">
-					<div id="jsGrid1" class="jsgrid" style="position: relative; height: 100%; width: 100%;">
-						<div class="jsgrid-grid-header jsgrid-header-scrollbar">
+					<div id="jsGrid1" class="jsgrid"
+						style="position: relative; height: 100%; width: 100%;">
+						<div class="jsgrid-grid-body" style="height: 450px;">
 							<table class="jsgrid-table">
-								<tr class="jsgrid-header-row">
-									<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 80px;">회원아이디</th>
-									<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">회사명</th>
-									<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">기술명</th>
-									<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">입사일시</th>
-										<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">퇴사일시</th>
-										<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">근무부서</th>
-										<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">직위</th>
-										<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">딤당업무</th>
-									<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">정보 등록 일시</th>
-									<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 60px;">공개여부</th>
-									<th class="jsgrid-header-cell jsgrid-align-center jsgrid-header-sortable"
-										style="width: 70px;">입사지원 시 공개여부</th>
-								</tr>
-							</table>
-						</div>
-						<div class="jsgrid-grid-body" style="height: 816.8px;">
-							<table class="jsgrid-table">
+								<thead>
+									<tr class="jsgrid-header-row">
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 40px;"><input type="checkbox"></th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 70px;">회원아이디</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">회사명</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">기술명</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">입사일시</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">퇴사일시</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">근무부서</th>
+											<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">직위</th>
+											<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">담당업무</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">등록일시</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 40px;">삭제</th>
+									</tr>
+								</thead>
 								<tbody>
-									<tr th:unless="${#lists.isEmpty(profileWorkSpecList)}"
-										th:each="l : ${profileWorkSpecList}">
-										<!-- <td th:text="${l.userIntroCode}"></td> -->
-										<td th:text="${l.userId}"></td>
-										<td th:text="${l.userCompany}"></td>
-										<td th:text="${l.userSkill}"></td>
-										<td th:text="${l.userEnterDate}"></td>
-										<td th:text="${l.userLeaveDate}"></td>
-										<td th:text="${l.userDepartment}"></td>
-										<td th:text="${l.userRank}"></td>
-										<td th:text="${l.userRank}"></td>
-										<td th:text="${l.userWork}"></td>
-										<td th:text="${l.profileRegDate}"></td>
-										<td th:text="${l.profileHidden}"></td>
-										<td th:text="${l.profileApplicationHidden}"></td>
+									<th:block th:unless="${#lists.isEmpty(profileWorkSpecList)}"
+											  th:each="l : ${profileWorkSpecList}">
+										<tr class="jsgrid-row">
+											<td class="jsgrid-cell jsgrid-align-center">
+												<input type="checkbox">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userId}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userCompany}"> </td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userSkill}"></td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userEnterDate}"></td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userLeaveDate}"></td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userDepartment}"></td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userRank}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userWork}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.profileRegDate}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center">
+												<input type="button" value="삭제" style="border-radius: 3px; padding:1px; font-size:12px; border:1px solid;">
+											</td>
+										</tr>
+									</th:block>
+									<tr th:if="${#lists.isEmpty(profileWorkSpecList)}">
+										<td colspan="5">등록된 회원의 일경력 정보를 조회할 수 없습니다.</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
 						<div class="jsgrid-pager-container">
 							<div class="jsgrid-pager">
-								페이지: <span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">처음</a></span>
-								<span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">이전</a></span> <span
-									class="jsgrid-pager-page"><a href="javascript:void(0);">1</a></span><span
-									class="jsgrid-pager-page"><a href="javascript:void(0);">2</a></span><span
-									class="jsgrid-pager-page"><a href="javascript:void(0);">3</a></span><span
-									class="jsgrid-pager-page jsgrid-pager-current-page">4</span><span
-									class="jsgrid-pager-page"><a href="javascript:void(0);">5</a></span>
-								<span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">다음</a></span> <span
-									class="jsgrid-pager-nav-button"><a href="javascript:void(0);">마지막</a></span>
-								&nbsp;&nbsp; 4 of 5
+								Pages: 
+								<span class="jsgrid-pager-nav-button">
+									<a th:href="@{/admin/profile/adminProfileWorkSpecList}">First</a>
+								</span>
+								<span class="jsgrid-pager-nav-button">
+									<a th:if="${currentPage > 1}" 
+									   th:href="@{/admin/profile/adminProfileWorkSpecList(currentPage=${currentPage-1})}">Prev</a>
+									<label th:unless="${currentPage > 1}">Prev</label>
+								</span> 
+								<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+									<span class="jsgrid-pager-page">
+											<a th:if="${currentPage != num}"
+											   th:href="@{/admin/profile/adminProfileWorkSpecList(currentPage=${num})}"
+											   th:text="${num}"></a>
+											<label th:if="${currentPage == num}"
+												   th:text="${num}"></label>
+									</span>
+								</th:block>
+								<span class="jsgrid-pager-nav-button">
+									<a th:if="${currentPage < lastPage}"
+									   th:href="@{/admin/profile/adminProfileWorkSpecList(currentPage=${currentPage+1})}">Next</a>
+									<label th:unless="${currentPage < lastPage}">Next</label>
+								</span>
+								<span class="jsgrid-pager-nav-button">
+									<a th:href="@{/admin/profile/adminProfileWorkSpecList(currentPage=${lastPage})}">Last</a>
+								</span>
 							</div>
 						</div>
 						<div class="jsgrid-load-shader"
 							style="display: none; position: absolute; inset: 0px; z-index: 1000;"></div>
 						<div class="jsgrid-load-panel"
-							style="display: none; position: absolute; top: 50%; left: 50%; z-index: 1000;">잠시만 기다려주세요...
-						</div>
+							style="display: none; position: absolute; top: 50%; left: 50%; z-index: 1000;">Please,
+							wait...</div>
 					</div>
 				</div>
 				<!-- /.card-body -->

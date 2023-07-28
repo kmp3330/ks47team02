@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		layout:decorate="~{user/layout/default}">
-<head>
-<meta charset="UTF-8">
-<title th:text="${title}">제</title>
-</head>
-<body>
-	<h1 th:text="${contents}">자기소개 페이지 입니다.</h1>
-</body>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{user/layout/default}">
 
 <th:block layout:fragment="customJs">
@@ -17,7 +8,7 @@
 	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script> -->
 	<script>
 		
-		$('.danger-border').click(function (e) {
+		$('.job-btn2').click(function (e) {
 			e.preventDefault();
 			
 			let isDelete = confirm('정말로 삭제하시겠습니까?');
@@ -27,14 +18,12 @@
 				location.replace(`/profile/profileIntroDelete?userIntroCode=${userIntroCode}`);
 			}
 		});
-		
-		
 	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
 	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
+		<div class="container col-lg-10">
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="sidebar">
@@ -42,9 +31,9 @@
 							<h4 class="mb-4">프로필</h4>
 							<a th:href="@{/profile/profileIntroList}"
 								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
-							</a> <a th:href="@{/profile/profileSkillList}"
+							</a> <a th:href="@{/profile/profileIntroList}"
 								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
-							</a> <a th:href="@{/profile/profileWorkSpecList}"
+							</a> <a th:href="@{/profile/profileIntroList}"
 								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
 							</a> <a th:href="@{/profile/profileEduSpecList}"
 								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
@@ -58,54 +47,59 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9">
-					<div class="single-job mb-4 justify-content-between text-center">
-						<div class="card">
-							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">자기소개</h3>
-								<div class="card-tools">
-									<a th:href="@{/profile/profileIntroInsert}" class="genric-btn info-border circle"> <i class="fas">등록</i>
-									</a>
-								</div>
-							</div>
-							<div class="card-body table-responsive p-0">
-								<table class="table table-striped table-valign-middle">
-									<thead>
-										<tr>
-											<!-- <th>회원별 자기소개 코드</th> -->
-											<!-- <th>회원아이디</th> -->
-											<th>자기소개</th>
-											<th>공개 여부</th>
-											<th>입사지원시 공개여부</th>
-											<th>수정</th>
-											<th>삭제</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:unless="${#lists.isEmpty(profileIntroList)}"
-											th:each="l : ${profileIntroList}">
-											<!-- <td th:text="${l.userIntroCode}"></td> -->
-											<!-- <td th:text="${l.userId}"></td> -->
-											<td th:text="${l.userIntro}"></td>
-											<td th:text="${l.profileHidden}"></td>
-											<td th:text="${l.profileApplicationHidden}"></td>
-											<td><a th:href="@{/profile/profileIntroModify(userIntroCode=${l.userIntroCode})}" class="genric-btn success-border circle"> <i
-														class="fas">수정</i>
-												</a></td>
-											<td><a th:href="@{#}" id="profileIntroDeleteBtn" th:data-user-intro-code="${l.userIntroCode}" class="genric-btn danger-border circle"> <i
-														class="fas">삭제</i>
-												</a></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+				<div class="col-lg-7">
+					<div class="mb-2">
+						<div class="card-tools">
+							<a th:href="@{/profile/profileIntroInsert}"
+							   class="genric-btn info-border circle"> <i class="fas">등록</i>
+							</a>
 						</div>
 					</div>
-				</div>
+                    <div class="main-content">
+                        <div class="single-content1" th:unless="${#lists.isEmpty(profileIntroList)}"
+                           	 th:each="l : ${profileIntroList}">
+                            <div class="single-job mb-4 d-lg-flex justify-content-between">
+                                <div class="job-text">
+                                    <h4 th:text="${title}"></h4>
+                                    <ul class="mt-4">
+                                        <li class="mb-3"><h6 th:text="|[내용] : ${l.userIntro}|"></h6></li>
+                                        <li class="mb-3">
+                                        	<th:block th:if="${l.profileHidden == true}">
+                                        		<h6 th:text="|[공개여부] : O|"></h6>
+                                        	</th:block>
+                                        	<th:block th:unless="${l.profileHidden == true}">
+                                        		<h6 th:text="|[공개여부] : X|"></h6>
+                                        	</th:block>
+                                       	</li>
+                                        <li class="mb-3">
+                                        	<th:block th:if="${l.profileApplicationHidden == true}">
+                                        		<h6 th:text="|[입사지원시 공개여부] : O|"></h6>
+                                        	</th:block>
+                                        	<th:block th:unless="${l.profileApplicationHidden == true}">
+                                        		<h6 th:text="|[입사지원시 공개여부] : X|"></h6>
+                                        	</th:block>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="job-btn align-self-center">
+		                            <a th:href="@{/profile/profileIntroModify(userIntroCode=${l.userIntroCode})}"
+		                               class="third-btn job-btn4">수정</a>
+		                            <a th:href="@{#}" id="profileIntroBtn" th:data-user-intro-code="${l.userIntroCode}"
+		                               class="third-btn job-btn2">삭제</a>
+		                        </div>
+                            </div>
+                        </div>
+                        <div class="single-content1" th:if="${#lists.isEmpty(profileIntroList)}">
+                        	<div class="single-job d-lg-flex justify-content-center">
+                            	<div class="job-text">
+                                <h5 th:text="|***등록된 자기소개가 없습니다.***|"></h5>
+                             </div>
+						</div>
+          			</div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</section>
-
 </th:block>
-
 </html>
