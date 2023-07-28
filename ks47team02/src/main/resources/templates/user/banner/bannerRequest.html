@@ -47,7 +47,10 @@
     .form-group{
       padding: 15px 0 15px 0;
     }
-    
+    form {
+      padding: 0px;
+      margin: 40px 0;
+    }
   
   </style>
 </head>
@@ -62,8 +65,8 @@
 
 <th:block layout:fragment="customContents">
   
-    <div class="row">
-      <div class="col-lg-3">
+    <div class="row container col-lg-12">
+      <div class="col-lg-3" style="margin-top: 40px">
         <div class="sidebar">
           <div class="single-item mb-4">
             <h4 class="mb-4">배너 광고</h4>
@@ -79,7 +82,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-8">
       <form id="requestForm" th:action="@{/banner/bannerRequest}" method="post">
       
         <div class="card card-primary">
