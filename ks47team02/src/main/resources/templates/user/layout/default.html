@@ -82,14 +82,14 @@
 <div layout:fragment="customContents"></div>
 <!-- 컨텐츠 끝 -->
 <div class="right-image">
-  <span class="cls-btn" onclick="this.parentElement.style.display='none';">×</span>
+  <span class="cls-btn" onclick="this.parentElement.style.visibility='hidden';">×</span>
   <a th:href="@{http://www.naver.com}" onclick="event.stopPropagation();">
     <img th:src="@{/user/assets/images/banner2.jpg}" alt="banner" width="125px">
   </a>
 </div>
 
 <div class="center-image">
-  <span class="cls-btn2" onclick="this.parentElement.style.display='none';">×</span>
+  <span class="cls-btn2" onclick="this.parentElement.style.visibility='hidden';">×</span>
   <a th:href="@{http://www.daum.net}" onclick="event.stopPropagation();">
     <img th:src="@{/user/assets/images/zeroPlusBanner.jpg}" alt="banner" height="110px">
   </a>
