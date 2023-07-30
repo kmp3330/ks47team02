@@ -54,10 +54,23 @@
 		<result column="subject_cate_name" property="subjectCateName"/>
 	</resultMap>
 	
-	<resultMap type="NormalProjects" id="workCateResultMap">
-		<id column="work_cate_code" property="workCateCode"/>
-		<result column="work_cate_name" property="workCateName"/>
+
+
+	<resultMap  type="normalProjectApplyApplicant" id="applyApplicantListMap">
+		<id column="reject_approval_code"			property="rejectApprovalCode"></id>
+		<result column="reject_approval_name" 		property="rejectApprovalName"></result>
+		<result column="reject_approval_message"	property="rejectApprovalMessage"></result>
 	</resultMap>
+
+	<!-- 승인/거절사유 목록 전체 조회 -->
+	<select  id="getAcceptApproveList" resultType="rejectApprovalList">
+		SELECT
+			reject_approval_code as rejectApprovalCode,
+			reject_approval_name as rejectApprovalName,
+			reject_approval_message as rejectApprovalMessage
+		FROM
+			reject_approval_list
+	</select>
 
 	<!-- 일반과제 신청자 상세조회 -->
 	<select id="getNormalProjectApplyApplicantById" parameterType="String" resultMap="normalProjectApplyApplicantMap">
@@ -113,6 +126,7 @@
 		INSERT INTO normal_project_apply_applicant
 			(normal_project_apply_code,
 			normal_project_code,
+			normal_project_name,
 			user_id,
 			normal_project_application_date,
 			normal_applyer_run_code,
@@ -125,6 +139,7 @@
 		SELECT
 			CONCAT('normal_project_apply',LPAD(CAST(SUBSTRING(MAX(normal_project_apply_code),21)+1 as UNSIGNED),3,'0')),
 			#{normalProjectCode},
+			(SELECT normal_project_name FROM normal_project WHERE normal_project_code = #{normalProjectCode}),
 			'id002',
 			CURDATE(),
 			'normal_applyer_run01',

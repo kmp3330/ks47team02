@@ -3,6 +3,7 @@ package ks47team02.user.project.normal.controller;
 import java.util.List;
 
 import ks47team02.user.project.normal.dto.normalProjectApplyApplicant;
+import ks47team02.user.project.pro.dto.ProProjectApplicant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
+import ks47team02.user.project.normal.dto.rejectApprovalList;
 import ks47team02.user.project.normal.service.NormalProjectService;
 import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.project.pro.dto.SubjectCate;
@@ -109,14 +111,34 @@ public class normalProjectController {
 		
 		return "redirect:/normalProject/projectList";
 	}
-	
 
-	
 
-	
+	/**
+	 * 일반과제 신청자 승인폼 GET
+	 * @param normalProjectApplyCode 신청자 코드
+	 *
+	 * */
+	@PostMapping("/addAcceptApprove")
+	public String addAcceptApprove(normalProjectApplyApplicant ApplyApplicant , String normalProjectApplyCode,
+								   Model model){
+		log.info("ApplyApplicant : {}", ApplyApplicant);
+		return "redirect:/normalProject/getApplicantAcceptList";
+	}
+
+
+
+	/**
+	 * 일반과제 신청자 승인폼 GET
+	 * @param normalProjectApplyCode 신청자 코드
+	 *
+	 * */
 	@GetMapping("/addAcceptApprove")
-	public String addAcceptApprove(Model model) {
-		model.addAttribute("title", "일반과제 신청자 승인");
+	public String addAcceptApprove(@RequestParam(value = "normalProjectApplyCode") String normalProjectApplyCode,
+								   Model model) {
+		List<rejectApprovalList> acceptApproveList = normalProjectService.getAcceptApproveList();
+		log.info("acceptApproveList", acceptApproveList);
+		model.addAttribute("normalProjectApplyCode", normalProjectApplyCode);
+		model.addAttribute("acceptApproveList", acceptApproveList);
 		return "user/project/normal/applyApplicant/addAcceptApprove";
 	}
 	
@@ -267,7 +289,7 @@ public class normalProjectController {
 	
 	/**
 	 * 일반과제 전체 리스트 가져오는 폼
-	 * @param Model model 모델 가져옴
+	 * @param model 모델 가져옴
 	 * @return 프로젝트 리스트 화면
 	 * 
 	 * */
@@ -303,7 +325,12 @@ public class normalProjectController {
 	
 	
 
-	
+	/**
+	 * 신청자 목록 조회
+	 * @param model
+	 * @return normalProjectApplyApplicantList 신청자 리스트
+	 *
+	 * */
 	@GetMapping("/getApplicantAcceptList")
 	public String getAcceptList(Model model) {
 		// 신청자 목록 조회

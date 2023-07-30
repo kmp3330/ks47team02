@@ -4,8 +4,10 @@ package ks47team02.user.project.normal.service;
 import java.util.List;
 
 import ks47team02.user.project.normal.dto.normalProjectApplyApplicant;
+import ks47team02.user.project.normal.dto.rejectApprovalList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +16,7 @@ import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
 import ks47team02.user.project.normal.mapper.NormalProjectMapper;
 import ks47team02.user.project.pro.dto.JoinCate;
-import lombok.extern.slf4j.Slf4j;
+
 
 @Service
 @Transactional
@@ -31,6 +33,23 @@ public class NormalProjectService {
 		this.normalProjectMapper = normalProjectMapper;
 	}
 
+	/**
+	 * 일반과제 신청자 승인/거절 리스트 조회
+	 * @return acceptApproveList 신청자 승인/거절 리스트
+	 *
+	 * */
+	public List<rejectApprovalList> getAcceptApproveList(){
+		List<rejectApprovalList> acceptApproveList = normalProjectMapper.getAcceptApproveList();
+		log.info("acceptApproveList : {}", acceptApproveList);
+		return acceptApproveList;
+	}
+
+	/**
+	 * 일반과제 신청
+	 * @param normalProjectCode 일반과제 코드
+	 * 나중에 아이디도 들어가게 해야한느데 ㅠ
+	 *
+	 * */
 	public void addApplicantAccept(String normalProjectCode){
 		normalProjectMapper.addApplicantAccept(normalProjectCode);
 	}
@@ -40,6 +59,7 @@ public class NormalProjectService {
 		return ApplyApplicantInfo;
 
 	}
+
 
 	/**
 	 * 일반과제 신청자 목록 조회

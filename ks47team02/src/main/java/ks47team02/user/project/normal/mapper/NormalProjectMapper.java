@@ -3,6 +3,7 @@ package ks47team02.user.project.normal.mapper;
 import java.util.List;
 
 import ks47team02.user.project.normal.dto.normalProjectApplyApplicant;
+import ks47team02.user.project.normal.dto.rejectApprovalList;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks47team02.user.project.normal.dto.NormalProjects;
@@ -13,6 +14,11 @@ import ks47team02.user.project.pro.dto.WorkCate;
 @Mapper
 public interface NormalProjectMapper {
 
+	/**
+	 * 신청자 승인/거절 사유 리스트 조회
+	 *
+	 * */
+	public List<rejectApprovalList> getAcceptApproveList();
 
 	/**
 	 * 일반과제 신청자 상세조회
