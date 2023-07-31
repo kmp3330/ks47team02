@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks47team02.admin.announcement.mapper.AdminAnnouncementMapper">
+
+	<delete id="adminAnnouncementRemove" parameterType="String">
+		/* 구인구직공고 삭제 */
+		DELETE
+		FROM
+			announcement
+		WHERE
+			announcement_code = #{announcementCode};
+	</delete>
+
+	<select id="getAdminAnnouncementCnt">
+		/* 구인구직공고 전체 행 갯수 */
+		SELECT
+			COUNT(*)
+		FROM
+			announcement;
+	</select>
+
+	<select id="getAdminAnnouncementList" parameterType="map" resultType="map">
+		/* 구인구직공고 조회 */
+		SELECT
+			a.announcement_code AS announcementCode,
+			a.cp_name 		    AS cpName,
+			a.join_cate_name    AS joinCateName,
+			a.area_cate 	    AS areaCate,
+			a.job_opening 	    AS jobOpening,
+			a.required_skills   AS requiredSkills,
+			a.career 		    AS career,
+			a.recruitment 	    AS recruitment,
+			a.wage			    AS wage,
+			a.due_date	  	    AS dueDate
+		FROM
+			announcement AS a
+		ORDER BY a.due_date DESC
+		<if test="startIndex != null and stratIndex > -1">
+			LIMIT #{startIndex}, #{rowPerPage};
+		</if>
+	</select>
+	
+</mapper>
+
