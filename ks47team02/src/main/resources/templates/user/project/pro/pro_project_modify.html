@@ -3,36 +3,6 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/layout/default}">
 
-	<head>
-    	<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
-    	<style>
-    		input{
-    			width: 98%;
-    			height: 23px;
-    		}
-    		td:nth-child(3n+1):not(:last-child){
-    			color: white;
-    			font-weight: 700;
-    			background-color: cornflowerblue;
-    		}
-    		select{
-    			width: 99%;
-    			text-align: center;
-    			height: 23px;
-    		}
-    		#idCheck{
-    			width: 99%; 
-    			height: 25px;
-    		}
-    		#proProjectModifyBtn, #resetBtn {
-    			width: 49%;
-    			height: 25px;
-    		}
-    		#proProjectCode{
-    			display : none;
-    		}
-    	</style>
-    </head>
     
     <th:block layout:fragment="customJs">
     	<script th:src="@{/js/jquery-3.7.0.js}"></script>
@@ -102,9 +72,10 @@
     		})   
     	
     		
+    		//회원가입버튼시 이벤트
     		
     		$('#proProjectModifyBtn').click(function(){
-    			const validateEle = $('#proProjectModifyForm input');
+    			const validateEle = $('#proProjectModifyForm select,input');
     								
     			let isSubmit = false;
     			validateEle.each((idx, item) => {
@@ -135,112 +106,136 @@
     </th:block>
 
 	<th:block layout:fragment="customContents">
-		<form id="proProjectModifyForm" th:action="@{/project/pro/proProjectModify}" method="post">
-  			<table th:object="${proProjectInfo}">
-  			<thead>※제목, 각 분야들은 수정할 수 없습니다.※</thead>
-				<tbody>
-					<tr>
-						<th:block>
-							<input type="text" id="proProjectCode" name="proProjectCode" th:value="*{proProjectCode}" hidden />
-						</th:block>
-						<td>
-							<label for="title">제목</label>
-						</td>
-						<td>
-							<input type="text" id="title" name="title" th:value="*{title}"
-								   readonly="readonly"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-						    <label for="JoinCate">참여분야</label>
-						</td>
-						<td>
-						    <select id="JoinCate" name="joinCateCode"disabled>
-						    <th:block th:unless="${#lists.isEmpty(joinCate)}"
-									  th:each="j : ${joinCate}">
-								 <option th:value="*{joinCateCode}"  th:selected="${j.joinCateCode} == *{joinCateName}">:::::::[[${j.joinCateName}]]:::::::</option>
-						    </select>
+		<section class="jobs-area section-padding">
+			<div class="container col-lg-12">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="sidebar">
+							<div class="single-item mb-4">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-9">
+						<div class="single-job mb-4 justify-content-between text-center">
+							<div class="card">
+								<div class="card-header border-0">
+									<h3 class="mb-0 title_color text-left">전문과제</h3>
+									<div class="card-tools">
+									</div>
+								</div>
+								<div class="card-body table-responsive p-0">
+									<form id="proProjectInsertForm" th:action="@{/project/pro/proProjectInsert}" method="post">
+										<table class="table table-striped table-valign-middle">
+											<thead>
+											</thead>
+											<tbody>
+												<tr>
+													<td>
+														<label for="title">제목</label>
+													</td>
+													<td>
+														<input type="text" id="title" name="title" th:value="*{title}"
+															   readonly="readonly"/>
+													</td>
+												</tr>
+												<tr>
+													<td>
+													    <label for="JoinCate">참여분야</label>
+													</td>
+													<td>
+													    <select id="JoinCate" name="joinCateCode"disabled>
+													    <th:block th:unless="${#lists.isEmpty(joinCate)}"
+																  th:each="j : ${joinCate}">
+															 <option th:value="*{joinCateCode}"  th:selected="${j.joinCateCode} == *{joinCateName}">:::::::[[${j.joinCateName}]]:::::::</option>
+													    </select>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="WorkCate">작업분야</label>
+													</td>
+													<td>
+													    <select id="WorkCate" name="workCateCode"disabled>
+													    <th:block th:unless="${#lists.isEmpty(workCate)}"
+																  th:each="w : ${workCate}">
+															 <option th:value="*{workCateCode}"
+															 		th:selected="${w.workCateCode} == *{workCateName}">:::::::[[${w.workCateName}]]:::::::</option>
+													    </select>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="SubjectCate">주제분야</label>
+													</td>
+													<td>
+													    <select id="SubjectCate" name="subjectCateCode"disabled>
+													    <th:block th:unless="${#lists.isEmpty(subjectCate)}"
+																  th:each="s : ${subjectCate}">
+															 <option th:value="*{subjectCate}"  th:selected="${s.subjectCateCode} == ${subjectCateName}">:::::::[[${s.subjectCateName}]]:::::::</option>
+													    </select>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="skill">필수 기술</label>
+													</td>
+													<td>
+														<input type="text" id="skill" name="skill" th:value="*{skill}"
+															   placeholder="필수 기술을 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="details">상세정보</label>
+													</td>
+													<td>
+														<input type="text" id="details" name="details" th:value="*{details}" 
+															   placeholder="상세 정보를 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="maxTotal">최대인원</label>
+													</td>
+													<td>
+														<input type="text" id="maxTotal" name="maxTotal" th:value="*{maxTotal}"
+															   placeholder="프로젝트 최대인원을 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="projectPrice"> 프로젝트 예상 금액</label>
+													</td>
+													<td>
+														<input type="text" id="proProjectPrice" name="proProjectPrice" th:value="*{proProjectPrice}" 
+															   placeholder="프로젝트 예상 금액을 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="dueDate">구인 마감 일자</label>
+													</td>
+													<td>
+														<input type="text" id="dueDate" name="dueDate" th:value="*{dueDate}"
+															   placeholder="구인 마감 일자를 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="3">
+														<button type="submit" id="proProjectModifyBtn">작성완료</button>
+														<a th:href="@{/project/pro/proProjectList}">뒤로가기</a>
+													</td>
+												</tr>	
+											</tbody> 
+										</table>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="WorkCate">작업분야</label>
-						</td>
-						<td>
-						    <select id="WorkCate" name="workCateCode"disabled>
-						    <th:block th:unless="${#lists.isEmpty(workCate)}"
-									  th:each="w : ${workCate}">
-								 <option th:value="*{workCateCode}"  th:selected="${w.workCateCode} == *{workCateName}">:::::::[[${w.workCateName}]]:::::::</option>
-						    </select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="SubjectCate">주제분야</label>
-						</td>
-						<td>
-						    <select id="SubjectCate" name="subjectCateCode"disabled>
-						    <th:block th:unless="${#lists.isEmpty(subjectCate)}"
-									  th:each="s : ${subjectCate}">
-								 <option th:value="*{subjectCate}"  th:selected="${s.subjectCateCode} == ${subjectCateName}">:::::::[[${s.subjectCateName}]]:::::::</option>
-						    </select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="skill">필수 기술</label>
-						</td>
-						<td>
-							<input type="text" id="skill" name="skill" th:value="*{skill}"
-								   placeholder="필수 기술을 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="details">상세정보</label>
-						</td>
-						<td>
-							<input type="text" id="details" name="details" th:value="*{details}" 
-								   placeholder="상세 정보를 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="maxTotal">최대인원</label>
-						</td>
-						<td>
-							<input type="text" id="maxTotal" name="maxTotal" th:value="*{maxTotal}"
-								   placeholder="프로젝트 최대인원을 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="projectPrice"> 프로젝트 예상 금액</label>
-						</td>
-						<td>
-							<input type="text" id="proProjectPrice" name="proProjectPrice" th:value="*{proProjectPrice}" 
-								   placeholder="프로젝트 예상 금액을 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="dueDate">구인 마감 일자</label>
-						</td>
-						<td>
-							<input type="text" id="dueDate" name="dueDate" th:value="*{dueDate}"
-								   placeholder="구인 마감 일자를 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<button type="submit" id="proProjectModifyBtn">작성완료</button>
-							<a th:href="@{/project/pro/proProjectList}">뒤로가기</a>
-						</td>
-					</tr>	
-				</tbody> 
-			</table>
-		</form>
 	</th:block>
 </html>

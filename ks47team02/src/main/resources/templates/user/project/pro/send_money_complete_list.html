@@ -24,9 +24,8 @@
 		    e.preventDefault();
 			let isDelete = confirm('정말로 삭제하시겠습니까?');
 			if(isDelete) {
-		        const proProjectCode = this.dataset.proProjectCode;
-		        location.href=`/project/pro/depositListDelete?proProjectCode=${proProjectCode}`;
-		        //location.replace(/project/pro/depositDelete?proProjectCode=${proProjectCode});
+		        const sendMoneyCompleteCode = this.dataset.proProjectCode;
+		        location.href=`/project/pro/sendMoneyCompleteDelete?sendMoneyCompleteCode=${sendMoneyCompleteCode}`;
 		    }
 		});
 	</script>
@@ -39,7 +38,7 @@
 						<th hidden>성과금송금완료코드</th>
 						<th hidden>전문 과제 코드</th>
 						<th hidden>관리자 아이디</th>
-						<th>전문 과제별 신청자 코드</th>
+						<th hidden>전문 과제별 신청자 코드</th>
 						<th>전문과제 참여한 아이디</th>
 						<th>프로젝트 성과금</th>
 						<th>송금일시</th>
@@ -67,10 +66,10 @@
 						<td th:text="${s.projectPayment}"></td>
 						<td th:text="${s.sendDate}"></td>
 						<td>
-							<a th:href="@{#}">수정하기</a>
+							<a th:href="@{/project/pro/sendMoneyCompleteModify(proProjectCode=${s.proProjectCode})}">수정하기</a>
 						</td>
 						<td>
-							<a class="sendMoneyCompleteDeleteBtn">삭제</a>
+							<a class="sendMoneyCompleteDeleteBtn" th:href="@{#}" th:data-pro-project-code="${s.sendMoneyCompleteCode}">삭제</a>
 						</td>
 					</tr>
 				</tbody>
