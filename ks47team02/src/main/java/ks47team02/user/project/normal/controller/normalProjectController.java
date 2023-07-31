@@ -2,6 +2,7 @@ package ks47team02.user.project.normal.controller;
 
 import java.util.List;
 
+import ks47team02.user.project.normal.dto.normalProjectApplyApplicant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,23 @@ public class normalProjectController {
 	
 	
 		/*등록 영역*/
+
+	/**
+	 * 일반과제 신청
+	 * @param normalProjectCode 일반과제 코드
+	 * @param model 모델
+	 *
+	 * */
+	@GetMapping("/addApplicantAccept")
+	public String addApplicantAccept(@RequestParam(value = "normalProjectCode") String normalProjectCode,
+									 Model model){
+		String returnjuso = "redirect:/normalProject/projectDetail?normalProjectCode=" + normalProjectCode;
+		normalProjectService.addApplicantAccept(normalProjectCode);
+
+
+		return returnjuso;
+
+	}
 	
 	
 	@GetMapping("/addPersonalFunction")
@@ -52,7 +70,7 @@ public class normalProjectController {
 	
 	/**
 	 * 일반과제 작성 
-	 * @param Model model
+	 * @param model 모델태그임
 	 * @return 일반과제 추가 페이지
 	 * 
 	 * */
@@ -76,7 +94,7 @@ public class normalProjectController {
 	
 	/**
 	 * 일반과제 작성 폼 post
-	 * @param normalProjects
+	 * @param normalProjects 입력받은 일반과제
 	 * @return 일반과제 리스트
 	 */
 	@PostMapping("/addProject")
@@ -92,36 +110,13 @@ public class normalProjectController {
 		return "redirect:/normalProject/projectList";
 	}
 	
-	@GetMapping("/addApplicantAccept")
-	public String addApplicantAccept(@RequestParam(value="normalProjectCode") String normalProjectCode, Model model) {
-		model.addAttribute("title", "일반과제 신청");
-		model.addAttribute("normalProjectCode" ,normalProjectCode);
-		
-		
-		
-		return "user/project/normal/applyApplicant/addApplicantAccept";
-	}
+
 	
-	@PostMapping("/addApplicantAccept")
 
-	public String addApplicantAccept(Model model) {
-		model.addAttribute("title", "일반과제 신청");
-
-
-
-		
-
-		return "redirect:/normalProject/getAcceptList";
-
-		
-
-
-	}
 	
 	@GetMapping("/addAcceptApprove")
 	public String addAcceptApprove(Model model) {
 		model.addAttribute("title", "일반과제 신청자 승인");
-		
 		return "user/project/normal/applyApplicant/addAcceptApprove";
 	}
 	
@@ -131,7 +126,8 @@ public class normalProjectController {
 	/*수정영역*/
 	@PostMapping("/modifyProject")
 	public String modifyProject(NormalProjects normalProject) {
-		log.info("normalProject : {}", normalProject);
+
+		normalProjectService.modifyNormalProject(normalProject);
 		
 		
 		return "redirect:/normalProject/projectList";
@@ -148,10 +144,9 @@ public class normalProjectController {
 	@GetMapping("/modifyProject")
 	public String modifyProject(@RequestParam(value="normalProjectCode") String normalProjectCode
 			,Model model) {
-		
-		/*월요일날 물어볼것 : 이거 각 LIST를 한번씩 가져오기 좀 번거로운데 한꺼번에 가져오게 할 수 있는 방법을 물어보기*/
+
 		//일반과제 리스트
-		List<NormalProjects> normalProject = normalProjectService.getNormalProjectByCode(normalProjectCode);
+		NormalProjects normalProject = normalProjectService.getNormalProjectByCode(normalProjectCode);
 		//참여분야 리스트
 		List<JoinCate> joinCateList = normalProjectService.getJoinCateList();
 		//작업분류 리스트
@@ -162,7 +157,7 @@ public class normalProjectController {
 		model.addAttribute("joinCateList", joinCateList);
 		model.addAttribute("workCateList", workCateList);
 		log.info("normalProjectController = {}", normalProject);
-		model.addAttribute("normalProjectList" ,normalProject);
+		model.addAttribute("normalProject" ,normalProject);
 		model.addAttribute("subjectCateList" ,subjectCateList);
 		model.addAttribute("title", "일반과제 수정 페이지");
 		
@@ -240,6 +235,35 @@ public class normalProjectController {
 	/* 삭제영역 끝*/
 	
 	/*get영역*/
+
+	/**
+	 * 일반과제 신청자 상세보기
+	 * @param userId 신청자 아이디
+	 * @return nor
+	 *
+	 * */
+	@GetMapping("/getAcceptApproveDetail")
+	public String getProjectAcceptDetail(@RequestParam(value = "userId") String userId,
+										 Model model){
+		normalProjectApplyApplicant applyApplicantInfo = normalProjectService.getNormalProjectApplyApplicantById(userId);
+		log.info("applyApplicantInfo : {}", applyApplicantInfo);
+		model.addAttribute("applyApplicantInfo", applyApplicantInfo);
+		return "user/project/normal/applyApplicant/getAcceptApproveDetail";
+	}
+
+	/**
+	 * 일반과제 상세 페이지 이동
+	 * @param projectCode 일반과제코드
+	 * @return 일반과제 상세 화면
+	 * */
+	@GetMapping("/projectDetail")
+	public String getProjectDetail(@RequestParam(value = "normalProjectCode") String projectCode,Model model){
+		NormalProjects normalProject = normalProjectService.getNormalProjectByCode(projectCode);
+		model.addAttribute("title", "일반과제 상세 페이지 이동");
+		model.addAttribute("normalProject", normalProject);
+
+		return "user/project/normal/list/projectDetail";
+	}
 	
 	/**
 	 * 일반과제 전체 리스트 가져오는 폼
@@ -249,8 +273,7 @@ public class normalProjectController {
 	 * */
 	@GetMapping("/projectList")
 	public String getProjectList(Model model) {
-		
-		log.info("normalProjectList = {}", "안녕");
+
 		List<NormalProjects> normalProjectList =  normalProjectService.getNormalProjects();
 		model.addAttribute("normalProjectList", normalProjectList);
 		model.addAttribute("title", "일반과제 목록");
@@ -281,11 +304,16 @@ public class normalProjectController {
 	
 
 	
-	@GetMapping("/getAcceptList")
+	@GetMapping("/getApplicantAcceptList")
 	public String getAcceptList(Model model) {
+		// 신청자 목록 조회
+		List<normalProjectApplyApplicant> normalProjectApplyApplicantList = normalProjectService.getNormalProjectApplyApplicantList();
+
+
+		model.addAttribute("normalProjectApplyApplicantList", normalProjectApplyApplicantList);
 		model.addAttribute("title", "일반과제 신청자 목록");
 		
-		return "user/project/normal/applyApplicant/getAcceptList";
+		return "user/project/normal/applyApplicant/getApplicantAcceptList";
 	}
 	
 	/*get영역 끝*/

@@ -8,7 +8,7 @@ public class SendMoneyComplete {
 	private String sendMoneyCompleteCode;
 	private String proProjectCode;
 	private String adminId;
-	private String proProjectApplicant;
+	private String proProjectPersonalFunctionCode;
 	private String userId;
 	private int projectPayment;
 	private String sendDate;

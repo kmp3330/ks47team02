@@ -53,19 +53,19 @@
 								</ul></li>
 
 							<!-- 광고 메뉴 -->
-							<li><a th:href="@{/banner}">광고문의</a>
+							<li><a th:href="@{/banner}" onclick="showWarning()">광고문의</a>
 								<ul class="sub-menu">
 									<li><a th:href="@{/banner}">광고 문의</a></li>
 									<li><a th:href="@{/banner/bannerRequest}">광고 신청</a></li>
 									<li><a th:href="@{/banner/bannerRequestList}">광고 신청 현황</a></li>
-									<li><a th:href="@{/banner/bannerProcessList}">광고 진행 현황</a></li>
+									<li><a th:href="@{/banner/bannerProcessList}">#광고 진행 현황</a></li>
 								</ul></li>
 
 							<!-- 로그인 메뉴 -->
               <li class="menu-btn">
-                <a th:if="${session.SID == null}" th:href="@{/login}" class="login">log in</a>
-                <a th:unless="${session.SID == null}" th:href="@{/logout}" class="login template-btn">log out</a>
-                <a th:if="${session.SID == null}" th:href="@{/addMember}" class="template-btn">sign up</a>
+                <a th:if="${session.SID != null || session.CPID != null}" th:href="@{/logout}" class="login template-btn">log out</a>
+                <a th:if="${session.SID == null && session.CPID == null}" th:href="@{/login}" class="login">log in</a>
+                <a th:if="${session.SID == null && session.CPID == null}" th:href="@{/addMember}" class="template-btn">sign up</a>
               </li>
             </ul>
 					</div>
@@ -84,4 +84,14 @@
 		</div>
 	</div>
 </header>
+  <script th:inline="javascript">
+    var userLevel = [[${session.SLEVEL}]];
+      function showWarning() {
+        if(userLevel === '일반회원') {
+          alert("접근할 수 없는 메뉴입니다.");
+          return false;
+        }
+        return true;
+      }
+  </script>
 </html>
