@@ -5,10 +5,20 @@
 
 <th:block layout:fragment="customJs">
 	<script>
-		$('.approve_btn').click(function (){
-			let result = $('#reject_approval_select option:selected').val();
-			alert(result);
-		})
+		$(document).ready(function (){
+			$('#reject_message_input').hide();
+			$('#reject_approval_select').change(function (){
+				let result = $('#reject_approval_select option:selected').val();
+
+				if(result == 'reject_code008' || result == 'reject_code009'){
+					$('#reject_message_input').show();
+				}else{
+					$('#reject_message_input').hide();
+				}
+			});
+
+
+		});
 
 
 	</script>
@@ -37,6 +47,7 @@
 								<div class="col-lg-8 col-md-8">
 										<form th:action="@{/normalProject/addAcceptApprove}" id="addAcceptApproveForm" name="addAcceptApproveForm" method="post">
 											<input type="hidden" name="normalProjectApplyCode" th:value="${normalProjectApplyCode}">
+											<input type="hidden" name="userId" th:value="${loggedInUserId}">
 											<div class="input-group-icon mt-10">
 												<div class="icon">
 													<i class="fa fa-plane" aria-hidden="true"></i>
@@ -45,27 +56,18 @@
 														<select style="display: none;" id="reject_approval_select" name="rejectApprovalCode">
 															<th:block th:unless="${#lists.isEmpty(acceptApproveList)}"
 																	  th:each="l : ${acceptApproveList}">
-																<option th:value="${l.rejectApprovalCode}">[[${l.rejectApprovalName}]]</option>
+																<option th:value="${l.rejectApprovalCode}">[[${l.rejectApprovalMessage}]]</option>
 															</th:block>
 														</select>
-														<div class="nice-select" tabindex="0">
-															<span class="current">승인/거절 사유</span>
-																<ul class="list">
-																	<th:block th:unless="${#lists.isEmpty(acceptApproveList)}"
-																			  th:each="l : ${acceptApproveList}">
-																		<li th:value="${l.rejectApprovalName}" class="option">[[${l.rejectApprovalMessage}]]</li>
-																	</th:block>
-																</ul>
-														</div>
+
 													</div>
 													<div class="mt-10">
-														<input type="text" name="first_name" placeholder="직접입력" onfocus="this.placeholder = ''"
+														<input type="text" name="rejectApprovalMessage" placeholder="직접입력" onfocus="this.placeholder = ''"
 															   onblur="this.placeholder = '직접입력'" id="reject_message_input" class="single-input">
 													</div>
 													<div class="button-group-area mt-10">
 														<button type="submit" class="genric-btn info-border circle">확인</button>
 														<button type="reset" class="genric-btn info-border circle">초기화</button>
-														<button type="button" class="genric-btn info-border circle approve_btn">안녕</button>
 													</div>
 												</div>
 											</form>

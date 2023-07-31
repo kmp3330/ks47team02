@@ -1,15 +1,22 @@
 package ks47team02.user.project.normal.controller;
 
+import java.security.Key;
 import java.util.List;
+import java.util.Map;
 
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import ks47team02.user.project.normal.dto.normalProjectApplyApplicant;
 import ks47team02.user.project.pro.dto.ProProjectApplicant;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import ks47team02.user.project.normal.dto.NormalProjects;
 import ks47team02.user.project.normal.dto.rejectApprovalList;
@@ -20,8 +27,11 @@ import ks47team02.user.project.pro.dto.WorkCate;
 import ks47team02.user.project.pro.service.ProProjectService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.context.annotation.RequestScope;
 
 
+@Component
+@RequestScope
 @Controller
 @RequestMapping("/normalProject")
 @Slf4j
@@ -32,11 +42,18 @@ public class normalProjectController {
 	
 	private final NormalProjectService normalProjectService;
 	private final ProProjectService proProjectService;
+	/**
+	 * http서블릿리퀘스트
+	 *
+	 * */
+	private final HttpServletRequest request;
 	
 
 	
 	
 		/*등록 영역*/
+
+
 
 	/**
 	 * 일반과제 신청
@@ -47,11 +64,30 @@ public class normalProjectController {
 	@GetMapping("/addApplicantAccept")
 	public String addApplicantAccept(@RequestParam(value = "normalProjectCode") String normalProjectCode,
 									 Model model){
-		String returnjuso = "redirect:/normalProject/projectDetail?normalProjectCode=" + normalProjectCode;
-		normalProjectService.addApplicantAccept(normalProjectCode);
+
+		HttpSession session = request.getSession();
+		String loggedInUserId = (String) session.getAttribute("SID");
+
+		model.addAttribute("normalProjectCode", normalProjectCode);
+		model.addAttribute("loggedInUserId", loggedInUserId);
 
 
-		return returnjuso;
+
+		return "user/project/normal/applyApplicant/addApplicantAccept";
+	}
+	/**
+	 * 일반과제 신청
+	 * @param normalProjects 일반과제dto
+	 *
+	 * */
+	@PostMapping("/addApplicantAccept")
+	public String addApplicantAccept(NormalProjects normalProjects){
+
+
+		normalProjectService.addApplicantAccept(normalProjects);
+
+
+		return "redirect:/normalProject/projectList";
 
 	}
 	
@@ -119,9 +155,10 @@ public class normalProjectController {
 	 *
 	 * */
 	@PostMapping("/addAcceptApprove")
-	public String addAcceptApprove(normalProjectApplyApplicant ApplyApplicant , String normalProjectApplyCode,
+	public String addAcceptApprove(normalProjectApplyApplicant applyApplicant , String normalProjectApplyCode,
 								   Model model){
-		log.info("ApplyApplicant : {}", ApplyApplicant);
+		normalProjectService.addAcceptApprove(applyApplicant);
+
 		return "redirect:/normalProject/getApplicantAcceptList";
 	}
 
@@ -137,8 +174,15 @@ public class normalProjectController {
 								   Model model) {
 		List<rejectApprovalList> acceptApproveList = normalProjectService.getAcceptApproveList();
 		log.info("acceptApproveList", acceptApproveList);
+
+		HttpSession session = request.getSession();
+		String loggedInUserId = (String) session.getAttribute("SID");
+
+
 		model.addAttribute("normalProjectApplyCode", normalProjectApplyCode);
 		model.addAttribute("acceptApproveList", acceptApproveList);
+		// 유저아이디
+		model.addAttribute("loggedInUserId", loggedInUserId);
 		return "user/project/normal/applyApplicant/addAcceptApprove";
 	}
 	
@@ -261,7 +305,7 @@ public class normalProjectController {
 	/**
 	 * 일반과제 신청자 상세보기
 	 * @param userId 신청자 아이디
-	 * @return nor
+	 * @return
 	 *
 	 * */
 	@GetMapping("/getAcceptApproveDetail")
@@ -342,9 +386,18 @@ public class normalProjectController {
 		
 		return "user/project/normal/applyApplicant/getApplicantAcceptList";
 	}
-	
-	/*get영역 끝*/
-	
+
+	/**
+	 * 일반과제 신청자 인원 확인
+	 *
+	 * */
+	@PostMapping("/checkPeople")
+	public boolean checkPeople(normalProjectApplyApplicant normalProjectApplyApplicant){
+		log.info("normalProjectApplyApplicant : {}", normalProjectApplyApplicant);
+
+
+		return true;
+	}
 	
 	
 

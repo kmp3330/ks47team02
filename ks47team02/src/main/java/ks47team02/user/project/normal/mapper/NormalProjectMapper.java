@@ -14,6 +14,15 @@ import ks47team02.user.project.pro.dto.WorkCate;
 @Mapper
 public interface NormalProjectMapper {
 
+
+	/**
+	 * 일반과제 신청 승인/거절 입력
+	 *
+	 *
+	 * */
+	public int addAcceptApprove(normalProjectApplyApplicant applyApplicant);
+
+
 	/**
 	 * 신청자 승인/거절 사유 리스트 조회
 	 *
@@ -32,7 +41,7 @@ public interface NormalProjectMapper {
 	 * 일반과제 신청
 	 *
 	 * */
-	public int addApplicantAccept(String normalProjectCode);
+	public int addApplicantAccept(NormalProjects normalProjects);
 
 
 	/**

@@ -34,6 +34,15 @@ public class NormalProjectService {
 	}
 
 	/**
+	 * 일반과제 신청자 승인/거절 입력
+	 *
+	 * */
+	public void addAcceptApprove(normalProjectApplyApplicant applyApplicant){
+		normalProjectMapper.addAcceptApprove(applyApplicant);
+	}
+
+
+	/**
 	 * 일반과제 신청자 승인/거절 리스트 조회
 	 * @return acceptApproveList 신청자 승인/거절 리스트
 	 *
@@ -50,8 +59,8 @@ public class NormalProjectService {
 	 * 나중에 아이디도 들어가게 해야한느데 ㅠ
 	 *
 	 * */
-	public void addApplicantAccept(String normalProjectCode){
-		normalProjectMapper.addApplicantAccept(normalProjectCode);
+	public void addApplicantAccept(NormalProjects normalProjects){
+		normalProjectMapper.addApplicantAccept(normalProjects);
 	}
 
 	public normalProjectApplyApplicant getNormalProjectApplyApplicantById(String userId){
