@@ -62,6 +62,11 @@
 		<result column="reject_approval_message"	property="rejectApprovalMessage"></result>
 	</resultMap>
 
+	<select id="checkPeople" parameterType="String">
+
+
+	</select>
+
 	<update id="addAcceptApprove" parameterType="normalProjectApplyApplicant">
 		UPDATE
 			normal_project_apply_applicant

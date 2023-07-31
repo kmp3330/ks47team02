@@ -6,37 +6,12 @@
 	<th:block layout:fragment="customJs">
 		<script>
 			$(document).ready(function() {
-				$("#acceptBtn").on("click", function() {
-					// 여기서 Ajax 요청을 보냅니다.
-					$.ajax({
-						url: "/normalProject/checkPeople", // Ajax 요청 보낼 URL
-						method: "POST", // GET 또는 POST
-						data: $("#acceptForm").serialize(), // 폼 데이터를 직렬화하여 전송
-						dataType: "json", // 응답 데이터 형식 (JSON 형식으로 응답받을 것이므로 'json'으로 설정)
-						success: function(response) {
-							// Ajax 요청이 성공적으로 완료되었을 때 실행되는 콜백 함수
-							// 서버에서의 유효성 검사 결과를 확인하여, true일 경우 폼을 제출합니다.
-							if (response.valid) {
-								// 유효성 검사가 통과되었으므로 폼을 제출합니다.
-								$("#acceptForm").submit();
-							} else {
-								// 유효성 검사가 실패하였으므로 사용자에게 오류 메시지를 보여줄 수 있습니다.
-								alert("유효성 검사에 실패하였습니다.");
-							}
-						},
-						error: function(xhr, status, error) {
-							// Ajax 요청이 실패할 경우 실행되는 콜백 함수
-							console.error("Error:", status, error);
-						}
-					});
-				});
+
 				$('#acceptBtn').click(function(){
-					const $memberId = $('#memberId');
-					let memberId = $memberId.val();
+					const $normalProjectCode = $('#normalProjectCode');
+					let normalProjectCode = $normalProjectCode.val();
 
 					// 유효성검사
-					let valid = validCheck($memberId);
-					if(!valid) return false;
 
 					// ajax 호출
 					const request = $.ajax({
@@ -44,26 +19,12 @@
 						method: 'POST',
 						data: { 'normalProjectCode' : normalProjectCode },
 						dataType: 'text'
-
 					});
 
-					request.done(function( response ) {
-						if(response == 'true'){
-							alert('이미 등록된 아이디입니다.');
-							$memberId.val('');
-							$memberId.focus();
-							return false;
-						}else{
-							$('#addMemberForm input').prop('disabled', false);
-							$('#addMemberForm select').prop('disabled', false);
-							$('#addMemberForm button').prop('disabled', false);
-						}
-						//console.log(response);
-					});
 
-					request.fail(function( jqXHR, textStatus ) {
-						alert( "Request failed: " + textStatus );
-					});
+
+
+
 
 				});
 			});
@@ -106,7 +67,7 @@
 												<tbody>
 													<tr>
 														<td>
-															<input type="hidden" name="normalProjectCode" th:value="${normalProjectCode}">
+															<input type="hidden" name="normalProjectCode" id="normalProjectCode" th:value="${normalProjectCode}">
 														</td>
 														<td>
 															<input name="userId" type="hidden" th:value="${loggedInUserId}">

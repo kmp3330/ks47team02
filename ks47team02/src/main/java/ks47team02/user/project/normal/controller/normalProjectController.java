@@ -12,10 +12,7 @@ import ks47team02.user.project.pro.dto.ProProjectApplicant;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 import ks47team02.user.project.normal.dto.NormalProjects;
@@ -392,8 +389,9 @@ public class normalProjectController {
 	 *
 	 * */
 	@PostMapping("/checkPeople")
-	public boolean checkPeople(normalProjectApplyApplicant normalProjectApplyApplicant){
-		log.info("normalProjectApplyApplicant : {}", normalProjectApplyApplicant);
+	@ResponseBody
+	public boolean checkPeople(@RequestParam(value = "normalProjectCode") String normalProjectCode){
+		log.info("normalProjectCodeCheck : {}", normalProjectCode);
 
 
 		return true;
