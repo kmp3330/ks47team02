@@ -260,7 +260,7 @@
 			nf.per_person_days		AS prePersonDays,
 			nf.function_start_date	AS functionStartDate,
 			nf.function_finish_time AS functionFinishTime,
-			'normal' 				AS cateProject
+			'일반과제' 				AS cateProject
 		FROM
 			normal_project AS np
 			INNER JOIN 
@@ -268,7 +268,7 @@
 			ON 
 			np.normal_project_code = nf.normal_project_code
 		WHERE 
-			np.user_id = #{sessionId}
+			nf.user_id = #{sessionId}
 		UNION 
 		SELECT
 			pp.pro_project_code			AS projectCd,
@@ -281,7 +281,7 @@
 			pppf.individual_work_day	AS prePersonDays,
 			pppf.start_date				AS functionStartDate,
 			pppf.complete_date			AS functionFinishTime,
-			'pro' 						AS cateProject
+			'전문과제' 					AS cateProject
 		FROM
 			pro_project AS pp
 			INNER JOIN

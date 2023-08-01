@@ -35,12 +35,9 @@ public interface ProfilePortfolioMapper {
 	public ProfilePortfolio getProfilePortfolioByCode(String portfolioCode);
 	
 	
-	// 참여한 전문과제 프로젝트 목록
+	// 참여한 프로젝트 목록
 	public List<Map<String, Object>> getProProjectList(String sessionId);
-	
-	// 참여한 일반과제 프로젝트 목록
-	
-	
+
 	// 포트폴리오 등록
 	public int addProfilePortfolio(ProfilePortfolio profilePortfolio);
 

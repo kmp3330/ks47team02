@@ -21,7 +21,6 @@ import ks47team02.user.profile.dto.ProfileSkill;
 import ks47team02.user.profile.dto.ProfileWorkSpec;
 import ks47team02.user.profile.service.ProfileService;
 import ks47team02.user.project.pro.dto.JoinCate;
-import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
 import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
 import lombok.AllArgsConstructor;
@@ -588,10 +587,7 @@ public class ProfileController {
 	 * @return
 	 */
 	@GetMapping("/profilePortfolioInsert")
-	public String profilePortfolioInsert(Model model,
-										 HttpSession session) {
-		
-		String sessionId = (String) session.getAttribute("SID");
+	public String profilePortfolioInsert(Model model) {
 		
 		List<JoinCate> joinCateList = profileService.getJoinCateList();
 		List<WorkCate> workCateList = profileService.getWorkCateList();
@@ -705,7 +701,7 @@ public class ProfileController {
 	
 	@PostMapping("/pro")
 	@ResponseBody
-	public List<Map<String, Object>> pro(HttpSession session) {
+	public List<Map<String, Object>> projectList(HttpSession session) {
 		
 		String sessionId = (String) session.getAttribute("SID");
 		
