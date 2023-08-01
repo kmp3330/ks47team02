@@ -62,7 +62,20 @@
 		<result column="reject_approval_message"	property="rejectApprovalMessage"></result>
 	</resultMap>
 
-	<select id="checkPeople" parameterType="String">
+	<select id="checkPeople" parameterType="String" resultType="boolean">
+
+			SELECT
+			CASE
+			WHEN (SELECT project_max_people_num
+			FROM normal_project
+			WHERE normal_project_code = #{normalProjectCode})
+			=
+			(SELECT COUNT(normal_project_apply_code)
+			FROM normal_project_apply_applicant
+			WHERE normal_applyer_run_code = 'normal_applyer_run02')
+			THEN 'true'
+			ELSE 'false'
+			END AS result;
 
 
 	</select>

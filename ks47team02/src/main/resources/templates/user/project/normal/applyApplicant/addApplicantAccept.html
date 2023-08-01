@@ -3,43 +3,44 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/layout/default}">
 
-	<th:block layout:fragment="customJs">
+	<th:block layout:fragment="customJs" th:inline="javascript">
 		<script>
-			$(document).ready(function() {
 
-				$('#acceptBtn').click(function(){
-					const $normalProjectCode = $('#normalProjectCode');
-					let normalProjectCode = $normalProjectCode.val();
+				$(document).ready(function() {
+					$('#acceptBtn').click(function() {
+						if (confirm("신청하시겠습니까")) {
+							const $normalProjectCode = $('#normalProjectCode');
+							let normalProjectCode = $normalProjectCode.val();
 
-					// 유효성검사
+							// ajax 호출
+							const request = $.ajax({
+								url: '/normalProject/checkPeople',
+								method: 'POST',
+								data: { 'normalProjectCode': normalProjectCode},
+								dataType: 'text',
+								success: function(response) {
+									let result = response;
+									console.log(result);
+									/*리절트가 true가 아닐경우에 submit을 한다.*/
+									if (result != 'true') {
 
-					// ajax 호출
-					const request = $.ajax({
-						url: '/normalProject/checkPeople',
-						method: 'POST',
-						data: { 'normalProjectCode' : normalProjectCode },
-						dataType: 'text'
+										$('#acceptForm').submit();
+									} else {
+										alert('참여인원이 가득차 참가 불가 입니다.');
+									}
+								}
+							});
+						} else {
+							alert('아니오를 누르셨습니다');
+						}
 					});
-
-
-
-
-
-
-				});
 			});
-
-
-
-
-
-
 
 		</script>
 	</th:block>
       
 	<th:block layout:fragment="customContents">
-		<form th:action="@{/normalProject/addApplicantAccept}" method="post" id="addApplicantAcceptForm">
+
 			<section class="jobs-area section-padding">
 				<div class="container col-lg-12">
 					<div class="row">
@@ -89,5 +90,4 @@
 					</div>
 				</div>
 			</section>
-		</form>
 	</th:block>	

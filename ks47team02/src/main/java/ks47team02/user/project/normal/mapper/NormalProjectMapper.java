@@ -14,6 +14,12 @@ import ks47team02.user.project.pro.dto.WorkCate;
 @Mapper
 public interface NormalProjectMapper {
 
+	/**
+	 * 일반과제 인원수 체크
+	 * @Param normalProjectCode 일반과제 코드
+	 */
+
+	public boolean checkPeople(String normalProjectCode);
 
 	/**
 	 * 일반과제 신청 승인/거절 입력

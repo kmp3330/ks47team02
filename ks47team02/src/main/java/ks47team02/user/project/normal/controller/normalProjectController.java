@@ -80,7 +80,7 @@ public class normalProjectController {
 	@PostMapping("/addApplicantAccept")
 	public String addApplicantAccept(NormalProjects normalProjects){
 
-
+		log.info("normalProjectsAccept : {}", normalProjects);
 		normalProjectService.addApplicantAccept(normalProjects);
 
 
@@ -390,11 +390,13 @@ public class normalProjectController {
 	 * */
 	@PostMapping("/checkPeople")
 	@ResponseBody
-	public boolean checkPeople(@RequestParam(value = "normalProjectCode") String normalProjectCode){
-		log.info("normalProjectCodeCheck : {}", normalProjectCode);
+	public boolean checkPeople(@RequestParam(value = "normalProjectCode") String normalProjectCode,
+							   Model model){
+		boolean checkPeopleResult = normalProjectService.checkPeople(normalProjectCode);
 
 
-		return true;
+
+		return checkPeopleResult;
 	}
 	
 	

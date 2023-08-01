@@ -5,10 +5,12 @@
       
       <th:block layout:fragment="customJs">
 		  <script>
-			  
+
+
+			  /**
+			   * 일반과제 일수, 점수 체크함수
+			   * */
 			  let $dateCalculateBtn = $('#dateCalculate');
-			  
-			  
 			  $dateCalculateBtn.click(function(){
 				  const $projectStartDay = $('#projectStartUpDate').val();
 				  const $projectFinishDay = $('#projectFinishDate').val();
@@ -24,8 +26,32 @@
 				  $projectFinishScore.val(result*10);
 				  
 			  });
-			  
-			  
+
+
+			  /**
+			   * 유효성 검사 함수
+			   *
+			   * */
+			  const validCheck = element => {
+				  let data = $(element).val();
+				  let eleId = $(element).attr('id');
+				  if(typeof data == 'undefined' || data == null || data == '' ){
+					  let cate = $(`label[for="${eleId}"]`).text();
+					  alert(`${cate} 필수 입력항목입니다.`);
+					  $(element).focus();
+					  return false;
+				  }
+				  return true;
+			  }
+			  $('#addProjectBtn').click(function (){
+				  const validateEle = $('#addProjectForm input');
+				  let isSubmit = false;
+				  validateEle.each(function (idx, item){
+					  isSubmit = validCheck(item);
+					  return isSubmit
+				  })
+				  if(isSubmit) $('#addProjectForm').submit();
+			  });
 			  
 			  
 			  
@@ -55,7 +81,7 @@
 								</div>
 								<div class="card-body table-responsive p-0">
 									<form th:action="@{/normalProject/addProject}" id="addProjectForm" name="addProjectForm" method="post">
-										<table class="table table-striped table-valign-middle">
+										<table class="table table-striped table-valign-middle" id="addProjectInput">
 											<thead>
 											</thead>
 											<tbody>
@@ -69,7 +95,7 @@
 												</tr>
 												<tr>
 													<td>
-														<label for="joinCate">참여분야 선택</label>
+														<label for="joinCateCode">참여분야 선택</label>
 													</td>
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
@@ -83,7 +109,7 @@
 												</tr>
 												<tr>
 													<td>
-														<label for="workCate">작업분류 선택</label>
+														<label for="workCateCode">작업분류 선택</label>
 													</td>
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
@@ -97,7 +123,7 @@
 												</tr>
 												<tr>
 													<td> 
-														<label for="subjectCate">주제분류 선택</label>
+														<label for="subjectCateCode">주제분류 선택</label>
 													</td>
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
@@ -111,7 +137,7 @@
 												</tr>
 												<tr>
 													<td> 
-														<label>요구기술 기입</label>
+														<label for="requiredSkill">요구기술 기입</label>
 													</td>
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
@@ -120,7 +146,7 @@
 												</tr>
 												<tr>
 													<td> 
-														<label>프로젝트 내용 기입</label>
+														<label for="normalProjectDetail">프로젝트 내용 기입</label>
 													</td>
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
@@ -129,7 +155,7 @@
 												</tr>
 												<tr>
 													<td> 
-														<label>프로젝트 최대인원</label>
+														<label for="projectMaxPeopleNum">프로젝트 최대인원</label>
 													</td>
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
@@ -138,7 +164,7 @@
 												</tr>
 												<tr>
 													<td>
-														<label>신청마감일시</label>
+														<label for="projectAdvertiseFinishDate">신청마감일시</label>
 													</td>
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
@@ -166,7 +192,7 @@
 												</tr>
 												<tr>
 													<td>
-														<label for="projectFinishDate">프로젝트 일수</label>
+														<label for="projectDay">프로젝트 일수</label>
 													</td>
 													<td>
 														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
@@ -175,7 +201,7 @@
 												</tr>
 												<tr>
 													<td>
-														<label>일일점수</label>
+														<label for="dayScore">일일점수</label>
 													</td>
 													<td>
 														<h2 id="dayScore">10</h2>
@@ -183,7 +209,7 @@
 												</tr>
 												<tr>
 													<td>
-														<label>개인별 밭는 점수</label>
+														<label for="projectFinishScore">개인별 밭는 점수</label>
 													</td>
 													<td>
 														<input id="projectFinishScore" name="projectFinishScore" placeholder="0"></input>
@@ -195,7 +221,7 @@
 													
 													</td>
 													<td>
-														<button type="submit" id="addProjectBtn">프로젝트 작성 완료</button>
+														<button type="button" id="addProjectBtn">프로젝트 작성 완료</button>
 														<button type="reset" id="resetBtn">지우기</button>
 													</td>
 												</tr>

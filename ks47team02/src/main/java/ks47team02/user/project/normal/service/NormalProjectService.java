@@ -20,7 +20,7 @@ import ks47team02.user.project.pro.dto.JoinCate;
 
 @Service
 @Transactional
-@Slf4j
+
 public class NormalProjectService {
 	
 	private static final Logger log = LoggerFactory.getLogger(NormalProjectService.class);
@@ -31,6 +31,16 @@ public class NormalProjectService {
 	// 생성자 메소드 의존성 주입방식
 	public NormalProjectService(NormalProjectMapper normalProjectMapper) {
 		this.normalProjectMapper = normalProjectMapper;
+	}
+
+
+	/**
+	 * 일반과제 인원수 체크
+	 * @Param normalProjectCode 일반과제 코드
+	 */
+	public boolean checkPeople(String normalProjectCode){
+		boolean checkPeopleResult = normalProjectMapper.checkPeople(normalProjectCode);
+		return checkPeopleResult;
 	}
 
 	/**
