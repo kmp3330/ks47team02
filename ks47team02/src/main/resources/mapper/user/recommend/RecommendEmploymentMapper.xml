@@ -111,9 +111,9 @@ VALUE
 	#{companySupportCode},
 	#{userId},
 	#{announcementCode},
-	'join_cate_code001',
+	#{joinCateCode},
 	#{joinCateName},
-	'area_code001',
+	#{areaCode},
 	#{areaCate},
 	#{jobOpening},
 	#{requiredSkills},
@@ -121,7 +121,7 @@ VALUE
 	#{wage},
 	CURDATE(),
 	CURDATE(),
-	'job_normal_run_code001',
+	#{jobNormalRunCode},
 	#{jobNormalRun})
  </insert>
  

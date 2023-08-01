@@ -14,6 +14,7 @@ import ks47team02.user.member.dto.Company;
 import ks47team02.user.member.dto.User;
 import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.recommend.dto.AreaCate;
+import ks47team02.user.recommend.dto.NormalRun;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.dto.RecommendScrap;
 import ks47team02.user.recommend.dto.RecommendSupport;
@@ -39,6 +40,13 @@ public class RecommendService {
 		this.recommendScrapMapper = recommendScrapMapper;
 	}
 	
+	/*
+	 * 진행 상태 분류
+	 */
+	public List <NormalRun> getNormalRunRecommend(){
+		List <NormalRun> recommendNormalRun = recommendEmploymentMapper.getNormalRunRecommend();
+		return recommendNormalRun;
+	}
 	/*
 	 * 분야
 	 */
