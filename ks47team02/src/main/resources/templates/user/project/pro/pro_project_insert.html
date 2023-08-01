@@ -3,33 +3,6 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/layout/default}">
 
-	<head>
-    	<link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
-    	<style>
-    		input{
-    			width: 98%;
-    			height: 23px;
-    		}
-    		td:nth-child(3n+1):not(:last-child){
-    			color: white;
-    			font-weight: 700;
-    			background-color: cornflowerblue;
-    		}
-    		select{
-    			width: 99%;
-    			text-align: center;
-    			height: 23px;
-    		}
-    		#idCheck{
-    			width: 99%; 
-    			height: 25px;
-    		}
-    		#proProjectInsertBtn, #resetBtn {
-    			width: 49%;
-    			height: 25px;
-    		}
-    	</style>
-    </head>
     
     <th:block layout:fragment="customJs">
     	<script th:src="@{/js/jquery-3.7.0.js}"></script>
@@ -133,117 +106,152 @@
     </th:block>
 
 	<th:block layout:fragment="customContents">
-		<form id="proProjectInsert" th:action="@{/project/pro/proProjectInsert}" method="post">
-			<table>
-				<tbody>			
-					<tr>
-						<td>
-							<label for="title">제목</label>
-						</td>
-						<td>
-							<input type="text" id="title" name="title" 
-								   placeholder="제목을 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-						    <label for="JoinCate">참여분야</label>
-						</td>
-						<td>
-						    <select id="JoinCate" name="joinCateCode">
-						         <option value="">===참여분야를 선택해주세요.===</option>
-						         <option th:unless="${#lists.isEmpty(joinCate)}"
-						                 th:each="j : ${joinCate}"
-						                 th:value="${j.joinCateCode}"
-						                 th:text="|:::: ${j.joinCateName}::::|">
-						         </option>
-						    </select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="WorkCate">작업분야</label>
-						</td>
-						<td>
-						    <select id="WorkCate" name="workCateCode">
-						         <option value="">===작업분야를 선택해주세요.===</option>
-						         <option th:unless="${#lists.isEmpty(workCate)}"
-						                 th:each="w : ${workCate}"
-						                 th:value="${w.workCateCode}"
-						                 th:text="|:::: ${w.workCateName}::::|">
-						         </option>
-						    </select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="SubjectCate">주제분야</label>
-						</td>
-						<td>
-						    <select id="SubjectCate" name="subjectCateCode">
-						         <option value="">===주제분야를 선택해주세요.===</option>
-						         <option th:unless="${#lists.isEmpty(subjectCate)}"
-						                 th:each="s : ${subjectCate}"
-						                 th:value="${s.subjectCateCode}"
-						                 th:text="|:::: ${s.subjectCateName}::::|">
-						         </option>
-						    </select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="skill">필수 기술</label>
-						</td>
-						<td>
-							<input type="text" id="skill" name="skill" 
-								   placeholder="필수 기술을 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="details">상세정보</label>
-						</td>
-						<td>
-							<input type="text" id="details" name="details" 
-								   placeholder="상세 정보를 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="maxTotal">최대인원</label>
-						</td>
-						<td>
-							<input type="text" id="maxTotal" name="maxTotal" 
-								   placeholder="프로젝트 최대인원을 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="projectPrice"> 프로젝트 예상 금액</label>
-						</td>
-						<td>
-							<input type="text" id="projectPrice" name="projectPrice" 
-								   placeholder="프로젝트 예상 금액을 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="dueDate">구인 마감 일자</label>
-						</td>
-						<td>
-							<input type="text" id="dueDate" name="dueDate" 
-								   placeholder="구인 마감 일자를 입력하세요" />
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<button type="submit" id="proProjectInsertBtn">작성완료</button>
-							<a th:href="@{/project/pro/proProjectList}">뒤로가기</a>
-							<button type="button" id="resetBtn">초기화</button>
-						</td>
-					</tr>	
-				</tbody> 
-			</table>
-		</form>
+		<section class="jobs-area section-padding">
+			<div class="container col-lg-12">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="sidebar">
+							<div class="single-item mb-4">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-9">
+						<div class="single-job mb-4 justify-content-between text-center">
+							<div class="card">
+								<div class="card-header border-0">
+									<h3 class="mb-0 title_color text-left">전문과제</h3>
+									<div class="card-tools">
+									</div>
+								</div>
+								<div class="card-body table-responsive p-0">
+									<form id="proProjectInsertForm" th:action="@{/project/pro/proProjectInsert}" method="post">
+										<table class="table table-striped table-valign-middle">
+											<thead>
+											</thead>
+											<tbody>
+												<tr>
+													<td>
+														<label for="title">제목</label>
+													</td>
+													<td>
+														<input type="text" id="title" name="title">
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="joinCate">참여분야 선택</label>
+													</td>
+													<td>
+														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+														<select name="joinCateCode" id="joinCateCode">
+															<option value="">===참여분야를 선택해주세요.===</option>
+													         <option th:unless="${#lists.isEmpty(joinCate)}"
+													                 th:each="j : ${joinCate}"
+													                 th:value="${j.joinCateCode}"
+													                 th:text="|:::: ${j.joinCateName}::::|">
+													         </option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="workCate">작업분류 선택</label>
+													</td>
+													<td>
+														 <select id="WorkCate" name="workCateCode">
+												         <option value="">===작업분야를 선택해주세요.===</option>
+												         <option th:unless="${#lists.isEmpty(workCate)}"
+												                 th:each="w : ${workCate}"
+												                 th:value="${w.workCateCode}"
+												                 th:text="|:::: ${w.workCateName}::::|">
+												         </option>
+												    </select>
+													</td>
+												</tr>
+												<tr>
+													<td> 
+														<label for="subjectCate">주제분류 선택</label>
+													</td>
+													<td>
+														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+														<select id="SubjectCate" name="subjectCateCode">
+												         <option value="">===주제분야를 선택해주세요.===</option>
+												         <option th:unless="${#lists.isEmpty(subjectCate)}"
+												                 th:each="s : ${subjectCate}"
+												                 th:value="${s.subjectCateCode}"
+												                 th:text="|:::: ${s.subjectCateName}::::|">
+												         </option>
+												    </select>
+													</td>
+												</tr>
+												<tr>
+													<td> 
+														<label for="skill">필수 기술</label>
+													</td>
+													<td>
+														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+														<input type="text" id="skill" name="skill" 
+								  						 placeholder="필수 기술을 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td> 
+														<label for="details">상세정보</label>
+													</td>
+													<td>
+														<input type="text" id="details" name="details" 
+													     placeholder="상세 정보를 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="maxTotal">최대인원</label>
+													</td>
+													<td>
+														<input type="text" id="maxTotal" name="maxTotal" 
+															   placeholder="프로젝트 최대인원을 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="projectPrice"> 프로젝트 예상 금액</label>
+													</td>
+													<td>
+														<input type="text" id="projectPrice" name="projectPrice" 
+															   placeholder="프로젝트 예상 금액을 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="dueDate">구인 마감 일자</label>
+													</td>
+													<td>
+														<input type="date" id="dueDate" name="dueDate" 
+															   placeholder="구인 마감 일자를 입력하세요" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="addProjectBtn">버튼</label>
+													
+													</td>
+													<td>
+														<td colspan="3">
+														<button type="submit" id="proProjectInsertBtn">작성완료</button>
+														<a th:href="@{/project/pro/proProjectList}">뒤로가기</a>
+														<button type="button" id="resetBtn">초기화</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
 	</th:block>
 </html>

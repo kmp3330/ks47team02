@@ -89,9 +89,12 @@ public interface ProProjectMapper {
 	public List<ProProjectPersonalFunction> getProProjectPersonalFunctionList2();
 		// 성과금 송금 완료 작성
 	public void sendMoneyCompleteInsert(SendMoneyComplete sendMoneyComplete);
-	
-	
-	
+		// 성과금 송금 완료 수정 - 상세 조회
+	public SendMoneyComplete getSendMoneyCompleteListInfo(String proProjectCode);
+		// 성과금 송금 완료 수정 
+	public int sendMoneyCompleteModify(SendMoneyComplete sendMoneyComplete);
+		// 성과금 송금 완료 삭제
+	public void sendMoneyCompleteDelete(String sendMoneyCompleteCode);
 	
 	
 	

@@ -38,23 +38,28 @@
 	        
 	        $.ajax({
 	            url: '/profile/pro', 
-	            method: 'POST', // or 'GET' depending on your server implementation
+	            method: 'POST',
 	            dataType: 'json',
 	            success: function (response) {
 	            	
 	            	let projectList = response;
 	            	$('#projectListBody').html('');
+	            	
 	            	if(selectedOption){
 	            		projectList = projectList.filter(item => item.cateProject == selectedOption);
 	            	}
+	            	
 	            	if(projectList.length > 0){
 	            		$(projectList).each((idx,item)=>{
 		            		const title = item.projectName;
 		            		const skill = item.assignedFunction;
 		            		const projectDay = item.projectDay;
 		            		const prePersonDays = item.prePersonDays;
+		            		const cateProject = item.cateProject;
+		            		const functionStartDate = item.functionStartDate;
+		            		const functionFinishTime = item.functionFinishTime;
 		            		
-		            		const contentsArr = [title,skill,projectDay,prePersonDays];
+		            		const contentsArr = [title,skill,projectDay,prePersonDays,functionStartDate,functionFinishTime,cateProject];
 		            		
 		            		const tr = $('<tr></tr>');
 		            		const tdRadio = $(`<td><input type="radio" name="optionsRadios" value="${item.projectCd}"></td>`);
@@ -66,7 +71,7 @@
 		            		$('#projectListBody').append(tr);	            	
 		            	});
 	            	}else{
-	            		const tr = $('<tr><td colspan="5">등록한 프로젝트가 없습니다.</td></tr>');
+	            		const tr = $('<tr><td colspan="8" class="text-center">***참여한 프로젝트가 없습니다.***</td></tr>');
 	            		$('#projectListBody').append(tr);	 
 	            	}
 	            },
@@ -78,6 +83,56 @@
 	    });
 		$('#subjectCateCode').change();
 		
+		// 모달창 닫는 함수
+		const closeModal = function () {
+	        $('#exampleModalCenter').modal('hide');
+	    }
+	    
+	    // 라디오 버튼 유효성 검사 함수
+		const radioCheckValidation = () => {
+		    // 라디오 버튼 중 선택된 것이 있는지 확인
+		    const isChecked = $('#projectListBody input[type="radio"]:checked').length > 0;
+		
+		    if (!isChecked) {
+		        alert('프로젝트를 선택해주세요.');
+		        return false;
+		    }
+		    return true;
+		}
+	    
+	    $('#selectBtn').click(function () {
+	    	
+	    	if (!radioCheckValidation()) {
+		        return;
+		    }
+	    	
+	    	const selectedProject = $('#projectListBody input[type="radio"]:checked').closest('tr');
+	    	const selectedProjectData = [];
+	    	
+	    	selectedProject.find('td').each((idx, item) => {
+		        if(idx !== 0){ // 첫번째 td(라디오 버튼)는 제외
+		            selectedProjectData.push($(item).text());
+		        }
+		    });
+		    
+
+			// 값 넣기	
+	    	$('#inputTitle').val(selectedProjectData[0]);
+	    	$('#inputFunction').val(selectedProjectData[1]);
+	    	$('#inputFunctionDay').val(selectedProjectData[3]);
+	    	$('#inputFunctionDay').attr('readonly', true);
+	    	$('#inputStartDay').val(selectedProjectData[4]);
+	    	$('#inputStartDay').attr('readonly', true);
+	    	$('#inputFinishDay').val(selectedProjectData[5]);
+	    	$('#inputFinishDay').attr('readonly', true);
+	    	$('#inputCate').val(selectedProjectData[6]);
+	    	$('#inputCate').attr('readonly', true);
+	    	
+	        closeModal();
+	    });
+		
+		
+		
 	</script>
 </th:block>
 
@@ -88,7 +143,7 @@
 				<div class="col-lg-10">
 					<div class="single-job mb-4 justify-content-between text-center">
 						<div class="single-element-widget d-flex">
-							<h6 class="title_color" style="margin:10px; font-size:large; font-weight:900;">참여한 프로젝트 목록</h6>
+							<h6 class="title_color" style="margin:10px; font-size:large; font-weight:900;">참여한 프로젝트 조회하기</h6>
 							<button type="button" class="genric-btn primary-border radius" data-toggle="modal"
 									data-target="#exampleModalCenter">조회</button>
 						</div>
@@ -100,7 +155,7 @@
 
 								<div class="left">
 									<p class="text-left" style="font-size:large; font-weight:900;">프로젝트 제목</p>
-									<input type="text"
+									<input type="text" id="inputTitle"
 										   placeholder="프로젝트 제목" onfocus="this.placeholder = ''"
 										   onblur="this.placeholder = '프로젝트 제목'"
 										   name="userProjectName"> 
@@ -108,7 +163,7 @@
 									<p class="text-left" style="font-size:large; font-weight:900;">참여분야</p>
 									<div class="d-md-flex mb-3">
 										<select style="display: none;" name="joinCateCode"
-												placeholder="작업분류">
+												placeholder="참여분야">
 												<option value="">==참여 분야==</option>
 												<th:block th:unless="${#lists.isEmpty(joinCateList)}"
 														  th:each="l : ${joinCateList}">
@@ -142,7 +197,7 @@
 									</div>
 									
 								    <p class="text-left" style="font-size:large; font-weight:900;">맡은기능</p>
-									<input type="text"
+									<input type="text" id="inputFunction"
 										   placeholder="맡은기능" onfocus="this.placeholder = ''"
 										   onblur="this.placeholder = '맡은기능'"
 										   name="userRequiredSkill">
@@ -154,25 +209,25 @@
 										   name="userDetails">
 										   
 								    <p class="text-left" style="font-size:large; font-weight:900;">기능 시작 일시</p>
-									<input type="date"
+									<input type="date" id="inputStartDay"
 										   placeholder="기능 시작 일시" onfocus="this.placeholder = ''"
 										   onblur="this.placeholder = '기능 시작 일시'"
 										   name="userProjectStartDate">
 										   
 								    <p class="text-left" style="font-size:large; font-weight:900;">기능 완료 일시</p>
-									<input type="date"
+									<input type="date" id="inputFinishDay"
 										   placeholder="기능 완료 일시" onfocus="this.placeholder = ''"
 										   onblur="this.placeholder = '기능 완료 일시'"
 										   name="userProjectEndDate">
 										   
 								    <p class="text-left" style="font-size:large; font-weight:900;">작업일수</p>
-									<input type="number"
+									<input type="number" id="inputFunctionDay"
 										   placeholder="작업일수" onfocus="this.placeholder = ''"
 										   onblur="this.placeholder = '작업일수'"
 										   name="userProjectDays">
 										   
 								    <p class="text-left" style="font-size:large; font-weight:900;">프로젝트 구분</p>
-									<input type="text"
+									<input type="text" id="inputCate"
 										   placeholder="프로젝트 구분" onfocus="this.placeholder = ''"
 										   onblur="this.placeholder = '프로젝트 구분'"
 										   name="userProjectGen">
@@ -228,20 +283,23 @@
 				<div class="d-md-flex col-lg-3">
 					<select style="display: none;" id="subjectCateCode"
 							name="subjectCateCode" placeholder="구분">
-							<option value="">==과제선택==</option>
-							<option value="normal">일반과제</option>
-							<option value="pro">전문과제</option>
+							<option value="">전체참여목록</option>
+							<option value="일반과제">일반과제</option>
+							<option value="전문과제">전문과제</option>
 					</select>
 				</div>
-				<div class="modal-body" id="projectListContainer">
+				<div class="modal-body">
 					<table class="table">
 						<thead class="thead-light">
 							<tr>
 								<td>선택</td>
 								<td>프로젝트 제목</td>
 								<td>맡은기능</td>
-								<td>프로젝트 전체 일수</td>
-								<td>맡은 기능 작업 일수</td>
+								<td>전체 일수</td>
+								<td>작업 일수</td>
+								<td>시작 일시</td>
+								<td>종료 일시</td>
+								<td>과제 구분</td>
 							</tr>
 						</thead>
 						<tbody id="projectListBody">

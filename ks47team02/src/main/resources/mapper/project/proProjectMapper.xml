@@ -721,14 +721,14 @@
 			(send_money_complete_code, pro_project_code, admin_id, pro_project_personal_function_code, user_id, project_payment, send_date)
 		SELECT
 			CONCAT('send_money_complete_code',LPAD(CAST(SUBSTRING(MAX(send_money_complete_code),25)+1 as UNSIGNED),3,'0')),
-			'pro_project001',
+			#{proProjectCode},
 			'master4',
 			(SELECT
 				pro_project_personal_function_code
 			FROM
 				pro_project_personal_function
 			WHERE
-				pro_project_code = #{proProjectCode}),
+				pro_project_code = #{proProjectCode} and user_id = #{userId}),
 			#{userId},
 			#{projectPayment},
 			CURDATE()
@@ -737,11 +737,61 @@
 		WHERE
 			send_money_complete_code LIKE 'send_money_complete_code%';
 	</insert>
-	
-	
-	
-	
-	
+	<!-- 송과금 송금 완료 수정 - 상세조회 -->
+	<select id="getSendMoneyCompleteListInfo" parameterType="map" resultMap="sendMoneyCompleteResultMap">
+		/* 송과금 송금 완료 수정 - 상세조회 */
+		SELECT
+			send_money_complete_code,
+			pro_project_code,
+			admin_id,
+			pro_project_personal_function_code,
+			user_id,
+			project_payment,
+			send_date
+		FROM
+			send_money_complete
+		WHERE
+			pro_project_code = #{proProjectCode};
+	</select>
+	<!-- 성과금 송금 완료 수정 -->
+	<update id="sendMoneyCompleteModify" parameterType="map">
+		/* 성과금 송금 완료 수정 */
+		UPDATE send_money_complete
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="sendMoneyCompleteCode != null and sendMoneyCompleteCode != '' ">
+				send_money_complete_code = #{sendMoneyCompleteCode},
+			</if>
+			<if test="proProjectCode != null and proProjectCode != '' ">
+				pro_project_code = #{proProjectCode},
+			</if>
+			<if test="adminId != null and adminId != '' ">
+				admin_id = #{adminId},
+			</if>
+			<if test="proProjectPersonalFunctionCode != null and proProjectPersonalFunctionCode != '' ">
+				pro_project_personal_function_code = #{proProjectPersonalFunctionCode},
+			</if>
+			<if test="userId != null and userId != '' ">
+				user_id = #{userId},
+			</if>
+			<if test="projectPayment != null and projectPayment != '' ">
+				project_payment = #{projectPayment},
+			</if>
+			<if test="sendDate != null and sendDate != '' ">
+				send_date = CURDATE(),
+			</if>
+		</trim>
+		WHERE
+			pro_project_code = #{proProjectCode} and send_money_complete_code = #{sendMoneyCompleteCode};
+	</update>
+	<!-- 성과금 송금 완료 삭제 -->
+	<delete id="sendMoneyCompleteDelete">
+		/* 성과금 송금 완료 삭제 */
+		DELETE
+		FROM
+			send_money_complete as smc
+		WHERE
+			smc.send_money_complete_code = #{sendMoneyCompleteCode};
+	</delete>
 	
 	
 	

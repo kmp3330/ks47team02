@@ -31,6 +31,77 @@
 			if (isSubmit) $('#addCertificateForm').submit();		
 		});
 		
+		// 자격증 API 정보
+		const paramObj = {
+	        'serviceKey': 'fbVE/K2iXGg+ZUnwxHuXLvK8nhPdz2YumV6zzW53wu4rn6KOG19ex5xs4uderScb5Qw8vGqxtbDKV5FUA0ymDg==',
+	        'page': '1',
+	        'perPage': '1000',
+	        //returnType': 'json'
+	    }
+	
+	    $(document).ready(function () {
+	        $('#searchButton').click(function () {
+	            let searchValue = $('#inputBox').val().replaceAll(' ', '');
+	            
+	            // 값이 비어있는지 확인
+	            if(searchValue == '') {
+	            	let certificateUl = $('#certificateUl');
+	            	certificateUl.empty();
+            		certificateUl.append('<li>검색결과가 없습니다.</li>');
+            		return;
+	            }
+	            
+	            $.ajax({
+	                //url : "https://infuser.odcloud.kr/oas/docs?namespace=15082998/v1",
+	                url : "https://api.odcloud.kr/api/15082998/v1/uddi:950a6280-b56a-417e-b97c-de941adbfc9f",
+	                method : 'GET',
+	                beforeSend: function (xhr) {
+	                    //xhr.setRequestHeader("Content-type","application/json");
+	                    xhr.setRequestHeader("Authorization","Infuser " + "fbVE/K2iXGg+ZUnwxHuXLvK8nhPdz2YumV6zzW53wu4rn6KOG19ex5xs4uderScb5Qw8vGqxtbDKV5FUA0ymDg==");
+	                },
+	                dataType : 'JSON',
+	                data : paramObj,
+	                success : function(response) {
+	                    const licenseList = response.data;
+	                    const filterList =  licenseList.filter(item => {
+	                        let targetValue = item['종목명'].replaceAll(' ','');
+	                        return targetValue.indexOf(searchValue) > -1;
+	                    });
+	                    
+	                    // ul 초기화
+	                    let certificateUl = $('#certificateUl');
+	                    certificateUl.empty();
+	                    
+	                    // 검색 결과가 없는지 확인
+	                    if(filterList.length == 0) {
+	                    	certificateUl.append('<li>검색결과가 없습니다.</li>');
+	                    	return;
+	                    }
+	
+						// li 반복
+	                    for(let i = 0; i < filterList.length; i++) {
+	                        let certificateName = filterList[i]['종목명'];
+	                        
+	                        certificateUl.append("<li><a href='#' class='selectcertificate' data-certificatename=" + certificateName + "><h6>" + certificateName + "</h6></a></li>");
+	                    }
+	                    
+	                    // 해당 li 클릭 시 input에 값 바인딩
+	                    $(document).on('click', '.selectcertificate', function (e) {
+	                    	e.preventDefault();
+	                    	
+	                    	let selectName = $(this).data('certificatename');
+	                    	
+	                    	$('#certificateName').val(selectName);
+	                    	$('#certificateName').attr('readonly', true);
+	                    	
+	                    	$('#exampleModal').modal('hide');
+	                    });
+	                }
+	            });
+	
+	        });
+	    });
+		
 	</script>
 </th:block>
 
@@ -40,52 +111,60 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-10">
 					<div class="single-job mb-4 justify-content-between text-center">
+						<div class="single-element-widget d-flex mb-2 justify-content-end">
+							<button type="button" class="genric-btn primary-border radius"
+								data-toggle="modal" data-target="#exampleModal">자격증 검색</button>
+						</div>
+
 						<div class="card single-job">
 							<form id="addCertificateForm"
-								  th:action="@{/profile/profileCertificateInsert}" method="post" 
-								  class="d-md-flex justify-content-center">
+								th:action="@{/profile/profileCertificateInsert}" method="post"
+								class="d-md-flex justify-content-center">
 
 								<div class="left">
-									<p class="text-left" style="font-size:large; font-weight:900;">자격증명</p>
-									<input type="text"
-										   placeholder="자격증명" onfocus="this.placeholder = ''"
-										   onblur="this.placeholder = '자격증명'"
-										   name="certificateName"> 
-									<p class="text-left" style="font-size:large; font-weight:900;">기관명</p>
-									<input type="text"
-										   placeholder="기관명" onfocus="this.placeholder = ''"
-										   onblur="this.placeholder = '기관명'"
-										   name="certificatePublication">
-								    <p class="text-left" style="font-size:large; font-weight:900;">취득일시</p>
-									<input type="date"
-										   placeholder="취득일시" onfocus="this.placeholder = ''"
-										   onblur="this.placeholder = '취득일시'"
-										   name="certificateDate">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">자격증명</p>
+									<input type="text" placeholder="자격증명" id="certificateName"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '자격증명'" name="certificateName">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">기관명</p>
+									<input type="text" placeholder="기관명"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '기관명'"
+										name="certificatePublication">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">취득일시</p>
+									<input type="date" placeholder="취득일시"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '취득일시'" name="certificateDate">
 									<input type="hidden" name="profileRegDate">
 									<div class="d-flex justify-content-between">
-										<label style="font-size:large; font-weight:900;">공개여부</label>
+										<label style="font-size: large; font-weight: 900;">공개여부</label>
 										<div class="confirm-switch">
 											<input type="checkbox" id="confirm-switch1"
-												name="profileHidden" checked>
-											<label for="confirm-switch1" style="margin: 2px 0"></label>
+												name="profileHidden" checked> <label
+												for="confirm-switch1" style="margin: 2px 0"></label>
 										</div>
 									</div>
 									<div class="d-flex justify-content-between">
-										<label style="font-size:large; font-weight:900;">입사지원시 공개여부</label>
+										<label style="font-size: large; font-weight: 900;">입사지원시
+											공개여부</label>
 										<div class="confirm-switch">
 											<input type="checkbox" id="confirm-switch2"
-												name="profileApplicationHidden" checked> 
-											<label for="confirm-switch2" style="margin: 2px 0"></label>
+												name="profileApplicationHidden" checked> <label
+												for="confirm-switch2" style="margin: 2px 0"></label>
 										</div>
 									</div>
 								</div>
 							</form>
 						</div>
 						<div class="card-tools">
-							<a th:href="@{#}" id="certificateInsertbtn" 
-								class="genric-btn info-border circle"> <i
-								class="fas">등록 완료</i>
-							</a> <a th:href="@{/profile/profileCertificateList}" id="certificateResetbtn" class="genric-btn danger-border circle">
+							<a th:href="@{#}" id="certificateInsertbtn"
+								class="genric-btn info-border circle"> <i class="fas">등록
+									완료</i>
+							</a> <a th:href="@{/profile/profileCertificateList}"
+								id="certificateResetbtn" class="genric-btn danger-border circle">
 								<i class="fas">취소</i>
 							</a>
 						</div>
@@ -94,6 +173,36 @@
 			</div>
 		</div>
 	</section>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel1">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="d-flex justify-content-end">
+						<label style="padding:5px">자격증명</label>
+						<input type="text" id="inputBox" style="height:30px">
+						<button id="searchButton" type="button" class="btn btn-light" style="height:30px">검색</button>
+					</div>
+					<div class="card-body" id="certificateList">
+						<h6 class="title text-left">※해당 자격증을 선택하세요.</h6>
+						<div class="single-widget category-widget">
+							<ul id="certificateUl">
+								<li>검색결과가 없습니다.</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </th:block>
 </html>
