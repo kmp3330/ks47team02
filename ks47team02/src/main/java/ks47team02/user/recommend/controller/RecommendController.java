@@ -21,6 +21,7 @@ import ks47team02.user.member.dto.Company;
 import ks47team02.user.member.dto.User;
 import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.recommend.dto.AreaCate;
+import ks47team02.user.recommend.dto.NormalRun;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 import ks47team02.user.recommend.dto.RecommendScrap;
 import ks47team02.user.recommend.dto.RecommendSupport;
@@ -168,6 +169,16 @@ public class RecommendController {
 	}
 	
 	/*
+	 * ajax로 진행 상황 분류 데이터 요청을 위한 컨트롤러
+	 */
+	@GetMapping("/recommendAjaxNormalRun")
+	  @ResponseBody 
+	  public List<NormalRun> getNormalRunRecommend() {
+		List<NormalRun> recommendNormalRun = recommendService.getNormalRunRecommend();
+	    return recommendNormalRun;
+	  }
+	
+	/*
 	 * ajax로 참여 분야 데이터 요청을 위한 컨트롤러
 	 */
 	@GetMapping("/recommendAjaxJoinCate")
@@ -221,7 +232,8 @@ public class RecommendController {
 		List <RecommendSupport> recommendSupportInfo = recommendService.getRecommendSupportInfo();
 		List <Company> recommendCpIdInfo = recommendService.getCpIdRecommend();
 		List <AreaCate> recommendAreaInfo = recommendService.getAreaRecommend();
-		List<JoinCate> recommendJoinCateInfo = recommendService.getJoinCateRecommend();
+		List <JoinCate> recommendJoinCateInfo = recommendService.getJoinCateRecommend();
+		List <NormalRun> recommendNormalRun = recommendService.getNormalRunRecommend();
 		
 		model.addAttribute("title", "채용 단계 순 목록 등록");
 		model.addAttribute("titleText", "채용 단계 순 목록 등록");
@@ -234,6 +246,7 @@ public class RecommendController {
 		model.addAttribute("recommendCpIdInfo", recommendCpIdInfo);
 		model.addAttribute("recommendAreaInfo", recommendAreaInfo);
 		model.addAttribute("recommendJoinCateInfo", recommendJoinCateInfo);
+		model.addAttribute("recommendNormalRun", recommendNormalRun);
 		return "user/recommend/recommend_employment_insert";
 	}
 	

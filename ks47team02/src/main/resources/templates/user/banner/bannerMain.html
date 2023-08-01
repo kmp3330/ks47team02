@@ -7,11 +7,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
   <style>
-  
+    form {
+      padding: 0px;
+      margin: 40px 0;
+    }
   </style>
 </head>
 <th:block layout:fragment="customContents">
-  <div class="row container col-lg-12">
+  <div class="row container col-lg-12" style="margin-bottom: 50px">
     <div class="col-lg-3" style="margin-top: 40px">
       <div class="sidebar">
         <div class="single-item mb-4">
@@ -28,9 +31,11 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8" style="padding-top: 40px">
       <div class="single-job mb-4 justify-content-between text-center">
-      <h4>예상 가격 알아보기</h4>
+        <div class="card-header">
+      <h2>예상 가격 알아보기</h2>
+        </div>
       <br>
       <form id="adForm" action="#" class="d-md-flex justify-content-between">
         <select id="adTypeSelect">

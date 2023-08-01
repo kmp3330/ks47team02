@@ -10,10 +10,17 @@ import ks47team02.user.member.dto.Company;
 import ks47team02.user.member.dto.User;
 import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.recommend.dto.AreaCate;
+import ks47team02.user.recommend.dto.NormalRun;
 import ks47team02.user.recommend.dto.RecommendEmployment;
 
 @Mapper
 public interface RecommendEmploymentMapper {
+	
+	/*
+	 * 진행 상황 분류 조회
+	 */
+	public List <NormalRun> getNormalRunRecommend();
+	
 	
 	/*
 	 * 분야 조회

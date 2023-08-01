@@ -178,9 +178,20 @@ public class ProProjectService {
 	public void sendMoneyCompleteInsert(SendMoneyComplete sendMoneyComplete) {
 		proProjectMapper.sendMoneyCompleteInsert(sendMoneyComplete);
 	}
-	
-
-	
+	// 성과금 송금 완료 수정
+	public SendMoneyComplete getSendMoneyCompleteListInfo(String proProjectCode) {
+		SendMoneyComplete sendMoneyCompleteListInfo = proProjectMapper.getSendMoneyCompleteListInfo(proProjectCode);
+		return sendMoneyCompleteListInfo;
+	}
+	// 성과금 송금 완료 수정 후 처리
+	public int sendMoneyCompleteModify(SendMoneyComplete sendMoneyComplete) {
+		int result = proProjectMapper.sendMoneyCompleteModify(sendMoneyComplete);
+		return result;
+	}
+	// 성과금 송금 완료 삭제 처리
+	public void sendMoneyCompleteDelete(String sendMoneyCompleteCode) {
+		proProjectMapper.sendMoneyCompleteDelete(sendMoneyCompleteCode);
+	}
 	
 	
 	

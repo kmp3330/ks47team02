@@ -72,7 +72,22 @@
 		<id column="area_code" property="areaCode"></id>
 		<result column="area_cate" property="areaCate"></result>
 	</resultMap>
+	
+	<resultMap type="NormalRun" id="NormalRunResultMap">
+		<id column="job_normal_run_code" property="normalRunCode"></id>
+		<result column="job_normal_run" property="runName"></result>
+	</resultMap>
+ <select id="getNormalRunRecommend" parameterType="String" resultMap="NormalRunResultMap">
+ 	SELECT
+		jnr.job_normal_run_code,
+		jnr.job_normal_run
+	FROM
+		job_normal_run AS jnr
+	</select>	
+	
+	
  <select id="getJoinCateRecommend" parameterType="String" resultMap="joinCateResultMap">
+ 
  	SELECT
 		join_cate_code,
 		join_cate_name
