@@ -7,23 +7,43 @@
 	<select id="getCertificateList" parameterType="map" resultType="map">
 		/* 자격증 전체 조회 */
 		SELECT
+			pc.user_certificate_code AS certificateCode,
 			pc.user_id AS userId,
 			pc.user_certificate_name AS certificateName,
 			pc.profile_reg_date AS profileRegDate
 		FROM
 			profile_certificate AS pc
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+				${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+		</where>
 		ORDER BY pc.profile_reg_date DESC
 		<if test="startIndex != null and stratIndex > -1">
 			LIMIT #{startIndex}, #{rowPerPage};
 		</if>
 	</select>
 	
-	<select id="getCertificateCnt">
+	<select id="getCertificateCnt" parameterType="map">
 		/* 자격증 전체 행 갯수 */
 		SELECT
 			COUNT(*)
 		FROM
-			profile_certificate;
+			profile_certificate AS pc
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+				${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+		</where>
 	</select>
+	
+	<delete id="removeAdminProfileCertificate" parameterType="String">
+		/* 자격증 삭제 */
+		DELETE
+		FROM
+			profile_certificate AS pc
+		WHERE
+			pc.user_certificate_code = #{certificateCode}
+	</delete>
 
 </mapper>

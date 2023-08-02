@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller("userCommonController")
 public class CommonController {
-	@GetMapping("/")
+	@GetMapping("/user")
 	public String main(Model model) {
 		
 		model.addAttribute("title", "메인화면");
