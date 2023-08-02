@@ -6,7 +6,6 @@
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
 </th:block>
-
 <th:block layout:fragment="customContents">
 	<div class="row container col-lg-12" style="margin-bottom: 50px">
 		<div class="col-lg-3" style="margin-top: 40px">
@@ -38,18 +37,14 @@
 						 th:unless="${#lists.isEmpty(normalProjectList)}"
 						 th:each="l : ${normalProjectList}"
 						 th:onclick="|location.href='@{/normalProject/projectDetail(normalProjectCode=${l.normalProjectCode})}'|">
-						<div class="job-text text-left">
-							<h4 th:text="${l.normalProjectName}"></h4>
-							<ul class="mt-4">
-								<li class="mb-3"><h5 th:text="|프로젝트 신청 마감일 ${l.projectAdvertiseFinishDate}|"></h5></li>
-								<li class="mb-3"><h5 th:text="|참여분야 : ${l.joinCateName} 주제분류 : ${l.workCateName} 요구기술 : ${l.requiredSkill}|"><i class="fa fa-pie-chart"></i></h5></li>
-								<li><h5 th:text="|프로젝트 참여인원 : ${l.projectMaxPeopleNum}|"><i class="fa fa-clock-o"></i></h5></li>
-							</ul>
-						</div>
-						<div class="job-btn align-self-center">
-							<a href="#" class="third-btn job-btn1">full time</a>
-							<a href="#" class="third-btn">apply</a>
-						</div>
+							<div class="job-text text-left">
+								<h4 th:text="${l.normalProjectName}"></h4>
+								<ul class="mt-4">
+									<li class="mb-3"><h5 th:text="|프로젝트 신청 마감일 ${l.projectAdvertiseFinishDate}|"></h5></li>
+									<li class="mb-3"><h5 th:text="|참여분야 : ${l.joinCateName} 주제분류 : ${l.workCateName} 요구기술 : ${l.requiredSkill}|"><i class="fa fa-pie-chart"></i></h5></li>
+									<li><h5 th:text="|프로젝트 참여인원 : ${l.projectMaxPeopleNum}|"><i class="fa fa-clock-o"></i></h5></li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
