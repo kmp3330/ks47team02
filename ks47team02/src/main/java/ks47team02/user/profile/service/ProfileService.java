@@ -13,6 +13,7 @@ import ks47team02.user.profile.dto.ProfileIntro;
 import ks47team02.user.profile.dto.ProfilePortfolio;
 import ks47team02.user.profile.dto.ProfileSkill;
 import ks47team02.user.profile.dto.ProfileWorkSpec;
+import ks47team02.user.profile.dto.UnivGradCate;
 import ks47team02.user.profile.mapper.ProfileAwardMapper;
 import ks47team02.user.profile.mapper.ProfileCertificateMapper;
 import ks47team02.user.profile.mapper.ProfileEduSpecMapper;
@@ -148,6 +149,22 @@ public class ProfileService {
 		
 		return profileWorkSpecList;
 	}
+	/**
+	 * 최종학력 조회
+	 * @return
+	 */
+	public List<UnivGradCate> getUnivGradCateList(){
+		List<UnivGradCate> univGradCateList = profileEduSpecMapper.getUnivGradCateList();
+		log.info("univGradCateList : {}", univGradCateList);
+		
+		return univGradCateList;
+	}
+	public UnivGradCate getUnivGradCateByCode(String univGradCateCode){
+		UnivGradCate univGradCate  = profileEduSpecMapper.getUnivGradCateByCode(univGradCateCode);
+		log.info("univGradCate : {}", univGradCate);
+		return univGradCate;
+	}
+	
 	/*학력 삭*/
 	public void profileEduSpecDelete(String userEduSpecCode) {
 		profileEduSpecMapper.profileEduSpecDelete(userEduSpecCode);

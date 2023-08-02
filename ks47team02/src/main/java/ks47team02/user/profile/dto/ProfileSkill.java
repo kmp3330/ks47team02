@@ -8,8 +8,8 @@ public class ProfileSkill {
 	private String userId;
 	private String userSkill;
 	private String userSkillRank;
-	private int userExperience;
-	private Date userRegDate;
+	private String userExperience;
+	private String userRegDate;
 	private boolean profileHidden;
 	private boolean profileApplicationHidden;
 	
@@ -38,16 +38,16 @@ public class ProfileSkill {
 	public void setUserSkillRank(String userSkillRank) {
 		this.userSkillRank = userSkillRank;
 	}
-	public int getUserExperience() {
+	public String getUserExperience() {
 		return userExperience;
 	}
-	public void setUserExperience(int userExperience) {
+	public void setUserExperience(String userExperience) {
 		this.userExperience = userExperience;
 	}
-	public Date getUserRegDate() {
+	public String getUserRegDate() {
 		return userRegDate;
 	}
-	public void setUserRegDate(Date userRegDate) {
+	public void setUserRegDate(String userRegDate) {
 		this.userRegDate = userRegDate;
 	}
 	public boolean isProfileHidden() {

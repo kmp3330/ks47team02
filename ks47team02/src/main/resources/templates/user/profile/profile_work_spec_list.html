@@ -91,7 +91,7 @@
 		                        </div>
                             </div>
                         </div>
-                        <div class="single-content1" th:if="${#lists.isEmpty(profileEduSpecList)}">
+                        <div class="single-content1" th:if="${#lists.isEmpty(profileWorkSpecList)}">
                         	<div class="single-job d-lg-flex justify-content-center">
                             	<div class="job-text">
                                 <h5 th:text="|***등록된 일경력이 없습니다.***|"></h5>
@@ -105,54 +105,4 @@
 	</section>
 	
 </th:block>
-</html>
-										
-											<th>회사명</th>
-											<th>기술명</th>
-											<th>입사 일시</th>
-											<th>퇴사 일시</th>
-											<th>근무부서</th>
-											<th>직위</th>
-											<th>담당업무</th>
-											 <th>정보 등록 일시</th>
-											<th>공개 여부</th>
-											<th>입사지원시 공개여부</th>
-											<th>수정</th>
-											<th>삭제</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:unless="${#lists.isEmpty(profileWorkSpecList)}"
-											th:each="l : ${profileWorkSpecList}">
-											<!-- <td th:text="${l.userWorkSpecCode}"></td> -->
-											<!-- <td th:text="${l.userId}"></td> -->
-											<td th:text="${l.userCompany}"></td>
-											<td th:text="${l.userSkill}"></td>
-											<td th:text="${l.userEnterDate}"></td>
-											<td th:text="${l.userLeaveDate}"></td>
-											<td th:text="${l.userDepartment}"></td>
-											<td th:text="${l.userRank}"></td>
-											<td th:text="${l.userWork}"></td>
-											<td th:text="${l.profileRegDate}"></td>
-											<td th:text="${l.profileHidden}"></td>
-											<td th:text="${l.profileApplicationHidden}"></td>
-											<td><a th:href="@{/profile/profileWorkSpecModify(userWorkSpecCode=${l.userWorkSpecCode})}" class="genric-btn success-border circle">
-												<i class="fas">수정</i>
-												</a></td>
-											<td><a th:href="@{#}" id="profileWorkSpecDelete" th:data-user-work-spec-code="${l.userWorkSpecCode}" class="genric-btn danger-border circle"> 
-												<i class="fas">삭제</i>
-												</a></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-</th:block>
-
 </html>

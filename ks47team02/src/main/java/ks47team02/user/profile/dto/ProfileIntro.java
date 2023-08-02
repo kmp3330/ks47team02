@@ -6,6 +6,7 @@ public class ProfileIntro {
 	//profile_intro 테이블 
 	private String userIntroCode;
 	private String userId;
+	private String userIntroTitle;
 	private String userIntro;
 	private boolean profileHidden;
 	private boolean profileApplicationHidden;
@@ -22,6 +23,13 @@ public class ProfileIntro {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public String getUserIntroTitle() {
+		return userIntroTitle;
+	}
+	public void setUserIntroTitle(String userIntroTitle) {
+		this.userIntroTitle = userIntroTitle;
+	}
+	
 	public String getUserIntro() {
 		return userIntro;
 	}
