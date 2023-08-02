@@ -1,111 +1,90 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{user/layout/default}">
 
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
 	<script>
-		$('#modifyBtn').click(function (e) {
+		$('#SkillInsertbtn').click(function (e) {
 			e.preventDefault();
-
-			$('#modifyProfileForm').submit();
+			
+			$('#profileSkillModifyForm').submit();
 		});
+		
+		
+		
 	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="sidebar">
-						<div class="single-item mb-4">
-							<h4 class="mb-4">프로필</h4>
-							<a th:href="@{/profile/profileSkillList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
-							</a> <a th:href="@{/profile/profileSkillList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
-							</a> <a th:href="@{/profile/profileWorkSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
-							</a> <a th:href="@{/profile/profileEduSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
-							</a> <a th:href="@{/profile/profileCertificateList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
-							</a> <a th:href="@{/profile/profileAwardList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
-							</a> <a th:href="@{/profile/profilePortfolioList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-9">
+	<section class="contact-form section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
 					<div class="single-job mb-4 justify-content-between text-center">
-						<div class="card">
-							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">보유기술</h3>
-								<div class="card-tools">
-									<a href="#" class="genric-btn info-border circle" >
-										<i id="modifyBtn" class="fas">수정 완료</i>
-									</a>
-									<a th:href="@{#}" class="genric-btn danger-border circle">
-										<i type="button" id="resetBtn" class="fas">취소</i>
-									</a>
+						<div class="card single-job">
+							<form id="profileSkillModifyForm"
+								  th:action="@{/profile/profileSkillModify}" method="post"
+								  class="d-md-flex justify-content-center">
+
+								<div class="left" th:object="${profileSkillInfo}">
+									<input type="hidden" name="userSkillCode"
+										   th:value="*{userSkillCode}">
+									<p class="text-left" style="font-size:large; font-weight:900;">기술명</p>
+									<input type="text"
+										   placeholder="기술명" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '기술명'"
+										   name="SkillName" th:value="*{userSkill}"> 
+									<p class="text-left" style="font-size:large; font-weight:900;">숙련도</p>
+									<input type="text"
+										   placeholder="숙련도" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '숙련도'"
+										   name="userSkillRank"
+										   th:value="*{userSkillRank}">
+									<p class="text-left" style="font-size:large; font-weight:900;">경험(년도차)</p>
+									<input type="text"
+										   placeholder="경험(연도차)" onfocus="this.placeholder = '(년도차)'"
+										   onblur="this.placeholder = '경험(연도차)'"
+										   name="user_experience"
+										   th:value="*{userExperience}">
+									<p class="text-left" style="font-size:large; font-weight:900;">취득일시</p>
+									<input type="date"
+										   placeholder="경험" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '경험'"
+										   name="userExperience" th:value="*{userExperience}">
+									<!-- <p class="text-left" style="font-size:large; font-weight:900;">정보등록일시</p>
+									<input type="date"
+										   placeholder="정보등록일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '정보등록일시'" readonly
+										   name="userRegDate" th:value="*{userRegDate}"> -->
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch1"
+												name="profileHidden" th:checked="*{profileHidden}">
+											<label for="confirm-switch1"></label>
+										</div>
+									</iv>
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">입사지원시 공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch2"
+												name="profileApplicationHidden"
+												th:checked="*{profileApplicationHidden}"> <label
+												for="confirm-switch2"></label>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="card-body table-responsive p-0">
-								<form id="modifyProfileForm" th:action="@{/profile/profileSkillModify}" 
-									class="d-md-flex justify-content-between" method="post">
-									<table class="table table-valign-middle">
-										<thead>
-											<tr>
-												<th>기술명</th>
-												<th>숙련도</th>
-												<th>경험</th>
-												<th>공개 여부</th>
-												<th>입사지원시 공개여부</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<input type="hidden" name="userSkillCode" th:value="${profileSkillInfo.userSkillCode}">
-												<td><input class="genric-btn" type="text" id="userSkill" name="userSkill"
-														th:value="${profileSkillInfo.userSkill}"></td>
-												<td>
-													<div class="default-select" id="default-select">
-														<select style="display: none;" name="userSkillRank"> <!-- 이거 물어봐 수정 -->
-															<option value="특급" th:selected:"${profileSkillInfo.userSkillRank}">특급</option>
-															<option value="고급">고급</option>
-															<option value="중급">중급</option>
-															<option value="초급">초급</option>
-														</select>
-													</div>
-												</td>
-												<td><input class="genric-btn" type="text" th:value="${profileSkillInfo.userExperience}"
-														name="userExperience">
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2"
-																name="profileHidden" th:checked="${profileSkillInfo.profileHidden}">
-															<label for="confirm-switch2"></label>
-														</div>
-													</div>
-												</td>
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2"
-																name="profileApplicationHidden" th:checked="${profileSkillInfo.profileApplicationHidden}">
-															<label for="confirm-switch2"></label>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-							</div>
+							</form>
+						</div>
+						<div class="card-tools">
+							<a th:href="@{#}" id="SkillInsertbtn"
+								class="genric-btn info-border circle"> <i class="fas">수정완료</i>
+							</a> <a th:href="@{/profile/profileSkillList}"
+								id="profileSkillResetbtn" class="genric-btn danger-border circle">
+								<i class="fas">취소</i>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -114,5 +93,4 @@
 	</section>
 
 </th:block>
-
 </html>

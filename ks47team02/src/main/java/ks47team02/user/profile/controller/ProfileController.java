@@ -19,6 +19,7 @@ import ks47team02.user.profile.dto.ProfileIntro;
 import ks47team02.user.profile.dto.ProfilePortfolio;
 import ks47team02.user.profile.dto.ProfileSkill;
 import ks47team02.user.profile.dto.ProfileWorkSpec;
+import ks47team02.user.profile.dto.UnivGradCate;
 import ks47team02.user.profile.service.ProfileService;
 import ks47team02.user.project.pro.dto.JoinCate;
 import ks47team02.user.project.pro.dto.SubjectCate;
@@ -88,7 +89,10 @@ public class ProfileController {
 	}
 	
 	@PostMapping("/profileIntroInsert")
-	public String profileIntroInsert(ProfileIntro profileIntro) {
+	public String profileIntroInsert(ProfileIntro profileIntro, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		profileIntro.setUserId(sessionId);
 		
 		log.info("자기소개 등록시 입력정보: {}", profileIntro);
 		
@@ -98,16 +102,12 @@ public class ProfileController {
 	}
 	
 	@GetMapping("/profileIntroInsert")
-	public String profileIntroInsert(Model model, HttpSession session) {
+	public String profileIntroInsert(Model model) {
 		
-		String sessionId = (String)session.getAttribute("SID");
 
-		List<ProfileIntro> profileIntroList = profileService.getProfileIntroList(sessionId);
-		
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
-		model.addAttribute("profileIntroList", profileIntroList);
 		return "user/profile/profile_intro_insert";
 	}
 	/*
@@ -170,7 +170,10 @@ public class ProfileController {
 	
 	
 	@PostMapping("/profileSkillInsert")
-	public String profileSkillInsert(ProfileSkill profileSkill) {
+	public String profileSkillInsert(ProfileSkill profileSkill, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		profileSkill.setUserId(sessionId);
 		
 		log.info("자기소개 등록시 입력정보: {}", profileSkill);
 		
@@ -179,16 +182,12 @@ public class ProfileController {
 		return "redirect:/profile/profileSkillList";
 	}
 	@GetMapping("/profileSkillInsert")
-	public String profilSkillInsert(Model model, HttpSession session) {
+	public String profilSkillInsert(Model model) {
 		
-		String sessionId = (String)session.getAttribute("SID");
-
-		List<ProfileIntro> profileSkillList = profileService.getProfileIntroList(sessionId);
 
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
-		model.addAttribute("profileSkillList", profileSkillList);
 		return "user/profile/profile_skill_insert";
 	}
 	/**
@@ -242,7 +241,11 @@ public class ProfileController {
 		
 	}
 	@PostMapping("/profileWorkSpecInsert")
-	public String profileWorkSpecInsert(ProfileWorkSpec profileWorkSpec) {
+	public String profileWorkSpecInsert(ProfileWorkSpec profileWorkSpec, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("SID");
+		profileWorkSpec.setUserId(sessionId);
+		
 		
 		log.info("일경력  등록시 입력정보: {}", profileWorkSpec);
 		
@@ -251,15 +254,11 @@ public class ProfileController {
 		return "redirect:/profile/profileWorkSpecList";
 	}
 	@GetMapping("/profileWorkSpecInsert")
-	public String profilWorkSpecInsert(Model model, HttpSession session) {
+	public String profilWorkSpecInsert(Model model) {
 		
-		String sessionId = (String)session.getAttribute("SID");
-		
-		List<ProfileWorkSpec> profileWorkSpecList = profileService.getProfileWorkSpecList(sessionId);
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
-		model.addAttribute("profileWorkSpecList", profileWorkSpecList);
 		return "user/profile/profile_work_spec_insert";
 	}
 	
@@ -282,6 +281,8 @@ public class ProfileController {
 		
 		return "user/profile/profile_work_spec_list";
 	}
+	
+	
 	/*학력 수*/
 	@GetMapping("/profileEduSpecDelete")
 	public String profileEduSpecDelete(@RequestParam(value="userEduSpecCode") String userEduSpecCode,
@@ -296,7 +297,16 @@ public class ProfileController {
 	
 	@PostMapping("/profileEduSpecModify")
 	public String profileEduSpecModify(ProfileEduSpec profileEduSpec) {
+		
+		String univGradCateCode = profileEduSpec.getUnivGradCateCode();
+		
+		UnivGradCate univGradCateInfo = profileService.getUnivGradCateByCode(univGradCateCode);
+		
+		profileEduSpec.setUnivGradCateName(univGradCateInfo.getUnivGradCateName());
+		log.info("profileEduSpec : {}", profileEduSpec);
+		
 		profileService.profileEduSpecModify(profileEduSpec);
+		
 		return "redirect:/profile/profileEduSpecList";
 	}
 	/*
@@ -308,18 +318,34 @@ public class ProfileController {
 	public String profileEduSpecModify(@RequestParam(value="userEduSpecCode") String userEduSpecCode, Model model) {
 		//회원 상세조회
 		ProfileEduSpec profileEduSpecInfo = profileService.getProfileEduSpecInfoByCode(userEduSpecCode);
-		//회원등급 목록 조회
+		
+		// 최종학력 상태 목록 조회
+		List<UnivGradCate> univGradCateList = profileService.getUnivGradCateList();
+		
 		//List<ProfileLevel> profileLevelList = profileService.getProfileLevelList
 		model.addAttribute("title","회원수정");
 		model.addAttribute("profileEduSpecInfo",profileEduSpecInfo);
-		
+		model.addAttribute("univGradCateList", univGradCateList);
 		return "user/profile/profile_edu_spec_modify";
 		
 	}
 	
 	
 	@PostMapping("/profileEduSpecInsert")
-	public String profileEduSpecInsert(ProfileEduSpec profileEduSpec) {
+	public String profileEduSpecInsert(ProfileEduSpec profileEduSpec,
+									   HttpSession session) {
+		
+		// 1. 세션에 저장된 아이디를 가져온다.
+		String sessionId = (String)session.getAttribute("SID");
+		// 2. 가져온 아이디를 dto에 있는 userId 프로퍼티에 셋팅한다.
+		profileEduSpec.setUserId(sessionId);
+		
+		// 1. 학력 코드를 가져온다.
+		String univGradCateCode = profileEduSpec.getUnivGradCateCode();
+		// 2. 코드별 학력 조회 
+		UnivGradCate univGradCate = profileService.getUnivGradCateByCode(univGradCateCode);
+		// 3. 학력 이름에 세팅을 해준다.
+		profileEduSpec.setUnivGradCateName(univGradCate.getUnivGradCateName());
 		
 		log.info("학력 등록시 입력정보: {}", profileEduSpec);
 		
@@ -330,13 +356,14 @@ public class ProfileController {
 	@GetMapping("/profileEduSpecInsert")
 	public String profileEduSpecInsert(Model model, HttpSession session) {
 		
-		String sessionId = (String)session.getAttribute("SID");
+		// 최종학력 코드가 필요하다.
+		List<UnivGradCate> univGradCateList  = profileService.getUnivGradCateList();
 
-		List<ProfileEduSpec> profileEduSpecList = profileService.getProfileEduSpecList(sessionId);
 		model.addAttribute("title", "메인화면");
 		model.addAttribute("titleText", "크게 보이는 글씨");
 		model.addAttribute("contents", "작게 보이는 글씨");
-		model.addAttribute("profileEduSpecList", profileEduSpecList);
+		model.addAttribute("univGradCateList", univGradCateList);
+		
 		return "user/profile/profile_edu_spec_insert";
 	}
 	

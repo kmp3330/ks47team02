@@ -1,145 +1,113 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{user/layout/default}">
 
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
 	<script>
-		$('#modifyBtn').click(function (e) {
+		$('#EduSpecInsertbtn').click(function (e) {
 			e.preventDefault();
-
-			$('#modifyProfileForm').submit();
+			
+			$('#profileEduSpecModifyForm').submit();
 		});
+		
+		
+		
 	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="sidebar">
-						<div class="single-item mb-4">
-							<h4 class="mb-4">프로필</h4>
-							<a th:href="@{/profile/profileIntroList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자기소개</span>
-							</a> <a th:href="@{/profile/profileSkillList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>보유기술</span>
-							</a> <a th:href="@{/profile/profileWorkSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>경력</span>
-							</a> <a th:href="@{/profile/profileEduSpecList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>학력</span>
-							</a> <a th:href="@{/profile/profileCertificateList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>자격증</span>
-							</a> <a th:href="@{/profile/profileAwardList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>수상이력</span>
-							</a> <a th:href="@{/profile/profilePortfolioList}"
-								class="sidebar-btn d-flex justify-content-between mb-3"> <span>포트폴리오</span>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-9">
+	<section class="contact-form section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
 					<div class="single-job mb-4 justify-content-between text-center">
-						<div class="card">
-							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">학력</h3>
-								<div class="card-tools">
-									<a href="#" class="genric-btn info-border circle" id="modifyBtn">
-										<i class="fas">등록 완료</i>
-									</a>
-									<a th:href="@{#}" class="genric-btn danger-border circle">
-										<i type="button" id="resetBtn" class="fas">취소</i>
-									</a>
+						<div class="card single-job">
+							<form id="profileEduSpecModifyForm"
+								  th:action="@{/profile/profileEduSpecModify}" method="post"
+								  class="d-md-flex justify-content-center">
+
+								<div class="left" th:object="${profileEduSpecInfo}">
+									<input type="hidden" name="userEduSpecCode"
+										   th:value="*{userEduSpecCode}">
+									<p class="text-left" style="font-size:large; font-weight:900;">학교구분</p>
+									<div class="d-md-flex mb-3">
+										<select style="display: none;" name="univGradCateCode"
+												placeholder="학교구분"> <!-- *는 object로 들고올-->
+												<option value="*{univGradCateCode}">[[*{univGradCateName}]]</option>
+												<th:block th:unless="${#lists.isEmpty(univGradCateList)}"
+													th:each="l : ${univGradCateList}"> <!-- $는 thymeleaf 구문으로 쓰는거-->
+													<option th:value="${l.univGradCateCode}">[[${l.univGradCateName}]]</option>
+												</th:block>
+										</select>
+									</div>
+									<p class="text-left" style="font-size:large; font-weight:900;">학교명</p>
+									<input type="text"
+										   placeholder="학교명" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '학교명'"
+										   name="userUnivName" th:value="*{userUnivName}"> 
+									<p class="text-left" style="font-size:large; font-weight:900;">전공명</p>
+									<input type="text"
+										   placeholder="전공명" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '전공명'"
+										   name="userUnivMajor"
+										   th:value="*{userUnivMajor}"> 
+									<p class="text-left" style="font-size:large; font-weight:900;">졸업상태</p>
+									<input type="text"
+										   placeholder="졸업상태" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '졸업상태'"
+										   name="userUnivGrad"
+										   th:value="*{userUnivGrad}"> 
+									<p class="text-left" style="font-size:large; font-weight:900;">입학일시</p>
+									<input type="date"
+										   placeholder="입학일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '입학일시'"
+										   name="userUnivEnterDate" th:value="*{userUnivEnterDate}">
+									<p class="text-left" style="font-size:large; font-weight:900;">졸업일시</p>
+									<input type="date"
+										   placeholder="졸업일시" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '졸업일시'"
+										   name="userUnivGradDate" th:value="*{userUnivGradDate}">
+									<p class="text-left" style="font-size:large; font-weight:900;">학점</p>
+									<input type="text"
+										   placeholder="학점" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '학점'"
+										   name="userUnivScore"
+										   th:value="*{userUnivScore}">
+									<p class="text-left" style="font-size:large; font-weight:900;">총점</p>
+									<input type="text"
+										   placeholder="총점" onfocus="this.placeholder = ''"
+										   onblur="this.placeholder = '총점'"
+										   name="userUnivTotalScore"
+										   th:value="*{userUnivTotalScore}">
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch1"
+												name="profileHidden" th:checked="*{profileHidden}">
+											<label for="confirm-switch1"></label>
+										</div>
+									</iv>
+									<div class="d-flex justify-content-between">
+										<label style="font-size:large; font-weight:900;">입사지원시 공개여부</label>
+										<div class="confirm-switch">
+											<input type="checkbox" id="confirm-switch2"
+												name="profileApplicationHidden"
+												th:checked="*{profileApplicationHidden}"> <label
+												for="confirm-switch2"></label>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="card-body table-responsive p-0">
-								<form id="modifyProfileForm" th:action="@{/profile/profileEduSpecModify}"
-									class="d-md-flex justify-content-between" method="post">
-									<table class="table table-valign-middle">
-										<thead>
-											<tr>
-												<th>학교구분</th>
-												<th>학교명</th>
-												<th>전공명</th>
-												<th>졸업상태</th>
-												<th>입학 일시</th>
-												<th>졸업 일시</th>
-												<th>학점</th>
-												<th>총점</th>
-												<th>공개 여부</th>
-												<th>입사지원시 공개여부</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<input type="hidden" name="userEduSpecCode" th:value="${profileEduSpecInfo.userEduSpecCode}">
-												<td>
-													<div class="default-select" id="default-select">
-														<select style="display: none;" name="userDegree">
-															<option value="대학원(박사)">대학원(박사)</option>
-															<option value="대학원(학사)">대학원(학사)</option>
-															<option value="대학교(4년제">대학교(4년제)</option>
-															<option value="전문대학(2.3년제)">전문대학(2.3년제)</option>
-															<option value="고등학교">고등학교</option>
-															<option value="중학교">중학교</option>
-															<option value="초등학교">초등학교</option>
-															<option value="무학">무학</option>
-														</select>
-													</div>
-												</td>
-												<td>
-													<input class="genric-btn" type="text" name="userUnivName" th:value="${profileEduSpecInfo.userUnivName}">
-												</td>
-												<td>
-													<input class="genric-btn" type="text" th:value="${profileEduSpecInfo.userUnivMajor}"
-														name="userUnivMajor">
-												</td>
-												<td>
-													<div class="default-select" id="default-select">
-														<select style="display: none;" name="userUnivGrad">
-															<option value="졸업">졸업</option>
-															<option value="재학">재학</option>
-															<option value="휴학">휴학</option>
-															<option value="편입">편입</option>
-														</select>
-													</div>
-												</td>
-												<td><input class="genric-btn" type="date" name="userUnivEnterDate"
-														th:value="${profileEduSpecInfo.userUnivEnterDate}"></td>
-												<td><input class="genric-btn" type="date" name="userUnivGradDate"
-														th:value="${profileEduSpecInfo.userUnivGradDate}"></td>
-												<td>
-													<input class="genric-btn" type="text" th:value="${profileEduSpecInfo.userUnivScore}"
-														name="userUnivScore">
-												</td>
-												<td>
-													<input class="genric-btn" type="text" th:value="${profileEduSpecInfo.userUnivTotalScore}"
-														name="userUnivTotalScore" >
-												</td>
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2"
-																name="profileHidden" th:checked="${profileEduSpecInfo.profileHidden}">
-															<label for="confirm-switch2"></label>
-														</div>
-													</div>
-												</td>
-												<td>
-													<div class="d-flex justify-content-center">
-														<div class="confirm-switch">
-															<input type="checkbox" id="confirm-switch2"
-																name="profileApplicationHidden" th:checked="${profileEduSpecInfo.profileApplicationHidden}">
-															<label for="confirm-switch2"></label>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-							</div>
+							</form>
+						</div>
+						<div class="card-tools">
+							<a th:href="@{#}" id="EduSpecInsertbtn"
+								class="genric-btn info-border circle"> <i class="fas">수정완료</i>
+							</a> <a th:href="@{/profile/profileEduSpecList}"
+								id="profileEduSpecResetbtn" class="genric-btn danger-border circle">
+								<i class="fas">취소</i>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -148,5 +116,4 @@
 	</section>
 
 </th:block>
-
 </html>

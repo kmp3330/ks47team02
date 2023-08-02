@@ -9,6 +9,7 @@
 		<id	column="user_intro_code" property="userIntroCode" />
 		<!-- result태그는 조회시 테이블의 일반컬럼 혹은 외래키를 의 -->
 		<result	column="user_id" property="userId" />
+		<result	column="user_intro_title" property="userIntroTitle" />
 		<result	column="user_intro" property="userIntro" />
 		<result	column="profile_hidden" property="profileHidden" />
 		<result	column="profile_application_hidden" property="profileApplicationHidden" />
@@ -19,6 +20,7 @@
 		SELECT
 		    pi.user_intro_code,
 		    pi.user_id,
+		    pi.user_intro_title,
 		    pi.user_intro,
 		    pi.profile_hidden,
 		    pi.profile_application_hidden
