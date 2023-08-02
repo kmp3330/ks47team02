@@ -219,7 +219,7 @@ public class AdminProfileService {
 	private final AdminProfileCertificateMapper adminProfileCertificateMapper;
 
 	/**
-	 * 자격증 페이징 목록
+	 * 자격증 페이징, 검색 조회
 	 * @param currentPage
 	 * @return
 	 */
@@ -284,4 +284,13 @@ public class AdminProfileService {
 		return paramMap;
 	}
 
+	/**
+	 * 자격증 선택 삭제
+	 * @param certificateCodeList
+	 */
+	public void removeAdminProfileCertificate(List<String> certificateCodeList) {
+		for(String certificateCode : certificateCodeList) {
+			adminProfileCertificateMapper.removeAdminProfileCertificate(certificateCode);
+		}
+	}
 }

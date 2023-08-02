@@ -14,4 +14,6 @@ public interface AdminProfileCertificateMapper {
 	// 자격증 행 갯수
 	public int getCertificateCnt(Map<String, Object> paramMap);
 
+	// 자격증 삭제
+	public int removeAdminProfileCertificate(String certificateCode);
 }

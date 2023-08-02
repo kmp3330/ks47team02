@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title th:text="${title}"></title>
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+	crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link th:href="@{/main/css/styles.css}" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+
+	<header class="masthead bg-primary text-white text-center">
+		<div class="container d-flex align-items-center flex-column">
+			<!-- Masthead Avatar Image-->
+			<img class="masthead-avatar mb-5"
+				th:src="@{/main/assets/img/avataaars.svg}" alt="..." />
+			<!-- Masthead Heading-->
+			<h1 class="masthead-heading mb-0">ITyranno</h1>
+			<!-- Icon Divider-->
+			<div class="divider-custom divider-light">
+				<div class="divider-custom-line"></div>
+				<div class="divider-custom-icon">
+					<i class="fas fa-star"></i>
+				</div>
+				<div class="divider-custom-line"></div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Contact Section-->
+	<section class="page-section" id="contact">
+		<div class="container">
+			<!-- Contact Section Heading-->
+			<div class="col-lg-4 ms-auto">
+				<p class="lead">2023년 8월 3일 09:00 배포</p>
+			</div>
+			<h2
+				class="page-section-heading text-center text-uppercase text-secondary mb-0">KSMART
+				47기 2팀 프로젝트 #xx 버전</h2>
+			<!-- Icon Divider-->
+			<div class="divider-custom">
+				<div class="divider-custom-line"></div>
+				<div class="divider-custom-icon">
+					<i class="fas fa-star"></i>
+				</div>
+				<div class="divider-custom-line"></div>
+			</div>
+			<!-- About Section Content-->
+			<div class="row justify-content-center">
+				<div class="col-lg-8 col-xl-7">
+					<h1>프로젝트 소개</h1>
+					<br>
+					<h3>프로젝트 명</h3>
+					<p class="lead">IT 개발자 스펙 관리 및 채용 플랫폼 ( IT개발자 스펙업 프로젝트)</p>
+					<h3>프로젝트 목적</h3>
+					<p class="lead">IT 개발자 커리어 스팩업(포트폴리오)을 위한 일반과제, 전문과제 구인 글 개설을
+						통해, 일반과제의 경우 팀 프로젝트를 함으로써 프로젝트 경험, 포트폴리오를 만들 수 있고 전문과제의 경우 팀 프로젝트
+						포트폴리오를 만들면서 동시에 성과금을 받을 수 있다. 기업과 프리랜서를 연결하는 서비스, 기업에서 프리랜서가 필요한
+						경우, 프리랜서 목록에서 이력서와 함께, 아이티라노에서 진행한 프로젝트, 포트폴리오를 확인할 수 있어, 더 세밀하게
+						검증할 수 있다. 구인·구직 서비스를 제공함. 구직자 같은 경우 학력, 실무경력, 자격증같이 이력서의 내용과
+						아이티라노에서 진행한 일반, 전문과제를 진행한 내용 등을 프로필에 등록해 기업회원이 구직자의 정보를 상세히 검증할 수
+						있다.</p>
+					<h3>기대효과</h3>
+					<p class="lead">다른 구인 구직 사이트와 다른 점 - 다른 사이트는 구인 구직, 프리랜서 고용이 목적
+						이지만 아이티라노는 취직과 이직에 도움이 되는 포트폴리오를 위해 팀프로젝트를 같이 할 수 있는 사람들 모집하는 서비스와
+						프리랜서와 기업을 연결시켜주는 서비스를 제공하여 프로젝트를 완성하고 이력서에 추가하여 구직에 및 스펙업에 도움이 될 수
+						있다.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- About Section-->
+	<section class="page-section portfolio" id="about">
+		<div class="container">
+			<!-- About Section Heading-->
+			<h2
+				class="page-section-heading text-center text-uppercase text-secondary">projects</h2>
+			<!-- Icon Divider-->
+			<div class="divider-custom">
+				<div class="divider-custom-line"></div>
+				<div class="divider-custom-icon">
+					<i class="fas fa-star"></i>
+				</div>
+				<div class="divider-custom-line"></div>
+			</div>
+			<!-- About Section Content-->
+			<div class="row justify-content-center">
+				<!-- Portfolio Item 1-->
+				<div class="col-md-6 col-lg-4 mb-5">
+					<div class="portfolio-item mx-auto">
+						<div id="userPage"
+							class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+						</div>
+						<img class="img-fluid mb-2"
+							th:src="@{/main/assets/img/portfolio/cabin.png}" alt="..." />
+						<h3 class="text-center">ITyranno</h3>
+					</div>
+				</div>
+				<!-- Portfolio Item 2-->
+				<div class="col-md-6 col-lg-4 mb-5">
+					<div class="portfolio-item mx-auto">
+						<div id="adminPage"
+							class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+						</div>
+						<img class="img-fluid mb-2"
+							th:src="@{/main/assets/img/portfolio/circus.png}" alt="..." />
+						<h3 class="text-center">ITyranno 관리자</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Portfolio Section-->
+	<section class="page-section portfolio" id="portfolio">
+		<div class="container">
+			<!-- Portfolio Section Heading-->
+			<h2
+				class="page-section-heading text-center text-uppercase text-secondary mb-0">MEMBER</h2>
+			<!-- Icon Divider-->
+			<div class="divider-custom">
+				<div class="divider-custom-line"></div>
+				<div class="divider-custom-icon">
+					<i class="fas fa-star"></i>
+				</div>
+				<div class="divider-custom-line"></div>
+			</div>
+			<!-- Portfolio Grid Items-->
+			<div class="row justify-content-center">
+				<div class="text-center col-lg-4 mb-5">
+					<div>
+						<img class="img-fluid"
+							th:src="@{/main/assets/img/portfolio/default_profile.png}"
+							alt="..." />
+						<h3 class="text-center">박규민</h3>
+					</div>
+				</div>
+				<div class="text-center col-lg-4 mb-5">
+					<div>
+						<img class="img-fluid"
+							th:src="@{/main/assets/img/portfolio/KJH.png}" alt="..." />
+						<h3 class="text-center">김재훈</h3>
+					</div>
+				</div>
+				<div class="text-center col-lg-4 mb-5">
+					<div>
+						<img class="img-fluid"
+							th:src="@{/main/assets/img/portfolio/LHY.png}" alt="..." />
+						<h3 class="text-center">이혜영</h3>
+					</div>
+				</div>
+				<div class="text-center col-lg-4 mb-5">
+					<div>
+						<img class="img-fluid"
+							th:src="@{/main/assets/img/portfolio/default_profile.png}"
+							alt="..." />
+						<h3 class="text-center">임민호</h3>
+					</div>
+				</div>
+				<div class="text-center col-lg-4 mb-5">
+					<div>
+						<img class="img-fluid"
+							th:src="@{/main/assets/img/portfolio/default_profile.png}"
+							alt="..." />
+						<h3 class="text-center">최대한</h3>
+					</div>
+				</div>
+				<div class="text-center col-lg-4 mb-5">
+					<div>
+						<img class="img-fluid"
+							th:src="@{/main/assets/img/portfolio/default_profile.png}"
+							alt="..." />
+						<h3 class="text-center">김현관</h3>
+					</div>
+				</div>
+				<div class="text-center col-lg-4 mb-5">
+					<div>
+						<img class="img-fluid"
+							th:src="@{/main/assets/img/portfolio/default_profile.png}"
+							alt="..." />
+						<h3 class="text-center">임하라</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Copyright Section-->
+	<div class="copyright py-4 text-center text-white">
+		<div class="container">
+			<small>Copyright &copy; ITyranno 2023</small>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script>
+        	
+        	let $userPage = document.getElementById('userPage');
+        	let $adminPage = document.getElementById('adminPage');
+        	
+		    $userPage.addEventListener('click', function() {
+		        location.href = '/user';
+		    });
+		    
+		    $adminPage.addEventListener('click', function() {
+		        location.href = '/admin';
+		    });
+		        	
+        </script>
+</body>
+</html>

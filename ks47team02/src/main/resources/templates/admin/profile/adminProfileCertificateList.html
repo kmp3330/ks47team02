@@ -12,7 +12,6 @@
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
 	<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
-	<script th:src="@{/admin/plugins/jsgrid/demos/db.js}"></script>
 	<script th:src="@{/admin/plugins/jsgrid/jsgrid.min.js}"></script>
 	<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
 	<script>
@@ -33,12 +32,34 @@
 	  		}
 	  	});
 	  	
-	  	$('#selectDeleteBtn').click(function () {
-	  	
-	  		let isDelete = confirm('정말 삭제하시겠습니까?');
+	  	// 삭제 버튼
+	  	$('.deleteBtn').click(function () {
+	  		
+	  		let isDelete = confirm('정말로 삭제하시겠습니까?');
 	  		
 	  		if(isDelete) {
-	  			
+	  			let certificateCode = this.dataset.certificateCode;
+	  			location.href = `/admin/profile/removeAdminProfileCertificate?certificateCode=${certificateCode}&currentPage=[[${currentPage}]]&searchKey=[[${searchKey}]]&searchValue=[[${searchValue}]]`;
+	  		}
+	  	});
+	  	
+	  	// 선택 삭제
+	  	$('#selectDeleteBtn').click(function () {
+	  		
+	  		let isDelete = confirm('정말로 삭제하시겠습니까?');
+	  		if(isDelete) {
+	  			let queryParam = '';
+		  		$('.checks:checked').each( (idx, item) => {
+		  			let buttonEle = $(item).closest('tr').find('button');
+		  			
+		  			const certificateCode = buttonEle[0].dataset.certificateCode;
+		  			if(idx != 0) queryParam += '&';
+		  			queryParam += `certificateCode=${certificateCode}`;
+		  			
+							  			
+	  			});
+	  			console.log(queryParam);
+		  		location.href = `/admin/profile/removeAdminProfileCertificate?${queryParam}&currentPage=[[${currentPage}]]&searchKey=[[${searchKey}]]&searchValue=[[${searchValue}]]`;
 	  		}
 	  	});
 	  
@@ -110,7 +131,7 @@
 												th:text="${l.profileRegDate}">
 											</td>
 											<td class="jsgrid-cell jsgrid-align-center">
-												<button class="btn btn-sm btn-secondary">삭제</button>
+												<button class="btn btn-sm btn-secondary deleteBtn" th:data-certificate-code="${l.certificateCode}">삭제</button>
 											</td>
 										</tr>
 									</th:block>

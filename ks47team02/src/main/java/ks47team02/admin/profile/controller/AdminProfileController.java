@@ -132,12 +132,29 @@ public class AdminProfileController {
 		return "admin/profile/adminProfileCertificateList";
 	}
 	
+	/**
+	 * 자격증 삭제
+	 * @param reAttr
+	 * @param certificateCode
+	 * @param currentPage
+	 * @param searchKey
+	 * @param searchValue
+	 * @return
+	 */
 	@GetMapping("/removeAdminProfileCertificate")
-	public String removeAdminProfileCertificate(RedirectAttributes reAttr) {
+	public String removeAdminProfileCertificate(RedirectAttributes reAttr,
+												@RequestParam(value="certificateCode") List<String> certificateCodeList,
+												@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage,
+												@RequestParam(value="searchKey", required = false) String searchKey,
+												@RequestParam(value="searchValue", required = false) String searchValue) {
 		
-		//reAttr.addAttribute("", );
+		adminProfileService.removeAdminProfileCertificate(certificateCodeList);
 		
-		return "";
+		reAttr.addAttribute("currentPage", currentPage);
+		reAttr.addAttribute("searchKey", searchKey);
+		reAttr.addAttribute("searchValue", searchValue);
+		
+		return "redirect:/admin/profile/adminProfileCertificateList";
 	}
 	
 	@GetMapping("/adminProfileAwardList")

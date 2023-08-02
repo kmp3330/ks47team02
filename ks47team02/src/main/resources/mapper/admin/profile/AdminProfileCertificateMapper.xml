@@ -36,5 +36,14 @@
 			</if>
 		</where>
 	</select>
+	
+	<delete id="removeAdminProfileCertificate" parameterType="String">
+		/* 자격증 삭제 */
+		DELETE
+		FROM
+			profile_certificate AS pc
+		WHERE
+			pc.user_certificate_code = #{certificateCode}
+	</delete>
 
 </mapper>
