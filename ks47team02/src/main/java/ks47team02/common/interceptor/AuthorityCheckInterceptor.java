@@ -14,14 +14,14 @@ public class AuthorityCheckInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
 
         if (request.getRequestURI().equals("/checkAccess")) {
-            String sessionCpId = (String) session.getAttribute("CPID");
+            String sessionId = (String) session.getAttribute("SID");
 
-            // 기업회원인 경우 메뉴 생성
-            if (sessionCpId != null) {
+            // 일반 회원인 경우에만 접근 차단
+            if (sessionId != null) {
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
-                response.getWriter().write("{\"accessAllowed\": true}");
-                return true;
+                response.getWriter().write("{\"accessDenied\": true}");
+                return false;
             }
         }
         return true;
