@@ -60,7 +60,7 @@
                            	 th:each="l : ${profileIntroList}">
                             <div class="single-job mb-4 d-lg-flex justify-content-between">
                                 <div class="job-text">
-                                    <h4 th:text="${title}"></h4>
+                                    <h4 th:text="${l.userIntroTitle}"></h4>
                                     <ul class="mt-4">
                                         <li class="mb-3"><h6 th:text="|[내용] : ${l.userIntro}|"></h6></li>
                                         <li class="mb-3">
