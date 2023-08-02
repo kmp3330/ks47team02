@@ -43,102 +43,119 @@
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<section class="jobs-area section-padding">
-		<div class="container col-lg-12">
+
+	<section class="contact-form section-padding">
+		<div class="container col-lg-10">
 			<div class="row">
-				<div class="col-lg-12">
-					<div class="single-job mb-4 justify-content-between text-center">
-						<div class="card">
-							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-center">구인구직공고등록</h3>
-								<div class="card-tools">
-									<button th:href="@{/announcement/announcementList}" class="genric-btn info-border circle" id="announcementInsertBtn">
-										<i class="fas">등록완료</i>
-									</button>
-									<button th:href="@{#}" class="genric-btn danger-border circle" id="resetBtn">
+				<div class="col-lg-3">
+					<div class="sidebar">
+						<div class="single-item mb-3">
+							<h4 class="mb-3">구인구직</h4>
+							<a th:href="@{/announcement/announcementList}"
+								class="sidebar-btn d-flex justify-content-between mb-3"> <span>구인구직 검색</span></a> 
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-7">
+					<div class="card single-job">
+							<form id="announcementInsertForm"
+								  th:action="@{/announcement/announcementInsert}" method="post"
+							   	  class="d-md-flex justify-content-center">
+
+								<div class="left">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">기업아이디</p>
+									<input type="text" placeholder="기업아이디" id="cpId"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '기업아이디'" name="cpId">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">회사명</p>
+									<input type="text" placeholder="회사명" id="cpName"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '회사명'" name="cpName">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">기업분류코드</p>
+									<input type="text" placeholder="기업분류코드" id="cpCateCode"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '기업분류코드'" name="cpCateCode">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">참여분야코드</p>
+									<input type="text" placeholder="참여분야코드" id="joinCateCode"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '참여분야코드'" name="joinCateCode">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">참여분야</p>
+									<input type="text" placeholder="참여분야" id="joinCateName"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '참여분야'" name="joinCateName">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">지역분류코드</p>
+									<input type="text" placeholder="지역분류코드" id="areaCode"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '지역분류코드'" name="areaCode">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">지역분류</p>
+									<input type="text" placeholder="지역분류" id="areaCate"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '지역분류'" name="areaCate">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">채용직</p>
+									<input type="text" placeholder="채용직" id="jobOpening"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '채용직'" name="jobOpening">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">요구기술</p>
+									<input type="text" placeholder="요구기술" id="requiredSkills"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '요구기술'" name="requiredSkills">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">관련업무경력</p>
+									<input type="text" placeholder="관련업무경력" id="career"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '관련업무경력'" name="career">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">채용인원</p>
+									<input type="text" placeholder="채용인원" id="recruitment"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '채용인원'" name="recruitment">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">급여</p>
+									<input type="text" placeholder="급여" id="wage"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '급여'" name="wage">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">작성시간</p>
+									<input type="date" placeholder="작성시간" id="startDate"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '작성시간'" name="startDate">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">마감시간</p>
+									<input type="date" placeholder="마감시간" id="dueDate"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '마감시간'" name="dueDate">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">구인진행상황분류코드</p>
+									<input type="text" placeholder="구인진행상황분류코드" id="hiringStatusCode"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '구인진행상황분류코드'" name="hiringStatusCode">
+									<p class="text-left"
+										style="font-size: large; font-weight: 900;">진행상태분류</p>
+									<input type="text" placeholder="진행상태분류" id="hiringStatus"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = '진행상태분류'" name="hiringStatus">
+								</div>
+							</form>
+							<div class="card-tools">
+								<div class="d-md-flex justify-content-center">
+									<button th:href="@{/announcement/announcementList}" id="announcementInsertBtn"
+										class="genric-btn info-border circle"> <i class="fas">등록
+											완료</i>
+									</button> <button th:href="@{#}"
+										id="resetBtn" class="genric-btn danger-border circle">
 										<i class="fas">취소</i>
 									</button>
 								</div>
 							</div>
-							<div class="card-body table-responsive p-0">
-								<form id="announcementInsertForm" th:action="@{/announcement/announcementInsert}" method="post"  class="d-md-flex justify-content-between">
-									<table class="table table-valign-middle">
-										<thead>
-											<tr>
-												<th>기업아이디</th>
-												<th>회사명</th>
-												<th>기업분류코드</th>
-												<th>참여분야코드</th>
-												<th>참여분야</th>
-												<th>지역분류코드</th>
-												<th>지역분류</th>
-												<th>채용직</th>
-												<th>요구기술</th>
-												<th>관련업무경력</th>
-												<th>채용인원</th>
-												<th>급여</th>
-												<th>작성시간</th>
-												<th>마감시간</th>
-												<th>구인 진행상태분류</th>
-												<th>진행상태분류</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><input class="genric-btn" type="text" id="cpId" name="cpId"
-													placeholder="기업아이디" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '기업아이디'" required=""></td>
-												<td><input class="genric-btn" type="text" id="cpName" name="cpName"
-													placeholder="회사명" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '회사명'" required=""></td>
-												<td><input class="genric-btn" type="text" id="cpCateCode" name="cpCateCode"
-													placeholder="기업분류코드" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '기업분류코드'" required=""></td>
-												<td><input class="genric-btn" type="text" id="joinCateCode" name="joinCateCode"
-													placeholder="참여분야코드" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '참여분야코드'" required=""></td>
-												<td><input class="genric-btn" type="text" id="joinCateName" name="joinCateName"
-													placeholder="참여분야" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '참여분야'" required=""></td>
-												<td><input class="genric-btn" type="text" id="areaCode" name="areaCode"
-													placeholder="지역분류코드" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '지역분류코드'" required=""></td>
-												<td><input class="genric-btn" type="text" id="areaCate" name="areaCate"
-													placeholder="지역분류" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '지역분류'" required=""></td>
-												<td><input class="genric-btn" type="text" id="jobOpening" name="jobOpening"
-													placeholder="채용직" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '채용직'" required=""></td>
-												<td><input class="genric-btn" type="text" id="requiredSkills" name="requiredSkills"
-													placeholder="요구기술" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '요구기술'" required=""></td>
-												<td><input class="genric-btn" type="text" id="career" name="career"
-													placeholder="관련업무경력" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '관련업무경력'" required=""></td>
-												<td><input class="genric-btn" type="text" id="recruitment" name="recruitment"
-													placeholder="채용인원" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '채용인원'" required=""></td>
-												<td><input class="genric-btn" type="text" id="wage" name="wage"
-													placeholder="급여" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '급여'" required=""></td>
-												<td><input class="genric-btn" type="date" id="startDate" name="startDate"
-													placeholder="작성시간" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '작성시간'" required=""></td>
-												<td><input class="genric-btn" type="date" id="dueDate" name="dueDate"
-													placeholder="마감시간" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '마감시간'" required=""></td>
-												<td><input class="genric-btn" type="text" id="hiringStatusCode" name="hiringStatusCode"
-													placeholder="구인 진행상태분류" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '구인 진행상태분류'" required=""></td>
-												<td><input class="genric-btn" type="text" id="hiringStatus" name="hiringStatus"
-													placeholder="진행상태분류" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '진행상태분류'" required=""></td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

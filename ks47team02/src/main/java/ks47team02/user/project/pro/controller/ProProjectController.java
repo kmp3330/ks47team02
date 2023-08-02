@@ -257,7 +257,7 @@ public class ProProjectController {
 		log.info("progressStatus : {}", progressStatus);
 		return "redirect:/project/pro/progressStatusList";
 	}
-//---------------------------------전문과제 성과금 목록 조회, 작성, 수정, 삭제 --------------------------------------------------------------------------------------------------------------
+//---------------------------------전문과제 성과금 예치 목록 조회, 작성, 수정, 삭제 --------------------------------------------------------------------------------------------------------------
 	// 성과금 예치 완료 목록	230726 1100
 	@GetMapping("/depositList")
 	public String proProjectDepositList(Model model) {
@@ -339,38 +339,47 @@ public class ProProjectController {
 		List <AccountHolderInfoList> accountHolderInfoList = ProProjectService.getAccountHolderInfoList();
 		List<ProProjectPersonalFunction> proProjectPersonalFunctionList = ProProjectService.proProjectPersonalFunctionList();
 		
-		log.info("db에 저장된 정보 - accountHolderInfoList : {}", accountHolderInfoList);
-		//model.addAttribute("proProjectPersonalFunctionList", proProjectPersonalFunctionList);
+		model.addAttribute("proProjectPersonalFunctionList", proProjectPersonalFunctionList);
 		model.addAttribute("accountHolderInfoList", accountHolderInfoList);
 		model.addAttribute("sendMoneyCompleteList", sendMoneyCompleteList);
 		model.addAttribute("title", "성과금 송금 완료 작성");
 		model.addAttribute("contents", "성과금 송금 완료 작성 페이지 입니다.");
 		return "user/project/pro/send_money_complete_insert";
 	}
-	// 성과금 송금 완료 작성 후 처리
+	// 성과금 송금 완료 작성 후 처리 230728 1000
 	@PostMapping("sendMoneyCompleteInsert")
 	public String sendMoneyCompleteInsert(SendMoneyComplete sendMoneyComplete) {
 		ProProjectService.sendMoneyCompleteInsert(sendMoneyComplete);
 		return "redirect:/project/pro/sendMoneyCompleteList";
 	}
-
-	
-	 
-//	// 성과금 송금 완료 목록
-//	@GetMapping("/proProjectSendMoneyCompleteList")
-//	public String proProjectSendMoneyCompleteList(Model model) {  
-//		
-//		model.addAttribute("title", "메인화면");
-//		model.addAttribute("contents", "성과금 송금 완료 목록 페이지 입니다.");
-//		return "user/project/pro/send_money_complete _list";
-//	}
-//	// 신청자별 계좌 정보 목록
-//	@GetMapping("/pro/proProjectApplicantAccountList")
-//	public String proProjectApplicantAccountList(Model model) {
-//		
-//		model.addAttribute("title", "메인화면");
-//		model.addAttribute("contents", "신청자별 계좌 정보 목록 페이지 입니다."); 
-//		return "user/project/pro/applicant_account_list";
-//	}
-
+	// 성과금 송금 완료 수정 전 처리 230728 1100
+	@GetMapping("/sendMoneyCompleteModify")
+	public String sendMoneyCompleteModify(@RequestParam(value="proProjectCode") String proProjectCode,
+										Model model) {
+		// 성과금 송금 완료 목록 상세 조회
+		SendMoneyComplete sendMoneyCompleteListInfo = ProProjectService.getSendMoneyCompleteListInfo(proProjectCode);
+		
+		model.addAttribute("sendMoneyCompleteListInfo", sendMoneyCompleteListInfo);
+		model.addAttribute("title", "성과금 송금 완료 수정");
+		model.addAttribute("contents", "성과금 송금 완료 수정 페이지 입니다.");
+		
+		return "/user/project/pro/send_money_complete_modify";
+	}
+	// 성과금 송금 완료 수정 후 처리 230728 1200
+	@PostMapping("/sendMoneyCompleteModify")
+	public String sendMoneyCompleteModify(SendMoneyComplete sendMoneyComplete) {
+		ProProjectService.sendMoneyCompleteModify(sendMoneyComplete);
+		return "redirect:/project/pro/sendMoneyCompleteList";
+	}
+	// 성과금 송금 완료 삭제 처리
+	@GetMapping("/sendMoneyCompleteDelete")
+	public String sendMoneyCompleteDelete(@RequestParam(value="sendMoneyCompleteCode") String sendMoneyCompleteCode,
+											Model model) {
+		
+		ProProjectService.sendMoneyCompleteDelete(sendMoneyCompleteCode);
+		
+		model.addAttribute("title", "성과금 송금 완료 목록 삭제");
+		model.addAttribute("contents", "성과금 송금 완료 목록 삭제 페이지 입니다.");
+		return "redirect:/project/pro/sendMoneyCompleteList";
+	}
 }

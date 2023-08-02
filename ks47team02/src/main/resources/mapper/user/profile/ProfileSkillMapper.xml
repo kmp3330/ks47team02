@@ -65,11 +65,11 @@
 		)
 		VALUES(
 		           #{userSkillCode},
-		           'id010',
+		           #{userId},
 		            #{userSkill},
 		            #{userSkillRank},
 		            #{userExperience},
-		            CURDATE(),
+		            NOW(),
 		            #{profileHidden},
 		            #{profileApplicationHidden});
 	</insert>
@@ -81,10 +81,16 @@
 			<if test="userSkill !=null and userSkill !=''">
 				user_skill = #{userSkill},
 			</if>
-			<if test="profileHidden !=null and profileHidden !=''">
+			<if test="userSkillRank !=null and userSkillRank !=''">
+				user_skill_rank = #{userSkillRank},
+			</if>
+			<if test="userExperience !=null and userExperience !=''">
+				user_experience = #{userExperience},
+			</if>
+			<if test="profileHidden != null">
 				profile_hidden = #{profileHidden},
 			</if>
-			<if test="profileApplicationHidden !=null and profileApplicationHidden !=''">
+			<if test="profileApplicationHidden != null">
 				profile_application_hidden = #{profileApplicationHidden},
 			</if>
 		</trim>

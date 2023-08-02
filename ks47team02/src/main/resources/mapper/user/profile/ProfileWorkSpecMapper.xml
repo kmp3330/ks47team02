@@ -17,7 +17,7 @@
 		<result column="user_department" property="userDepartment" />
 		<result column="user_rank" property="userRank" />
 		<result column="user_work" property="userWork" />
-		<result column="user_reg_date" property="userRegDate" />
+		<result column="profile_reg_date" property="profileRegDate" />
 		<result column="profile_hidden" property="profileHidden" />
 		<result column="profile_application_hidden"
 			property="profileApplicationHidden" />
@@ -76,7 +76,7 @@
 			profile_application_hidden)
 		VALUES(
 			#{userWorkSpecCode},
-			'id010',
+			#{userId},
 			#{userCompany},
 			#{userSkill},
 			#{userEnterDate},
@@ -84,7 +84,7 @@
 			#{userDepartment},
 			#{userRank},
 			#{userWork},
-			CURDATE(),
+			NOW(),
 			#{profileHidden},
 			#{profileApplicationHidden});
 	</insert>
@@ -108,10 +108,10 @@
 			<if test="userSkill !=null and userSkill !=''">
 				user_skill = #{userSkill},
 			</if>
-			<if test="profileHidden !=null and profileHidden !=''">
+			<if test="profileHidden !=null">
 				profile_hidden = #{profileHidden},
 			</if>
-			<if test="profileApplicationHidden !=null and profileApplicationHidden !=''">
+			<if test="profileApplicationHidden !=null">
 				profile_application_hidden = #{profileApplicationHidden},
 			</if>
 		</trim>

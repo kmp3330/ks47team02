@@ -24,57 +24,6 @@
 		<result column="profile_application_hidden" property="profileApplicationHidden"></result>
 	</resultMap>
 	
-	<resultMap id="proProjectResultMap" type="ProProjectPersonalFunction">
-		<id column="pro_project_personal_function_code" property="proProjectPersonalFunctionCode"/>
-		<result column="pro_project_code" property="proProjectCode"/>
-		<result column="user_id" property="userId"/>
-		<result column="skill" property="skill"/>
-		<result column="project_day" property="projectDay"/>
-		<result column="day_score" property="dayScore"/>
-		<result column="project_complete_score" property="projectCompleteScore"/>
-		<result column="individual_work_day" property="individualWorkDay"/>
-		<result column="individual_complete_possible_score" property="individualCompletePossibleScore"/>
-		<result column="individual_complete_score" property="individualCompleteScore"/>
-		<result column="work_day_price" property="workDayPrice"/>
-		<result column="grade_commision" property="gradeCommision"/>
-		<result column="user_commision" property="userCommision"/>
-		<result column="project_price" property="projectPrice"/>
-		<result column="progress_rate" property="progressRate"/>
-		<result column="run_name" property="runName"/>
-		<result column="start_date" property="startDate"/>
-		<result column="complete_date" property="completeDate"/>
-		<result column="registeration_date" property="registerationDate"/>
-		<result column="period" property="period"/>
-		
-		<collection property="proProjectInfo" ofType="ProProject">
-			<id column="pro_project_code" property="proProjectCode"/>
-			<result column="cp_id" property="cpId"/>
-			<result column="cp_name" property="cpName"/>		
-			<result column="title" property="title"/>
-			<result column="join_cate_code" property="joinCateCode"/>
-			<result column="join_cate_name" property="joinCateName"/>
-			<result column="work_cate_code" property="workCateCode"/>
-			<result column="work_cate_name" property="workCateName"/>
-			<result column="subject_cate_code" property="subjectCateCode"/>
-			<result column="subject_cate_name" property="subjectCateName"/>
-			<result column="skill" property="skill"/>
-			<result column="details" property="details"/>
-			<result column="max_total" property="maxTotal"/>
-			<result column="normal_run_code" property="normalRunCode"/>
-			<result column="run_name" property="runName"/>
-			<result column="project_price" property="proProjectPrice"/>
-			<result column="cp_commission" property="cpCommisson"/>
-			<result column="write_date" property="proProjectWriteDate"/>
-			<result column="due_date" property="dueDate"/>
-			<result column="due_complete_date" property="dueCompleteDate"/>
-			<result column="project_start_date" property="proProjectStartDate"/>
-			<result column="project_complete_date" property="proProjectCompleteDate"/>
-			<result column="project_days" property="proProjectDays"/>
-			<result column="applicant_user_id" property="applicantUserId"/>
-			<result column="application_date" property="applicationDate"/>
-		</collection>
-	</resultMap>
-	
 	<select id="getProfilePortfolioList" resultMap="portfolioResultMap" parameterType="String">
 		/* 포트폴리오 조회 */
 		SELECT 
@@ -303,15 +252,15 @@
 		SELECT
 			np.normal_project_code  AS projectCd,
 			np.normal_project_name	AS projectName,
-			np.join_cate_name			AS joinCateName,
-			np.work_cate_name			AS workCateName,
-			np.subject_cate_name		AS subjectCateName,
-			nf.assigned_function		AS assignedFunction,
-			nf.project_day				AS projectDay,
+			np.join_cate_name		AS joinCateName,
+			np.work_cate_name		AS workCateName,
+			np.subject_cate_name	AS subjectCateName,
+			nf.assigned_function	AS assignedFunction,
+			nf.project_day			AS projectDay,
 			nf.per_person_days		AS prePersonDays,
 			nf.function_start_date	AS functionStartDate,
 			nf.function_finish_time AS functionFinishTime,
-			'normal' 						AS cateProject
+			'일반과제' 				AS cateProject
 		FROM
 			normal_project AS np
 			INNER JOIN 
@@ -319,20 +268,20 @@
 			ON 
 			np.normal_project_code = nf.normal_project_code
 		WHERE 
-			np.user_id = #{sessionId}
+			nf.user_id = #{sessionId}
 		UNION 
 		SELECT
 			pp.pro_project_code			AS projectCd,
-			pp.title							AS projectName,
-			pp.join_cate_name				AS joinCateName,
-			pp.work_cate_name				AS workCateName,
-			pp.subject_cate_name			AS subjectCateName,
-			pppf.skill						AS assignedFunction,
-			pppf.project_day				AS projectDay,
+			pp.title					AS projectName,
+			pp.join_cate_name			AS joinCateName,
+			pp.work_cate_name			AS workCateName,
+			pp.subject_cate_name		AS subjectCateName,
+			pppf.skill					AS assignedFunction,
+			pppf.project_day			AS projectDay,
 			pppf.individual_work_day	AS prePersonDays,
 			pppf.start_date				AS functionStartDate,
 			pppf.complete_date			AS functionFinishTime,
-			'pro' 							AS cateProject
+			'전문과제' 					AS cateProject
 		FROM
 			pro_project AS pp
 			INNER JOIN
