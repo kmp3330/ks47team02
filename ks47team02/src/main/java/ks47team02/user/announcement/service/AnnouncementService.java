@@ -22,6 +22,18 @@ public class AnnouncementService {
 	private final AnnouncementMapper announcementMapper;
 	
 	/**
+	 * 구인구직공고 등록시 지역 조회
+	 * @return
+	 */
+	public List<Map<String, Object>> getAreaList(){
+		
+		List<Map<String, Object>> areaList = announcementMapper.getAreaList();
+		
+		return areaList;
+		
+	}
+	
+	/**
 	 * 구인구직공고 삭제
 	 * @param announcement
 	 */
