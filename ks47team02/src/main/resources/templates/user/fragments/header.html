@@ -53,7 +53,7 @@
 								</ul></li>
 
 							<!-- 광고 메뉴 -->
-							<li><a th:href="@{/banner}" onclick="showWarning()">광고문의</a>
+							<li th:if="${session.CPID != null}"><a th:href="@{/banner}">광고문의</a>
 								<ul class="sub-menu">
 									<li><a th:href="@{/banner}">광고 문의</a></li>
 									<li><a th:href="@{/banner/bannerRequest}">광고 신청</a></li>
@@ -84,14 +84,4 @@
 		</div>
 	</div>
 </header>
-  <script th:inline="javascript">
-    var userLevel = [[${session.SLEVEL}]];
-      function showWarning() {
-        if(userLevel === '일반회원') {
-          alert("접근할 수 없는 메뉴입니다.");
-          return false;
-        }
-        return true;
-      }
-  </script>
 </html>

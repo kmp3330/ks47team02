@@ -151,8 +151,28 @@ public class RecommendController {
 	public String recommendModifyEmployment(Model model, String companyEmploymentCode) {
 		
 		RecommendEmployment recommendEmploymentByCode = recommendService.getRecommendEmploymentByCode(companyEmploymentCode);
+		List <RecommendEmployment> RecommendEmploymentInfo = recommendService.getRecommendEmploymentInfo();
+		List <RecommendSupport>	recommendSupportCodeInfo =recommendService.getRecommendSupportCode();
+		List <User> recommendUserIdInfo = recommendService.getUserIdRecommend();
+		List <Announcement> recommendAnnouncemetCodeInfo = recommendService.getAnnouncementCodeRecommend();
+		List <RecommendSupport> recommendSupportInfo = recommendService.getRecommendSupportInfo();
+		List <Company> recommendCpIdInfo = recommendService.getCpIdRecommend();
+		List <AreaCate> recommendAreaInfo = recommendService.getAreaRecommend();
+		List <JoinCate> recommendJoinCateInfo = recommendService.getJoinCateRecommend();
+		List <NormalRun> recommendNormalRun = recommendService.getNormalRunRecommend();
 		
-		model.addAttribute("title", "메인화면");
+		model.addAttribute("title", "채용 단계 순 목록 등록");
+		model.addAttribute("titleText", "채용 단계 순 목록 등록");
+		model.addAttribute("contents", "채용 단계 순 목록 등록 화면입니다.");
+		model.addAttribute("RecommendEmploymentInfo", RecommendEmploymentInfo);
+		model.addAttribute("recommendSupportCodeInfo", recommendSupportCodeInfo);
+		model.addAttribute("recommendUserIdInfo", recommendUserIdInfo);
+		model.addAttribute("recommendAnnouncemetCodeInfo", recommendAnnouncemetCodeInfo);
+		model.addAttribute("recommendSupportInfo", recommendSupportInfo);
+		model.addAttribute("recommendCpIdInfo", recommendCpIdInfo);
+		model.addAttribute("recommendAreaInfo", recommendAreaInfo);
+		model.addAttribute("recommendJoinCateInfo", recommendJoinCateInfo);
+		model.addAttribute("recommendNormalRun", recommendNormalRun);
 		model.addAttribute("recommendEmploymentByCode", recommendEmploymentByCode);
 		return "user/recommend/recommend_employment_modify";
 	}
