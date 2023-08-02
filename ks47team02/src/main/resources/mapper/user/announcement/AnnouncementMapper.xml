@@ -26,6 +26,16 @@
 		<result column="hiring_status"  	 property="hiringStatus"/>
 	</resultMap>
 	
+	<select id="getAreaList" resultType="Map">
+		/* 지역분류 조회 */
+		SELECT
+				area_code	AS areaCode,
+				area_cate	AS areaCate
+		FROM
+				area_cate;
+	
+	</select>
+	
 	<delete id="announcementRemove" parameterType="String">
 		/* 구인구직공고 삭제 */
 		DELETE
@@ -129,7 +139,7 @@
 							      hiring_status_code,
 								  hiring_status)
 		VALUES 
-								 (#{announcementCode},
+								   (#{announcementCode},
 								  'cp004',
 								  '엘지SW',
 							 	  'cp_cate_code004',

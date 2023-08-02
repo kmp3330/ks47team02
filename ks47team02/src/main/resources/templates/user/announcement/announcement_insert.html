@@ -20,17 +20,64 @@
     			return true;
     		}
     		
-    		// 등록완료 버튼시 이벤트
-    		$('#announcementInsertBtn').click(function(){
-    			const validateEle = $('#announcementInsertForm input').not('#announcementCode');
-    			let isSubmit = false;
-    			validateEle.each((idx, item) => {    				
-	    			isSubmit = validCheck(item);
-	    			return isSubmit;
-    			})
-    			if(isSubmit) $('#announcementInsertForm').submit();
+    		$(document).ready(function () {
+    			// 모달 열기 버튼 클릭 이벤트 처리
+    			$('#searchBtn').on('click', function () {
+    				$.ajax({
+    					url: '/announcement/area', // 컨트롤러의 매핑 주소에 맞게 변경
+    					method: 'POST',
+    					dataType: 'json',
+    					success: function (response) {
+    						// AJAX 요청이 성공했을 때의 처리
+    						console.log(response);
+    						populateAreaCateModal(response); // 모달에 데이터 표시
+    						//$('#exampleModalCenter').modal('show'); // 모달 열기
+    					},
+    					error: function () {
+    						// AJAX 요청이 실패했을 때의 처리
+    						console.error('Failed to fetch areaCate data.');
+    					}
+    				});
+    			});
+
+    			// 모달 창에 지역 데이터 표시하는 함수
+    			function populateAreaCateModal(data) {
+    				var modalBody = $('#areaListBody');
+    				modalBody.empty(); // 기존 내용 삭제
+
+    				// 데이터를 순회하며 행 추가
+    				data.forEach(function (item) {
+    					var row = $('<tr>').appendTo(modalBody);
+    					$('<td class="items">').text(item.areaCate).appendTo(row); // 지역명 추가
+
+    					
+    				});
+    			}
+
     		});
     		
+    		$(document).on('click', '.items', function (e) {
+    			   			
+    			let value = $(this).text();
+    			$('#areaCate').val(value);
+    			$('#areaCate').prop('readonly', true);
+    			$('.close').click();
+    			//$('#exampleModalCenter').modal('hide');
+    			
+    		});
+    		
+    		// 등록버튼 클릭시 이벤트 처리
+    		$('#announcementInsertBtn').click(function(){
+    			const validateEle = $('#announcementInsertForm input');
+    			let isSubmit= false;
+    			
+    			validateEle.each((idx, item) => {    				
+        			isSubmit = validCheck(item);
+        			return isSubmit;
+       			})
+    			if(isSubmit)$('#announcementInsertForm').submit();
+    			
+    		})
     		
     		// 입력 취소 버튼 클릭시 이벤트 처리
     		$('#resetBtn').click(function(e){
@@ -94,7 +141,9 @@
 										onfocus="this.placeholder = ''"
 										onblur="this.placeholder = '지역분류코드'" name="areaCode">
 									<p class="text-left"
-										style="font-size: large; font-weight: 900;">지역분류</p>
+										style="font-size: large; font-weight: 900;">지역분류
+									<button id="searchBtn" type="button" class="genric-btn primary-border radius" data-toggle="modal"
+										 data-target="#exampleModalCenter">조회</button></p>
 									<input type="text" placeholder="지역분류" id="areaCate"
 										onfocus="this.placeholder = ''"
 										onblur="this.placeholder = '지역분류'" name="areaCate">
@@ -123,11 +172,6 @@
 									<input type="text" placeholder="급여" id="wage"
 										onfocus="this.placeholder = ''"
 										onblur="this.placeholder = '급여'" name="wage">
-									<p class="text-left"
-										style="font-size: large; font-weight: 900;">작성시간</p>
-									<input type="date" placeholder="작성시간" id="startDate"
-										onfocus="this.placeholder = ''"
-										onblur="this.placeholder = '작성시간'" name="startDate">
 									<p class="text-left"
 										style="font-size: large; font-weight: 900;">마감시간</p>
 									<input type="date" placeholder="마감시간" id="dueDate"
@@ -161,6 +205,36 @@
 			</div>
 		</div>
 	</section>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">지역분류</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<thead class="thead-light">
+						<tr>
+							<th>지역</th>
+						</tr>
+						</thead>
+						<tbody id="areaListBody">
+						<!-- 이 부분은 JavaScript로 동적으로 채워질 것입니다. -->
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					<button id="selectBtn" type="button" class="btn btn-primary">선택</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </th:block>
 

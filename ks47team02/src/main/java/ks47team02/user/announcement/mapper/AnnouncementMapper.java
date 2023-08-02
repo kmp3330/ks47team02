@@ -25,4 +25,7 @@ public interface AnnouncementMapper {
 	// 구인구직공고 조회
 	public List<Announcement> getAnnouncementList(Map<String, Object> paramMap);
 
+	// 구인구직공고 등록시 지역 조회
+	public List<Map<String, Object>> getAreaList();
+
 }

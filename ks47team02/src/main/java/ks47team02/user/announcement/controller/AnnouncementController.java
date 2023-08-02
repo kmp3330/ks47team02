@@ -1,6 +1,7 @@
 package ks47team02.user.announcement.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks47team02.user.announcement.dto.Announcement;
 import ks47team02.user.announcement.service.AnnouncementService;
@@ -63,12 +65,23 @@ public class AnnouncementController {
 		return "redirect:/announcement/announcementList";
 	}
 	
+	// 구인구직 공고 등록시 지역 조회
+	@PostMapping("/area")
+	@ResponseBody
+	public List<Map<String, Object>> areaList(){
+		
+		List<Map<String, Object>> result = announcementService.getAreaList();
+		
+		return result;
+	}
+	
 	@GetMapping("/announcementInsert")
 	public String announcementInsert(Model model) {
 		
 		model.addAttribute("title", "구인구직공고등록화면");
 		model.addAttribute("titleText", "구인구직공고등록");
 		model.addAttribute("contents", "구인구직공고등록 페이지입니다.");
+		
 		
 		return "user/announcement/announcement_insert";
 	}
@@ -85,6 +98,7 @@ public class AnnouncementController {
 		model.addAttribute("titleText", "구인구직공고");
 		model.addAttribute("contents", "구인구직공고목록 페이지입니다.");
 		model.addAttribute("announcementList", announcementList);
+		
 		
 		return "user/announcement/announcement_list";
 	}

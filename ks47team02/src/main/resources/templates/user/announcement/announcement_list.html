@@ -48,8 +48,8 @@
 			                               <option value="joinCateName">참여분야별 검색</option>
 			                               <option value="areaCate">지역별 검색</option>
 			                           </select>
-			                           <input type="text" name="searchValue" placeholder="검색어 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '검색어 입력'" required="">
-			                           <button type="button" class="genric-btn primary-border radius" data-toggle="modal">검색</button>
+			                           <input type="text" name="searchValue" placeholder="검색어 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '검색어 입력'" required="" />
+			                           <button type="submit" class="genric-btn primary-border radius" data-toggle="modal">검색</button>
 		                        </form>
 							</div>
 							<div class="single-content1" th:unless="${#lists.isEmpty(announcementList)}"
