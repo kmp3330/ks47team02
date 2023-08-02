@@ -17,31 +17,10 @@
 	<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
 	<script>
 	
-		// 전체 체크
-		$('#allCheck').click(function () {
-			let isAllChecked = $(this).prop('checked');
-	  		$('.checks').prop('checked', isAllChecked);
-	  	});
-	  	
-	  	// 개별 체크
-	  	$('.checks').click(function() {
-	  		const checkedEle = $('.checks:checked');
-	  		if($('.checks').length == checkedEle.length) {
-	  			$('#allCheck').prop('checked', true);
-	  		} else {
-	  			$('#allCheck').prop('checked', false);
-	  		}
-	  	});
-	  	
-	  	$('#selectDeleteBtn').click(function () {
-	  	
-	  		let isDelete = confirm('정말 삭제하시겠습니까?');
-	  		
-	  		if(isDelete) {
-	  			
-	  		}
-	  	});
-	  
+	  $('#allCheck').click(function () {
+	  	let isAllChecked = $(this).prop('checked');
+	  	$('.checks').prop('checked', isAllChecked);
+	  });
 	  
 	</script>
 </th:block>
@@ -54,7 +33,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1 class="m-0">자격증 관리</h1>
+						<h1 class="m-0">수상이력 관리</h1>
 					</div>
 				</div>
 			</div>
@@ -64,10 +43,8 @@
 		<section class="content">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">자격증 등록 회원 목록</h3>
+					<h3 class="card-title">수상이력 등록 회원 목록</h3>
 				</div>
-				<th:block th:insert="~{admin/fragments/search :: searchFragment}"></th:block>
-				
 				<!-- /.card-header -->
 				<div class="card-body">
 					<div id="jsGrid1" class="jsgrid"
@@ -84,7 +61,10 @@
 											style="width: 70px;">회원아이디</th>
 										<th
 											class="jsgrid-header-cell jsgrid-align-center"
-											style="width: 100px;">자격증명</th>
+											style="width: 100px;">수상이름</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">수상일시</th>
 										<th
 											class="jsgrid-header-cell jsgrid-align-center"
 											style="width: 100px;">등록일시</th>
@@ -94,8 +74,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<th:block th:unless="${#lists.isEmpty(profileCertificateList)}"
-											  th:each="l : ${profileCertificateList}">
+									<th:block th:unless="${#lists.isEmpty(profileAwardList)}"
+											  th:each="l : ${profileAwardList}">
 										<tr class="jsgrid-row">
 											<td class="jsgrid-cell jsgrid-align-center">
 												<input class="checks" type="checkbox">
@@ -104,18 +84,21 @@
 												th:text="${l.userId}">
 											</td>
 											<td class="jsgrid-cell jsgrid-align-center"
-												th:text="${l.certificateName}">
+												th:text="${l.userAwardName}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userAwardDate}">
 											</td>
 											<td class="jsgrid-cell jsgrid-align-center"
 												th:text="${l.profileRegDate}">
 											</td>
 											<td class="jsgrid-cell jsgrid-align-center">
-												<button class="btn btn-sm btn-secondary">삭제</button>
+												<input id="deleteBtn" type="button" value="삭제" style="border-radius: 3px; padding:1px; font-size:12px; border:1px solid;">
 											</td>
 										</tr>
 									</th:block>
 									<tr th:if="${#lists.isEmpty(profileCertificateList)}">
-										<td colspan="5">등록된 회원의 자격증 정보를 조회할 수 없습니다.</td>
+										<td colspan="6">등록된 회원의 자격증 정보를 조회할 수 없습니다.</td>
 									</tr>
 								</tbody>
 							</table>
@@ -124,17 +107,17 @@
 							<div class="jsgrid-pager">
 								Pages: 
 								<span class="jsgrid-pager-nav-button">
-									<a th:href="@{/admin/profile/adminProfileCertificateList(searchKey=${searchKey}, searchValue=${searchValue})}">First</a>
+									<a th:href="@{/admin/profile/adminProfileCertificateList}">First</a>
 								</span>
 								<span class="jsgrid-pager-nav-button">
 									<a th:if="${currentPage > 1}" 
-									   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${currentPage-1}, searchKey=${searchKey}, searchValue=${searchValue})}">Prev</a>
+									   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${currentPage-1})}">Prev</a>
 									<label th:unless="${currentPage > 1}">Prev</label>
 								</span> 
 								<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
 									<span class="jsgrid-pager-page">
 											<a th:if="${currentPage != num}"
-											   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${num}, searchKey=${searchKey}, searchValue=${searchValue})}"
+											   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${num})}"
 											   th:text="${num}"></a>
 											<label th:if="${currentPage == num}"
 												   th:text="${num}"></label>
@@ -142,14 +125,12 @@
 								</th:block>
 								<span class="jsgrid-pager-nav-button">
 									<a th:if="${currentPage < lastPage}"
-									   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${currentPage+1}, searchKey=${searchKey}, searchValue=${searchValue})}">Next</a>
+									   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${currentPage+1})}">Next</a>
 									<label th:unless="${currentPage < lastPage}">Next</label>
 								</span>
 								<span class="jsgrid-pager-nav-button">
-									<a th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${lastPage}, searchKey=${searchKey}, searchValue=${searchValue})}">Last</a>
+									<a th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${lastPage})}">Last</a>
 								</span>
-								<button id="selectDeleteBtn" class="btn btn-sm btn-info float-right">선택삭제</button>
-								<button id="selectInsertBtn" class="btn btn-sm btn-info float-right" style="margin-right:5px;">추가등록</button>
 							</div>
 						</div>
 						<div class="jsgrid-load-shader"

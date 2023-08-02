@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- 자격증 검색 조각 -->
+<th:block th:fragment="searchFragment">
+	<div class="card-info">
+		<form class="form-group d-flex"
+			th:action="@{/admin/profile/adminProfileCertificateList}"
+			method="get" style="margin: 10px 0 0 10px;">
+			<select name="searchKey" class="form-control col-sm-2"
+				style="margin-right: 5px;">
+				<option value="" th:selected="${searchKey == null}">===선택===</option>
+				<option value="userId" th:selected="${searchKey == 'userId'}">회원아이디</option>
+				<option value="certificateName" th:selected="${searchKey == 'certificateName'}">자격증명</option>
+			</select> <input name="searchValue" th:value="${searchValue}" type="text" class="form-control col-sm-3"
+				placeholder="검색어를 입력해주세요"> <span class="input-group-append">
+				<button type="submit" class="btn btn-secondary btn-flat">
+					<i class="fas fa-search fa-fw"></i>
+				</button>
+			</span>
+		</form>
+	</div>
+</th:block>
+
+</html>

@@ -223,8 +223,24 @@ public class AdminProfileService {
 	 * @param currentPage
 	 * @return
 	 */
-	public Map<String, Object> getCertificateList(int currentPage) {
+	public Map<String, Object> getCertificateList(int currentPage, String searchKey, String searchValue) {
 
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		/* 검색 */
+		if(searchValue != null) {
+			switch (searchKey) {
+				case "userId" -> {
+					searchKey = "pc.user_id";
+				}
+				case "certificateName" -> {
+					searchKey = "pc.user_certificate_name";
+				}
+			}
+			paramMap.put("searchKey", searchKey);
+			paramMap.put("searchValue", searchValue);
+		}
+		
 		// 보여질 행의 갯수
 		int rowPerPage = 10;
 
@@ -233,7 +249,7 @@ public class AdminProfileService {
 
 		// 마지막 페이지 계산
 		// 1. 보여질 테이블의 전체 행의 갯수
-		double rowsCnt = adminProfileCertificateMapper.getCertificateCnt();
+		double rowsCnt = adminProfileCertificateMapper.getCertificateCnt(paramMap);
 		// 2. 마지막 페이지
 		int lastPage = (int) Math.ceil(rowsCnt / rowPerPage);
 
@@ -251,7 +267,6 @@ public class AdminProfileService {
 		}
 
 		//HashMap<String, object> 여러 데이터타입을 담을 수 있는 Map<> 이라는 객체를 생성한다. 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("startIndex", startIndex);
 		paramMap.put("rowPerPage", rowPerPage);
 

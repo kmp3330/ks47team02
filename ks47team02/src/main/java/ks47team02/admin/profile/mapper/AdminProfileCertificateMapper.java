@@ -12,6 +12,6 @@ public interface AdminProfileCertificateMapper {
 	public List<Map<String, Object>> getCertificateList(Map<String, Object> paramMap);
 	
 	// 자격증 행 갯수
-	public int getCertificateCnt();
+	public int getCertificateCnt(Map<String, Object> paramMap);
 
 }

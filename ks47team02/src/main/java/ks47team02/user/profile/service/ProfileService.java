@@ -1,6 +1,5 @@
 package ks47team02.user.profile.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,6 @@ import ks47team02.user.profile.mapper.ProfilePortfolioMapper;
 import ks47team02.user.profile.mapper.ProfileSkillMapper;
 import ks47team02.user.profile.mapper.ProfileWorkSpecMapper;
 import ks47team02.user.project.pro.dto.JoinCate;
-import ks47team02.user.project.pro.dto.ProProjectPersonalFunction;
 import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
 import lombok.AllArgsConstructor;

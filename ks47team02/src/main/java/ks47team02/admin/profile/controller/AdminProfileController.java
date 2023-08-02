@@ -8,12 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks47team02.admin.profile.service.AdminProfileService;
-import ks47team02.user.profile.dto.ProfileEduSpec;
-import ks47team02.user.profile.dto.ProfileIntro;
-import ks47team02.user.profile.dto.ProfileSkill;
-import ks47team02.user.profile.dto.ProfileWorkSpec;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -99,12 +96,23 @@ public class AdminProfileController {
 		return "admin/profile/adminProfileEduSpecList";
 	}
 	
+	/**
+	 * 자격증 등록 회원 목록
+	 * @param model
+	 * @param currentPage
+	 * @param searchKey
+	 * @param searchValue
+	 * @return
+	 */
 	@GetMapping("/adminProfileCertificateList")
 	@SuppressWarnings("unchecked") // unchecked로 되어있으면 데이터타입을 체크 안한다는 뜻
 	public String profileCertificateList(Model model,
-										 @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
+										 @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage,
+										 @RequestParam(value="searchKey", required = false) String searchKey,
+										 @RequestParam(value="searchValue", required = false) String searchValue) {
 		
-		Map<String, Object> resultMap = adminProfileService.getCertificateList(currentPage);
+		/* 페이징 */
+		Map<String, Object> resultMap = adminProfileService.getCertificateList(currentPage, searchKey, searchValue);
 		int lastPage = (int) resultMap.get("lastPage");
 		List<Map<String, Object>> profileCertificateList = (List<Map<String, Object>>) resultMap.get("profileCertificateList");
 		int startPageNum = (int) resultMap.get("startPageNum");
@@ -117,23 +125,38 @@ public class AdminProfileController {
 		model.addAttribute("startPageNum", startPageNum);
 		model.addAttribute("endPageNum", endPageNum);
 		
+		/* 검색 */
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		
 		return "admin/profile/adminProfileCertificateList";
 	}
 	
-	
-	@GetMapping("/profileAwardList")
-	public String profileAwardList(Model model) {
+	@GetMapping("/removeAdminProfileCertificate")
+	public String removeAdminProfileCertificate(RedirectAttributes reAttr) {
 		
-		model.addAttribute("title", "수상이력 관리");
+		//reAttr.addAttribute("", );
 		
 		return "";
 	}
 	
-	@GetMapping("/profilePortfolioList")
-	public String profilePortfolioList(Model model) {
+	@GetMapping("/adminProfileAwardList")
+	public String profileAwardList(Model model,
+								   @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
+		
+		
+		
+		model.addAttribute("title", "수상이력 관리");
+		
+		return "admin/profile/adminProfileAwardList";
+	}
+	
+	@GetMapping("/adminProfilePortfolioList")
+	public String profilePortfolioList(Model model,
+									   @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		
 		model.addAttribute("title", "포트폴리오 관리");
 		
-		return "";
+		return "admin/profile/adminProfilePortfolioList";
 	}
 }
