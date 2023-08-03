@@ -59,9 +59,6 @@
 									<tr class="jsgrid-header-row">
 										<th
 											class="jsgrid-header-cell jsgrid-align-center"
-											style="width: 40px;"><input type="checkbox"></th>
-										<th
-											class="jsgrid-header-cell jsgrid-align-center"
 											style="width: 150px;">회사명</th>
 										<th
 											class="jsgrid-header-cell jsgrid-align-center"
@@ -96,9 +93,6 @@
 									<th:block th:unless="${#lists.isEmpty(announcementList)}"
 											  th:each="l : ${announcementList}">
 										<tr class="jsgrid-row">
-											<td class="jsgrid-cell jsgrid-align-center">
-												<input type="checkbox">
-											</td>
 											<td class="jsgrid-cell jsgrid-align-center"
 												th:text="${l.cpName}">
 											</td>

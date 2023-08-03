@@ -29,7 +29,7 @@
     					dataType: 'json',
     					success: function (response) {
     						// AJAX 요청이 성공했을 때의 처리
-    						console.log(response);
+    						// console.log(response);
     						populateAreaCateModal(response); // 모달에 데이터 표시
     						//$('#exampleModalCenter').modal('show'); // 모달 열기
     					},
@@ -145,7 +145,7 @@
 									<button id="searchBtn" type="button" class="genric-btn primary-border radius" data-toggle="modal"
 										 data-target="#exampleModalCenter">조회</button></p>
 									<input type="text" placeholder="지역분류" id="areaCate"
-										onfocus="this.placeholder = ''"
+										onfocus="this.placeholder = ''" readonly
 										onblur="this.placeholder = '지역분류'" name="areaCate">
 									<p class="text-left"
 										style="font-size: large; font-weight: 900;">채용직</p>
