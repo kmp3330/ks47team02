@@ -5,6 +5,20 @@
 
 <th:block layout:fragment="customJs">
 	<script>
+		$(document).ready(function (){
+			$('#reject_message_input').hide();
+			$('#reject_approval_select').change(function (){
+				let result = $('#reject_approval_select option:selected').val();
+
+				if(result == 'reject_code008' || result == 'reject_code009'){
+					$('#reject_message_input').show();
+				}else{
+					$('#reject_message_input').hide();
+				}
+			});
+
+
+		});
 
 
 	</script>
@@ -21,28 +35,50 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9">
+				<div class="col-lg-8">
 					<div class="single-job mb-4 justify-content-between text-center">
 						<div class="card">
 							<div class="card-header border-0">
-								<h3 class="mb-0 title_color text-left">일반과제 신청자 승인 페이지</h3>
+								<h3 class="mb-0 title_color text-left">일반과제 신청자 승인/거절 페이지</h3>
 								<div class="card-tools">
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">
-								<form th:action="@{/normalProject/addProject}" id="addProjectForm" name="addProjectForm" method="post">
-									<div>
-										<button>신청하기</button>
-										<button>뒤로가기</button>
+								<div class="col-lg-8 col-md-8">
+										<form th:action="@{/normalProject/addAcceptApprove}" id="addAcceptApproveForm" name="addAcceptApproveForm" method="post">
+											<input type="hidden" name="normalProjectApplyCode" th:value="${normalProjectApplyCode}">
+											<input type="hidden" name="userId" th:value="${loggedInUserId}">
+											<div class="input-group-icon mt-10">
+												<div class="icon">
+													<i class="fa fa-plane" aria-hidden="true"></i>
+												</div>
+													<div class="form-select" id="default-select">
+														<select style="display: none;" id="reject_approval_select" name="rejectApprovalCode">
+															<th:block th:unless="${#lists.isEmpty(acceptApproveList)}"
+																	  th:each="l : ${acceptApproveList}">
+																<option th:value="${l.rejectApprovalCode}">[[${l.rejectApprovalMessage}]]</option>
+															</th:block>
+														</select>
+
+													</div>
+													<div class="mt-10">
+														<input type="text" name="rejectApprovalMessage" placeholder="직접입력" onfocus="this.placeholder = ''"
+															   onblur="this.placeholder = '직접입력'" id="reject_message_input" class="single-input">
+													</div>
+													<div class="button-group-area mt-10">
+														<button type="submit" class="genric-btn info-border circle">확인</button>
+														<button type="reset" class="genric-btn info-border circle">초기화</button>
+													</div>
+												</div>
+											</form>
+										</div>
 									</div>
-								</form>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</section>
+		</section>
 
 </th:block>
 </html>
