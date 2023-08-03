@@ -28,6 +28,8 @@ public class WebConfig implements WebMvcConfigurer{
 		excludePathList.add("/admin/plugins/**");
 		excludePathList.add("/js/**");
 		excludePathList.add("/user/assets/**");
+		excludePathList.add("/main/css/**");
+		excludePathList.add("/main/assets/img/**");
 		excludePathList.add("/favicon.ico");
 		
 		registry.addInterceptor(loggerInterceptor)
@@ -37,6 +39,7 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns("/**")
 				.excludePathPatterns("/")
+				.excludePathPatterns("/user")
 				.excludePathPatterns("/login")
 				.excludePathPatterns("/cpLogin")
 				.excludePathPatterns("/logout")
