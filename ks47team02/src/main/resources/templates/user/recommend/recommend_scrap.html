@@ -7,6 +7,22 @@
 <link rel="stylesheet" type="text/css" />
 </head>
 
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+	<script>
+	$('.job-btn2').click(function (e) {
+        e.preventDefault();
+
+        let isDelete = confirm('정말로 삭제하시겠습니까?');
+
+        if(isDelete) {
+            const scrapCode = this.dataset.scrapCode;
+            location.replace(`/recommend/recommendRemoveScrap?companScrapCode=${ScrapCode}`);
+        }
+    });
+	</script>
+</th:block>
+
 <th:block layout:fragment="customContents">
 	<section class="jobs-area section-padding">
 		<div class="container col-lg-10">
@@ -28,13 +44,6 @@
 					</div>
 				</div>
 				<div class="col-lg-7">
-					<div class="mb-2">
-						<div class="card-tools">
-							<a th:href="@{/recommend/recommendInsertEmployment}"
-								class="genric-btn info-border circle"> <i class="fas">등록</i>
-							</a>
-						</div>
-					</div>	
 					<div class="main-content">
                         <div class="single-content1" th:unless="${#lists.isEmpty(recommendScrapInfo)}"
                            	 th:each="l : ${recommendScrapInfo}">
@@ -51,12 +60,7 @@
                                         <li class="mb-3"><h6 th:text="|[등록 시간] : ${l.registrationTime}|"></h6></li>
 								</ul>
 								</div>
-								<div class="job-btn align-self-center">
-		                            <a th:href="@{#}"
-		                               class="third-btn job-btn4">수정</a>
-		                            <a th:href="@{#}"
-		                               class="third-btn job-btn2">삭제</a>
-		                        </div>
+								
 		                       </div>
 		                      </div>
 							<div class="single-content1" th:if="${#lists.isEmpty(recommendScrapInfo)}">
