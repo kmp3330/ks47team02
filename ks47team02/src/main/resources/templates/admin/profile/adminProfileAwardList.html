@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/layout/default}">
+
+<head>
+<link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid.min.css}">
+<link rel="stylesheet"
+	th:href="@{/admin/plugins/jsgrid/jsgrid-theme.min.css}">
+</head>
+
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+	<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+	<script th:src="@{/admin/plugins/jsgrid/demos/db.js}"></script>
+	<script th:src="@{/admin/plugins/jsgrid/jsgrid.min.js}"></script>
+	<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+	<script>
+	
+	  $('#allCheck').click(function () {
+	  	let isAllChecked = $(this).prop('checked');
+	  	$('.checks').prop('checked', isAllChecked);
+	  });
+	  
+	</script>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<div class="content-wrapper" style="min-height: 912px;">
+
+		<!-- 콘텐츠 헤더 -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0">수상이력 관리</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 메인 콘텐츠 -->
+		<section class="content">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">수상이력 등록 회원 목록</h3>
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body">
+					<div id="jsGrid1" class="jsgrid"
+						style="position: relative; height: 100%; width: 100%;">
+						<div class="jsgrid-grid-body" style="height: 450px;">
+							<table class="jsgrid-table">
+								<thead>
+									<tr class="jsgrid-header-row">
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 40px;"><input id="allCheck" type="checkbox"></th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 70px;">회원아이디</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">수상이름</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">수상일시</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 100px;">등록일시</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 40px;">삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:unless="${#lists.isEmpty(profileAwardList)}"
+											  th:each="l : ${profileAwardList}">
+										<tr class="jsgrid-row">
+											<td class="jsgrid-cell jsgrid-align-center">
+												<input class="checks" type="checkbox">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userId}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userAwardName}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.userAwardDate}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.profileRegDate}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center">
+												<input id="deleteBtn" type="button" value="삭제" style="border-radius: 3px; padding:1px; font-size:12px; border:1px solid;">
+											</td>
+										</tr>
+									</th:block>
+									<tr th:if="${#lists.isEmpty(profileCertificateList)}">
+										<td colspan="6">등록된 회원의 자격증 정보를 조회할 수 없습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="jsgrid-pager-container">
+							<div class="jsgrid-pager">
+								Pages: 
+								<span class="jsgrid-pager-nav-button">
+									<a th:href="@{/admin/profile/adminProfileCertificateList}">First</a>
+								</span>
+								<span class="jsgrid-pager-nav-button">
+									<a th:if="${currentPage > 1}" 
+									   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${currentPage-1})}">Prev</a>
+									<label th:unless="${currentPage > 1}">Prev</label>
+								</span> 
+								<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+									<span class="jsgrid-pager-page">
+											<a th:if="${currentPage != num}"
+											   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${num})}"
+											   th:text="${num}"></a>
+											<label th:if="${currentPage == num}"
+												   th:text="${num}"></label>
+									</span>
+								</th:block>
+								<span class="jsgrid-pager-nav-button">
+									<a th:if="${currentPage < lastPage}"
+									   th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${currentPage+1})}">Next</a>
+									<label th:unless="${currentPage < lastPage}">Next</label>
+								</span>
+								<span class="jsgrid-pager-nav-button">
+									<a th:href="@{/admin/profile/adminProfileCertificateList(currentPage=${lastPage})}">Last</a>
+								</span>
+							</div>
+						</div>
+						<div class="jsgrid-load-shader"
+							style="display: none; position: absolute; inset: 0px; z-index: 1000;"></div>
+						<div class="jsgrid-load-panel"
+							style="display: none; position: absolute; top: 50%; left: 50%; z-index: 1000;">Please,
+							wait...</div>
+					</div>
+				</div>
+				<!-- /.card-body -->
+			</div>
+		</section>
+	</div>
+</th:block>
+
+</html>

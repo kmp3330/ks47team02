@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/layout/default}">
+<head>
+<link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid.min.css}">
+<link rel="stylesheet"
+	th:href="@{/admin/plugins/jsgrid/jsgrid-theme.min.css}">
+</head>
+
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+	<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+	<script th:src="@{/admin/plugins/jsgrid/demos/db.js}"></script>
+	<script th:src="@{/admin/plugins/jsgrid/jsgrid.min.js}"></script>
+	<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+	<script>
+	// 구인구직 공고 삭제
+	$('.jsgrid-cell').click(function (e) {
+            e.preventDefault();
+
+            let isDelete = confirm('정말로 삭제하시겠습니까?');
+
+            if(isDelete) {
+                const announcementCode = this.dataset.announcementCode;
+                location.replace(`/admin/announcement/adminAnnouncementRemove?announcementCode=${announcementCode}`);
+            }
+        });
+	</script>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<div class="content-wrapper" style="min-height: 912px;">
+
+		<!-- 콘텐츠 헤더 -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0">구인공고 관리</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 메인 콘텐츠 -->
+		<section class="content">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">구인구직 공고목록</h3>
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body">
+					<div id="jsGrid1" class="jsgrid"
+						style="position: relative; height: 100%; width: 100%;">
+						<div class="jsgrid-grid-body" style="height: 450px;">
+							<table class="jsgrid-table">
+								<thead>
+									<tr class="jsgrid-header-row">
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 40px;"><input type="checkbox"></th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 150px;">회사명</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 150px;">참여 분야</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 150px;">지역 분류</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 150px;">채용직</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 150px;">요구 기술</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 150px;">관련 업무 경력</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 150px;">채용인원</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 150px;">급여</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 150px;">마감시간</th>
+										<th
+											class="jsgrid-header-cell jsgrid-align-center"
+											style="width: 80px;">삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:unless="${#lists.isEmpty(announcementList)}"
+											  th:each="l : ${announcementList}">
+										<tr class="jsgrid-row">
+											<td class="jsgrid-cell jsgrid-align-center">
+												<input type="checkbox">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.cpName}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.joinCateName}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.areaCate}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.jobOpening}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.requiredSkills}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.career}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.recruitment}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.wage}">
+											</td>
+											<td class="jsgrid-cell jsgrid-align-center"
+												th:text="${l.dueDate}">
+											</td>
+											<td><a th:href="@{#}" th:data-announcement-code="${l.announcementCode}" class="jsgrid-cell jsgrid-align-center">
+												<input type="button" value="삭제" style="border-radius: 3px; padding:5px; font-size:12px; border:1px solid;">
+											</a></td>
+										</tr>
+									</th:block>
+									<tr th:if="${#lists.isEmpty(announcementList)}">
+										<td colspan="5">등록된 구인구직 공고 정보를 조회할 수 없습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="jsgrid-pager-container">
+							<div class="jsgrid-pager">
+								Pages: 
+								<span class="jsgrid-pager-nav-button">
+									<a th:href="@{/admin/announcement/adminAnnouncementList}">처음</a>
+								</span>
+								<span class="jsgrid-pager-nav-button">
+									<a th:if="${currentPage > 1}" 
+									   th:href="@{/admin/announcement/adminAnnouncementList(currentPage=${currentPage-1})}">Prev</a>
+									<label th:unless="${currentPage > 1}">이전</label>
+								</span> 
+								<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+									<span class="jsgrid-pager-page">
+											<a th:if="${currentPage != num}"
+											   th:href="@{/admin/announcement/adminAnnouncementList(currentPage=${num})}"
+											   th:text="${num}"></a>
+											<label th:if="${currentPage == num}"
+												   th:text="${num}"></label>
+									</span>
+								</th:block>
+								<span class="jsgrid-pager-nav-button">
+									<a th:if="${currentPage < lastPage}"
+									   th:href="@{/admin/announcement/adminAnnouncementList(currentPage=${currentPage+1})}">다음</a>
+									<label th:unless="${currentPage < lastPage}">다음</label>
+								</span>
+								<span class="jsgrid-pager-nav-button">
+									<a th:href="@{/admin/announcement/adminAnnouncementList(currentPage=${lastPage})}">마지막</a>
+								</span>
+							</div>
+						</div>
+						<div class="jsgrid-load-shader"
+							style="display: none; position: absolute; inset: 0px; z-index: 1000;"></div>
+						<div class="jsgrid-load-panel"
+							style="display: none; position: absolute; top: 50%; left: 50%; z-index: 1000;">Please,
+							wait...</div>
+					</div>
+				</div>
+				<!-- /.card-body -->
+			</div>
+		</section>
+	</div>
+</th:block>
+	
+</html>

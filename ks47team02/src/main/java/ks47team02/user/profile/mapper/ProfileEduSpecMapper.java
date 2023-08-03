@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import ks47team02.user.profile.dto.ProfileEduSpec;
 import ks47team02.user.profile.dto.ProfileWorkSpec;
+import ks47team02.user.profile.dto.UnivGradCate;
 
 @Mapper
 public interface ProfileEduSpecMapper {
@@ -18,4 +19,8 @@ public interface ProfileEduSpecMapper {
 	public int profileEduSpecInsert(ProfileEduSpec profileEduSpec);
 	//회원별 학력 목록
 	public List<ProfileEduSpec> getProfileEduSpecList(String sessionId);
+	//최종학력 상태 목록
+	public List<UnivGradCate> getUnivGradCateList();
+	
+	public UnivGradCate getUnivGradCateByCode(String univGradCateCode);
 }

@@ -60,7 +60,7 @@
                            	 th:each="l : ${profileEduSpecList}">
                             <div class="single-job mb-4 d-lg-flex justify-content-between">
                                 <div class="job-text">
-                                    <h4 th:text="${l.userDegree}"></h4>
+                                    <h4 th:text="${l.univGradCateName}"></h4>
                                     <ul class="mt-4">
                                         <li class="mb-3"><h6 th:text="|[학교명] : ${l.userUnivName}|"></h6></li>
                                         <li class="mb-3"><h6 th:text="|[전공명] : ${l.userUnivMajor}|"></h6></li>

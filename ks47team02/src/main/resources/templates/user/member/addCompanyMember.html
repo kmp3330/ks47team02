@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:justify-content="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/banner/layout/default}">
 <head>
   <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
@@ -254,13 +254,13 @@
       });
       
       function isRegNumValid(){
-        return $('#cpRegNumber').val().length = 12 && isRegNumChecked;
+        return $('#cpRegNumber').val().length == 12 && isRegNumChecked;
       }
       $('#checkRegNum').click(function (e){
         e.preventDefault();
-        var cpRegNumber = $('#cpRegNumber').val();
+        let cpRegNumber = $('#cpRegNumber').val();
         if(cpRegNumber.length != 12){
-          swal.fire({
+          Swal.fire({
             icon: 'error',
             title: '사업자등록번호는 (-) 포함 12글자로 이루어져 있습니다.'
           });

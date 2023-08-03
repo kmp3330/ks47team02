@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:justify-content="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/banner/layout/default}">
 <head>
   <link rel="stylesheet" th:href="@{/user/assets/css/banner.css}">
@@ -131,7 +131,7 @@
             </div>
           </div><br>
           <div class="input-group mb-3">
-            <input type="address" id="userAddr" name="userAddr" class="form-control" placeholder="주소를 입력해주세요.">
+            <input type="text" id="userAddr" name="userAddr" class="form-control" placeholder="주소를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -140,7 +140,7 @@
           </div>
           <br>
           <div class="input-group mb-3">
-            <input type="phone" id="userPhone" name="userPhone" class="form-control" placeholder="번호를 입력해주세요.">
+            <input type="tel" id="userPhone" name="userPhone" class="form-control" placeholder="번호를 입력해주세요.">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-phone"></span>
@@ -244,7 +244,7 @@
       
       $('#checkId').click(function (e){
         e.preventDefault();
-        var userId = $('#userId').val();
+        let userId = $('#userId').val();
         if(userId.length<5){
           Swal.fire({
             icon: 'error',
@@ -380,7 +380,6 @@
         });
         
         if (isValid) {
-          // if the form is valid, submit it
           $('#addUserForm').submit();
         } else {
           Swal.fire({
