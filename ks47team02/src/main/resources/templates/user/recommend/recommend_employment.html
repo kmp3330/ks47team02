@@ -6,7 +6,7 @@
 <th:block layout:fragment="customJs">
 	<!-- 자바스크립트 작성 공간 -->
 	<script>
-	$('.danger-border').click(function (e) {
+	$('.job-btn2').click(function (e) {
         e.preventDefault();
 
         let isDelete = confirm('정말로 삭제하시겠습니까?');
@@ -69,7 +69,7 @@
 								<div class="job-btn align-self-center">
 		                            <a th:href="@{/recommend/recommendModifyEmployment(companyEmploymentCode=${l.companyEmploymentCode})}"
 		                               class="third-btn job-btn4">수정</a>
-		                            <a th:href="@{#}" th:data-award-code="${l.companyEmploymentCode}"
+		                            <a th:href="@{#}" th:data-employment-code="${l.companyEmploymentCode}"
 		                               class="third-btn job-btn2">삭제</a>
 		                        </div>
 		                       </div>

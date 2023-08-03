@@ -2,11 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{user/layout/default}">
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" />
 
-</head>
+<th:block layout:fragment="customJs">
+	<!-- 자바스크립트 작성 공간 -->
+	<script th:src="@{/js/jquery-3.7.0.js}"></script>
+	<script>
+	$('.job-btn2').click(function (e) {
+        e.preventDefault();
+
+        let isDelete = confirm('정말로 삭제하시겠습니까?');
+
+        if(isDelete) {
+            const supportCode = this.dataset.supportCode;
+            location.replace(`/recommend/recommendRemovesupport?compansupportCode=${supportCode}`);
+        }
+    });
+	</script>
+</th:block>
 
 <th:block layout:fragment="customContents">
 	<section class="jobs-area section-padding">
@@ -31,7 +43,7 @@
 				<div class="col-lg-7">
 					<div class="mb-2">
 						<div class="card-tools">
-							<a th:href="@{/recommend/recommendInsertEmployment}"
+							<a th:href="@{/recommend/recommendInsertSupport}"
 								class="genric-btn info-border circle"> <i class="fas">등록</i>
 							</a>
 						</div>
@@ -53,9 +65,9 @@
 								</ul>
 								</div>
 								<div class="job-btn align-self-center">
-		                            <a th:href="@{#}"
+		                            <a th:href="@{/recommend/recommendModifySupport}"
 		                               class="third-btn job-btn4">수정</a>
-		                            <a th:href="@{#}"
+		                            <a th:href="@{#}" th:data-support-code="${l.companySupportCode}"
 		                               class="third-btn job-btn2">삭제</a>
 		                        </div>
 		                       </div>

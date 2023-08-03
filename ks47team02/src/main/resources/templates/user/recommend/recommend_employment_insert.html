@@ -21,17 +21,18 @@
 
 
 		// 등록버튼 
-		$('#addEmploymentBtn').click(function(){
-			const validateEle = $('#employmentInsertForm input');
-			let isSubmit= false;
-			
-			validateEle.each((idx, item) => {    				
-    			isSubmit = validCheck(item);
-    			return isSubmit;
-   			})
-			if(isSubmit)$('#employmentInsertForm').submit();
-			
-		})
+				
+		$('#addEmploymentBtn').click(function () {
+		
+			let inputEles = $('#employmentInsertForm input');
+			let isSubmit = false;
+			inputEles.each( (idx, item) => {
+				isSubmit = validCheck(item);
+				return isSubmit;
+			});
+			if (isSubmit) $('#employmentInsertForm').submit();		
+		});
+		
 
 		// 입력 취소 버튼 클릭시 이벤트 처리
    		$('#resetBtn').click(function(e){
@@ -380,13 +381,13 @@
 									</form>
 								</div>
 								<div class="card-tools">
-										<a th:href="@{/recommend/recommendEmployment}"
+										<button th:href="@{/recommend/recommendEmployment}"
 											id="addEmploymentBtn"
 											class="genric-btn info-border circle"> <i class="fas">등록
 												완료</i>
-										</a> <a th:href="@{#}" id="resetBtn"
+										</button> <button th:href="@{#}" id="resetBtn"
 											class="genric-btn danger-border circle"> <i class="fas">취소</i>
-										</a>
+										</button>
 								</div>
 							</div>
 						</div>
@@ -395,5 +396,4 @@
 		</section>
 	</th:block>
 
-</body>
 </html>

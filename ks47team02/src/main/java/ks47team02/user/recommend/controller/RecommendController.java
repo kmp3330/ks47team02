@@ -86,9 +86,23 @@ public class RecommendController {
 		return "user/recommend/recommend_scrap";
 	}
 	
+	/*
+	 *  기업 지원 순 기업 추천 서비스 수정 (폼)
+	 */
+	@GetMapping("/recommendModifySupport")
+	public String recommendModifyRecommendSupport(Model model) {
+		
+				
+		model.addAttribute("title", "기업 지원 순 기업 추천 서비스 수정 ");
+		model.addAttribute("titleText", "기업 지원 순 기업 추천 서비스 수정 ");
+		model.addAttribute("contents","기업 지원 순 기업 추천 서비스 수정화면입니다.");
+				
+		return "user/recommend/recommend_support_Modify";
+	}
+	
 	
 	/*
-	 *  기업 지원 순 기업 추천 서비스
+	 *  기업 지원 순 기업 추천 서비스  
 	 */
 	@GetMapping("/recommendSupport")
 	public String getRecommendSupport(Model model) {
@@ -96,11 +110,25 @@ public class RecommendController {
 		List <RecommendSupport> recommendSupportInfo = recommendService.getRecommendSupportInfo();
 		
 		model.addAttribute("title", "기업 지원 순 기업 추천 서비스");
-		model.addAttribute("titleText", "기업 지원 순 기업 추천 서비스");
-		model.addAttribute("contents","기업 지원 순 추천 서비스 화면입니다.");
+		model.addAttribute("titleText", "기업 지원 순 기업 추천 서비스 ");
+		model.addAttribute("contents","기업 지원 순 기업 추천 서비스 화면입니다.");
 		model.addAttribute("recommendSupportInfo", recommendSupportInfo);
 		
 		return "user/recommend/recommend_support";
+	}
+	
+	/*
+	 *  기업 지원 순 기업 추천 서비스 등록 (폼)
+	 */
+	@GetMapping("/recommendInsertSupport")
+	public String recommendInsertRecommendSupport(Model model) {
+		
+				
+		model.addAttribute("title", "기업 지원 순 기업 추천 서비스 등록");
+		model.addAttribute("titleText", "기업 지원 순 기업 추천 서비스 등록");
+		model.addAttribute("contents","기업 지원 순 추천 서비스 등록 화면입니다.");
+				
+		return "user/recommend/recommend_support_insert";
 	}
 	
 	
@@ -110,11 +138,10 @@ public class RecommendController {
 	 */
 	@GetMapping("/recommendSupportDelete")
 	public String removeRecommendSupport(Model model) {
-		model.addAttribute("title", "기업 지원 목록 삭제");
-		model.addAttribute("titleText", "기업 지원 목록 삭제");
-		model.addAttribute("contents","기업 지원 목록 삭제 화면입니다.");
+			
+		
 	
-		return "user/recommend/recommend_support_delete";
+		return "redirect:/recommend/recommendSupport";
 	}
 	
 	/*
@@ -161,9 +188,9 @@ public class RecommendController {
 		List <JoinCate> recommendJoinCateInfo = recommendService.getJoinCateRecommend();
 		List <NormalRun> recommendNormalRun = recommendService.getNormalRunRecommend();
 		
-		model.addAttribute("title", "채용 단계 순 목록 등록");
-		model.addAttribute("titleText", "채용 단계 순 목록 등록");
-		model.addAttribute("contents", "채용 단계 순 목록 등록 화면입니다.");
+		model.addAttribute("title", "채용 단계 순 목록 수정");
+		model.addAttribute("titleText", "채용 단계 순 목록 수정");
+		model.addAttribute("contents", "채용 단계 순 목록 수정 화면입니다.");
 		model.addAttribute("RecommendEmploymentInfo", RecommendEmploymentInfo);
 		model.addAttribute("recommendSupportCodeInfo", recommendSupportCodeInfo);
 		model.addAttribute("recommendUserIdInfo", recommendUserIdInfo);
