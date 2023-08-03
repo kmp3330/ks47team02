@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{user/layout/default}">
+<head>
+<meta charset="UTF-8">
+<style>
+	.titleStyle{
+		font-size: 2.5rem;
+		
+	}
+  .proProjectListsBox {
+	 	background-color: rgba(205, 205, 205, 1);
+	    border-radius: 10px;
+	    display: inline-block;
+	    height: auto;
+	    margin-bottom: 2.25rem;
+	    position: relative;
+	    color: rgba(0, 0, 0, 1);
+	    width: 70%;
+	    padding-left: 2.5rem;
+	    padding-right: 2.5rem;
+	    padding-top: 1.75rem;
+	    padding-bottom: 50rem;
+  }
+  .small-btn{
+	  	display: inline-block;
+	    text-align: center;
+	    margin: 1px;
+	    border-radius: 5px;
+	    font-weight: 400;
+	    font-size: 1.5rem;
+	    padding-top: 0.25rem;
+	    padding-bottom: 0.25rem;
+	    padding-left: 0.375rem;
+	    padding-right: 0.375rem;
+   }
+   .small-btn2{
+	  	display: inline-block;
+	    text-align: center;
+	    margin: 1px;
+	    border-radius: 5px;
+	    font-weight: 400;
+	    font-size: 1rem;
+	    padding-top: 0.25rem;
+	    padding-bottom: 0.25rem;
+	    padding-left: 0.375rem;
+	    padding-right: 0.375rem;
+   }
+    .small-btn3{
+	  	display: inline-block;
+	    text-align: center;
+	    margin: 1px;
+	    border-radius: 5px;
+	    font-weight: 400;
+	    font-size: 1.15rem;
+	    padding-top: 0.5rem;
+	    padding-bottom: 0.25rem;
+	    padding-left: 0.375rem;
+	    padding-right: 0.375rem;
+   }
+   .absolute{
+  	  position: absolute;
+	}
+	.left-5{
+   	 	left: 1.25rem;
+	}
+	.right-20{
+   	 	right: 5rem;
+	}
+	.top-5{
+    	top: 1.25rem;
+	}
+	.bottom-5{
+    	bottom: 1.25rem;
+	}
+	.ecard-lb-div {
+	    position: absolute;
+   	 	margin-top: 15rem;
+   	 	margin-left: 1.5rem;
+	}
+	.ecard-lb-div2 {
+	    position: absolute;
+	    margin-top: 55rem;
+	    margin-left: 1.5rem;
+	}
+	.ebtn-cf-dgray{
+	    background-color: rgba(60, 60, 60, 1);
+	    border-color: rgba(60, 60, 60, 1);
+	    border-width: 1px;
+	    color: rgba(255, 255, 255, 1);
+	}
+	.ebtn-cf-pink{
+		background-color: rgba(255, 107, 107, 1);
+	    border-color: rgba(255, 107, 107, 1);
+	    border-width: 1px;
+	    color: rgba(255, 255, 255, 1);
+    }
+    .ebtn-cf{
+	    background-color: rgba(0, 0, 0, 1);
+	    border-color: rgba(255, 107, 107, 1);
+	    border-width: 1px;
+	    color: rgba(255, 255, 255, 1);
+    }
+    .mr-10 {
+    	margin-right: 2.5rem;
+	}
+	.ecard-title {
+	    font-size: 3rem;
+	    line-height: 3.6rem;
+	    margin-bottom: 0.75rem;
+	    margin-top: 1.25rem;
+	}
+	.ecard-rb-div {
+	    border-radius: 9999px;
+	    padding: 0.375rem;
+	    height: 1.75rem;
+	    position: absolute;
+	    top: 8rem;
+	    color: rgba(0, 0, 0, 1);
+	    cursor: pointer;
+	}
+	.ecard-rb-div-date {
+	    border-radius: 9999px;
+	    padding: 0.375rem;
+	    position: absolute;
+	    right: 3rem;
+	    color: rgba(0, 0, 0, 1);
+	    cursor: pointer;
+	    margin-top: 50rem;
+	}
+	.ebtn-cf-white{
+		background-color: rgba(255, 255, 255, 1);
+	    border-color: rgba(255, 107, 107, 1);
+	    border-width: 1px;
+	    color: rgba(0, 0, 0, 1);
+    }
+   	.ebtn-cf-red{
+		background-color: rgba(255, 107, 107, 1);
+	    border-color: rgba(255, 107, 107, 1);
+	    border-width: 1px;
+	    color: rgba(255, 255, 255, 1);
+    }
+	.runNameStyle{
+		border-radius: 9999px;
+	    position: absolute;
+	    right: 20rem;
+	    color: rgba(0, 0, 0, 1);
+	    cursor: pointer;
+	    margin-top: -4rem;
+	}
+</style>
+</head>
+<th:block layout:fragment="customJs">
+	<script>
+		$('.proProjectDeleteBtn').click(function (e) {
+		    e.preventDefault();
+			let isDelete = confirm('정말로 삭제하시겠습니까?');
+			if(isDelete) {
+		        const proProjectCode = this.dataset.proProjectCode;
+		        location.href=`/project/pro/proProjectDelete?proProjectCode=${proProjectCode}`;
+		        //location.replace(/project/pro/proProjectDelete?proProjectCode=${proProjectCode});
+		    }
+		});
+		
+		    
+		    
+		//지원자 수 조회
+		$('#memberNumCheckBtn').click(function(){
+    			const $proProjectCode = $('#proProjectCode');
+    			let proProjectCode = $proProjectCode.text();
+    			// ajax 호출
+    			const request = $.ajax({
+					url: '/project/pro/memberNumCheck',
+					method: 'POST',
+					data: { 'proProjectCode' : proProjectCode },
+					dataType: 'text'
+   				});
+   				request.done(function( response ) {
+   					if(response != 0 ){
+   						alert('현재 지원자 수는 ' + response  + ' 명 입니다.');
+   	    				return false;
+   					}else{
+   						alert('지원자가 없습니다...');
+   					}
+					//console.log(typeof response);
+   				});
+   				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+   				});		
+    		});
+			
+			
+		
+	</script>
+</th:block>
+		<th:block layout:fragment="customContents">
+			<section class="jobs-area section-padding">
+				<div class="container col-lg-12">
+					<div class="row">
+					
+						<div class="col-lg-3">
+							<div class="sidebar">
+								<div class="single-item mb-4">
+									<a th:href="@{/project/pro/progressStatusList}" class="sidebar-btn d-flex justify-content-between mb-3">
+										<span>진행상태 조회</span>
+									</a>
+									<a th:href="@{/project/pro/depositList}" class="sidebar-btn d-flex justify-content-between mb-3">
+										<span>성과금 예치 목록 조회</span>
+									</a>
+									<a th:href="@{/project/pro/sendMoneyCompleteList}" class="sidebar-btn d-flex justify-content-between mb-3">
+										<span>성과금 송금 완료 목록</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					
+						<div class="col-lg-9">
+							<div th:if="${#lists.isEmpty(proProjectInfo)}">
+								<span>등록된 전문과제가 없습니다.</span>
+							</div>
+							<div class="proProjectListsBox"
+								th:unless="${#lists.isEmpty(proProjectInfo)}"
+								th:each="p : ${proProjectInfo}">
+								<div>
+									<div class="ecard-title">
+										<span id="proProjectCode" th:text="${p.proProjectCode}" hidden></span>
+										<span th:text="${p.cpId}" hidden></span>
+										<span class="titleStyle" th:text="${p.title}"></span><p>
+										<span th:text="${p.cpName}" hidden></span><p>
+									</div>
+										<span class="ebtn-cf-red small-btn3 runNameStyle " th:text="${p.runName}"></span>
+								</div>
+									<div class="absolute left-5 right-20 top-5 bottom-5">
+									<div class="ecard-lb-div">
+										<div>
+											<span class="small-btn ebtn-cf" th:value="${p.skill}">필수 기술 : [[${p.skill}]]</span>
+										</div>
+										<div>
+											<span class="small-btn ebtn-cf" th:value="${p.details}">상세 설명 : [[${p.details}]]</span>
+										</div>
+										<div>
+											<span class="small-btn ebtn-cf" th:value="${p.maxTotal}">최대 인원 : [[${p.maxTotal}]]명 </span>
+										</div>
+										<div>
+											<span class="small-btn ebtn-cf" th:value="${p.joinCateName}">참여 분야 : [[${p.joinCateName}]]</span>
+										</div>
+										<div>
+											<span class="small-btn ebtn-cf" th:value="${p.workCateName}">작업 분야 : [[${p.workCateName}]]</span>
+										</div>
+										<div>
+											<span class="small-btn ebtn-cf" th:value="${p.subjectCateName}">주제 분야 : [[${p.subjectCateName}]]</span>
+										</div>
+										<div>
+											<span class="small-btn ebtn-cf" th:value="${p.proProjectPrice}"> 총 성과금 [[${p.proProjectPrice}]]만원 || 월 단가 : 약 [[${p.proProjectPrice}]] / 작업개월수 </span>
+										</div>
+										<div>
+											<span class="small-btn ebtn-cf" th:value="${p.proProjectDays}"> 총 작업 예상일 수 : [[${p.proProjectDays}]]일</span>
+										</div>
+									</div>
+									<div class="ecard-rb-div-date ecard-rb-div-txt">
+										<div>
+											<span th:value="${p.proProjectWriteDate}">작성일자 : [[${p.proProjectWriteDate}]]</span>
+										</div>
+										<div>
+											<span th:value="${p.dueDate}">마감일자 : [[${p.dueDate}]]</span>
+										</div>
+										<div>
+											<span th:value="${p.dueCompleteDate}">마감완료일자 : [[${p.dueCompleteDate}]]</span>
+										</div>
+										<div>
+											<span th:value="${p.proProjectStartDate}">프로젝트 시작일자 : [[${p.proProjectStartDate}]]</span>
+										</div>
+										<div>
+											<span th:value="${p.proProjectCompleteDate}">프로젝트 완료 일자 : [[${p.proProjectCompleteDate}]]</span>
+										</div>
+									</div>
+									
+										
+									<div class="ecard-lb-div2">
+											<a class="ebtn-cf-white small-btn2" th:href="@{/project/pro/proProjectApplicantList(proProjectCode=${p.proProjectCode})}">신청자 목록 보기</a>
+											<a class="ebtn-cf-white small-btn2" th:href="@{/project/pro/proProjectPersonalFunctionList(proProjectCode=${p.proProjectCode})}">개인별 맡은 기능 조회하기</a>
+											<button type="button" id="memberNumCheckBtn"> 지원자 수 보기!</button>
+											<div>
+												<a class="ebtn-cf-white small-btn2" th:href="@{/project/pro/proProjectModify(proProjectCode=${p.proProjectCode})}">수정</a>
+												<a class="proProjectDeleteBtn ebtn-cf-white small-btn2" th:href="@{#}" th:data-pro-project-code="${p.proProjectCode}">삭제</a>
+											</div>
+									</div>
+								</div>
+							</div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</section>
+		</th:block>
+</html>

@@ -17,7 +17,7 @@
     padding-left: 2.5rem;
     padding-right: 2.5rem;
     padding-top: 1.75rem;
-    padding-bottom: 4rem;
+    padding-bottom: 3rem;
   }
   .small-btn{
   	display: inline-block;
@@ -25,7 +25,6 @@
     margin: 1px;
     border-radius: 5px;
     font-weight: 400;
-    font-size: 0.625rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
     padding-left: 0.375rem;
@@ -46,8 +45,20 @@
 	.bottom-5{
     bottom: 1.25rem;
 	}
-	.ecard-lb-div{
+	.ecard-lb-div1{
     position: absolute;
+    margin-left: 1.2rem;
+	}
+	.ecard-lb-div2{
+    position: absolute;
+    margin-left: 1.2rem;
+    margin-top: 7rem;
+	}
+	.ebtn-cf-due{
+	background-color: rgba(100, 100, 200, 1);
+    border-color: rgba(60, 60, 60, 1);
+    border-width: 1px;
+    color: rgba(255, 255, 255, 1);
 	}
 	.ebtn-cf-dgray{
     background-color: rgba(60, 60, 60, 1);
@@ -56,19 +67,19 @@
     color: rgba(255, 255, 255, 1);
 	}
 	.ebtn-cf-pink{
-	background-color: rgba(255, 107, 107, 1);
+	background-color: rgba(0, 207, 507, 1);
     border-color: rgba(255, 107, 107, 1);
     border-width: 1px;
-    color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
     }
     .mr-10 {
     margin-right: 2.5rem;
 	}
 	.ecard-title {
     font-size: 1.563rem;
-    line-height: 2.188rem;
+    /* line-height: 2.188rem; */
     margin-bottom: 0.75rem;
-    margin-top: 1.25rem;
+    margin-top: 2rem;
 	}
 	.ecard-rb-div {
     border-radius: 9999px;
@@ -98,7 +109,11 @@
 </style>
 </head>
 <th:block layout:fragment="customJs">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
 	<script>
+			
+		
+		
 		$('.proProjectDeleteBtn').click(function (e) {
 		    e.preventDefault();
 			let isDelete = confirm('정말로 삭제하시겠습니까?');
@@ -108,6 +123,46 @@
 		        //location.replace(/project/pro/proProjectDelete?proProjectCode=${proProjectCode});
 		    }
 		});
+		// JavaScript로 현재 날짜를 업데이트하는 함수를 정의합니다.
+        function updateCurrentDate() {
+            let currentDateElement = document.querySelectorAll('.current-date');
+            // JavaScript의 Date 객체를 사용하여 현재 날짜를 가져옵니다.
+            let currentDate = new Date();
+            // 날짜를 "년-월-일" 형식으로 변환합니다.
+            let year = currentDate.getFullYear();
+            let month = currentDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
+            let day = currentDate.getDate();
+            // 월과 일이 한 자리 숫자인 경우 앞에 0을 추가합니다.
+            month = month < 10 ? "0" + month : month;
+            day = day < 10 ? "0" + day : day;
+            // HTML 요소에 현재 날짜를 반영합니다.
+            currentDateElement.textContent = year + "-" + month + "-" + day;
+        }
+        // 페이지가 로드되면 현재 날짜를 업데이트합니다.
+        updateCurrentDate();
+        // 매일 자정마다 현재 날짜를 업데이트하는 타이머를 설정합니다.
+        setInterval(updateCurrentDate, 86400000); // 1일은 86,400,000 밀리초입니다.
+        
+        // JavaScript로 날짜 차이를 계산하여 표시하는 함수
+        function displayDateDifference() {
+            $('.otherDate').each(function(idx, item){
+            	console.log($(item).text());
+            	const date = $(item).text();
+            	const dday = -1*(moment().diff(date, 'day'));
+            	console.log(dday);
+            	const target = $(item).parent().find('#daysDifference');
+            	target.text('마감 '+ (dday) + '일 전')
+            	//console.log(target.text());
+            if(-1 >= dday){
+            	target.text("마감완료");
+			}
+         });
+           // var daysDifference = moment('.otherDate').diff('.current-date', 'day')
+        	//var now = new Date(document.querySelectorAll('.current-date').innerText);
+            //var otherDate = new Date(document.getElementById("otherDate").innerText);
+        }
+        // 페이지가 로드되면 함수를 호출하여 현재 시간을 표시
+        displayDateDifference();
 	</script>
 </th:block>
 		<th:block layout:fragment="customContents">
@@ -142,35 +197,50 @@
 								th:each="p : ${proProjectList}">
 								<div>
 									<div class="ecard-title">
-										<span th:text="${p.proProjectCode}" hidden></span>
+										<span class="proProjectCode" th:text="${p.proProjectCode}" hidden></span>
 										<span th:text="${p.cpId}" hidden></span>
-										<span th:text="${p.title}"></span>
+										
+										<span th:text="${p.title}"></span><p>
 										<span th:text="${p.cpName}"></span>
+										
 									</div>
+									<!-- 
 									<div>
 										<span th:text="${p.skill}"></span>
 										<span th:text="${p.details}"></span>
 										<span th:text="${p.maxTotal}">[[${p.maxTotal}]]명 </span>
+										<span th:text="${p.runName}"></span>
 									</div>
+									 -->
 								</div>
-									<span th:text="${p.runName}"></span>
 									<div class="absolute left-5 right-20 top-5 bottom-5">
-									<div class="ecard-lb-div">
+									<div class="ecard-lb-div1">
 										<span class="small-btn ebtn-cf-pink" th:text="${p.joinCateName}"></span>
 										<span class="small-btn ebtn-cf-pink" th:text="${p.workCateName}"></span>
 										<span class="small-btn ebtn-cf-pink" th:text="${p.subjectCateName}"></span>
+									</div>
+									<div class="ecard-lb-div2">
 										<span class="small-btn ebtn-cf-dgray" th:value="${p.proProjectPrice}">[[${p.proProjectPrice}]]만원</span>
 										<span class="small-btn ebtn-cf-dgray" th:value="${p.proProjectDays}">[[${p.proProjectDays}]]일</span>
+ 									<span class="current-date" hidden></span>
+										<span class="otherDate" th:value="${p.dueDate}" hidden>[[${p.dueDate}]]</span>
+										<span id="daysDifference" class="small-btn ebtn-cf-due">일</span>
+										
 									</div>
+									
 									<div class="ecard-rb-div-date ecard-rb-div-txt">
-										<div>
-											<span th:value="${p.proProjectWriteDate}">작성일자 : [[${p.proProjectWriteDate}]]</span>
+										<div>	
+											<span th:value="${p.proProjectWriteDate}">작성 일자 : [[${p.proProjectWriteDate}]]</span>
 										</div>
 										<div>
-											<span th:value="${p.dueDate}">마감일자 : [[${p.dueDate}]]</span>
+											<span type="date" th:value="${p.dueCompleteDate}">마감 일자 : [[${p.dueCompleteDate}]]</span>
 										</div>
 										<div>
-											<span th:value="${p.dueCompleteDate}">마감완료일자 : [[${p.dueCompleteDate}]]</span>
+											<button type="button" th:onclick="|location.href='@{/project/pro/proProjectDetails(proProjectCode=${p.proProjectCode})}'|"> 상세보기 </span>
+										</div>
+										
+										
+																					<!--
 										</div>
 										<div>
 											<span th:value="${p.proProjectStartDate}">프로젝트 시작일자 : [[${p.proProjectStartDate}]]</span>
@@ -178,9 +248,7 @@
 										<div>
 											<span th:value="${p.proProjectCompleteDate}">프로젝트 완료 일자 : [[${p.proProjectCompleteDate}]]</span>
 										</div>
-									</div>
-									
-										
+									</div> 
 									<div class="ecard-rb-div ecard-rb-div-txt">
 										<div>
 											<a class="ebtn-cf-white small-btn" th:href="@{/project/pro/proProjectApplicantList(proProjectCode=${p.proProjectCode})}">신청자 목록 보기</a>
@@ -189,6 +257,7 @@
 											<a class="proProjectDeleteBtn ebtn-cf-white small-btn" th:href="@{#}" th:data-pro-project-code="${p.proProjectCode}">삭제</a>
 										</div>
 									</div>
+									 -->
 								</div>
 							</div>
 							</div>

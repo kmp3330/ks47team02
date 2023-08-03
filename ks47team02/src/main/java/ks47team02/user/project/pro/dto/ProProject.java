@@ -37,8 +37,14 @@ public class ProProject {
 	private String ApplicantAccountCode;
 	private String userId;
 	private String applicantAccountUserId;
+	private int projectApplicantNumber;
 	
-	
+	public int getProjectApplicantNumber() {
+		return projectApplicantNumber;
+	}
+	public void setProjectApplicantNumber(int projectApplicantNumber) {
+		this.projectApplicantNumber = projectApplicantNumber;
+	}
 	public String getApplicantAccountUserId() {
 		return applicantAccountUserId;
 	}
@@ -306,78 +312,8 @@ public class ProProject {
 		builder.append(userId);
 		builder.append(", applicantAccountUserId=");
 		builder.append(applicantAccountUserId);
-		builder.append(", getApplicantAccountUserId()=");
-		builder.append(getApplicantAccountUserId());
-		builder.append(", getUserId()=");
-		builder.append(getUserId());
-		builder.append(", getApplicantAccountCode()=");
-		builder.append(getApplicantAccountCode());
-		builder.append(", getProProjectCode()=");
-		builder.append(getProProjectCode());
-		builder.append(", getCpId()=");
-		builder.append(getCpId());
-		builder.append(", getCpName()=");
-		builder.append(getCpName());
-		builder.append(", getTitle()=");
-		builder.append(getTitle());
-		builder.append(", getJoinCate()=");
-		builder.append(getJoinCate());
-		builder.append(", getWorkCate()=");
-		builder.append(getWorkCate());
-		builder.append(", getSubjectCate()=");
-		builder.append(getSubjectCate());
-		builder.append(", getJoinCateCode()=");
-		builder.append(getJoinCateCode());
-		builder.append(", getJoinCateName()=");
-		builder.append(getJoinCateName());
-		builder.append(", getWorkCateCode()=");
-		builder.append(getWorkCateCode());
-		builder.append(", getWorkCateName()=");
-		builder.append(getWorkCateName());
-		builder.append(", getSubjectCateCode()=");
-		builder.append(getSubjectCateCode());
-		builder.append(", getSubjectCateName()=");
-		builder.append(getSubjectCateName());
-		builder.append(", getSkill()=");
-		builder.append(getSkill());
-		builder.append(", getDetails()=");
-		builder.append(getDetails());
-		builder.append(", getMaxTotal()=");
-		builder.append(getMaxTotal());
-		builder.append(", getNormalRunCode()=");
-		builder.append(getNormalRunCode());
-		builder.append(", getRunName()=");
-		builder.append(getRunName());
-		builder.append(", getProProjectPrice()=");
-		builder.append(getProProjectPrice());
-		builder.append(", getCpCommisson()=");
-		builder.append(getCpCommisson());
-		builder.append(", getProProjectWriteDate()=");
-		builder.append(getProProjectWriteDate());
-		builder.append(", getProProjectDueDate()=");
-		builder.append(getProProjectDueDate());
-		builder.append(", getDueDate()=");
-		builder.append(getDueDate());
-		builder.append(", getDueCompleteDate()=");
-		builder.append(getDueCompleteDate());
-		builder.append(", getProProjectStartDate()=");
-		builder.append(getProProjectStartDate());
-		builder.append(", getProProjectCompleteDate()=");
-		builder.append(getProProjectCompleteDate());
-		builder.append(", getProProjectDays()=");
-		builder.append(getProProjectDays());
-		builder.append(", getApplicationDate()=");
-		builder.append(getApplicationDate());
-		builder.append(", getApplicantUserId()=");
-		builder.append(getApplicantUserId());
-		builder.append(", getLevelCode()=");
-		builder.append(getLevelCode());
-		builder.append(", getClass()=");
-		builder.append(getClass());
-		builder.append(", hashCode()=");
-		builder.append(hashCode());
-		builder.append(", toString()=");
-		builder.append(super.toString());
+		builder.append(", projectApplicantNumber=");
+		builder.append(projectApplicantNumber);
 		builder.append("]");
 		return builder.toString();
 	}

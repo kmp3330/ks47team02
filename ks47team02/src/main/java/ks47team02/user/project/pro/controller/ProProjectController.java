@@ -2,13 +2,14 @@ package ks47team02.user.project.pro.controller;
 
 import java.util.List;
 
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.annotation.PostConstruct;
@@ -25,7 +26,7 @@ import ks47team02.user.project.pro.dto.ProgressStatus;
 import ks47team02.user.project.pro.dto.SendMoneyComplete;
 import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
-
+import ks47team02.user.project.pro.mapper.ProProjectMapper;
 import ks47team02.user.project.pro.service.ProProjectService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,10 +37,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProProjectController {
 	private final ProProjectService ProProjectService;
+	private final ProProjectMapper proProjectMapper;
+	
 	@PostConstruct
 	public void proProjectControllerInit() {
 		System.out.println("proProjectController 생성");
 	}
+	
+	
 	
 //-----------------------------------전문과제 목록 조회, 등록, 수정, 삭제-------------------------------------------------------------------------------------------------------------------
 	// 모든 전문과제 목록 조회
@@ -79,6 +84,17 @@ public class ProProjectController {
 		model.addAttribute("contents", "전문과제 구인글 작성 페이지 입니다.");
 		
 		return "user/project/pro/pro_project_insert";
+	}
+	// 전문과제 상세 조회
+	@GetMapping("/proProjectDetails")
+	public String proProjectDetails(@RequestParam(value="proProjectCode") String proProjectCode, Model model) {
+		ProProject proProjectInfo = ProProjectService.getProjectInfoByCode(proProjectCode);
+		
+		model.addAttribute("title","전문과제 상세 조회");
+		model.addAttribute("contents", "전문과제 상세 조회 페이지 입니다.");
+		model.addAttribute("proProjectInfo",proProjectInfo);
+		
+		return "/user/project/pro/pro_project_details";
 	}
 	// 전문과제 구인글 수정 후 처리
 	@PostMapping("/proProjectModify")
@@ -382,4 +398,12 @@ public class ProProjectController {
 		model.addAttribute("contents", "성과금 송금 완료 목록 삭제 페이지 입니다.");
 		return "redirect:/project/pro/sendMoneyCompleteList";
 	}
+	//---------------------------------기타 비동기 통신--------------------------------------------------------------------------------------------------------------
+	@PostMapping("/memberNumCheck")
+	@ResponseBody
+	public int memberNumCheck(@RequestParam(value="proProjectCode") String proProjectCode) {
+		int result = proProjectMapper.memberNumCheck(proProjectCode);
+		return result;
+	}
+
 }
