@@ -254,13 +254,13 @@
       });
       
       function isRegNumValid(){
-        return $('#cpRegNumber').val().length = 12 && isRegNumChecked;
+        return $('#cpRegNumber').val().length == 12 && isRegNumChecked;
       }
       $('#checkRegNum').click(function (e){
         e.preventDefault();
-        var cpRegNumber = $('#cpRegNumber').val();
+        let cpRegNumber = $('#cpRegNumber').val();
         if(cpRegNumber.length != 12){
-          swal.fire({
+          Swal.fire({
             icon: 'error',
             title: '사업자등록번호는 (-) 포함 12글자로 이루어져 있습니다.'
           });
