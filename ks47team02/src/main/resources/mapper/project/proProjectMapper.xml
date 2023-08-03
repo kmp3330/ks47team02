@@ -194,7 +194,7 @@
 					`project_start_date`,`project_complete_date`,`project_days`)
 				SELECT
 					CONCAT('pro_project',LPAD(CAST(SUBSTRING(MAX(pro_project_code),12)+1 as UNSIGNED),3,'0')),
-					'cp001',
+					#{sessionId},
 					#{title},
 					#{joinCateCode},
 					(SELECT join_cate_name FROM join_cate WHERE join_cate_code = #{joinCateCode}),

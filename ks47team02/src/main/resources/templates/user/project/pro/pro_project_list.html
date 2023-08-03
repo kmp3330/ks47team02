@@ -172,7 +172,7 @@
 						<div class="col-lg-3">
 							<div class="sidebar">
 								<div class="single-item mb-4">
-									<a th:href="@{/project/pro/proProjectInsert}" class="sidebar-btn d-flex justify-content-between mb-3">
+									<a th:href="@{/project/pro/proProjectInsert}" th:if="${session.CPID != null}" class="sidebar-btn d-flex justify-content-between mb-3">
 										<span>구인글 등록하기</span>
 									</a>
 									<a th:href="@{/project/pro/progressStatusList}" class="sidebar-btn d-flex justify-content-between mb-3">

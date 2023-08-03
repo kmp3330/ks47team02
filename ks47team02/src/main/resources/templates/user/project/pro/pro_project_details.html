@@ -81,8 +81,8 @@
 	}
 	.ecard-lb-div2 {
 	    position: absolute;
-	    margin-top: 55rem;
-	    margin-left: 1.5rem;
+    	margin-top: 50rem;
+    	margin-left: 1.5rem;
 	}
 	.ebtn-cf-dgray{
 	    background-color: rgba(60, 60, 60, 1);
@@ -122,12 +122,11 @@
 	}
 	.ecard-rb-div-date {
 	    border-radius: 9999px;
-	    padding: 0.375rem;
 	    position: absolute;
 	    right: 3rem;
 	    color: rgba(0, 0, 0, 1);
 	    cursor: pointer;
-	    margin-top: 50rem;
+	    margin-top: 45rem;
 	}
 	.ebtn-cf-white{
 		background-color: rgba(255, 255, 255, 1);
@@ -144,10 +143,11 @@
 	.runNameStyle{
 		border-radius: 9999px;
 	    position: absolute;
-	    right: 20rem;
+	    right: 3rem;
 	    color: rgba(0, 0, 0, 1);
 	    cursor: pointer;
 	    margin-top: -4rem;
+	    
 	}
 </style>
 </head>
@@ -281,7 +281,7 @@
 											<a class="ebtn-cf-white small-btn2" th:href="@{/project/pro/proProjectApplicantList(proProjectCode=${p.proProjectCode})}">신청자 목록 보기</a>
 											<a class="ebtn-cf-white small-btn2" th:href="@{/project/pro/proProjectPersonalFunctionList(proProjectCode=${p.proProjectCode})}">개인별 맡은 기능 조회하기</a>
 											<button type="button" id="memberNumCheckBtn"> 지원자 수 보기!</button>
-											<div>
+											<div th:if="${sessionId != p.cpId}">
 												<a class="ebtn-cf-white small-btn2" th:href="@{/project/pro/proProjectModify(proProjectCode=${p.proProjectCode})}">수정</a>
 												<a class="proProjectDeleteBtn ebtn-cf-white small-btn2" th:href="@{#}" th:data-pro-project-code="${p.proProjectCode}">삭제</a>
 											</div>

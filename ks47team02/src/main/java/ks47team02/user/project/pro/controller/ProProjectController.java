@@ -61,21 +61,29 @@ public class ProProjectController {
 	}
 	// 전문과제 구인글 작성 후 처리
 	@PostMapping("/proProjectInsert")
-	public String proProjectInsert(ProProject proProject) {
+	public String proProjectInsert(ProProject proProject,
+									HttpSession session) {
 		
-//		log.info("구인글 작성시 입력정보: {}", proProject);
+		String sessionId = (String)session.getAttribute("SID");
+		proProject.setCpId(sessionId);
+		
+		log.info("로그인한 아이디 : {}", sessionId);
 		ProProjectService.proProjectInsert(proProject);
+		
 		return "redirect:/project/pro/proProjectList";
 	}
 	// 전문과제 구인글 작성 전 처리
 	@GetMapping("/proProjectInsert")
-	public String proProjectInsert(Model model) {
+	public String proProjectInsert(Model model,
+								HttpSession session) {
 		
 		List<ProProject> proProjectList = ProProjectService.getProProjectList();
 		List<JoinCate> joinCate = ProProjectService.getJoinCateList();
 		List<WorkCate> workCate = ProProjectService.getWorkCateList();
 		List<SubjectCate> subjectCate = ProProjectService.getSubjectCateList();
+		String sessionId = (String)session.getAttribute("SID");
 		
+		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("joinCate", joinCate);
 		model.addAttribute("workCate", workCate);
 		model.addAttribute("subjectCate", subjectCate);
@@ -87,9 +95,14 @@ public class ProProjectController {
 	}
 	// 전문과제 상세 조회
 	@GetMapping("/proProjectDetails")
-	public String proProjectDetails(@RequestParam(value="proProjectCode") String proProjectCode, Model model) {
+	public String proProjectDetails(@RequestParam(value="proProjectCode") String proProjectCode,
+									Model model,
+									HttpSession session) {
 		ProProject proProjectInfo = ProProjectService.getProjectInfoByCode(proProjectCode);
+		String sessionId = (String)session.getAttribute("SID");
+		log.info("sessionId : {}", sessionId);
 		
+		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("title","전문과제 상세 조회");
 		model.addAttribute("contents", "전문과제 상세 조회 페이지 입니다.");
 		model.addAttribute("proProjectInfo",proProjectInfo);
@@ -175,7 +188,8 @@ public class ProProjectController {
 	}
 	// 전문과제별 신청서 작성 완료 후 처리
 	@PostMapping("proProjectApplicantInsert")
-	public String proProjectApplicantInsert(ProProjectApplicant proProjectApplicant, HttpSession session,
+	public String proProjectApplicantInsert(ProProjectApplicant proProjectApplicant,
+											HttpSession session,
 											@RequestParam(value="proProjectCode") String proProjectCode) {
 		
 //		String sessionId = (String)session.getAttribute("SID");
