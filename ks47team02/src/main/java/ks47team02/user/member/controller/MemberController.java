@@ -62,7 +62,7 @@ public class MemberController {
 			session.setAttribute("SLEVEL", userInfo.getLevelName());
 			session.setAttribute("SNAME", userInfo.getUserName());
 
-			return "redirect:/";
+			return "redirect:/user";
 		}
 
 		reAttr.addAttribute("msg", "일치하는 회원의 정보가 없습니다.");
@@ -89,7 +89,7 @@ public class MemberController {
 			session.setAttribute("CPLEVEL", companyInfo.getLevelName());
 			session.setAttribute("CPNAME", companyInfo.getCpName());
 
-			return "redirect:/";
+			return "redirect:/user";
 		}
 
 		reAttr.addAttribute("msg", "일치하는 회원의 정보가 없습니다.");
@@ -108,7 +108,7 @@ public class MemberController {
 		
 		session.invalidate();
 		
-		return "redirect:/";
+		return "redirect:/user";
 	}
 
 	@PostMapping("/checkId")
