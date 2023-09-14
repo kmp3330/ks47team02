@@ -5,61 +5,66 @@
 	      layout:decorate="~{user/layout/default}">
 	      
 	<th:block layout:fragment="customContents">
-		<section class="jobs-area section-padding">
-			<div class="container col-lg-12">
-				<div class="row">
-					<div class="col-lg-3">
-						<div class="sidebar">
-							<div class="single-item mb-4">
+		<div class="row container col-lg-12 margin-bottom: 50px">
+			<div class="col-lg-3" style="margin-top: 40px">
+				<div class="sidebar">
+					<div class="single-item mb-4">
+						<h4 class="mb-4">일반과제</h4>
+						<a th:href="@{/normalProject/getApplicantAcceptList}"
+						   class="sidebar-btn d-flex justify-content-between mb-3"> <span>신청자 목록</span>
+						</a>
+						<a th:href="@{/normalProject/getApplicantAcceptList}"
+						   class="sidebar-btn d-flex justify-content-between mb-3"> <span>신청자 목록</span>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-8" style="padding-top: 40px">
+				<div class="single-job mb-4 justify-content-between text-center">
+					<div class="card">
+						<div class="card-header border-0">
+							<h3 class="mb-0 title_color text-left">일반과제</h3>
+							<div class="card-tools">
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-9">
-						<div class="single-job mb-4 justify-content-between text-center">
-							<div class="card">
-								<div class="card-header border-0">
-									<h3 class="mb-0 title_color text-left">일반과제</h3>
-									<div class="card-tools">
-									</div>
-								</div>
-								<div class="card-body table-responsive p-0">
-									<table class="table table-striped table-valign-middle">
-										<form th:action="@{/normalProject/removeProject}" method="post" id="removeProjectForm">
-											<tbody>
-												<tr>
-													<td>
-														<label for="projectFinishDate">사용자 아이디</label>
-													</td>
-													<td>
-														<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
-														<input type="text" id="userId" name="userId" disabled>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<label for="projectFinishDate">비밀번호 입력</label>
-													</td>
-													<td>
-														<input type="password" id="userPw" name="userPw">
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<label for="projectFinishDate">비밀번호 입력</label>
-													</td>
-													<td>
-														<input type="submit">
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									
-								</div>
-							</div>
+						<div class="card-body table-responsive p-0">
+							<table class="table table-striped table-valign-middle">
+								<form th:action="@{/normalProject/removeProject}" method="post" id="removeProjectForm">
+									<tbody>
+										<tr>
+											<td>
+												<label for="userId">사용자 아이디</label>
+											</td>
+											<td>
+												<!-- 만약 기타를 설정시, 밑에 인풋이 나오게 설정 -->
+												<input type="text" id="userId" name="userId" disabled>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label for="userPw">비밀번호 입력</label>
+											</td>
+											<td>
+												<input type="password" id="userPw" name="userPw">
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label>버튼</label>
+											</td>
+											<td>
+												<input type="submit">
+											</td>
+										</tr>
+									</tbody>
+								</form>
+							</table>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
-	</th:block>			
+		</div>
+	</th:block>
+
 

@@ -102,9 +102,9 @@ public interface ProProjectMapper {
 	
 	
 	
-	
-	
-	
+//------------------------------------비동기 통신 관련---------------------------------------------------------------	
+	// 참여자 수 확인 
+	public int memberNumCheck(String proProjectCode);
 	
 //------------------------------------분루 관련---------------------------------------------------------------	
 	// 참여분야 목록 조회
@@ -113,7 +113,8 @@ public interface ProProjectMapper {
 	public List<WorkCate> getWorkCateList();
 	// 주제분야 목록 조회
 	public List<SubjectCate> getSubjectCateList();
+	
 
-	
-	
+
+
 }

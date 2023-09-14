@@ -2,9 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org/"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/layout/default}">
+
+	<th:block layout:fragment="customJs" th:inline="javascript">
+		<script>
+
+				$(document).ready(function() {
+					$('#acceptBtn').click(function() {
+						if (confirm("신청하시겠습니까")) {
+							const $normalProjectCode = $('#normalProjectCode');
+							let normalProjectCode = $normalProjectCode.val();
+
+							// ajax 호출
+							const request = $.ajax({
+								url: '/normalProject/checkPeople',
+								method: 'POST',
+								data: { 'normalProjectCode': normalProjectCode},
+								dataType: 'text',
+								success: function(response) {
+									let result = response;
+									console.log(result);
+									/*리절트가 true가 아닐경우에 submit을 한다.*/
+									if (result != 'true') {
+
+										$('#acceptForm').submit();
+									} else {
+										alert('참여인원이 가득차 참가 불가 입니다.');
+									}
+								}
+							});
+						} else {
+							alert('아니오를 누르셨습니다');
+						}
+					});
+			});
+
+		</script>
+	</th:block>
       
 	<th:block layout:fragment="customContents">
-		<form th:action="@{/normalProject/addApplicantAccept}" method="post" id="addApplicantAcceptForm">
+
 			<section class="jobs-area section-padding">
 				<div class="container col-lg-12">
 					<div class="row">
@@ -19,7 +55,7 @@
 								<div class="card">
 									<div class="card-header border-0">
 										<!-- 제목영역 -->
-										<h3 class="mb-0 title_color text-left">일반과제</h3>
+										<h3 class="mb-0 title_color text-left">일반과제신청</h3>
 										<div class="card-tools">
 										</div>
 									</div>
@@ -28,18 +64,24 @@
 										<table class="table table-striped table-valign-middle">
 											<thead>
 											</thead>
-											<tbody>
-												<tr>
-													<td>
-														<input type="text" th:text="${normalProjectCode}">
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<button type="submit">신청버튼</button>
-													</td>
-												</tr>
-											</tbody>
+											<form th:action="@{/normalProject/addApplicantAccept}" id="acceptForm" method="post">
+												<tbody>
+													<tr>
+														<td>
+															<input type="hidden" name="normalProjectCode" id="normalProjectCode" th:value="${normalProjectCode}">
+														</td>
+														<td>
+															<input name="userId" type="hidden" th:value="${loggedInUserId}">
+														</td>
+														<h1>신청하시겠습니까?</h1>
+													</tr>
+													<tr>
+														<td>
+															<button type="button" id="acceptBtn">신청버튼</button>
+														</td>
+													</tr>
+												</tbody>
+											</form>
 										</table>
 									</div>
 								</div>
@@ -48,5 +90,4 @@
 					</div>
 				</div>
 			</section>
-		</form>
 	</th:block>	

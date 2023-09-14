@@ -2,13 +2,14 @@ package ks47team02.user.project.pro.controller;
 
 import java.util.List;
 
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.annotation.PostConstruct;
@@ -25,7 +26,7 @@ import ks47team02.user.project.pro.dto.ProgressStatus;
 import ks47team02.user.project.pro.dto.SendMoneyComplete;
 import ks47team02.user.project.pro.dto.SubjectCate;
 import ks47team02.user.project.pro.dto.WorkCate;
-
+import ks47team02.user.project.pro.mapper.ProProjectMapper;
 import ks47team02.user.project.pro.service.ProProjectService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,10 +37,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProProjectController {
 	private final ProProjectService ProProjectService;
+	private final ProProjectMapper proProjectMapper;
+	
 	@PostConstruct
 	public void proProjectControllerInit() {
 		System.out.println("proProjectController 생성");
 	}
+	
+	
 	
 //-----------------------------------전문과제 목록 조회, 등록, 수정, 삭제-------------------------------------------------------------------------------------------------------------------
 	// 모든 전문과제 목록 조회
@@ -56,21 +61,29 @@ public class ProProjectController {
 	}
 	// 전문과제 구인글 작성 후 처리
 	@PostMapping("/proProjectInsert")
-	public String proProjectInsert(ProProject proProject) {
+	public String proProjectInsert(ProProject proProject,
+									HttpSession session) {
 		
-//		log.info("구인글 작성시 입력정보: {}", proProject);
+		String sessionId = (String)session.getAttribute("SID");
+		proProject.setCpId(sessionId);
+		
+		log.info("로그인한 아이디 : {}", sessionId);
 		ProProjectService.proProjectInsert(proProject);
+		
 		return "redirect:/project/pro/proProjectList";
 	}
 	// 전문과제 구인글 작성 전 처리
 	@GetMapping("/proProjectInsert")
-	public String proProjectInsert(Model model) {
+	public String proProjectInsert(Model model,
+								HttpSession session) {
 		
 		List<ProProject> proProjectList = ProProjectService.getProProjectList();
 		List<JoinCate> joinCate = ProProjectService.getJoinCateList();
 		List<WorkCate> workCate = ProProjectService.getWorkCateList();
 		List<SubjectCate> subjectCate = ProProjectService.getSubjectCateList();
+		String sessionId = (String)session.getAttribute("SID");
 		
+		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("joinCate", joinCate);
 		model.addAttribute("workCate", workCate);
 		model.addAttribute("subjectCate", subjectCate);
@@ -79,6 +92,22 @@ public class ProProjectController {
 		model.addAttribute("contents", "전문과제 구인글 작성 페이지 입니다.");
 		
 		return "user/project/pro/pro_project_insert";
+	}
+	// 전문과제 상세 조회
+	@GetMapping("/proProjectDetails")
+	public String proProjectDetails(@RequestParam(value="proProjectCode") String proProjectCode,
+									Model model,
+									HttpSession session) {
+		ProProject proProjectInfo = ProProjectService.getProjectInfoByCode(proProjectCode);
+		String sessionId = (String)session.getAttribute("SID");
+		log.info("sessionId : {}", sessionId);
+		
+		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("title","전문과제 상세 조회");
+		model.addAttribute("contents", "전문과제 상세 조회 페이지 입니다.");
+		model.addAttribute("proProjectInfo",proProjectInfo);
+		
+		return "/user/project/pro/pro_project_details";
 	}
 	// 전문과제 구인글 수정 후 처리
 	@PostMapping("/proProjectModify")
@@ -159,7 +188,8 @@ public class ProProjectController {
 	}
 	// 전문과제별 신청서 작성 완료 후 처리
 	@PostMapping("proProjectApplicantInsert")
-	public String proProjectApplicantInsert(ProProjectApplicant proProjectApplicant, HttpSession session,
+	public String proProjectApplicantInsert(ProProjectApplicant proProjectApplicant,
+											HttpSession session,
 											@RequestParam(value="proProjectCode") String proProjectCode) {
 		
 //		String sessionId = (String)session.getAttribute("SID");
@@ -382,4 +412,12 @@ public class ProProjectController {
 		model.addAttribute("contents", "성과금 송금 완료 목록 삭제 페이지 입니다.");
 		return "redirect:/project/pro/sendMoneyCompleteList";
 	}
+	//---------------------------------기타 비동기 통신--------------------------------------------------------------------------------------------------------------
+	@PostMapping("/memberNumCheck")
+	@ResponseBody
+	public int memberNumCheck(@RequestParam(value="proProjectCode") String proProjectCode) {
+		int result = proProjectMapper.memberNumCheck(proProjectCode);
+		return result;
+	}
+
 }

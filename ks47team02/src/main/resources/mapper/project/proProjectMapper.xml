@@ -31,6 +31,7 @@
 		<result column="project_days" property="proProjectDays"/>
 		<result column="applicant_user_id" property="applicantUserId"/>
 		<result column="application_date" property="applicationDate"/>
+		<result column="project_applicant_number" property="projectApplicantNumber"/>
 	</resultMap>
 	<!-- 성과금 예치 목록 조회 -->
 	<resultMap type="DepositList" id="depositResultMap">
@@ -155,7 +156,13 @@
 							due_complete_date,
 							project_start_date,
 							project_complete_date,
-							project_days
+							project_days,
+								(select
+								COUNT(*)
+							FROM
+								pro_project_applicant
+							where
+								pro_project_code = #{proProjectCode}) as project_applicant_number
 						FROM
 							cp_info AS ci
 							INNER join
@@ -187,7 +194,7 @@
 					`project_start_date`,`project_complete_date`,`project_days`)
 				SELECT
 					CONCAT('pro_project',LPAD(CAST(SUBSTRING(MAX(pro_project_code),12)+1 as UNSIGNED),3,'0')),
-					'cp001',
+					#{sessionId},
 					#{title},
 					#{joinCateCode},
 					(SELECT join_cate_name FROM join_cate WHERE join_cate_code = #{joinCateCode}),
@@ -216,7 +223,8 @@
     	/* 전문 과제 상세 조회 */
     	SELECT
 			pro_project_code,
-			cp_id,
+			ci.cp_id,
+			ci.cp_name,
 			title,
 			join_cate_code,
 			join_cate_name, 
@@ -236,9 +244,19 @@
 			due_complete_date,
 			project_start_date,
 			project_complete_date,
-			project_days
+			project_days,
+			(select
+				COUNT(*)
+			FROM
+				pro_project_applicant
+			where
+				pro_project_code = #{proProjectCode}) as project_applicant_number
 		FROM
-			pro_project
+			pro_project AS pp
+			INNER join
+			cp_info AS ci
+			on
+			pp.cp_id = ci.cp_id
 		WHERE
 			pro_project_code = #{proProjectCode}
     </select>
@@ -802,6 +820,16 @@
 	
 	
 	
+	<!-- 지원자 수 조회 -->
+	<select id="memberNumCheck" resultType="int" parameterType="String">
+			/* 프로젝트 별 참여자 수 조회 */
+			select
+				COUNT(*)
+			FROM
+				pro_project_applicant as ppa
+			where
+				ppa.pro_project_code = #{proProjectCode}
+	</select>
 	
 	
 	
